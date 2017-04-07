@@ -11,7 +11,6 @@
   * [Deploying-ATTX-Components-on-Docker-Swarm](Deploying-ATTX-Components-on-Docker-Swarm.md)
 * [Workflow Component](Workflow-Component.md)
   * [ETL Artifacts](ETL-Artifacts.md)
-  * [UnifiedViews Docker configuration](Unified-Views-Docker-configuration.md)
   * [UnifiedViews plugins](Unified-Views-plugins.md)
   * [Workflow API](WF-API.md)
 * [Graph Component](Graph-Component.md)
@@ -44,4 +43,3 @@
 ---
 
 * [ATTX website](https://www.helsinki.fi/en/projects/attx-2016)
-
