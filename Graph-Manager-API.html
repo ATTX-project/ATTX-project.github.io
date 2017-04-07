@@ -1,0 +1,1180 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Graph Manager API · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Graph-Store.html" />
+    
+    
+    <link rel="prev" href="Graph-Component.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">ATTX Project</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Architecture.html">
+            
+                <a href="Architecture.html">
+            
+                    
+                    Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="Platform-Deployment.html">
+            
+                <a href="Platform-Deployment.html">
+            
+                    
+                    Platform Deployment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html">
+            
+                <a href="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html">
+            
+                    
+                    Docker Application Stacks in Swarm Mode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="CSC-cPouta-Cloud-Services-Report.html">
+            
+                <a href="CSC-cPouta-Cloud-Services-Report.html">
+            
+                    
+                    CSC cPouta Cloud Services Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                    
+                    Provisioning ATTX Components on CSC Open Stack (cPouta)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                    
+                    Deploying-ATTX-Components-on-Docker-Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="Workflow-Component.html">
+            
+                <a href="Workflow-Component.html">
+            
+                    
+                    Workflow Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="ETL-Artifacts.html">
+            
+                <a href="ETL-Artifacts.html">
+            
+                    
+                    ETL Artifacts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="Unified-Views-plugins.html">
+            
+                <a href="Unified-Views-plugins.html">
+            
+                    
+                    UnifiedViews plugins
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="WF-API.html">
+            
+                <a href="WF-API.html">
+            
+                    
+                    Workflow API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Graph-Component.html">
+            
+                <a href="Graph-Component.html">
+            
+                    
+                    Graph Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.5.1" data-path="Graph-Manager-API.html">
+            
+                <a href="Graph-Manager-API.html">
+            
+                    
+                    Graph Manager API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="Graph-Store.html">
+            
+                <a href="Graph-Store.html">
+            
+                    
+                    Graph Store
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.2.1" data-path="Data-Model.html">
+            
+                <a href="Data-Model.html">
+            
+                    
+                    Ontology/Data model
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.2" data-path="Namespaces.html">
+            
+                <a href="Namespaces.html">
+            
+                    
+                    Namespaces
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.3" data-path="Linking-graphs.html">
+            
+                <a href="Linking-graphs.html">
+            
+                    
+                    Linking
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Distribution-Component.html">
+            
+                <a href="Distribution-Component.html">
+            
+                    
+                    Distribution Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
+            
+                <a href="ElasticSearch-with-Siren.html">
+            
+                    
+                    ElasticSearch with Siren
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Applications-and-Use-Cases.html">
+            
+                <a href="Applications-and-Use-Cases.html">
+            
+                    
+                    Applications and Use Cases
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="UC1---Infrastructures-and-publications.html">
+            
+                <a href="UC1---Infrastructures-and-publications.html">
+            
+                    
+                    UC1 - infras and pubs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project Guidelines</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="Release-Plan.html">
+            
+                <a href="Release-Plan.html">
+            
+                    
+                    Release Plan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="Project-Development-Environment.html">
+            
+                <a href="Project-Development-Environment.html">
+            
+                    
+                    Project Development Environment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="CI-CD-Enviroment.html">
+            
+                <a href="CI-CD-Enviroment.html">
+            
+                    
+                    CI/CD Enviroment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="Jenkins.html">
+            
+                <a href="Jenkins.html">
+            
+                    
+                    Jenkins
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="Build-Multiple-Environments.html">
+            
+                <a href="Build-Multiple-Environments.html">
+            
+                    
+                    Build Multiple Environments
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="Containerized-testing.html">
+            
+                <a href="Containerized-testing.html">
+            
+                    
+                    Containerized testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" >
+            
+                <span>
+            
+                    
+                    Reports
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.1" data-path="Gradle.html">
+            
+                <a href="Gradle.html">
+            
+                    
+                    Building Gradle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.2" data-path="Messaging-Service.html">
+            
+                <a href="Messaging-Service.html">
+            
+                    
+                    Messaging Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.3" data-path="Service-Discovery.html">
+            
+                <a href="Service-Discovery.html">
+            
+                    
+                    Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.4" data-path="Workflow-Management-Tools.html">
+            
+                <a href="Workflow-Management-Tools.html">
+            
+                    
+                    Workflow Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="Contributions.html">
+            
+                <a href="Contributions.html">
+            
+                    
+                    Contributions
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.5.1" data-path="ELAG-2017.html">
+            
+                <a href="ELAG-2017.html">
+            
+                    
+                    ELAG2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <a target="_blank" href="https://www.helsinki.fi/en/projects/attx-2016">
+            
+                    
+                    ATTX website
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Graph Manager API</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="graph-manager-api">Graph Manager API</h1>
+<!-- TOC START min:1 max:3 link:true update:true -->
+<ul>
+<li><a href="#graph-manager-api">Graph Manager API</a><ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#building-the-gm-api">Building the GM-API</a><ul>
+<li><a href="#graph-store-connection">Graph Store Connection</a></li>
+<li><a href="#elasticsearch-connection">Elasticsearch Connection</a></li>
+<li><a href="#workflow-api-connection">Workflow API connection</a></li>
+</ul>
+</li>
+<li><a href="#consuming-the-gm-api">Consuming the GM-API</a><ul>
+<li><a href="#health-endpoint">health Endpoint</a></li>
+<li><a href="#index-endpoint">index Endpoint</a></li>
+<li><a href="#cluster-endpoint">cluster Endpoint</a></li>
+<li><a href="#link-endpoint">link Endpoint</a></li>
+<li><a href="#linkstrategy-endpoint">linkstrategy Endpoint</a></li>
+<li><a href="#prov-endpoint">prov Endpoint</a></li>
+</ul>
+</li>
+<li><a href="#processing-and-indexing-graph-data">Processing and Indexing Graph Data</a><ul>
+<li><a href="#elasticsearch-5x-and-json-derived-from-json-ld-frame">Elasticsearch 5.x and JSON derived from JSON-LD frame</a></li>
+<li><a href="#elasticsearch-5x-indexing-json-ld">Elasticsearch 5.x indexing JSON-LD</a></li>
+<li><a href="#elasticsearch-134-and-siren-plugin">Elasticsearch 1.3.4 and Siren plugin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- TOC END -->
+<h2 id="overview">Overview</h2>
+<p>The Graph Manager REST API has the following endpoints:</p>
+<ul>
+<li><code>index</code> - on given indexing parameters index the data from the Graph Store and insert it into Distribution Component endpoint;</li>
+<li><code>cluster</code> - cluster the IDs from the working data in the Graph Store;</li>
+<li><code>link</code> - retrieve the links in the Graph Store see: <a href="Linking-graphs.html">Linking Graphs</a>;</li>
+<li><code>linkstrategy</code> - retrieve either all or specific linking strategies from the Graph Store;</li>
+<li><code>prov</code> - retrieve provenance from the Workflow API and update the Graph Store with the provenance information.</li>
+<li><code>health</code> - checks if the application is running.</li>
+</ul>
+<p>The GM exposes information from the Graph Store to the Distribution component (Elasticsearch). It runs the indexing processing, clustering of IDs for the data and also it communicates with the Workflow API about the Provenance information in the Graph Store.</p>
+<p>Current version: <code>0.1</code> (URL for the endpoint should take into consideration for the API <code>http://host:4302/version/endpoint</code>)</p>
+<h2 id="building-the-gm-api">Building the GM-API</h2>
+<p>For formatted the GM-API see:</p>
+<ul>
+<li><a href="https://github.com/ATTX-project/graph-component/blob/dev/gm-API/README.md" target="_blank">GM-API source</a> - building both the project and the  Docker image and testing from the source code</li>
+<li>short tutorial on <a href="Gradle">Gradle</a></li>
+</ul>
+<h3 id="graph-store-connection">Graph Store Connection</h3>
+<p>The GM API requires a connection with the <a href="Graph-Store.html">Graph Store</a>, such a connection is specified either in the indexing or clustering or linkage requests.
+A graph store connection is required:</p>
+<ul>
+<li>obtained provenance graph information;</li>
+<li>clustering IDs based on input Working Graphs;</li>
+<li>using the data for the indexing, in order to place data in the distribution component.</li>
+</ul>
+<h3 id="elasticsearch-connection">Elasticsearch Connection</h3>
+<p>In order to process data in Elasticsearch 5.1 as JSON-LD there are a few prerequisites:</p>
+<ul>
+<li>plugin field should be: <code>python</code>;</li>
+<li><code>query</code> field needs to contain a SPARQL query;</li>
+<li>Data needs to be in JSON-LD compact format;</li>
+<li>Data needs to be have a <code>@context</code> included;</li>
+<li>Index and Topics need to be specified;</li>
+<li>Indexing documents based on specific resource type: e.g. 1 publication indexed at a time.</li>
+</ul>
+<p>In order to process data in Elasticsearch 1.3.4 and Elasticsearch Siren plugin:</p>
+<ul>
+<li>plugin field should be: <code>java</code>;</li>
+<li><code>query</code> field needs to contain a string version of the JSON indexing;</li>
+<li>endpoint for the Elasticsearch should be 9300 for the bulk import;</li>
+<li>in the docker image there shoul be the <code>gc-rdf2json-indexer.jar</code>.</li>
+</ul>
+<h3 id="workflow-api-connection">Workflow API connection</h3>
+<p>In order to process the provenance information and update the Graph Store with it, the Graph Manager API pulls the data from the <a href="WF-API.html">Workflow API</a> upon calling the <code>/prov?start=true</code> endpoint.</p>
+<h2 id="consuming-the-gm-api">Consuming the GM-API</h2>
+<p>The Graph Manager API has the following endpoints:</p>
+<ul>
+<li><code>index</code> - on given indexing parameters index the data from the Graph Store and insert it into Distribution Component endpoint (POST method available);</li>
+<li><code>index/{id}</code> - retrieve the status of a previously processed index - with the ID - or delete that index data (GET and DELETE methods available);</li>
+<li><code>cluster</code> - cluster the IDs from the working data in the Graph Store (POST method available);</li>
+<li><code>link</code> - start a linking job with a specific strategy (POST method available);</li>
+<li><code>link/{id}</code> - retrieve the liking strategy with an ID or delete it (GET and DELETE methods available);</li>
+<li><code>linkstrategy</code> - retrieve all the URIs of linking strategies from the Graph Store (GET method available);</li>
+<li><code>linkstrategy/{id}</code> - retrieve all the URIs of linking strategies from the Graph Store (GET method available);</li>
+<li><code>prov</code> - retrieve provenance from the Workflow API and update the Graph Store (GET method available).</li>
+<li><code>health</code> - responds with <code>200</code> so that we know the service is alive.</li>
+</ul>
+<p>When the response from an endpoint returns a JSON with a key <code>status</code>, there can be some times values: <code>Done</code>, <code>WIP</code> (Work In Progress), <code>Error</code> (some times a specific error).</p>
+<p>The functionality provided by the endpoints is intertwined as illustrated below, and while the endpoints can be consumed separately the vision is to have the functionality for <code>cluster</code>, <code>prov</code> and <code>link</code> scheduled and better managed via the workflow-component.</p>
+<pre><code>               +--------------+
+               |              |
+               | linkstrategy |
+               |              |
+               +--------+-----+
+                        |
++---------+             |
+|         +-----------+ |
+| cluster |           | |
+|         |     +-----v-v--+          +---------+
++---------+     |          |          |         |
+                |   link   +----------&gt;  index  |
++---------+     |          |          |         |
+|         |     +----------+          +-----^---+
+|  prov   |                                 |
+|         +---------------------------------+
++---------+
+</code></pre><h3 id="health-endpoint">health Endpoint</h3>
+<ul>
+<li><code>health</code> GET API:<ul>
+<li>simple: <a href="http://localhost:4302/health" target="_blank">http://localhost:4302/health</a> reponds with <code>200</code> in order for other applications to know the service is running.</li>
+</ul>
+</li>
+</ul>
+<h3 id="index-endpoint">index Endpoint</h3>
+<p>More details on how the information is processed and indexed are available at: <a href="#how-the-information-processed-and-indexed">How the Information Processed and Indexed</a>.</p>
+<p>Different calls specific to index endpoint:</p>
+<ul>
+<li><p><code>index</code> POST API:</p>
+<ul>
+<li>simple: <a href="http://localhost:4302/0.1/index" target="_blank">http://localhost:4302/0.1/index</a></li>
+<li>POST request is validated against a schema and it has the following structure (in the indexing key everything except the <code>filter</code> key is optional&quot;):<pre><code class="lang-{json}">{
+&quot;plugin&quot;: &quot;python&quot;,
+&quot;targetEndpoint&quot;: {
+    &quot;host&quot;:&quot;localhost&quot;,
+    &quot;port&quot;: 9200
+},
+&quot;indexing&quot;: {
+    &quot;index&quot;: &quot;default&quot;,
+    &quot;resourceType&quot;: &quot;work&quot;,
+    &quot;indexingID&quot;: &quot;dcterms:identifier&quot;,
+    &quot;filter&quot;: &quot;{\n  \&quot;@context\&quot;: {\n    \&quot;@vocab\&quot;: \&quot;http://data.hulib.helsinki.fi/attx/\&quot;,\n    \&quot;dcterms\&quot;: \&quot;http://purl.org/dc/terms/\&quot;,\n    \&quot;rdf\&quot;: \&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#\&quot;,\n    \&quot;rdfs\&quot;: \&quot;http://www.w3.org/2000/01/rdf-schema#\&quot;,\n    \&quot;xsd\&quot;: \&quot;http://www.w3.org/2001/XMLSchema#\&quot;,\n    \&quot;attx-types\&quot;: \&quot;http://data.hulib.helsinki.fi/attx/types/\&quot;,\n    \&quot;attx-types:Infrastructure\&quot;: {\n    \&quot;@type\&quot;: \&quot;@id\&quot;\n  },\n    \&quot;attx:hasclusteredID\&quot;: {\n      \&quot;@id\&quot;: \&quot;http://data.hulib.helsinki.fi/attx/id\&quot;\n    }\n    ,\n    \&quot;dcterms:identifier\&quot;: {\n      \&quot;@type\&quot;: \&quot;@id\&quot;,\n      \&quot;@id\&quot;: \&quot;http://purl.org/dc/terms/identifier\&quot;\n    }\n  },\n  \&quot;@type\&quot;: \&quot;attx-types:Infrastructure\&quot;\n}&quot;
+},
+&quot;graphStore&quot;: {
+    &quot;endpoint&quot;: {
+        &quot;host&quot;:&quot;localhost&quot;,
+        &quot;port&quot;:3030,
+        &quot;dataset&quot;: &quot;ds&quot;
+    },
+    &quot;graphs&quot;:[&quot;http://data.hulib.helsinki.fi/attx/ids&quot;, &quot;http://data.hulib.helsinki.fi/attx/work1&quot;]
+}
+}
+</code></pre>
+Another variant to obtain the indexing is via the JAVA indexing processor. The body of the request should be unsing the following structure.
+```{json}
+{
+&quot;plugin&quot;: &quot;java&quot;,
+&quot;targetEndpoint&quot;: {<pre><code>&quot;host&quot;: &quot;localhost&quot;,
+&quot;port&quot;: 9200
+</code></pre>},
+&quot;indexing&quot;: {<pre><code>&quot;filter&quot;: &quot;{\&quot;configs\&quot;:[{\&quot;index\&quot;:\&quot;uc1\&quot;,\&quot;targets\&quot;:{\&quot;http://data.hulib.helsinki.fi/attx/types/Infrastructure\&quot;:{\&quot;type\&quot;:\&quot;infra\&quot;,\&quot;indexDoc\&quot;:{\&quot;dataProperties\&quot;:[{\&quot;sourceProperty\&quot;:\&quot;http://purl.org/dc/terms/title\&quot;,\&quot;targetProperty\&quot;:\&quot;title\&quot;,\&quot;isFunctional\&quot;:\&quot;true\&quot;}],\&quot;multiLingualDataProperties\&quot;:[],\&quot;objectProperties\&quot;:[{\&quot;sourceProperty\&quot;:\&quot;http://purl.org/dc/terms/identifier\&quot;,\&quot;targetProperty\&quot;:\&quot;identifier\&quot;,\&quot;isFunctional\&quot;:\&quot;true\&quot;}]}},\&quot;http://data.hulib.helsinki.fi/attx/types/Publication\&quot;:{\&quot;type\&quot;:\&quot;pub\&quot;,\&quot;indexDoc\&quot;:{\&quot;dataProperties\&quot;:[{\&quot;sourceProperty\&quot;:\&quot;http://purl.org/dc/terms/title\&quot;,\&quot;targetProperty\&quot;:\&quot;title\&quot;,\&quot;isFunctional\&quot;:\&quot;true\&quot;},{\&quot;sourceProperty\&quot;:\&quot;http://purl.org/dc/terms/identifier\&quot;,\&quot;targetProperty\&quot;:\&quot;identifier\&quot;,\&quot;isFunctional\&quot;:\&quot;true\&quot;}],\&quot;multiLingualDataProperties\&quot;:[],\&quot;objectProperties\&quot;:[]}}}}]}&quot;
+</code></pre>},
+&quot;graphStore&quot;: {<pre><code>&quot;endpoint&quot;: {
+    &quot;host&quot;: &quot;localhost&quot;,
+    &quot;port&quot;: 3030,
+    &quot;dataset&quot;: &quot;ds&quot;
+},
+&quot;graphs&quot;: [&quot;http://data.hulib.helsinki.fi/attx/ids&quot;, &quot;http://data.hulib.helsinki.fi/attx/work1&quot;]
+</code></pre>}
+}</li>
+</ul>
+<pre><code>* Responses: `202` or `400`. When the request is successful the following response is issued:
+```{json}
+{
+  &quot;id&quot;: 123,
+  &quot;status&quot;: &quot;WIP&quot;
+}
+</code></pre><p>When the response status code is <code>400</code> or a bad request (bad request due to validation issues), a response under the following format is issued:</p>
+<pre><code class="lang-{json}">{
+  &quot;title&quot;: &quot;Invalid data&quot;,
+  &quot;description&quot;: &quot;Could not properly parse the provided data as JSON&quot;
+}
+</code></pre>
+<p>or (a message where the description depends on the error message):</p>
+<pre><code class="lang-{json}">{
+  &quot;title&quot;: &quot;Failed data validation&quot;,
+  &quot;description&quot;: &quot;THE DESCRIPTION CAN VARY&quot;
+}
+</code></pre>
+</li>
+<li><code>index/{id}</code> GET API:<ul>
+<li>simple:  <a href="http://localhost:4302/0.1/index/{id}" target="_blank">http://localhost:4302/0.1/index/{id}</a></li>
+<li>Responses: <code>200</code> or <code>410</code> (for the <code>410</code> the body of the response is empty). The following response the request is completed successfully (a.k.a. <code>200</code>):<pre><code class="lang-{json}">{
+&quot;id&quot;: 123,
+&quot;status&quot;: &quot;Done&quot;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li><code>index/{id}</code> DELETE API:<ul>
+<li>simple:  <a href="http://localhost:4302/0.1/index/{id}" target="_blank">http://localhost:4302/0.1/index/{id}</a></li>
+<li>Responses: <code>200</code><pre><code class="lang-{json}">{
+&quot;deletedID&quot;: 123
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="cluster-endpoint">cluster Endpoint</h3>
+<p>The cluster endpoint:</p>
+<ul>
+<li><code>cluster</code> POST API:<ul>
+<li>simple: <a href="http://localhost:4302/0.1/cluster" target="_blank">http://localhost:4302/0.1/cluster</a> with the following body (if the body format is badly formatted the response will be <code>400</code>):<pre><code class="lang-{json}">{
+&quot;graphStore&quot;: {
+    &quot;host&quot;: &quot;localhost&quot;,
+    &quot;port&quot;: 3030,
+    &quot;dataset&quot;: &quot;ds&quot;
+}
+}
+</code></pre>
+</li>
+<li>Responses: <code>200</code>. In case of success the response should be a message containing:<pre><code class="lang-{json}">{
+&quot;IDCount&quot;: 123,
+&quot;status&quot;: &quot;Processed&quot;
+}
+</code></pre>
+In case the Clustering of IDs is not possible the response status code is <code>422</code> and the message is (title always the same the description can differ):<pre><code class="lang-{json}">{
+&quot;title&quot;: &quot;Unprocessable ID Clustering&quot;,
+&quot;description&quot;: &quot;Could not process the clustering of ids.&quot;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="link-endpoint">link Endpoint</h3>
+<ul>
+<li><p><code>link</code> POST API:</p>
+<ul>
+<li>simple: <a href="http://localhost:4302/0.1/link" target="_blank">http://localhost:4302/0.1/link</a> with the following body:<pre><code class="lang-{json}">{
+&quot;strategy&quot;: {
+    &quot;uri&quot;: &quot;http://data.hulib.helsinki.fi/attx/idstrategy1&quot;,
+    &quot;output&quot;: &quot;http://data.hulib.helsinki.fi/attx/work3&quot;
+},
+&quot;graphStore&quot;: {
+    &quot;endpoint&quot;: {
+        &quot;host&quot;:&quot;localhost&quot;,
+        &quot;port&quot;:3030,
+        &quot;dataset&quot;: &quot;ds&quot;
+    },
+    &quot;graphs&quot;:[&quot;http://data.hulib.helsinki.fi/attx/work2&quot;, &quot;http://data.hulib.helsinki.fi/attx/work1&quot;]
+}
+}
+</code></pre>
+<strong>From the request body above the keys <code>output</code> and <code>graphs</code> can be omitted. For the <code>output</code> the implementation will generate a random 16 digit id. Meanwhile omitting the <code>graphs</code> will trigger the gm_API to use the whole ATTX clustered IDs graph instead of the clustered IDs graph generated from a specific list of graphs.</strong></li>
+</ul>
+<p>The <code>link</code> endpoint will also generated associated provenance for the link activity and update the provenance graph in the Graph Store.</p>
+<ul>
+<li>Responses: <code>202</code> Accepted or <code>400</code> not allowed with the body:<pre><code class="lang-{json}">{
+&quot;id&quot;: 123,
+&quot;status&quot;: &quot;WIP&quot;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>The strategy for linking graphs is detailed at: <a href="Linking-graphs.html">Linking Graphs</a></p>
+<ul>
+<li><code>link/{id}</code> GET API:<ul>
+<li>simple:  <a href="http://localhost:4302/0.1/link/{id}" target="_blank">http://localhost:4302/0.1/link/{id}</a></li>
+<li>Responses: <code>200</code> or <code>410</code> (for the <code>410</code> the body of the response is empty). The following response the request is completed successfully (a.k.a. <code>200</code>):<pre><code class="lang-{json}">{
+&quot;id&quot;: 123,
+&quot;status&quot;: &quot;Done&quot;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li><code>link/{id}</code> DELETE API:<ul>
+<li>simple:  <a href="http://localhost:4302/0.1/link/{id}" target="_blank">http://localhost:4302/0.1/link/{id}</a></li>
+<li>Responses: <code>200</code><pre><code class="lang-{json}">{
+&quot;deletedID&quot;: 123
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="linkstrategy-endpoint">linkstrategy Endpoint</h3>
+<ul>
+<li><p><code>linkstrategy</code>GET API:</p>
+<ul>
+<li>simple:  <a href="http://localhost:4302/0.1/linkstrategy" target="_blank">http://localhost:4302/0.1/linkstrategy</a> the response will be <code>200</code> upon successful retrieving the strategies or <code>404</code> if no strategies exist and the body will contain an array of strategy URIs and titles:</li>
+</ul>
+<pre><code class="lang-{json}">[
+    {
+      &quot;title&quot;: &quot;IDs based Linking Strategy&quot;,
+      &quot;uri&quot;: &quot;http://data.hulib.helsinki.fi/attx/idstrategy1&quot;
+    },
+    {
+      &quot;title&quot;: &quot;IDs v2 based Linking Strategy&quot;,
+      &quot;uri&quot;: &quot;http://data.hulib.helsinki.fi/attx/idstrategy2&quot;
+    }
+]
+</code></pre>
+<ul>
+<li>to configure the endpoints for the Graph Store the following parameters can be used:<ul>
+<li><code>?graphStore=http://fusekidockerimagename:port/dataset</code> - the value can be a docker image name alongside the port and dataset (e.g. <code>ds</code> for production and <code>test</code> for testing) - if not specified it defaults to <code>http://localhost:3030/ds</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>linkstrategy/{id}</code> GET API:</p>
+<ul>
+<li>simple:  <a href="http://localhost:4302/0.1/linkstrategy/{id}" target="_blank">http://localhost:4302/0.1/linkstrategy/{id}</a> where <code>{id}</code> is the ID of the strategy not the full URI (e.g. <code>idstrategy1</code> in <code>http://data.hulib.helsinki.fi/attx/idstrategy1</code>) the response will be <code>200</code> upon successfully retrieving the strategy or <code>404</code> if that strategies does not exist and the body will contain the URIs and the parameters of the strategy:</li>
+</ul>
+<pre><code>  {
+   &quot;parameters&quot;: {
+      &quot;description&quot;: &quot;Linking Strategy based on IDs clustering and specifying required datasets.&quot;,
+      &quot;hasParameters&quot;: &quot;List of parameters&quot;,
+      &quot;hasStrategyType&quot;: &quot;SPARQL&quot;,
+      &quot;query&quot;: &quot;prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt;\n prefix attx: &lt;http://data.hulib.helsinki.fi/attx/&gt;\n construct { ?r1 skos:exactMatch ?r2} where { ?r1 attx:id ?id .\n  ?r2 attx:id ?id .\n  filter(?r1 != ?r2)\n}&quot;,
+      &quot;title&quot;: &quot;IDs based Linking Strategy&quot;
+   },
+   &quot;uri&quot;: &quot;http://data.hulib.helsinki.fi/attx/idstrategy1&quot;
+  }
+</code></pre><ul>
+<li>to configure the endpoints for the Graph Store the following parameters can be used:<ul>
+<li><code>?graphStore=http://fusekidockerimagename:port/dataset</code> - the value can be a docker image name alongside the port and dataset (e.g. <code>ds</code> for production and <code>test</code> for testing) - if not specified it defaults to <code>http://localhost:3030/ds</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="prov-endpoint">prov Endpoint</h3>
+<p>The prov endpoint works as described below:</p>
+<ul>
+<li><code>prov</code> GET API:<ul>
+<li>simple: <a href="http://localhost:4302/0.1/prov" target="_blank">http://localhost:4302/0.1/prov</a> - retrieve status and see the last run</li>
+<li>start provenance: <a href="http://localhost:4302/0.1/prov?start=true" target="_blank">http://localhost:4302/0.1/prov?start=true</a> - to do a provenance update (there are two values to start true or false, default is false)</li>
+<li>start provenance from specific date: <a href="http://localhost:4302/0.1/prov?start=true&amp;modifiedSince=2017-02-09T13:05:50Z" target="_blank">http://localhost:4302/0.1/prov?start=true&amp;modifiedSince=2017-02-09T13:05:50Z</a> - to do a provenance update (using the format: <code>%Y-%m-%dT%H:%M:%SZ</code>)</li>
+<li>to configure the endpoints for the WF-API and Graph store the following parameters can be used:<ul>
+<li><code>?wfapi=http://wfdockerimagename:port/apiversion</code> - the value can be a docker image name alongside the port and version - if not specified it defaults to `<a href="http://localhost:4302/0.1" target="_blank">http://localhost:4302/0.1</a>;</li>
+<li><code>?graphStore=http://fusekidockerimagename:port/dataset</code> - the value can be a docker image name alongside the port and dataset (e.g. <code>ds</code> for production and <code>test</code> for testing) - if not specified it defaults to <code>http://localhost:3030/ds</code>.</li>
+<li>whole request: <a href="http://localhost:4302/0.1/prov?start=true&amp;?wfapi=http://wfdockerimagename:port/apiversion&amp;?graphStore=http://fusekidockerimagename:port/dataset" target="_blank">http://localhost:4302/0.1/prov?start=true&amp;?wfapi=http://wfdockerimagename:port/apiversion&amp;?graphStore=http://fusekidockerimagename:port/dataset</a></li>
+</ul>
+</li>
+<li>Responses: <code>200</code> or <code>404</code>. In the case of success the response should be a message containing:<pre><code class="lang-{json}">{
+&quot;lastStart&quot;: &quot;2017-02-15T08:14:14Z&quot;,
+&quot;status&quot;: &quot;Done&quot;
+}
+</code></pre>
+The <code>lastStart</code> parameter has the format <code>%Y-%m-%dT%H:%M:%SZ</code>.
+In case no provenance update has been performed it will return <code>404</code> Not Found. In case there is nothing to update it will return the last provenance update run.
+Another response status code is <code>502</code> Bad Gateway in case the Graph Manager cannot connect to any of the required endpoints. And the response has the following body:<pre><code class="lang-{json}">{
+&quot;title&quot;: &quot;Failed to do Graph Store update.&quot;
+}
+</code></pre>
+or<pre><code class="lang-{json}">{
+&quot;title&quot;: &quot;Failed to do the get provenance from WF-API update.&quot;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="processing-and-indexing-graph-data">Processing and Indexing Graph Data</h2>
+<p>The information is processed and indexed according to the plugins specification. Plugins provided with the current version of the implementation are:</p>
+<ul>
+<li><code>python</code> - simple JSON indexing of a resource/document (a particular set of triples associated with a subject in a graph) which was processed by a JSON-LD frame</li>
+<li><code>Java</code></li>
+</ul>
+<p>Proposed plugins:</p>
+<ul>
+<li><code>python-ld</code> - framed JSON-LD will be indexed in Elasticsearch and each indexed resource/document would take shape of sub-graph (or tree based on the subject/JSON-LD frame).</li>
+</ul>
+<h3 id="elasticsearch-5x-and-json-derived-from-json-ld-frame">Elasticsearch 5.x and JSON derived from JSON-LD frame</h3>
+<p>Given a JSON-LD frame (included in the POST <code>index</code> request):</p>
+<pre><code class="lang-{json}">{
+  &quot;@context&quot;: {
+    &quot;@vocab&quot;: &quot;http://data.hulib.helsinki.fi/attx/&quot;,
+    &quot;dcterms&quot;: &quot;http://purl.org/dc/terms/&quot;,
+    &quot;rdf&quot;: &quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;,
+    &quot;rdfs&quot;: &quot;http://www.w3.org/2000/01/rdf-schema#&quot;,
+    &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+    &quot;attx-types&quot;: &quot;http://data.hulib.helsinki.fi/attx/types/&quot;,
+    &quot;attx-types:Infrastructure&quot;: {
+    &quot;@type&quot;: &quot;@id&quot;
+  },
+    &quot;attx:hasclusteredID&quot;: {
+      &quot;@id&quot;: &quot;http://data.hulib.helsinki.fi/attx/id&quot;
+    }
+    ,
+    &quot;dcterms:identifier&quot;: {
+      &quot;@type&quot;: &quot;@id&quot;,
+      &quot;@id&quot;: &quot;http://purl.org/dc/terms/identifier&quot;
+    }
+  },
+  &quot;@type&quot;: &quot;attx-types:Infrastructure&quot;
+}
+</code></pre>
+<p>The resulting JSON-LD would have the following structure:</p>
+<pre><code class="lang-{json}">{
+  &quot;@context&quot;: {
+    &quot;@vocab&quot;: &quot;http://data.hulib.helsinki.fi/attx/&quot;,
+    &quot;dcterms&quot;: &quot;http://purl.org/dc/terms/&quot;,
+    &quot;rdf&quot;: &quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;,
+    &quot;rdfs&quot;: &quot;http://www.w3.org/2000/01/rdf-schema#&quot;,
+    &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+    &quot;attx-types&quot;: &quot;http://data.hulib.helsinki.fi/attx/types/&quot;,
+    &quot;attx-types:Infrastructure&quot;: {
+      &quot;@type&quot;: &quot;@id&quot;
+    },
+    &quot;attx:hasclusteredID&quot;: {
+      &quot;@id&quot;: &quot;http://data.hulib.helsinki.fi/attx/id&quot;
+    },
+    &quot;dcterms:identifier&quot;: {
+      &quot;@type&quot;: &quot;@id&quot;,
+      &quot;@id&quot;: &quot;http://purl.org/dc/terms/identifier&quot;
+    }
+  },
+  &quot;@graph&quot;: [
+    {
+      &quot;@id&quot;: &quot;http://data.hulib.helsinki.fi/attx/3/work/infra/urn:nbn:fi:research-infras-201607251&quot;,
+      &quot;@type&quot;: &quot;attx-types:Infrastructure&quot;,
+      &quot;attx:hasclusteredID&quot;: {
+        &quot;@id&quot;: &quot;urn:nbn:fi:research-infras-201607251&quot;
+      },
+      &quot;dcterms:identifier&quot;: &quot;urn:nbn:fi:research-infras-201607251&quot;,
+      &quot;dcterms:title&quot;: &quot;European Social Survey&quot;
+    },
+    {
+      &quot;@id&quot;: &quot;http://data.hulib.helsinki.fi/attx/3/work/infra/urn:nbn:fi:research-infras-2016072510&quot;,
+      &quot;@type&quot;: &quot;attx-types:Infrastructure&quot;,
+      &quot;attx:hasclusteredID&quot;: {
+        &quot;@id&quot;: &quot;urn:nbn:fi:research-infras-2016072510&quot;
+      },
+      &quot;dcterms:identifier&quot;: &quot;urn:nbn:fi:research-infras-2016072510&quot;,
+      &quot;dcterms:title&quot;: &quot;Finnish Marine Research Infrastructure&quot;
+    }]
+  }
+</code></pre>
+<h3 id="elasticsearch-5x-indexing-json-ld">Elasticsearch 5.x indexing JSON-LD</h3>
+<p>TBD</p>
+<h3 id="elasticsearch-134-and-siren-plugin">Elasticsearch 1.3.4 and Siren plugin</h3>
+<p>Details available at: ElasticSearch-with-Siren</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Graph-Component.html" class="navigation navigation-prev " aria-label="Previous page: Graph Component">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Graph-Store.html" class="navigation navigation-next " aria-label="Next page: Graph Store">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Graph Manager API","level":"1.5.1","depth":2,"next":{"title":"Graph Store","level":"1.5.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.5.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Namespaces","level":"1.5.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking","level":"1.5.2.3","depth":3,"path":"Linking-graphs.md","ref":"Linking-graphs.md","articles":[]}]},"previous":{"title":"Graph Component","level":"1.5","depth":1,"path":"Graph-Component.md","ref":"Graph-Component.md","articles":[{"title":"Graph Manager API","level":"1.5.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},{"title":"Graph Store","level":"1.5.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.5.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Namespaces","level":"1.5.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking","level":"1.5.2.3","depth":3,"path":"Linking-graphs.md","ref":"Linking-graphs.md","articles":[]}]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Manager-API.md","mtime":"2017-04-07T13:11:10.830Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

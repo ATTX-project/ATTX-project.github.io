@@ -1,0 +1,766 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Graph Component · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Graph-Manager-API.html" />
+    
+    
+    <link rel="prev" href="WF-API.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">ATTX Project</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Architecture.html">
+            
+                <a href="Architecture.html">
+            
+                    
+                    Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="Platform-Deployment.html">
+            
+                <a href="Platform-Deployment.html">
+            
+                    
+                    Platform Deployment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html">
+            
+                <a href="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html">
+            
+                    
+                    Docker Application Stacks in Swarm Mode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="CSC-cPouta-Cloud-Services-Report.html">
+            
+                <a href="CSC-cPouta-Cloud-Services-Report.html">
+            
+                    
+                    CSC cPouta Cloud Services Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                    
+                    Provisioning ATTX Components on CSC Open Stack (cPouta)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                    
+                    Deploying-ATTX-Components-on-Docker-Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="Workflow-Component.html">
+            
+                <a href="Workflow-Component.html">
+            
+                    
+                    Workflow Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="ETL-Artifacts.html">
+            
+                <a href="ETL-Artifacts.html">
+            
+                    
+                    ETL Artifacts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="Unified-Views-plugins.html">
+            
+                <a href="Unified-Views-plugins.html">
+            
+                    
+                    UnifiedViews plugins
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="WF-API.html">
+            
+                <a href="WF-API.html">
+            
+                    
+                    Workflow API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="Graph-Component.html">
+            
+                <a href="Graph-Component.html">
+            
+                    
+                    Graph Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="Graph-Manager-API.html">
+            
+                <a href="Graph-Manager-API.html">
+            
+                    
+                    Graph Manager API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="Graph-Store.html">
+            
+                <a href="Graph-Store.html">
+            
+                    
+                    Graph Store
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.2.1" data-path="Data-Model.html">
+            
+                <a href="Data-Model.html">
+            
+                    
+                    Ontology/Data model
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.2" data-path="Namespaces.html">
+            
+                <a href="Namespaces.html">
+            
+                    
+                    Namespaces
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.3" data-path="Linking-graphs.html">
+            
+                <a href="Linking-graphs.html">
+            
+                    
+                    Linking
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Distribution-Component.html">
+            
+                <a href="Distribution-Component.html">
+            
+                    
+                    Distribution Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
+            
+                <a href="ElasticSearch-with-Siren.html">
+            
+                    
+                    ElasticSearch with Siren
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Applications-and-Use-Cases.html">
+            
+                <a href="Applications-and-Use-Cases.html">
+            
+                    
+                    Applications and Use Cases
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="UC1---Infrastructures-and-publications.html">
+            
+                <a href="UC1---Infrastructures-and-publications.html">
+            
+                    
+                    UC1 - infras and pubs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project Guidelines</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="Release-Plan.html">
+            
+                <a href="Release-Plan.html">
+            
+                    
+                    Release Plan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="Project-Development-Environment.html">
+            
+                <a href="Project-Development-Environment.html">
+            
+                    
+                    Project Development Environment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="CI-CD-Enviroment.html">
+            
+                <a href="CI-CD-Enviroment.html">
+            
+                    
+                    CI/CD Enviroment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="Jenkins.html">
+            
+                <a href="Jenkins.html">
+            
+                    
+                    Jenkins
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="Build-Multiple-Environments.html">
+            
+                <a href="Build-Multiple-Environments.html">
+            
+                    
+                    Build Multiple Environments
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="Containerized-testing.html">
+            
+                <a href="Containerized-testing.html">
+            
+                    
+                    Containerized testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" >
+            
+                <span>
+            
+                    
+                    Reports
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.1" data-path="Gradle.html">
+            
+                <a href="Gradle.html">
+            
+                    
+                    Building Gradle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.2" data-path="Messaging-Service.html">
+            
+                <a href="Messaging-Service.html">
+            
+                    
+                    Messaging Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.3" data-path="Service-Discovery.html">
+            
+                <a href="Service-Discovery.html">
+            
+                    
+                    Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.4" data-path="Workflow-Management-Tools.html">
+            
+                <a href="Workflow-Management-Tools.html">
+            
+                    
+                    Workflow Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="Contributions.html">
+            
+                <a href="Contributions.html">
+            
+                    
+                    Contributions
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.5.1" data-path="ELAG-2017.html">
+            
+                <a href="ELAG-2017.html">
+            
+                    
+                    ELAG2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <a target="_blank" href="https://www.helsinki.fi/en/projects/attx-2016">
+            
+                    
+                    ATTX website
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Graph Component</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="graph-component">Graph component</h1>
+<p>The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the platform, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.</p>
+<p>Graph Component is designed to:</p>
+<ul>
+<li>retrieve information from the <a href="WF-API.html">Workflow API</a> in order to update the <strong>Provenance and Workflow Data</strong> graphs;</li>
+<li>manage the mapping - RML mappings;</li>
+<li>source data queries - select specific data from the <a href="Graph-Store.html">Graph Store</a> and after applying the mapping deliver it to target output;</li>
+<li>target output (e.g. endpoint API) - where to output the <a href="Graph-Store.html">Graph Store</a> data.</li>
+<li>There is an <a href="Graph-Manager-API.html">Graph Manager API</a> which handles all these specific tasks</li>
+<li>Ontology based linking/clustering of IDs</li>
+</ul>
+<p><strong>Github Repository: </strong><a href="https://github.com/ATTX-project/graph-component" target="_blank"><strong>graph-component</strong></a></p>
+<p>The Workflow Component consists of following parts:</p>
+<ul>
+<li><a href="Graph-Manager-API.html">Graph Manager API</a><ul>
+<li><a href="Graph-Store.html">Graph Store</a><ul>
+<li><a href="Data-Model.html">Ontology/Data model</a></li>
+<li><a href="Namespaces.html">Namespaces</a></li>
+<li><a href="Working-Data-sets.md">Working Datasets</a></li>
+<li><a href="Linking-graphs.html">Linking</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="WF-API.html" class="navigation navigation-prev " aria-label="Previous page: Workflow API">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Graph-Manager-API.html" class="navigation navigation-next " aria-label="Next page: Graph Manager API">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Graph Component","level":"1.5","depth":1,"next":{"title":"Graph Manager API","level":"1.5.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},"previous":{"title":"Workflow API","level":"1.4.3","depth":2,"path":"WF-API.md","ref":"WF-API.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Component.md","mtime":"2017-04-07T13:12:04.270Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
