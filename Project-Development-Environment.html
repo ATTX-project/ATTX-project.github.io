@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Project Development Environment · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="CI-CD-Enviroment.html" />
     
+    
+    <link rel="prev" href="Release-Plan.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -418,7 +420,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.2" data-path="Project-Development-Environment.html">
+        <li class="chapter active" data-level="2.2" data-path="Project-Development-Environment.html">
             
                 <a href="Project-Development-Environment.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Project Development Environment</a>
     </h1>
 </div>
 
@@ -657,39 +659,152 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <p>This page describes the project management and software development related practices and tools for the ATTX2016 project. This is the place to go, when member of the project wants to learn or be reminded of how different project management methodologies and tools are used in ATTX, how we for example branch in using GIT, or what are the requirements for testing ones code.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<!-- TOC START min:1 max:3 link:true update:true -->
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#meetings">Meetings</a><ul>
+<li><a href="#sprint-planning">Sprint planning</a></li>
+<li><a href="#daily">Daily</a></li>
+<li><a href="#grooming">Grooming</a></li>
+<li><a href="#retrodemo">Retro/Demo</a></li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+</li>
+<li><a href="#github-workflow">Github Workflow</a><ul>
+<li><a href="#practicalities">Practicalities</a></li>
+<li><a href="#issue-management">Issue management</a></li>
+<li><a href="#privacy-considerations">Privacy considerations</a></li>
+<li><a href="#source-code--other-files">Source code &amp; other files</a></li>
+<li><a href="#branching">Branching</a></li>
+</ul>
+</li>
+<li><a href="#testing">Testing</a><ul>
+<li><a href="#unit-testing">Unit testing</a></li>
+<li><a href="#bdd-testing">BDD testing</a></li>
+<li><a href="#test-coverage">Test coverage</a></li>
+</ul>
+</li>
+<li><a href="#zenhub">ZenHub</a></li>
+</ul>
+<!-- TOC END -->
+<hr>
+<h2 id="meetings">Meetings</h2>
+<h3 id="sprint-planning">Sprint planning</h3>
+<p>Duration: 2 hours max
+Monday morning when the sprint starts.</p>
+<p>PO should be present at least at the end of the meeting.</p>
+<h3 id="daily">Daily</h3>
+<p>Duration: 15 min
+Every day at 9:30.</p>
+<p>Issues that are ready should be closed after the meeting and the burn-down chart should be updated to reflect the current situation.</p>
+<h3 id="grooming">Grooming</h3>
+<p>Duration: 30-60 min
+Middle of the sprint on Friday.</p>
+<h3 id="retrodemo">Retro/Demo</h3>
+<p>Duration: 30 min
+At the end of the project on Friday, right before lunch.
+PO must be present. Scrumm master presents the sprint and demo.</p>
+<h2 id="github-workflow">Github Workflow</h2>
+<p>Project uses Github for all of its issue management purposes from general todos (e.g. prepare materials for the next meeting)  to sprint related development task management. ATTX has been registered as organization in Github (<a href="https://github.com/ATTX-project" target="_blank">https://github.com/ATTX-project</a>) under which all the project related repositories will be created. Project is also subscribed to the Github&apos;s commercial plan, which allows the creation unlimited private repositories.
+Project uses ZenHub (<a href="https://www.zenhub.com/" target="_blank">https://www.zenhub.com/</a>) to add project management related functionality, such as Epics, todo-list and Broads to Github. One needs to have ZenHub installed in orde to participate in Sprint activities.</p>
+<h3 id="practicalities">Practicalities</h3>
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li>Add Milestone for every sprint and include the sprint issue in the corresponding milestone. This allows us to take (some) advantage of the timing capabilities related to milestones in Github/Zenhub combo.</li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
+<h3 id="issue-management">Issue management</h3>
+<p><em>Every task/user story is an issue</em></p>
 <ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
+<li>project-management repository is used for issues that do not fit under component specific repositories. The visibility of PM repo is private, so that only project members are allowed to add new issues. The idea is that PM repo is used for project&apos;s internal, &quot;Buy more coffee&quot; kind of issues.</li>
+<li>All the EPICs will be created in the project-management repo.</li>
+<li>Issues related to certain Sprint are collected to an EPIC called &quot;Sprint X&quot;. Issues can be added to EPIC when they are created or when they are assigned.</li>
+<li>Milestones are not used in PM repo. In other repositories milestones can be used to group issues for releases.</li>
+<li>One should always reference the issues in the commit message. Use full name ATTX-project/[repo]/#[issue number] to distinguish between repositories.</li>
 </ul>
-<p>Open Source contributions on various projects:</p>
+<h3 id="privacy-considerations">Privacy considerations</h3>
+<p><strong>Do not include any personal information that is not part of the Github in the issues.</strong></p>
+<h3 id="source-code--other-files">Source code &amp; other files</h3>
+<p>Project&apos;s GitHub is divided into following repositories:</p>
 <ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
+<li>project-management<ul>
+<li>Special private repository main for providing overall view to the issues in different repositories.</li>
 </ul>
-<p>Conference Proposals, Presentation and Talks:</p>
+</li>
+<li>etl<ul>
+<li>Repository for projects that provide etl/workflow related functionality. Add new directories for every specific implementation.</li>
+</ul>
+</li>
+<li>public-apis</li>
+<li>graphmanager<ul>
+<li>Repository hosts a single project that manages the state of the internal graph.</li>
+</ul>
+</li>
+</ul>
+<p>All projects are Gradle projects. Naming convention for the projects is [root-project]-[subproject] e.g. workflow-component-feature-tests or workflow-component-wfAPI.</p>
+<p>Unit tests can be written in any language.</p>
+<p>BDD tests should be run with <a href="https://cucumber.io/docs/reference/jvm" target="_blank">Cucumber JVM implementation</a></p>
+<p>Project structure:</p>
+<pre><code>gradle root project (e.g. wf component)
+&#x2502;   README.md
+&#x2502;   build.gradle    
+&#x2502;   docker-compose.yml
+&#x2514;&#x2500;&#x2500;&#x2500;subprojectX (e.g. Unified Views implementation of WF component)
+&#x2502;   &#x2514;&#x2500;&#x2500;&#x2500;unit tests
+&#x2502;   &#x2502;   &#x2502;   unit tests (including the ones for the libraries)
+&#x2502;   &#x2514;&#x2500;&#x2500;&#x2500;library
+&#x2514;&#x2500;&#x2500;&#x2500;subprojectY (e.g. WFAPI implementation of Wf Component)
+&#x2502;    &#x2502;   unit tests
+&#x2514;&#x2500;&#x2500;&#x2500;componentX-feature-tests
+&#x2502;    &#x2502;   cucumber feature files and implementation for each subproject
+&#x2514;&#x2500;&#x2500;&#x2500;etc...
+</code></pre><pre><code>platform-deployment
+&#x2502;   README.md
+&#x2502;   build.gradle  
+&#x2502;   all-docker-compose.yml
+&#x2514;&#x2500;&#x2500;&#x2500;workflow-component
+&#x2502;   &#x2502;   wfc-docker-compose.yml
+&#x2502;   &#x2502;
+&#x2502;   &#x2514;&#x2500;&#x2500;&#x2500;WFAPI
+&#x2502;   &#x2502;   &#x2502;   Dockerfile
+&#x2502;   &#x2514;&#x2500;&#x2500;&#x2500;UnifiedViews
+&#x2502;       &#x2502;   Dockerfile
+&#x2514;&#x2500;&#x2500;&#x2500;distribution-component
+&#x2502;    &#x2502;   dc-docker-compose.yml
+&#x2502;    &#x2514;&#x2500;&#x2500;&#x2500;ElasticSearch-Siren
+&#x2502;    &#x2502;   &#x2502;   Dockerfile
+&#x2514;&#x2500;&#x2500;&#x2500;etc...
+</code></pre><h3 id="branching">Branching</h3>
+<p><strong>A must read</strong>: Project uses the branching model described by Vincent Driessen (<a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_blank">http://nvie.com/posts/a-successful-git-branching-model/</a>). One can print it out (<a href="http://nvie.com/files/Git-branching-model.pdf" target="_blank">http://nvie.com/files/Git-branching-model.pdf</a>) for reference.</p>
+<h2 id="testing">Testing</h2>
+<h3 id="unit-testing">Unit testing</h3>
+<p>Framework to use for unit testing depends on the programming language used.
+List of unit testing frameworks:</p>
 <ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+<li>Java - <a href="http://junit.org/" target="_blank">JUnit</a></li>
+<li>Python - <a href="https://docs.python.org/3/library/unittest.html" target="_blank">Unittest</a> &amp; <a href="http://nose.readthedocs.io/en/latest/index.html" target="_blank">nose</a></li>
+<li>Javascript - <a href="https://mochajs.org/" target="_blank">Mocha</a> &amp; <a href="http://chaijs.com/" target="_blank">Chai</a></li>
 </ul>
+<p>For unit tests, use which ever framework one feel comfortable.</p>
+<h3 id="bdd-testing">BDD testing</h3>
+<p>Feature files are written using Gherkin language (<a href="https://github.com/cucumber/cucumber/wiki/gherkin" target="_blank">https://github.com/cucumber/cucumber/wiki/gherkin</a>).</p>
+<p>Tests are executed using JVM version of the Cucumber, which allows for writing tests in any JVM supported language. Currently the aim is to support BDD testing in Java and Python.</p>
+<h4 id="setup-netbeans-for-bdd-testing">Setup Netbeans for BDD testing</h4>
+<p>Plugins</p>
+<ul>
+<li><a href="https://gradle.org/" target="_blank">Gradle</a></li>
+<li><a href="https://github.com/cucumber/cucumber/wiki/Gherkin" target="_blank">Gherkin</a></li>
+</ul>
+<p>By default, Gradle plugin seems to be using 2.31 version of the the Gradle. One must upgrade this to 3.1. by going to the project properties and changing the Gradle home.</p>
+<h3 id="test-coverage">Test coverage</h3>
+<p><strong>Java</strong></p>
+<p>Use <a href="http://www.eclemma.org/jacoco/" target="_blank">JaCoCo</a> (still in incubation)
+Documentation for the JaCoCo Gradle plugin: <a href="https://docs.gradle.org/current/userguide/jacoco_plugin.html" target="_blank">https://docs.gradle.org/current/userguide/jacoco_plugin.html</a></p>
+<h2 id="zenhub">ZenHub</h2>
+<p><a href="https://www.zenhub.com/" target="_blank">ZenHub</a></p>
+<p>When moving an Epic issue from one repository to another, the EPIC status is not preserved.</p>
+<p>ZenHub supports (since 6.1.2017) multi-repo milestones, which allows us to use both burndown and velocity charts.</p>
+<p><strong>NOTE</strong>
+Closing a milestone must be done separately for every repository.</p>
 
                                 
                                 </section>
@@ -717,8 +832,12 @@
 
             
                 
+                <a href="Release-Plan.html" class="navigation navigation-prev " aria-label="Previous page: Release Plan">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="CI-CD-Enviroment.html" class="navigation navigation-next " aria-label="Next page: CI/CD Enviroment">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +848,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Project Development Environment","level":"2.2","depth":1,"next":{"title":"CI/CD Enviroment","level":"2.3","depth":1,"path":"CI-CD-Enviroment.md","ref":"CI-CD-Enviroment.md","articles":[{"title":"Jenkins","level":"2.3.1","depth":2,"path":"Jenkins.md","ref":"Jenkins.md","articles":[]},{"title":"Build Multiple Environments","level":"2.3.2","depth":2,"path":"Build-Multiple-Environments.md","ref":"Build-Multiple-Environments.md","articles":[]},{"title":"Containerized testing","level":"2.3.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]}]},"previous":{"title":"Release Plan","level":"2.1","depth":1,"path":"Release-Plan.md","ref":"Release-Plan.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Project-Development-Environment.md","mtime":"2017-04-07T11:45:50.434Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

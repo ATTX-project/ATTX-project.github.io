@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Service Discovery · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Workflow-Management-Tools.html" />
     
+    
+    <link rel="prev" href="Messaging-Service.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -529,7 +531,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.4.3" data-path="Service-Discovery.html">
+        <li class="chapter active" data-level="2.4.3" data-path="Service-Discovery.html">
             
                 <a href="Service-Discovery.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Service Discovery</a>
     </h1>
 </div>
 
@@ -657,38 +659,64 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <h2 id="service-discovery">Service Discovery</h2>
+<p>Overview based on:</p>
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li><strong>Ecosystem</strong> - Documentation, Active Development, Open License, Ease of Use</li>
+<li><strong>Features</strong> - Service Discovery, Health Checking etc.</li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+<table>
+<thead>
+<tr>
+<th>Service Tool</th>
+<th>Additional Tools</th>
+<th>Ok</th>
+<th>Ecosystem</th>
+<th>Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://zookeeper.apache.org/" target="_blank">Apache Zookeeper</a></td>
+<td><a href="http://curator.apache.org/" target="_blank">Apache Curator</a></td>
+<td></td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>~ (requires a lot of plugins to have complete features)</td>
+</tr>
+<tr>
+<td><a href="https://github.com/coreos/etcd" target="_blank">etcd</a></td>
+<td><a href="https://github.com/gliderlabs/registrator" target="_blank">Registrator</a> <a href="https://github.com/kelseyhightower/confd" target="_blank">confd</a></td>
+<td></td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>~ with some effort</td>
+</tr>
+<tr>
+<td><a href="https://www.consul.io" target="_blank">Consul</a></td>
+<td><a href="https://github.com/hashicorp/consul-template" target="_blank">Consul Template</a></td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+</tr>
+<tr>
+<td><a href="http://nerds.airbnb.com/smartstack-service-discovery-cloud/" target="_blank">Airbnb SmartStack</a></td>
+<td><a href="https://github.com/airbnb/nerve" target="_blank">nerve</a> and <a href="https://github.com/airbnb/synapse" target="_blank">synapse</a></td>
+<td></td>
+<td>~</td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References</h2>
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li>Comparison of Zookeeper, etcd and Consul - <a href="https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/" target="_blank">https://technologyconversations.com/2015/09/08/service-discovery-zookeeper-vs-etcd-vs-consul/</a></li>
+<li>Curator Service Discovery based on Zookeeper and introduction to Service Discovery - <a href="https://github.com/Netflix/curator/wiki/Service-Discovery" target="_blank">https://github.com/Netflix/curator/wiki/Service-Discovery</a></li>
+<li>Service Discovery and Distributed Configuration Stores -  <a href="https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-service-discovery-and-distributed-configuration-stores" target="_blank">https://www.digitalocean.com/community/tutorials/the-docker-ecosystem-service-discovery-and-distributed-configuration-stores</a></li>
+<li>Service Discovery in a Microservices Architecture <a href="https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/" target="_blank">https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/</a></li>
+<li>Service Discovery with Docker and Consul<ul>
+<li>Part 1 - <a href="http://www.smartjava.org/content/service-discovery-docker-and-consul-part-1" target="_blank">http://www.smartjava.org/content/service-discovery-docker-and-consul-part-1</a></li>
+<li>Part 2 - <a href="http://www.smartjava.org/content/service-discovery-docker-and-consul-part-2" target="_blank">http://www.smartjava.org/content/service-discovery-docker-and-consul-part-2</a></li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
-<ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
-</ul>
-<p>Open Source contributions on various projects:</p>
-<ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
-</ul>
-<p>Conference Proposals, Presentation and Talks:</p>
-<ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+</li>
 </ul>
 
                                 
@@ -717,8 +745,12 @@
 
             
                 
+                <a href="Messaging-Service.html" class="navigation navigation-prev " aria-label="Previous page: Messaging Service">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Workflow-Management-Tools.html" class="navigation navigation-next " aria-label="Next page: Workflow Management">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +761,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Service Discovery","level":"2.4.3","depth":2,"next":{"title":"Workflow Management","level":"2.4.4","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]},"previous":{"title":"Messaging Service","level":"2.4.2","depth":2,"path":"Messaging-Service.md","ref":"Messaging-Service.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Service-Discovery.md","mtime":"2017-04-07T11:45:50.434Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

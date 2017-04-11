@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>UC1 - infras and pubs · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Release-Plan.html" />
     
+    
+    <link rel="prev" href="Applications-and-Use-Cases.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -380,7 +382,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.7.1" data-path="UC1---Infrastructures-and-publications.html">
+        <li class="chapter active" data-level="1.7.1" data-path="UC1---Infrastructures-and-publications.html">
             
                 <a href="UC1---Infrastructures-and-publications.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >UC1 - infras and pubs</a>
     </h1>
 </div>
 
@@ -657,39 +659,96 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <h1 id="uc1---infrastructure-and-publications">UC1 - Infrastructure and Publications</h1>
+<p>This pages describes the use cases identified as UC1, which deals with combining publication and infrastructure data.
+Steps:</p>
+<ol>
+<li>Get publication, infrastructure metadata from UH with links between them.</li>
+<li>Enrich infrastructure metadata using the service descriptions coming from the national infrastructure databank.</li>
+<li>Profit?</li>
+</ol>
+<!-- TOC START min:1 max:3 link:true update:true -->
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li><a href="#data-sources">Data sources</a><ul>
+<li><a href="#research-infrastructures-databank">Research infrastructures databank</a></li>
+<li><a href="#tuhat---university-of-helsinkis-cris-system">TUHAT - University of Helsinki&apos;s CRIS system</a></li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+</li>
+<li><a href="#workflows">Workflows</a></li>
+<li><a href="#working-data">Working Data</a></li>
+</ul>
+<!-- TOC END -->
+<h2 id="data-sources">Data sources</h2>
+<p>This section describes the the way different external datasets are accessed what the data looks like.</p>
+<h3 id="research-infrastructures-databank">Research infrastructures databank</h3>
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li>UI: <a href="http://infras.openscience.fi/" target="_blank">http://infras.openscience.fi/</a></li>
+<li>API: <a href="http://avaa.tdata.fi/api/jsonws?contextPath=/tupa-portlet" target="_blank">http://avaa.tdata.fi/api/jsonws?contextPath=/tupa-portlet</a></li>
+<li>API documentation:<a href="http://avaa.tdata.fi/adata/tupa/" target="_blank">http://avaa.tdata.fi/adata/tupa/</a></li>
+<li>Datamodel: <a href="http://iow.csc.fi/model/tipa/" target="_blank">http://iow.csc.fi/model/tipa/</a></li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
+<h3 id="tuhat---university-of-helsinkis-cris-system">TUHAT - University of Helsinki&apos;s CRIS system</h3>
+<p>We are using the test instance of the TUHAT system.</p>
 <ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
+<li>UI:<a href="https://tuha-test.it.helsinki.fi" target="_blank">https://tuha-test.it.helsinki.fi</a></li>
+<li>API: <a href="https://tuha-test.it.helsinki.fi/ws" target="_blank">https://tuha-test.it.helsinki.fi/ws</a></li>
+<li>API documentation: <a href="https://tuha-test.it.helsinki.fi/ws/doc" target="_blank">https://tuha-test.it.helsinki.fi/ws/doc</a></li>
 </ul>
-<p>Open Source contributions on various projects:</p>
+<p>Because API of the current PURE version does not support equipments (=infrastructure) we are forced to use other means to extract the information.</p>
+<p>The end result will a Turtle file that conforms to the data model described on this page. The file is downloadable from the data.hulib.helsinki.fi server.</p>
+<h2 id="workflows">Workflows</h2>
+<p>We will be using three workflows:</p>
 <ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
+<li><code>harvestFromInfrastructureDatabank</code><ul>
+<li>Retrieves JSON from service API and transforms it into internal RDF (see below).</li>
 </ul>
-<p>Conference Proposals, Presentation and Talks:</p>
+</li>
+<li><code>harvestFromHYCRIS</code><ul>
+<li>Retrieves three RDF files from library&apos;s server and uploads them to the internal graph.</li>
+</ul>
+</li>
+<li><code>linking</code><ul>
+<li>Creates identifier based links between infrastructure data coming from two different sources.</li>
+</ul>
+</li>
+</ul>
+<p>Workflows use very basic and custom built DPUs for tranformations and processing.</p>
 <ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+<li>uc1-infras2internal - transformer</li>
+<li>uc1-linker - transformer<ul>
+<li>link processor that knows how to compare URN pid and URN urls (urn:nbn:fi:research-infras-201607252 vs. <a href="http://urn.fi/urn:nbn:fi:research-infras-201607252" target="_blank">http://urn.fi/urn:nbn:fi:research-infras-201607252</a>). PIDs are coming from infrastructure databank. There is no place in Tuhat to add external identifiers, but there is a place for links.</li>
 </ul>
+</li>
+</ul>
+<h2 id="working-data">Working Data</h2>
+<p>This model should evolve as the implementation of the use case becomes more complex.
+We assume that TUHAT infrastructure data contains identifiers that point to the infrastructure bank. The idea is to enrich the infrastructure information.</p>
+<p>See <a href="Namespaces.html">Namespaces</a></p>
+<p><strong>Example data</strong></p>
+<p>Infrastructure databank</p>
+<pre><code class="lang-{turtle}">&lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra/{urn}&gt;
+  a &lt;http://data.hulib.helsinki.fi/attx/types/Infrastructure&gt; ;
+  dct:title &quot;{name}&quot; ;
+  dct:identifier &lt;{urn}&gt; .
+</code></pre>
+<p>Tuhat</p>
+<pre><code class="lang-{turtle}">&lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/pub/{uuid}&gt;
+  a &lt;http://data.hulib.helsinki.fi/attx/types/Publication&gt; ;
+  dct:title &quot;{title}&quot; .
+
+&lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra/{uuid}&gt;
+  a &lt;http://data.hulib.helsinki.fi/attx/types/Infrastructure&gt; ;
+  dct:identifier &quot;{uuid}&quot; ;
+  dct:title &quot;{title}&quot; ;
+  attx:link &lt;{links url}&gt; .
+
+&lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/pub/{uuid}&gt;
+  dct:relation &lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra/{uuid}&gt; .
+</code></pre>
+<p>Link processor</p>
+<pre><code class="lang-{turtle}">&lt;http://data.hulib.helsinki.fi/attx/{workflowID}/work/infra/{urn}&gt;
+   skos:exactMatch &lt;http://data.hulib.helsinki.fi/attx/{workflowID}/work/pub/{uuid}&gt;
+</code></pre>
 
                                 
                                 </section>
@@ -717,8 +776,12 @@
 
             
                 
+                <a href="Applications-and-Use-Cases.html" class="navigation navigation-prev " aria-label="Previous page: Applications and Use Cases">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Release-Plan.html" class="navigation navigation-next " aria-label="Next page: Release Plan">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +792,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UC1 - infras and pubs","level":"1.7.1","depth":2,"next":{"title":"Release Plan","level":"2.1","depth":1,"path":"Release-Plan.md","ref":"Release-Plan.md","articles":[]},"previous":{"title":"Applications and Use Cases","level":"1.7","depth":1,"path":"Applications-and-Use-Cases.md","ref":"Applications-and-Use-Cases.md","articles":[{"title":"UC1 - infras and pubs","level":"1.7.1","depth":2,"path":"UC1---Infrastructures-and-publications.md","ref":"UC1---Infrastructures-and-publications.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"UC1---Infrastructures-and-publications.md","mtime":"2017-04-07T13:08:35.283Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

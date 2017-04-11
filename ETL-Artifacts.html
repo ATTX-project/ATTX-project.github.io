@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>ETL Artifacts · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Unified-Views-plugins.html" />
     
+    
+    <link rel="prev" href="Workflow-Component.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -200,7 +202,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.4.1" data-path="ETL-Artifacts.html">
+        <li class="chapter active" data-level="1.4.1" data-path="ETL-Artifacts.html">
             
                 <a href="ETL-Artifacts.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >ETL Artifacts</a>
     </h1>
 </div>
 
@@ -657,38 +659,118 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <h2 id="etl-artifacts">ETL Artifacts</h2>
+<p>The Workflow Component ETL artifact consists of three main components as depicted in Figure 1:</p>
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li>Ingestion and Mapping</li>
+<li>Processing</li>
+<li>Dissemination</li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+<p>Other ETL components could be added to the ETL stack with the purpose of enhancing the results. Examples include:</p>
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li>NER for extracting Places, Organization etc.</li>
+<li>Data converters</li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
+<p><img src="https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/etl_dataworkflow.svg" alt="Figure 1. ETL Data Workflow"></p>
+<p>Figure 1. ETL Data Workflow</p>
+<hr>
+<p>Some of the uses of the ETL workflow include: inferencing, updating Public APIs, Transformation, updating ElasticSearch via the Graph (GM - Graph Manager component). Graph Manager component also can provide input to the ETL components further enriching the information contained in the platform.</p>
+<p>A draft overview on the platform components is provided in Figure 2.</p>
+<p><img src="https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/etl_componentworkflow.svg" alt="ETL Platform Component Workflow"></p>
+<p>Figure 2. ETL Platform Component Workflow</p>
+<h2 id="comparison-of-etl-artifacts">Comparison of ETL artifacts</h2>
+<p>The table below shows a basic comparison of some of the ETL tools and required functionalities with relation to the ATTX project.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th style="text-align:center">Workflows</th>
+<th style="text-align:center">Activities</th>
+<th style="text-align:center">REST API</th>
+<th style="text-align:center">Plugins</th>
+<th style="text-align:center">UI</th>
+<th style="text-align:center">License</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/IKCAP/wings" target="_blank">Wings</a></td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes ?</td>
+<td style="text-align:center">No ?</td>
+<td style="text-align:center">No ?</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Apache 2.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/linkedpipes/etl" target="_blank">LinkedPipes</a></td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes ?</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">MIT</td>
+</tr>
+<tr>
+<td><a href="http://www.dswarm.org/" target="_blank">DSwarm</a></td>
+<td style="text-align:center">? Maybe Transformations</td>
+<td style="text-align:center">? Maybe Transformations</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">No ?</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Apache 2.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/usc-isi-i2/Web-Karma" target="_blank">Web-Karma</a></td>
+<td style="text-align:center">No, although there is Batch Mode</td>
+<td style="text-align:center">No, although there is Batch Mode</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes, kinda</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Apache 2.0</td>
+</tr>
+<tr>
+<td><a href="https://github.com/UnifiedViews/Core" target="_blank">UnifiedViews</a></td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes (Limited)</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">GPL 3.0</td>
+</tr>
+<tr>
+<td><a href="http://www.fluidops.com/" target="_blank">FluidOps</a></td>
+<td style="text-align:center">?</td>
+<td style="text-align:center">?</td>
+<td style="text-align:center">?</td>
+<td style="text-align:center">Yes ?</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Commercial</td>
+</tr>
+<tr>
+<td><a href="http://silkframework.org" target="_blank">Silk Framework</a></td>
+<td style="text-align:center">Yes, Tasks</td>
+<td style="text-align:center">Yes, Workspace</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Apache 2.0</td>
+</tr>
+<tr>
+<td><a href="http://community.pentaho.com/projects/data-integration/" target="_blank">Pentaho</a></td>
+<td style="text-align:center">Maybe ? via Jobs</td>
+<td style="text-align:center">Maybe ? via Jobs</td>
+<td style="text-align:center">No ?</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Yes</td>
+<td style="text-align:center">Apache 2.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References</h2>
 <ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
-</ul>
-<p>Open Source contributions on various projects:</p>
-<ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
-</ul>
-<p>Conference Proposals, Presentation and Talks:</p>
-<ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+<li><a href="https://www.opensemanticsearch.org/etl" target="_blank">https://www.opensemanticsearch.org/etl</a></li>
+<li><a href="https://github.com/pawl/awesome-etl#python" target="_blank">https://github.com/pawl/awesome-etl#python</a></li>
 </ul>
 
                                 
@@ -717,8 +799,12 @@
 
             
                 
+                <a href="Workflow-Component.html" class="navigation navigation-prev " aria-label="Previous page: Workflow Component">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Unified-Views-plugins.html" class="navigation navigation-next " aria-label="Next page: UnifiedViews plugins">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +815,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ETL Artifacts","level":"1.4.1","depth":2,"next":{"title":"UnifiedViews plugins","level":"1.4.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},"previous":{"title":"Workflow Component","level":"1.4","depth":1,"path":"Workflow-Component.md","ref":"Workflow-Component.md","articles":[{"title":"ETL Artifacts","level":"1.4.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},{"title":"UnifiedViews plugins","level":"1.4.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},{"title":"Workflow API","level":"1.4.3","depth":2,"path":"WF-API.md","ref":"WF-API.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ETL-Artifacts.md","mtime":"2017-04-07T12:34:33.692Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

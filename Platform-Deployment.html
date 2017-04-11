@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Platform Deployment · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html" />
     
+    
+    <link rel="prev" href="Architecture.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -115,7 +117,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="Platform-Deployment.html">
+        <li class="chapter active" data-level="1.3" data-path="Platform-Deployment.html">
             
                 <a href="Platform-Deployment.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Platform Deployment</a>
     </h1>
 </div>
 
@@ -657,39 +659,37 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <p>This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.</p>
+<p><strong>Github Repository: <a href="https://github.com/ATTX-project/platform-deployment" target="_blank">platform-deployment</a></strong></p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Preconditions for running the ATTX stack:</p>
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li>8 GB RAM (minimum)</li>
+<li>Docker Engine (<a href="https://docs.docker.com/engine/installation/" target="_blank">https://docs.docker.com/engine/installation/</a>)</li>
+<li>Docker Compose (<a href="https://docs.docker.com/compose/" target="_blank">https://docs.docker.com/compose/</a>)</li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+<h2 id="install-steps">Install steps</h2>
+<p><em>TO DO: ATTX Install steps and Requirements to get started short description here.</em></p>
+<p>Assuming that those preconditions are satisfied, the following commands can be used to deploy and start-up the ATTX Stack:</p>
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li><code>curl https://raw.githubusercontent.com/ATTX-project/platform-deployment/dev/docker-compose.yml &gt; &lt;your_attx_directory&gt;/docker-compose.yml</code></li>
+<li><code>sudo docker-compose -f &lt;your_attx_directory&gt;/docker-compose.yml up -d</code> - for running in detached mode or <code>sudo docker-compose up -f &lt;your_attx_directory&gt;/docker-compose.yml</code> for running with console output</li>
+<li>Check the containers are running <code>docker ps</code></li>
+<li>Shut down the containers <code>sudo docker-compose down</code></li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
-<ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
-</ul>
-<p>Open Source contributions on various projects:</p>
-<ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
-</ul>
-<p>Conference Proposals, Presentation and Talks:</p>
-<ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
-</ul>
+<h3 id="how-to-deploy-and-start-the-attx-platform-automatically-in-rhel7-and-centos7">How to deploy and start the ATTX platform automatically in RHEL7 and Centos7:</h3>
+<ol>
+<li>Pre-requisite: sharing your SSH public keys with the target host</li>
+<li>Download the &quot;single_host_deployment.yml&quot; Ansible playbook</li>
+<li>Edit the &quot;hosts&quot; and &quot;remote_user&quot; (must have sudo rights) as appropriate</li>
+<li>Run the ansible-playbook (e.g. <code>ansible-playbook -i hosts --ask-become-pass single_host_deployment.yml</code>)</li>
+</ol>
+<h2 id="technical-documentation">Technical Documentation</h2>
+<p><em>TO DO: ATTX Technical Documentation short description here such as provisioning resources and necessary requirements.</em></p>
+<h2 id="gradle-tasks">Gradle tasks</h2>
+<p>Build artifacts should be created/downloaded under build/{image} directory.</p>
+<h3 id="build-image-attx-dpus">build-image-attx-dpus</h3>
+<h3 id="build-all-images">build-all-images</h3>
 
                                 
                                 </section>
@@ -717,8 +717,12 @@
 
             
                 
+                <a href="Architecture.html" class="navigation navigation-prev " aria-label="Previous page: Architecture">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html" class="navigation navigation-next " aria-label="Next page: Docker Application Stacks in Swarm Mode">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +733,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Platform Deployment","level":"1.3","depth":1,"next":{"title":"Docker Application Stacks in Swarm Mode","level":"1.3.1","depth":2,"path":"Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.md","ref":"Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.md","articles":[]},"previous":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Platform-Deployment.md","mtime":"2017-04-07T11:45:50.434Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

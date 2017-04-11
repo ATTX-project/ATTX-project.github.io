@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Graph Component · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Graph-Manager-API.html" />
     
+    
+    <link rel="prev" href="WF-API.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -244,7 +246,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="Graph-Component.html">
+        <li class="chapter active" data-level="1.5" data-path="Graph-Component.html">
             
                 <a href="Graph-Component.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Graph Component</a>
     </h1>
 </div>
 
@@ -657,38 +659,30 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <h1 id="graph-component">Graph component</h1>
+<p>The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the platform, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.</p>
+<p>Graph Component is designed to:</p>
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li>retrieve information from the <a href="WF-API.html">Workflow API</a> in order to update the <strong>Provenance and Workflow Data</strong> graphs;</li>
+<li>manage the mapping - RML mappings;</li>
+<li>source data queries - select specific data from the <a href="Graph-Store.html">Graph Store</a> and after applying the mapping deliver it to target output;</li>
+<li>target output (e.g. endpoint API) - where to output the <a href="Graph-Store.html">Graph Store</a> data.</li>
+<li>There is an <a href="Graph-Manager-API.html">Graph Manager API</a> which handles all these specific tasks</li>
+<li>Ontology based linking/clustering of IDs</li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+<p><strong>Github Repository: </strong><a href="https://github.com/ATTX-project/graph-component" target="_blank"><strong>graph-component</strong></a></p>
+<p>The Workflow Component consists of following parts:</p>
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li><a href="Graph-Manager-API.html">Graph Manager API</a><ul>
+<li><a href="Graph-Store.html">Graph Store</a><ul>
+<li><a href="Data-Model.html">Ontology/Data model</a></li>
+<li><a href="Namespaces.html">Namespaces</a></li>
+<li><a href="Working-Data-sets.md">Working Datasets</a></li>
+<li><a href="Linking-graphs.html">Linking</a></li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
-<ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
+</li>
 </ul>
-<p>Open Source contributions on various projects:</p>
-<ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
-</ul>
-<p>Conference Proposals, Presentation and Talks:</p>
-<ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+</li>
 </ul>
 
                                 
@@ -717,8 +711,12 @@
 
             
                 
+                <a href="WF-API.html" class="navigation navigation-prev " aria-label="Previous page: Workflow API">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Graph-Manager-API.html" class="navigation navigation-next " aria-label="Next page: Graph Manager API">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +727,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Graph Component","level":"1.5","depth":1,"next":{"title":"Graph Manager API","level":"1.5.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},"previous":{"title":"Workflow API","level":"1.4.3","depth":2,"path":"WF-API.md","ref":"WF-API.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Component.md","mtime":"2017-04-07T13:12:04.270Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

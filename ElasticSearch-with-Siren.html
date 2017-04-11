@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>ElasticSearch with Siren · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Applications-and-Use-Cases.html" />
     
+    
+    <link rel="prev" href="Distribution-Component.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -348,7 +350,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
+        <li class="chapter active" data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
             
                 <a href="ElasticSearch-with-Siren.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >ElasticSearch with Siren</a>
     </h1>
 </div>
 
@@ -657,39 +659,120 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <h1 id="elasticsearch-with-siren">Elasticsearch with Siren</h1>
+<p>This page describes the components and configuration needed to get the ATTX ES plugin up and running. This information should be used as the basis for creating a containerized version of the API component</p>
+<p><strong>Siren plugin only supports ES up till version 1.3.4.</strong></p>
+<h3 id="table-of-contents">Table of Contents</h3>
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li><a href="#mapping">Mapping</a></li>
+<li><a href="#plugins">Plugins</a><ul>
+<li><a href="#siren-elasticsearch-14">siren-elasticsearch 1.4</a></li>
+<li><a href="#analysis-icu-134">analysis-icu 1.3.4</a></li>
+<li><a href="#attx-es-api">attx-es-api</a></li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+</li>
+</ul>
+<h2 id="mapping">Mapping</h2>
+<p>In addition to the plugins listed below, the system requires that indexes are created with the following mapping.</p>
+<pre><code class="lang-{json}">{&quot;_default_&quot;:
+  {&quot;properties&quot;:
+    {&quot;_siren_source&quot;:
+      {&quot;analyzer&quot;: &quot;concise&quot;,
+       &quot;postings_format&quot;: &quot;Siren10AFor&quot;,
+       &quot;store&quot;: &quot;no&quot;,
+       &quot;type&quot;: &quot;string&quot;
+      }
+    },
+    &quot;_siren&quot;: {},
+    &quot;dynamic_templates&quot;: [
+      {&quot;rawstring&quot;:
+        {&quot;match&quot;: &quot;*&quot;,
+         &quot;match_mapping_type&quot;: &quot;string&quot;,
+         &quot;mapping&quot;: {
+           &quot;type&quot;: &quot;string&quot;,
+           &quot;index&quot;: &quot;analyzed&quot;,
+           &quot;fields&quot;: {
+             &quot;{name}_raw&quot;: {
+               &quot;type&quot;: &quot;string&quot;,
+               &quot;analyzer&quot;: &quot;case_insensitive_sort&quot;
+             }
+           }
+         }
+       }
+      }
+    ]
+  }
+}
+</code></pre>
+<h2 id="plugins">Plugins</h2>
+<p>These are the required plugins:</p>
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li><a href="#siren-elasticsearch-14">siren-elasticsearch 1.4</a></li>
+<li><a href="#analysis-icu-134">analysis-icu 1.3.4</a></li>
+<li><a href="#attx-es-api">attx-es-api</a></li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
-<ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
-</ul>
-<p>Open Source contributions on various projects:</p>
-<ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
-</ul>
-<p>Conference Proposals, Presentation and Talks:</p>
-<ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
-</ul>
+<h3 id="siren-elasticsearch-14">siren-elasticsearch 1.4</h3>
+<p><a href="https://github.com/sirensolutions/siren" target="_blank">https://github.com/sirensolutions/siren</a></p>
+<p>Plugin that allows one to index and query nested documents easily and efficiently.<br>Unfortunately, it is not maintained any more and we should come up with a replacement.</p>
+<p>Installation:</p>
+<pre><code>bin/plugin --install com.sindicetech.siren/siren-elasticsearch/1.4
+</code></pre><p>Configuration:</p>
+<p>Add the following to the elasticsearch.yml</p>
+<pre><code class="lang-{yml}"># Settings for the SIREn Plugin
+siren:
+  analysis:
+    # Enabled the use of wildcard for node attribute - Only for the concise mode This will increase the index size,
+    # as it will expand terms at indexing time. It is recommended to deactivate it if one does not need attribute
+    # wildcards.
+    concise.attribute_wildcard.enabled: true
+    # Mappings between datatype and analyzers. The analyzers must be referenced by their registered logical name.
+    datatype:
+      http://www.w3.org/2001/XMLSchema#string:
+        index_analyzer: standard
+        search_analyzer: lowerWhitespaceAnalyzer # here we refer to a custom analyzer that is below
+      http://json.org/field:
+        index_analyzer: whitespace
+      http://www.w3.org/2001/XMLSchema#double:
+          index_analyzer: double
+      http://www.w3.org/2001/XMLSchema#long:
+          index_analyzer: long
+      http://www.w3.org/2001/XMLSchema#boolean:
+          index_analyzer: whitespace
+      uri: # for NCPR demo
+          index_analyzer: whitespace
+    qname:
+        xsd : http://www.w3.org/2001/XMLSchema#
+        json: http://json.org/
+</code></pre>
+<h3 id="analysis-icu-134">analysis-icu 1.3.4</h3>
+<p><a href="https://github.com/elastic/elasticsearch-analysis-icu" target="_blank">https://github.com/elastic/elasticsearch-analysis-icu</a></p>
+<p>Extended Unicode support for ES. Needed to get the sorting working. Version 2.3.0 works with ES 1.3.4.</p>
+<p>Installation:</p>
+<pre><code>bin/plugin install elasticsearch/elasticsearch-analysis-icu/2.3.0
+</code></pre><p>Configuration:</p>
+<pre><code class="lang-{yml}">index:
+    analysis:
+        analyzer:
+            lowerWhitespaceAnalyzer:
+                type: custom
+                tokenizer: whitespace
+                filter: [lowercase]
+
+            case_insensitive_sort:
+                tokenizer: keyword
+                filter: [ &quot;icu_collation&quot; ]
+</code></pre>
+<h3 id="attx-es-api">attx-es-api</h3>
+<p>Plugin that provides simple query interface and then transforms those queries into ones that can be executed by the siren plugin.</p>
+<p>Installation:</p>
+<p>Our plugin can be installed in the same manner as the other ones. <a href="https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html</a></p>
+<p>Releases can installed from github using the following command:</p>
+<pre><code>bin/plugin --install &lt;org&gt;/&lt;user/component&gt;/&lt;version&gt;
+</code></pre><p>dev version can use the file based installation method:</p>
+<pre><code>bin/plugin --url file:///path/to/plugin --install plugin-name
+</code></pre><p><strong>How it works</strong></p>
+<p>Simple queries like &quot;test&quot; are translated into simple NodeQuery.</p>
+<p><em>TODO: continue this!</em></p>
 
                                 
                                 </section>
@@ -717,8 +800,12 @@
 
             
                 
+                <a href="Distribution-Component.html" class="navigation navigation-prev " aria-label="Previous page: Distribution Component">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Applications-and-Use-Cases.html" class="navigation navigation-next " aria-label="Next page: Applications and Use Cases">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +816,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"next":{"title":"Applications and Use Cases","level":"1.7","depth":1,"path":"Applications-and-Use-Cases.md","ref":"Applications-and-Use-Cases.md","articles":[{"title":"UC1 - infras and pubs","level":"1.7.1","depth":2,"path":"UC1---Infrastructures-and-publications.md","ref":"UC1---Infrastructures-and-publications.md","articles":[]}]},"previous":{"title":"Distribution Component","level":"1.6","depth":1,"path":"Distribution-Component.md","ref":"Distribution-Component.md","articles":[{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-with-Siren.md","mtime":"2017-04-07T12:19:44.952Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

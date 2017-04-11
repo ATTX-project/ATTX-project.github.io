@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Architecture · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Platform-Deployment.html" />
     
+    
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -102,7 +104,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="Architecture.html">
+        <li class="chapter active" data-level="1.2" data-path="Architecture.html">
             
                 <a href="Architecture.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Architecture</a>
     </h1>
 </div>
 
@@ -657,38 +659,70 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <h2 id="overview">Overview</h2>
+<p>The following components are part of the ATTX architecture.</p>
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li><a href="#workflow-component">Workflow Component</a></li>
+<li><a href="#graph-component">Graph Component</a></li>
+<li><a href="#distribution-component">Distribution Component</a></li>
+<li><a href="#platform-deployment">Platform Deployment</a></li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+<p><img src="https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/platform_architecture.svg" alt="Figure 1. ATTX Platform Architecture"></p>
+<p>Figure 1. ATTX Platform Architecture</p>
+<p>There are three main components: <strong>Workflow Component</strong>, <strong>Graph Component</strong>, <strong>Distribution Component</strong> and the <strong>Platform Deployment</strong> gathers all of them together in order to provide them as a individual services or as a platform.</p>
+<p>The communication and contracts between the components is specified in <a href="#inter-component-communication">Inter-component Communication</a></p>
+<h2 id="terminology-and-acronyms">Terminology and Acronyms</h2>
+<p>Acronyms:</p>
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li><em>WF</em> - Workflow Component</li>
+<li><em>GC</em> - Graph Component</li>
+<li><em>DC</em> - Distribution Component</li>
+<li><em>PD</em> - Platform Deployment</li>
+<li><em>UV</em> - UnifiedViews (WF component implementation)</li>
+<li><em>ES</em> - ElasticSearch (DC component implementation)</li>
+<li><em>ETL Artifact</em> - any kind of ETL software (e.g. UnifiedViews)</li>
+<li>sometimes a <em>workflow</em> can also be referred to as <em>pipeline</em></li>
+<li>sometimes a <em>activity</em> can also be referred to as <em>executed job</em> or <em>pipeline execution</em></li>
+<li><em>artifact</em> - any software or application/programming language specific library</li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
+<h2 id="workflow-component">Workflow Component</h2>
+<p>The ATTX Workflow Component provides a configurable framework with the main purpose of managing, scheduling and monitoring data ingestion, processing and distribution related workflows. WF provides the platform data related to provenance of the working data.</p>
 <ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
+<li>Github Repository: <a href="https://github.com/ATTX-project/workflow-component" target="_blank">workflow-component</a></li>
+<li>Details about the <a href="https://github.com/ATTX-project/project-management/wiki/Workflow-Component" target="_blank">Workflow Component</a>.</li>
 </ul>
-<p>Open Source contributions on various projects:</p>
+<h2 id="graph-component">Graph Component</h2>
+<p>The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the platform, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.</p>
 <ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
+<li>Github Repository: <a href="https://github.com/ATTX-project/graph-component" target="_blank">graph-component</a></li>
+<li>Details about the <a href="https://github.com/ATTX-project/project-management/wiki/Graph-Component" target="_blank">Graph Component</a>.</li>
 </ul>
-<p>Conference Proposals, Presentation and Talks:</p>
+<h2 id="distribution-component">Distribution Component</h2>
+<p>This ATTX Distribution Component provides the interface between the Workflow Component and/or Graph Component for public consumption of disseminated data.</p>
 <ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+<li>Github Repository: <a href="https://github.com/ATTX-project/distribution-component" target="_blank">distribution-component</a></li>
+<li>Details about the <a href="https://github.com/ATTX-project/project-management/wiki/Distribution-Component" target="_blank">Distribution Component</a>.</li>
+</ul>
+<h2 id="platform-deployment">Platform Deployment</h2>
+<p>This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.</p>
+<ul>
+<li>Github Repository: <a href="https://github.com/ATTX-project/platform-deployment" target="_blank">platform-deployment</a></li>
+<li>Details about the <a href="https://github.com/ATTX-project/project-management/wiki/Platform-Deployment" target="_blank">Platform Deployment</a>.</li>
+</ul>
+<h2 id="inter-component-communication">Inter-component Communication</h2>
+<p>There are three stages/versions to the inter-component communication:</p>
+<p><img src="https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/v1.1-intercomponent_communication.svg" alt="Figure 2. Stage 1 of Inter-component Communication"></p>
+<p>Figure 2. Stage 1 of Inter-component Communication</p>
+<ul>
+<li><p><strong>Stage 1</strong> - represents the base structure for achieving the flow of data between the three main components. At this stage the distinction between the components is rudimentary. For example the Graph Manager consists of a single scheduled script which consumes the WF-API. Components communication with direct HTTP requests using hard-coded component names.</p>
+</li>
+<li><p><strong>Stage 2</strong> - in this stage the major difference is that communication between components is implemented using messaging middleware component such as ActiveMQ. Message recipients are still hard-coded.  </p>
+</li>
+</ul>
+<p><img src="https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/v3-intercomponent_communication.svg" alt="Figure 3. Stage 2 of Inter-component Communication"></p>
+<p>Figure 3. Stage 3 with Service discovery and processing services</p>
+<ul>
+<li><strong>Stage 3</strong> - in this stage the components take shape such as Pipeline2 functionality is provided by the <a href="https://github.com/ATTX-project/project-management/wiki/Graph-Component" target="_blank">Graph Manager Component</a>, and the Graph Manager also provides an API. The <a href="https://github.com/ATTX-project/project-management/wiki/Workflow-Component" target="_blank">Workflow Component</a> instead of being depended on UnifiedViews as an ETL tool moves towards an Workflow tool (e.g. <a href="https://nifi.apache.org/" target="_blank">https://nifi.apache.org/</a> or <a href="https://github.com/spotify/luigi" target="_blank">https://github.com/spotify/luigi</a> or <a href="http://www.dswarm.org/" target="_blank">http://www.dswarm.org/</a> etc. - TBD). Workflows can include steps where implementation is provided by other platform components and workflow step only provides the UI for configuring the service execution. In order manage and use these new service Service Discovery component is needed as one of the core components of the platform.</li>
 </ul>
 
                                 
@@ -717,8 +751,12 @@
 
             
                 
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Platform-Deployment.html" class="navigation navigation-next " aria-label="Next page: Platform Deployment">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +767,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Architecture","level":"1.2","depth":1,"next":{"title":"Platform Deployment","level":"1.3","depth":1,"path":"Platform-Deployment.md","ref":"Platform-Deployment.md","articles":[{"title":"Docker Application Stacks in Swarm Mode","level":"1.3.1","depth":2,"path":"Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.md","ref":"Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.md","articles":[]},{"title":"CSC cPouta Cloud Services Report","level":"1.3.2","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.3.3","depth":2,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},{"title":"Deploying-ATTX-Components-on-Docker-Swarm","level":"1.3.4","depth":2,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]}]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Architecture.md","mtime":"2017-04-07T13:19:13.924Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

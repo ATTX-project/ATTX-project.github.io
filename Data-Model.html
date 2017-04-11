@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Ontology/Data model · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Namespaces.html" />
     
+    
+    <link rel="prev" href="Graph-Store.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -285,7 +287,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.5.2.1" data-path="Data-Model.html">
+        <li class="chapter active" data-level="1.5.2.1" data-path="Data-Model.html">
             
                 <a href="Data-Model.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Ontology/Data model</a>
     </h1>
 </div>
 
@@ -657,38 +659,91 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <h1 id="attx-ontology">ATTX Ontology</h1>
+<!-- TOC START min:1 max:3 link:true update:true -->
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li><a href="#ontologydata-model---attxonto">Ontology/Data Model - ATTXOnto</a></li>
+<li><a href="#related-data-models">Related Data models</a><ul>
+<li><a href="#att-data-model">ATT Data Model</a></li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
-<ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+</li>
+<li><a href="#references">References</a></li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
+<!-- TOC END -->
+<h2 id="ontologydata-model---attxonto">Ontology/Data Model - ATTXOnto</h2>
+<p>The ontology/data model has the purpose of describing how and when the data flows within the platform, types of transformations (and associated workflows), the provenance information (agent and associated processes performed) and other meta data.</p>
+<p><a href="Namespaces.html">Namespaces references</a></p>
+<pre><code class="lang-{turtle}">@base &lt;http://data.hulib.helsinki.fi/attx/&gt; .
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+@prefix attx: &lt;http://data.hulib.helsinki.fi/attx/&gt; .
+@prefix attxonto: &lt;http://data.hulib.helsinki.fi/attx/onto#&gt; .
+@prefix prov: &lt;http://www.w3.org/ns/prov#&gt; .
+@prefix pwo: &lt;http://purl.org/spar/pwo/&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix sd: &lt;http://www.w3.org/ns/sparql-service-description#&gt; .
+@prefix xml: &lt;http://www.w3.org/XML/1998/namespace&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+@prefix schema: &lt;http://schema.org/&gt; .
+</code></pre>
+<p>A general use case is represented in Figure 1 where we can depict several parts:</p>
 <ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
+<li>ETL processes associated with the specific steps and workflows - see <a href="ETL-Artifacts.html">ETL Workflow</a> for more details and <a href="WF-API.html">Workflow API</a> which generates such specific information;</li>
+<li>Provenance Data Graph - which depicts provenance information specific to each workflow, data set etc.;</li>
+<li>Working Data Graph - contains both inferred and explicit relationships between domain data;</li>
+<li>Dissemination Data Graph - Data Graph distributed via the APIs.</li>
 </ul>
-<p>Open Source contributions on various projects:</p>
+<p><img src="https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/ontology_usecase.svg" alt="Figure 1. Ontology Use Cases Flow"></p>
+<p>Figure 1. Ontology Use Cases Flow</p>
+<h2 id="related-data-models">Related Data models</h2>
+<h3 id="att-data-model">ATT Data Model</h3>
 <ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
+<li><a href="http://iow.csc.fi/model/att" target="_blank">http://iow.csc.fi/model/att</a> &quot;Application Profile for Research Data Catalogues&quot;</li>
 </ul>
-<p>Conference Proposals, Presentation and Talks:</p>
+<p>The Data Model is focused on data interoperability of catalogues and research materials find-ability (e.g. research papers and other types of documents). And as its label states it is a &quot;Application Profile for Research Data Catalogues&quot; or has the purpose to aid in building such an application profile.
+The main focus seems to be however on the <a href="http://dublincore.org/documents/dcmi-terms/#H2" target="_blank">DCTerms</a> vocabulary with concepts such as: <code>FileFormat</code>, <code>LinguisticSystem</code>, <code>LicenseDocument</code>, <code>Location</code>, <code>MediaType</code>, <code>PeriodOfTime</code>, <code>RightsStatement</code>.</p>
+<p>The ATT Ontology also builds on the <a href="https://www.w3.org/TR/prov-o/" target="_blank">PROV-O</a> with concepts such as Activity, Entity and <a href="http://xmlns.com/foaf/spec/" target="_blank">FOAF</a> (Agent, Project, Document - interesting there is no use of PROV-O Agent - given that between them is the property <code>prov:wasAssociatedWith</code>, however considering the precise definition of a <code>foaf:Agent</code> rather than the broader <code>prov:Agent</code> it justifies the choice. At the same time the use of <code>schema:SoftwareApplication</code> could be introduced <a href="https://schema.org/SoftwareApplication" target="_blank">https://schema.org/SoftwareApplication</a>) and SKOS: <code>Concept</code>, <code>ConceptScheme</code> and <a href="https://www.w3.org/TR/vocab-dcat/" target="_blank">DCAT</a>: <code>CatalogRecord</code>, <code>Catalog</code>, <code>Dataset</code>, <code>Distribution</code>. At the same time other utilised concepts are:</p>
 <ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+<li>Checksum from <a href="https://spdx.org/rdf/terms/" target="_blank">SPDX specification</a>;</li>
+<li>Object Characteristics from <a href="http://id.loc.gov/ontologies/premis.html#ObjectCharasteristics" target="_blank">PREMIS</a>;</li>
+<li>Identifier in <a href="https://www.w3.org/TR/vocab-adms/" target="_blank">W3 ADMS</a>;</li>
+<li>Variable in <a href="http://rdf-vocabulary.ddialliance.org/discovery.html#RepresentedVariable" target="_blank">DISCO</a>.</li>
+</ul>
+<p>On another note the ATT Data Model intertwines Shape Constraints <a href="https://www.w3.org/ns/shacl#" target="_blank">SHACL</a> with constructs such as:</p>
+<pre><code class="lang-{turtle}">&lt;http://iow.csc.fi/ns/att#DatasetChecksum&gt;
+        a                   sh:Shape ;
+        rdfs:comment        &quot;A value that allows the contents of a file to be authenticated. This class allows the results of a variety of checksum and cryptographic message digest algorithms to be represented.&quot;@en , &quot;Arvo joka mahdollistaa jakelun sis&#xE4;ll&#xF6;n tarkistamisen&quot;@fi ;
+        rdfs:isDefinedBy    &lt;http://iow.csc.fi/ns/att&gt; ;
+        rdfs:label          &quot;Checksum&quot;@en , &quot;Tarkistussumma&quot;@fi ;
+        dcterms:created     &quot;2016-05-17T13:26:21&quot;^^xsd:dateTime ;
+        dcterms:identifier  &quot;urn:uuid:7950884d-3a5e-4498-be71-1e82cbf6e1dc&quot; ;
+        dcterms:modified    &quot;2016-10-24T12:02:53.317+03:00&quot;^^xsd:dateTime ;
+        owl:versionInfo     &quot;Unstable&quot; ;
+        sh:property         &lt;urn:uuid:9baa0ec8-f994-443d-9793-595ebe498e18&gt; , &lt;urn:uuid:0d4bcc55-523f-4d08-a37c-0fdb8923d630&gt; ;
+        sh:scopeClass       &lt;http://spdx.org/rdf/terms#Checksum&gt; .
+</code></pre>
+<h2 id="references">References</h2>
+<p>Reference ontologies:</p>
+<ul>
+<li><a href="http://iow.csc.fi/model/att" target="_blank">http://iow.csc.fi/model/att</a></li>
+<li><a href="https://www.w3.org/TR/prov-o/" target="_blank">https://www.w3.org/TR/prov-o/</a></li>
+<li><a href="https://www.w3.org/TR/vocab-org/" target="_blank">https://www.w3.org/TR/vocab-org/</a></li>
+<li><a href="https://www.w3.org/TR/void/" target="_blank">https://www.w3.org/TR/void/</a></li>
+<li><a href="http://www.opmw.org/model/OPMW/#" target="_blank">http://www.opmw.org/model/OPMW/#</a></li>
+<li><a href="http://www.sparontologies.net/ontologies/pwo/source.html" target="_blank">http://www.sparontologies.net/ontologies/pwo/source.html</a></li>
+<li><a href="http://vcvcomputing.com/provone/provone.html" target="_blank">http://vcvcomputing.com/provone/provone.html</a></li>
+<li><a href="https://www.w3.org/ns/formats/" target="_blank">https://www.w3.org/ns/formats/</a> - Class URI for specific file formats</li>
+<li><a href="http://purl.org/dc/terms/" target="_blank">http://purl.org/dc/terms/</a> - DC terms</li>
+</ul>
+<p>Other models:</p>
+<ul>
+<li><a href="https://www.usenix.org/conference/tapp13/technical-sessions/presentation/missier" target="_blank">https://www.usenix.org/conference/tapp13/technical-sessions/presentation/missier</a> (D-PROV)</li>
+<li><a href="http://wf4ever.github.io/ro/" target="_blank">http://wf4ever.github.io/ro/</a></li>
+<li><a href="http://lov.okfn.org/dataset/lov/vocabs/kees" target="_blank">http://lov.okfn.org/dataset/lov/vocabs/kees</a></li>
+<li><a href="http://lov.okfn.org/dataset/lov/vocabs/prvt" target="_blank">http://lov.okfn.org/dataset/lov/vocabs/prvt</a></li>
+<li><a href="http://www.sparontologies.net/ontologies/fabio/source.html" target="_blank">http://www.sparontologies.net/ontologies/fabio/source.html</a></li>
+<li><a href="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl" target="_blank">http://www.ontologydesignpatterns.org/ont/dul/DUL.owl</a></li>
 </ul>
 
                                 
@@ -717,8 +772,12 @@
 
             
                 
+                <a href="Graph-Store.html" class="navigation navigation-prev " aria-label="Previous page: Graph Store">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Namespaces.html" class="navigation navigation-next " aria-label="Next page: Namespaces">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +788,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Ontology/Data model","level":"1.5.2.1","depth":3,"next":{"title":"Namespaces","level":"1.5.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},"previous":{"title":"Graph Store","level":"1.5.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.5.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Namespaces","level":"1.5.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking","level":"1.5.2.3","depth":3,"path":"Linking-graphs.md","ref":"Linking-graphs.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Data-Model.md","mtime":"2017-04-07T13:14:02.057Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

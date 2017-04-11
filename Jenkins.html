@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Jenkins · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Build-Multiple-Environments.html" />
     
+    
+    <link rel="prev" href="CI-CD-Enviroment.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -445,7 +447,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.3.1" data-path="Jenkins.html">
+        <li class="chapter active" data-level="2.3.1" data-path="Jenkins.html">
             
                 <a href="Jenkins.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Jenkins</a>
     </h1>
 </div>
 
@@ -657,38 +659,74 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <h1 id="jenkins-ci">Jenkins CI</h1>
+<p>The basic idea:</p>
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li>Jenkins triggers, orchestrates, executes and monitors running of Gradle tasks using pipelines</li>
+<li>Gradle tasks are used to implement all the required actions related to pipelines (e.g. :buildDockerImage)</li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
+<p>So instead of using Jenkins plugin to call Docker and create images, we should create a Gradle task that uses Docker and call that task from a Jenkins pipeline.</p>
+<p>Orchestration is handled using Jenkins pipelines that all should share some of the common stages listed below.</p>
+<p><img src="https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/cicd_jenkins-gradle-tools.svg" alt="Figure 1. ATTX Platform Architecture"></p>
+<p>Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)</p>
+<!-- TOC START min:1 max:3 link:true update:true -->
 <ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<li><a href="#stages">Stages</a><ul>
+<li><a href="#checkout">Checkout</a></li>
+<li><a href="#buildtestpackage">Build/Test/Package</a></li>
+<li><a href="#deploy-artifacts">Deploy artifacts</a></li>
+<li><a href="#publish-reports">Publish reports</a></li>
+<li><a href="#build-image">Build image</a></li>
+<li><a href="#plugins">Plugins</a></li>
+<li><a href="#additions-to-the-jenkins-image">Additions to the Jenkins image</a></li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
-<ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
+</li>
 </ul>
-<p>Open Source contributions on various projects:</p>
+<!-- TOC END -->
+<h2 id="stages">Stages</h2>
+<h3 id="checkout">Checkout</h3>
+<p>Getting the code from Github.</p>
+<p>Example:</p>
+<p><code>git branch: &apos;dev&apos;, url: &apos;https://github.com/ATTX-project/distribution-component.git&apos;</code></p>
+<h3 id="buildtestpackage">Build/Test/Package</h3>
+<p>Example:</p>
+<p><code>echo sh (script: &quot;${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle :dc-elasticsearch-siren:attx-api-plugin:clean :dc-elasticsearch-siren:attx-api-plugin:build&quot;, returnStdout: true)</code></p>
+<p>We need both &quot;echo&quot; and &quot;returnStdout: true&quot; to get the output of the Gradle execution to Jenkins logs.</p>
+<h3 id="deploy-artifacts">Deploy artifacts</h3>
+<p>Copies output artifacts to somewhere where they can be used by other pipelines.</p>
+<h3 id="publish-reports">Publish reports</h3>
+<p>Copies output of HTML reports to somewhere where Jenkins can access them.</p>
+<p>Example:</p>
+<p><code>archiveArtifacts artifacts: &apos;dc-elasticsearch-siren/attx-api-plugin/build/libs/*.jar&apos;, onlyIfSuccessful: true</code></p>
+<p>Example: publishing test reports</p>
+<pre><code>        publishHTML([
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: &apos;dc-elasticsearch-siren/attx-api-plugin/build/reports/tests/test&apos;,
+            reportFiles: &apos;index.html&apos;,
+            reportName: &apos;dc-elasticsearch-siren-test-reports&apos;
+            ])
+</code></pre><h3 id="build-image">Build image</h3>
+<p>Artifacts are accessed from Jenkins. Normally artifacts are restricted to authenticated clients, but this can be changed by first setting property hudson.security.ArtifactsPermission = true (<a href="https://issues.jenkins-ci.org/browse/JENKINS-1871" target="_blank">https://issues.jenkins-ci.org/browse/JENKINS-1871</a> and <a href="https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties</a>) and then giving everyone access to the artifacts in the Jenkins security matrix.</p>
+<p>Other option is to set &quot;Allow anonymous read access&quot; in the security settings.</p>
+<h1 id="plugins">Plugins</h1>
 <ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
+<li>Join (<a href="https://wiki.jenkins-ci.org/display/JENKINS/Join+Plugin" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/Join+Plugin</a>)</li>
+<li>Copy artifact (<a href="https://wiki.jenkins-ci.org/display/JENKINS/Copy+Artifact+Plugin" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/Copy+Artifact+Plugin</a>)</li>
+<li>Artifact Deployer (<a href="https://wiki.jenkins-ci.org/display/JENKINS/ArtifactDeployer+Plugin" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/ArtifactDeployer+Plugin</a>)</li>
+<li>Green Balls (<a href="https://wiki.jenkins-ci.org/display/JENKINS/Green+Balls" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/Green+Balls</a>)</li>
+<li>JaCoCo (<a href="https://wiki.jenkins-ci.org/display/JENKINS/JaCoCo+Plugin" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/JaCoCo+Plugin</a>)</li>
+<li>what else?</li>
 </ul>
-<p>Conference Proposals, Presentation and Talks:</p>
+<h1 id="additions-to-the-jenkins-image">Additions to the Jenkins image</h1>
+<p>Jenkins container must be linked to the pivy repository container:</p>
+<p><code>docker run -d --restart=always --link pivy_repo:pivyrepo  -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 49001:8080 -v /data/jenkins:/var/jenkins_home -t attxproject/attx-jenkins</code></p>
+<p>The following packages needs to added in order to build the wf-API python project:</p>
 <ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+<li>apt-get install libxml2-dev libxslt1-dev python-dev</li>
+<li>apt-get install build-essential</li>
+<li>apt-get install zlib1g-dev</li>
 </ul>
 
                                 
@@ -717,8 +755,12 @@
 
             
                 
+                <a href="CI-CD-Enviroment.html" class="navigation navigation-prev " aria-label="Previous page: CI/CD Enviroment">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Build-Multiple-Environments.html" class="navigation navigation-next " aria-label="Next page: Build Multiple Environments">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +771,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Jenkins","level":"2.3.1","depth":2,"next":{"title":"Build Multiple Environments","level":"2.3.2","depth":2,"path":"Build-Multiple-Environments.md","ref":"Build-Multiple-Environments.md","articles":[]},"previous":{"title":"CI/CD Enviroment","level":"2.3","depth":1,"path":"CI-CD-Enviroment.md","ref":"CI-CD-Enviroment.md","articles":[{"title":"Jenkins","level":"2.3.1","depth":2,"path":"Jenkins.md","ref":"Jenkins.md","articles":[]},{"title":"Build Multiple Environments","level":"2.3.2","depth":2,"path":"Build-Multiple-Environments.md","ref":"Build-Multiple-Environments.md","articles":[]},{"title":"Containerized testing","level":"2.3.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Jenkins.md","mtime":"2017-04-07T12:28:38.858Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

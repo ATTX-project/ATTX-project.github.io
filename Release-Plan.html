@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Introduction · GitBook</title>
+        <title>Release Plan · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Architecture.html" />
+    <link rel="next" href="Project-Development-Environment.html" />
     
+    
+    <link rel="prev" href="UC1---Infrastructures-and-publications.html" />
     
 
     </head>
@@ -89,7 +91,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -405,7 +407,7 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="Release-Plan.html">
+        <li class="chapter active" data-level="2.1" data-path="Release-Plan.html">
             
                 <a href="Release-Plan.html">
             
@@ -642,7 +644,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Introduction</a>
+        <a href="." >Release Plan</a>
     </h1>
 </div>
 
@@ -657,39 +659,104 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="attx-project-specific-information">ATTX project specific information</h2>
-<p>Answering questions such as:</p>
+                                <p>Adjacent to the - <a href="https://github.com/ATTX-project/project-management/wiki/Feature-roadmap" target="_blank">Feature roadmap</a> the release plan is detailed below, alongside corresponding issues.</p>
+<p><strong>We should establish priority and complexity for the issues above in order to have a complete release plan.</strong></p>
+<p><strong>We should associate issues with the first release version.</strong></p>
+<!-- TOC START min:1 max:3 link:true update:true -->
 <ul>
-<li>What is the Development process ? in <a href="Project-Development-Environment.html">Project Development Environment</a></li>
-<li>What are some of the environments that the project makes use of ? in <a href="CI-CD-Enviroment.html">CI/CD Enviroment</a></li>
-<li>The location of the ATTX-project website: <a href="https://www.helsinki.fi/en/projects/attx-2016" target="_blank">https://www.helsinki.fi/en/projects/attx-2016</a></li>
+<li><a href="#realease-version-20">Realease Version 2.0</a></li>
+<li><a href="#realease-version-10">Realease Version 1.0</a></li>
 </ul>
-<h2 id="technical-information">Technical information</h2>
-<p>Information about the components, the deployment and overall architecture of the ATTX project.</p>
-<ul>
-<li><a href="Architecture.html">Architecture</a></li>
-<li><a href="Platform-Deployment.html">Platform Deployment</a></li>
-<li><a href="Workflow-Component.html">Workflow Component</a></li>
-<li><a href="Graph-Component.html">Graph Component</a></li>
-<li><a href="Distribution-Component.html">Distribution Component</a></li>
-<li><a href="Applications-and-Use-Cases.html">Applications and Use Cases</a></li>
+<!-- TOC END -->
+<h2 id="realease-version-20">Realease Version 2.0</h2>
+<p>Planned release date: <strong>30st of April 2017</strong></p>
+<h2 id="realease-version-10">Realease Version 1.0</h2>
+<p>Planned release date: <strong>31st of March 2017</strong></p>
+<ol>
+<li>Exposed ports (NEED TO CHECK - might be solved; very small task)<ul>
+<li>DC component should have the ports exposed for both instances of ElasticSearch
+(stick with one version of ES ?) 9200 &amp; 9300 + 9210 &amp; 9310</li>
+<li>UV should have a frontend that expose port 8080</li>
+<li>other ports should not be available, except for the test/dev environments; this might require changes to the Gradle scripts (scripts out of scope for first release)</li>
 </ul>
-<h2 id="contributions-and-presentations">Contributions and Presentations</h2>
-<p>Reports on technologies and related initiatives:</p>
-<ul>
-<li><a href="Gradle.html">Gradle</a></li>
-<li><a href="Messaging-Service.html">Messaging Service</a></li>
-<li><a href="Service-Discovery.html">Service Discovery</a></li>
-<li><a href="Workflow-Management-Tools.html">Workflow Management</a></li>
+</li>
+<li>Versioning of artifacts and images<ul>
+<li><em>Make sure that packages in java projects follow the same structure (group and artifact)</em> <a href="https://github.com/ATTX-project/project-management/issues/86" target="_blank">https://github.com/ATTX-project/project-management/issues/86</a></li>
+<li><em>Make sure that all the artifacts end up in Archiva</em> <a href="https://github.com/ATTX-project/project-management/issues/81" target="_blank">https://github.com/ATTX-project/project-management/issues/81</a></li>
+<li><em>Replace downloads from Jenkins with Archiva downloads</em> <a href="https://github.com/ATTX-project/project-management/issues/80" target="_blank">https://github.com/ATTX-project/project-management/issues/80</a></li>
+<li><em>Publishing release artifacts externally</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/25" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/25</a></li>
+<li><em>Deployment of release images to a server</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/22" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/22</a><ul>
+<li>Images on the docker hub and on the private registry should have the same name and different tags for test/dev/prod ? maybe a pipeline can produce multiple tags</li>
+<li>(out of scope for first release ?) Investigate in Gradle</li>
+<li>investigate and set up CI which can work with Github other than internal Jenkins ? - needed for setting up a continuously release environment and publishing artifacts</li>
 </ul>
-<p>Open Source contributions on various projects:</p>
-<ul>
-<li><a href="Contributions.html">Open Source Projects Contributions</a></li>
+</li>
+<li><em>Generate release artifacts</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/21" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/21</a><ul>
+<li>artifacts should be published to Github and tagged with versions</li>
+<li>tagging of artifacts is not uniform (not an issue) however might confuse users</li>
 </ul>
-<p>Conference Proposals, Presentation and Talks:</p>
-<ul>
-<li><a href="ELAG-2017.html">ELAG2017</a></li>
+</li>
+<li><em>Nicer way to download required artifacts</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/24" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/24</a></li>
 </ul>
+</li>
+<li>Distribution of components<ul>
+<li><em>Services Health check endpoint</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/4" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/4</a> (out of scope)</li>
+<li>services discovery (out of scope for first release)</li>
+<li>using IAAS platform <a href="https://github.com/ATTX-project/platform-deployment/issues/26" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/26</a></li>
+<li>Create Docker Swarm out of ATTX containerised stack <a href="https://github.com/ATTX-project/project-management/issues/46" target="_blank">https://github.com/ATTX-project/project-management/issues/46</a><ul>
+<li>deployment scripts: Ansible ? Docker Swarm ?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>missing functionality (MISSING tasks)<ul>
+<li>GM-API missing linking functionality <a href="https://github.com/ATTX-project/graph-component/issues/17" target="_blank">https://github.com/ATTX-project/graph-component/issues/17</a></li>
+<li>GM-API test clustering functionality with URLs that do not have graphs materialised in the graph store</li>
+<li>UV missing DPU for scheduling GM-API; the DPUs need to be synchronised in order to propagate data in throughout the components</li>
+</ul>
+</li>
+<li>missing tests<ul>
+<li><em>Update BDD tests to run in the new containerised environment</em> <a href="https://github.com/ATTX-project/project-management/issues/72" target="_blank">https://github.com/ATTX-project/project-management/issues/72</a><ul>
+<li>dc-feature-tests missing</li>
+<li>gc-feature-tests extended for other functionalities</li>
+<li>wf-feature-tests not working</li>
+</ul>
+</li>
+<li><em>Get rid of dpu jars in the pd-feature-tests project</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/23" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/23</a><ul>
+<li>pd-feature-tests not working</li>
+</ul>
+</li>
+<li>missing BDD tests for GC, WF, PD <a href="https://github.com/ATTX-project/project-management/issues/82" target="_blank">https://github.com/ATTX-project/project-management/issues/82</a></li>
+<li><em>Add automated user story tests for use case 1</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/17" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/17</a></li>
+</ul>
+</li>
+<li>missing documentation<ul>
+<li>installation instructions HIGH IMPORTANCE</li>
+<li>development instructions</li>
+<li>missing documentation for each component how to run them in standalone or how to integrate them within other processes</li>
+</ul>
+</li>
+<li>logging (out of scope for first release)<ul>
+<li><em>Log collection from all components in order to check status and possible errors</em> <a href="https://github.com/ATTX-project/distribution-component/issues/7" target="_blank">https://github.com/ATTX-project/distribution-component/issues/7</a><ul>
+<li>ELK stash available (latest version) - NOTE: maintaining 2 different versions of ES would be difficult</li>
+<li>standardise logging format in components in order to have them available in logstash</li>
+<li>(out of scope for first release) figure out a way to connect it with provenance data</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Set up continuously release environment (HIGH IMPORTANCE)<ul>
+<li><em>Plan and document release flow</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/20" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/20</a></li>
+<li><em>Setup continuous release environment</em> <a href="https://github.com/ATTX-project/platform-deployment/issues/19" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/19</a><ul>
+<li>Jenkins and Archiva to release artifacts</li>
+<li>set up github and private jenkins to release artifacts (out of scope)</li>
+<li>set up jenkins and docker hub to release images with different tags and the same with private the repository</li>
+<li>test before release - if unit/integration/BDD tests fail the artifacts cannot be deployed and this needs to be signalled. (out of scope)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
 
                                 
                                 </section>
@@ -717,8 +784,12 @@
 
             
                 
+                <a href="UC1---Infrastructures-and-publications.html" class="navigation navigation-prev " aria-label="Previous page: UC1 - infras and pubs">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Architecture.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Architecture">
+                
+                <a href="Project-Development-Environment.html" class="navigation navigation-next " aria-label="Next page: Project Development Environment">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -729,7 +800,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2017-04-07T12:10:26.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Release Plan","level":"2.1","depth":1,"next":{"title":"Project Development Environment","level":"2.2","depth":1,"path":"Project-Development-Environment.md","ref":"Project-Development-Environment.md","articles":[]},"previous":{"title":"UC1 - infras and pubs","level":"1.7.1","depth":2,"path":"UC1---Infrastructures-and-publications.md","ref":"UC1---Infrastructures-and-publications.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Release-Plan.md","mtime":"2017-04-07T13:19:13.928Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-07T13:34:39.130Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
