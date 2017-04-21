@@ -1,14 +1,16 @@
-See also: [Release Plan](https://github.com/ATTX-project/project-management/wiki/Release-Plan) for detailed planning of the issues.
-### Q1 - 31st of March
+# Feature Roadmap
+
+See also: [Release Plan](Release-Plan.md) for detailed planning of the issues.
+### Q1 - mid April
 - Distributed deployment
 - GC: Identifier based linking
 - All: Service discovery (start)
 
 Deliverables:
 - [ ] Decision on how to implement or plan the service discovery (select technology)
-- [ ] Implement the distributed docker environment
-- [ ] **Platform Release 1 for the public**
-- [ ] Use case 1 Infrastructures and Publications
+- [X] Implement the distributed docker environment
+- [X] **Platform Release 1 for the public**
+- [X] Use case 1 Infrastructures and Publications
 
 ### Q2 - 30th of June
 - All: Service discovery (finish)

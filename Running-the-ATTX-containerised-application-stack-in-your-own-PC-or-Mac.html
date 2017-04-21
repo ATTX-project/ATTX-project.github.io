@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>ElasticSearch with Siren · GitBook</title>
+        <title>Running the ATTX Stack on a PC or Mac · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Applications-and-Use-Cases.html" />
+    <link rel="next" href="Deploying-ATTX-Components-on-Docker-Swarm.html" />
     
     
-    <link rel="prev" href="Distribution-Component.html" />
+    <link rel="prev" href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html" />
     
 
     </head>
@@ -170,7 +170,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+        <li class="chapter active" data-level="1.3.4" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
             
                 <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
             
@@ -363,7 +363,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
+        <li class="chapter " data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
             
                 <a href="ElasticSearch-with-Siren.html">
             
@@ -683,7 +683,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >ElasticSearch with Siren</a>
+        <a href="." >Running the ATTX Stack on a PC or Mac</a>
     </h1>
 </div>
 
@@ -698,120 +698,65 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="elasticsearch-with-siren">Elasticsearch with Siren</h1>
-<p>This page describes the components and configuration needed to get the ATTX ES plugin up and running. This information should be used as the basis for creating a containerized version of the API component</p>
-<p><strong>Siren plugin only supports ES up till version 1.3.4.</strong></p>
-<h3 id="table-of-contents">Table of Contents</h3>
+                                <h1 id="running-the-attx-stack-on-a-pc-or-mac">Running the ATTX Stack on a PC or Mac</h1>
+<p>We hereby exemplify how to run the ATTX stack in your PC or Mac, so that you can try out our Linked Open Data solution. The applications and services in the ATTX stack are fully containerised with Docker (cf. <a href="https://www.docker.com/what-container" target="_blank">https://www.docker.com/what-container</a>) and thus require that you install Docker CE (<a href="https://www.docker.com/community-edition" target="_blank">https://www.docker.com/community-edition</a>) and Docker Compose (<a href="https://docs.docker.com/compose/" target="_blank">https://docs.docker.com/compose/</a>) in your PC or Mac beforehand.</p>
+<!-- TOC START min:1 max:3 link:true update:true -->
 <ul>
-<li><a href="#mapping">Mapping</a></li>
-<li><a href="#plugins">Plugins</a><ul>
-<li><a href="#siren-elasticsearch-14">siren-elasticsearch 1.4</a></li>
-<li><a href="#analysis-icu-134">analysis-icu 1.3.4</a></li>
-<li><a href="#attx-es-api">attx-es-api</a></li>
+<li><a href="#pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac">Pre-requisite: install Docker and Docker Compose on your PC or Mac</a></li>
+<li><a href="#running-the-attx-application-stack-with-docker">Running the ATTX application stack with Docker</a></li>
+<li><a href="#test-the-availability-of-the-attx-containerised-stack">Test the availability of the ATTX containerised stack</a></li>
 </ul>
+<!-- TOC END -->
+<h2 id="pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac">Pre-requisite: install Docker and Docker Compose on your PC or Mac</h2>
+<p>The installation instructions for Docker are quite clear and straightforward. For your convenience, please find below the links to the most common Operating Systems in use on Academic environments PCs.</p>
+<p>Installing Docker Community Edition on PC (Windows):
+Please note that Docker for Windows comes either with Docker CE (windows 10) or with Docker Toolbox (older Windows versions).</p>
+<ul>
+<li><a href="https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description" target="_blank">On PC (Windows 10)</a></li>
+<li><a href="https://www.docker.com/products/docker-toolbox" target="_blank">On PC (older Windows versions)</a></li>
+</ul>
+<p>Installing Docker Community Edition on PC (GNU/Linux):</p>
+<ul>
+<li><a href="https://store.docker.com/editions/community/docker-ce-server-ubuntu?tab=description" target="_blank">On PC (Ubuntu)</a></li>
+<li><a href="https://store.docker.com/editions/community/docker-ce-server-fedora?tab=description" target="_blank">On PC (Fedora)</a></li>
+</ul>
+<p>Installing Docker Community Edition on Mac</p>
+<ul>
+<li><a href="https://store.docker.com/editions/community/docker-ce-desktop-mac?tab=description" target="_blank">On Mac</a></li>
+</ul>
+<p><strong>Installing Docker Compose</strong>
+GNU/Linux users need to install Docker Compose, Windows and Mac users have Docker Compose already bundled in their Docker installation (but please check your Docker environment as per the instructions below).</p>
+<ul>
+<li><a href="https://docs.docker.com/compose/install/" target="_blank">On all Operating Systems</a></li>
+</ul>
+<h2 id="running-the-attx-application-stack-with-docker">Running the ATTX application stack with Docker</h2>
+<p>With Docker CE and Docker Compose successfully installed, you can now download the docker-compose.yml file that defines the ATTX containerised applications and service to your PC or Mac.</p>
+<ol>
+<li>Download the ATTX docker-compose.yml file from <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/dcompose/docker-compose.yml" target="_blank">https://github.com/ATTX-project/platform-deployment/blob/dev/dcompose/docker-compose.yml</a> to a directory in your host machine.</li>
+<li>Open a command line terminal in your host machine (or even the Docker Quickstart Terminal if you&apos;re using Windows or Mac) and change your working directory to the one where you downloaded the ATTX docker-compose.yml file.</li>
+<li>In the directory where you downloaded the ATTX docker-compose.yml run the command &quot;docker-compose up&quot;. This will start up the containerised ATTX applications and services.</li>
+<li>You can follow the startup messages of containerised ATTX stack on the terminal. Once the message <code>_attx_uv_dpus_1 exited with status 0</code> is displayed, you can assume that the stack is up and running (meaning that all containers have been started and that the ATTX DPUs have been deployed to UnifiedViews).</li>
+</ol>
+<h2 id="test-the-availability-of-the-attx-containerised-stack">Test the availability of the ATTX containerised stack</h2>
+<ol>
+<li><p>Verify that the ATTX Docker containers are running. Open a new terminal and enter the <code>docker ps</code> command. The output should be similar to the following:</p>
+<pre><code>CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS              PORTS                                            NAMES
+6faf8fe639b1        attx-dev:5000/gm-api:latest                           &quot;/entrypoint.sh&quot;         3 minutes ago       Up 3 minutes        0.0.0.0:4302-&gt;4302/tcp                           build_gmapi_1
+f9f2a83adf38        tenforce/unified-views-frontend:latest                &quot;catalina.sh run&quot;        3 minutes ago       Up 3 minutes        0.0.0.0:8080-&gt;8080/tcp                           build_frontend_1
+b88cb73c9710        tenforce/unified-views-backend:latest                 &quot;/bin/bash /bin/st...&quot;   3 minutes ago       Up 3 minutes        5001/tcp                                         build_backend_1
+7daf4b1bcd17        attx-dev:5000/wf-api:latest                           &quot;/entrypoint.sh&quot;         3 minutes ago       Up 3 minutes        0.0.0.0:4301-&gt;4301/tcp                           build_wfapi_1
+a3fd681bad00        attx-dev:5000/attx-fuseki:latest                      &quot;/docker-entrypoin...&quot;   3 minutes ago       Up 3 minutes        0.0.0.0:3030-&gt;3030/tcp                           build_fuseki_1
+8f909dae60ea        attx-dev:5000/attx-es5:latest                         &quot;/docker-entrypoin...&quot;   3 minutes ago       Up 3 minutes        0.0.0.0:9210-&gt;9210/tcp, 0.0.0.0:9310-&gt;9310/tcp   build_elasticsearch5_1
+547f6c10aea6        tenforce/unified-views-mariadb:feat-compact-modular   &quot;docker-entrypoint...&quot;   3 minutes ago       Up 3 minutes        3306/tcp                                         build_mysql_1
+3a5c2751a642        attx-dev:5000/essiren:latest                          &quot;/docker-entrypoin...&quot;   3 minutes ago       Up 3 minutes        0.0.0.0:9200-&gt;9200/tcp, 0.0.0.0:9300-&gt;9300/tcp   build_essiren_1
+</code></pre></li>
+<li><p>Please keep in mind that if you launched the ATTX Stack with a command line terminal, the ATTX services will be using the localhost IP address (127.0.0.1). In case you used the Docker QuickStart Terminal, the IP address in use will the one of the Docker Machine (typically &quot;192.168.99.100&quot;, but please check in the startup messages of Docker QuickStart Terminal).</p>
 </li>
-</ul>
-<h2 id="mapping">Mapping</h2>
-<p>In addition to the plugins listed below, the system requires that indexes are created with the following mapping.</p>
-<pre><code class="lang-{json}">{&quot;_default_&quot;:
-  {&quot;properties&quot;:
-    {&quot;_siren_source&quot;:
-      {&quot;analyzer&quot;: &quot;concise&quot;,
-       &quot;postings_format&quot;: &quot;Siren10AFor&quot;,
-       &quot;store&quot;: &quot;no&quot;,
-       &quot;type&quot;: &quot;string&quot;
-      }
-    },
-    &quot;_siren&quot;: {},
-    &quot;dynamic_templates&quot;: [
-      {&quot;rawstring&quot;:
-        {&quot;match&quot;: &quot;*&quot;,
-         &quot;match_mapping_type&quot;: &quot;string&quot;,
-         &quot;mapping&quot;: {
-           &quot;type&quot;: &quot;string&quot;,
-           &quot;index&quot;: &quot;analyzed&quot;,
-           &quot;fields&quot;: {
-             &quot;{name}_raw&quot;: {
-               &quot;type&quot;: &quot;string&quot;,
-               &quot;analyzer&quot;: &quot;case_insensitive_sort&quot;
-             }
-           }
-         }
-       }
-      }
-    ]
-  }
-}
-</code></pre>
-<h2 id="plugins">Plugins</h2>
-<p>These are the required plugins:</p>
-<ul>
-<li><a href="#siren-elasticsearch-14">siren-elasticsearch 1.4</a></li>
-<li><a href="#analysis-icu-134">analysis-icu 1.3.4</a></li>
-<li><a href="#attx-es-api">attx-es-api</a></li>
-</ul>
-<h3 id="siren-elasticsearch-14">siren-elasticsearch 1.4</h3>
-<p><a href="https://github.com/sirensolutions/siren" target="_blank">https://github.com/sirensolutions/siren</a></p>
-<p>Plugin that allows one to index and query nested documents easily and efficiently.<br>Unfortunately, it is not maintained any more and we should come up with a replacement.</p>
-<p>Installation:</p>
-<pre><code>bin/plugin --install com.sindicetech.siren/siren-elasticsearch/1.4
-</code></pre><p>Configuration:</p>
-<p>Add the following to the elasticsearch.yml</p>
-<pre><code class="lang-{yml}"># Settings for the SIREn Plugin
-siren:
-  analysis:
-    # Enabled the use of wildcard for node attribute - Only for the concise mode This will increase the index size,
-    # as it will expand terms at indexing time. It is recommended to deactivate it if one does not need attribute
-    # wildcards.
-    concise.attribute_wildcard.enabled: true
-    # Mappings between datatype and analyzers. The analyzers must be referenced by their registered logical name.
-    datatype:
-      http://www.w3.org/2001/XMLSchema#string:
-        index_analyzer: standard
-        search_analyzer: lowerWhitespaceAnalyzer # here we refer to a custom analyzer that is below
-      http://json.org/field:
-        index_analyzer: whitespace
-      http://www.w3.org/2001/XMLSchema#double:
-          index_analyzer: double
-      http://www.w3.org/2001/XMLSchema#long:
-          index_analyzer: long
-      http://www.w3.org/2001/XMLSchema#boolean:
-          index_analyzer: whitespace
-      uri: # for NCPR demo
-          index_analyzer: whitespace
-    qname:
-        xsd : http://www.w3.org/2001/XMLSchema#
-        json: http://json.org/
-</code></pre>
-<h3 id="analysis-icu-134">analysis-icu 1.3.4</h3>
-<p><a href="https://github.com/elastic/elasticsearch-analysis-icu" target="_blank">https://github.com/elastic/elasticsearch-analysis-icu</a></p>
-<p>Extended Unicode support for ES. Needed to get the sorting working. Version 2.3.0 works with ES 1.3.4.</p>
-<p>Installation:</p>
-<pre><code>bin/plugin install elasticsearch/elasticsearch-analysis-icu/2.3.0
-</code></pre><p>Configuration:</p>
-<pre><code class="lang-{yml}">index:
-    analysis:
-        analyzer:
-            lowerWhitespaceAnalyzer:
-                type: custom
-                tokenizer: whitespace
-                filter: [lowercase]
-
-            case_insensitive_sort:
-                tokenizer: keyword
-                filter: [ &quot;icu_collation&quot; ]
-</code></pre>
-<h3 id="attx-es-api">attx-es-api</h3>
-<p>Plugin that provides simple query interface and then transforms those queries into ones that can be executed by the siren plugin.</p>
-<p>Installation:</p>
-<p>Our plugin can be installed in the same manner as the other ones. <a href="https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html</a></p>
-<p>Releases can installed from github using the following command:</p>
-<pre><code>bin/plugin --install &lt;org&gt;/&lt;user/component&gt;/&lt;version&gt;
-</code></pre><p>dev version can use the file based installation method:</p>
-<pre><code>bin/plugin --url file:///path/to/plugin --install plugin-name
-</code></pre><p><strong>How it works</strong></p>
-<p>Simple queries like &quot;test&quot; are translated into simple NodeQuery.</p>
-<p><em>TODO: continue this!</em></p>
+<li>Open the UnifiedViews login page at &quot;<a href="http://127.0.0.1:8080/unifiedviews/" target="_blank">http://127.0.0.1:8080/unifiedviews/</a>&quot; (or &quot;http://<docker_machine_ip>/unifiedviews/&quot;)</docker_machine_ip></li>
+<li>Check the availability of Apache Jena/Fuseki at &quot;<a href="http://127.0.0.1:3030" target="_blank">http://127.0.0.1:3030</a>&quot; (or &quot;http://<docker_machine_ip>:3030&quot;)</docker_machine_ip></li>
+<li>Verify ElasticSearch 2.2 (with SIREN plugin) at &quot;<a href="http://127.0.0.1:9200/_cat" target="_blank">http://127.0.0.1:9200/_cat</a>&quot; (or &quot;http://<docker_machine_ip>:9200/_cat&quot;).</docker_machine_ip></li>
+<li>Check that ElasticSearch 5.2 is available at &quot;<a href="http://127.0.0.1:9210/_cat" target="_blank">http://127.0.0.1:9210/_cat</a>&quot; (or &quot;http://<docker_machine_ip>:9210/_cat&quot;).</docker_machine_ip></li>
+</ol>
 
                                 
                                 </section>
@@ -839,12 +784,12 @@ siren:
 
             
                 
-                <a href="Distribution-Component.html" class="navigation navigation-prev " aria-label="Previous page: Distribution Component">
+                <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html" class="navigation navigation-prev " aria-label="Previous page: Provisioning ATTX Components on CSC Open Stack (cPouta)">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Applications-and-Use-Cases.html" class="navigation navigation-next " aria-label="Next page: Applications and Use Cases">
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html" class="navigation navigation-next " aria-label="Next page: Deploying ATTX Components on Docker Swarm">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -855,7 +800,7 @@ siren:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"next":{"title":"Applications and Use Cases","level":"1.7","depth":1,"path":"Applications-and-Use-Cases.md","ref":"Applications-and-Use-Cases.md","articles":[{"title":"UC1 - infras and pubs","level":"1.7.1","depth":2,"path":"UC1---Infrastructures-and-publications.md","ref":"UC1---Infrastructures-and-publications.md","articles":[]},{"title":"UC - Metax","level":"1.7.2","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]}]},"previous":{"title":"Distribution Component","level":"1.6","depth":1,"path":"Distribution-Component.md","ref":"Distribution-Component.md","articles":[{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-with-Siren.md","mtime":"2017-04-21T09:27:16.416Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-21T12:25:52.095Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Running the ATTX Stack on a PC or Mac","level":"1.3.4","depth":2,"next":{"title":"Deploying ATTX Components on Docker Swarm","level":"1.3.5","depth":2,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},"previous":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.3.3","depth":2,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","mtime":"2017-04-21T11:50:03.625Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-21T12:25:52.095Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

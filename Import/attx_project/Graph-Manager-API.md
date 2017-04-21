@@ -439,4 +439,4 @@ TBD
 
 ### Elasticsearch 1.3.4 and Siren plugin
 
-Details available at: ElasticSearch-with-Siren
+Details available at: [ElasticSearch with Siren](ElasticSearch-with-Siren.md)

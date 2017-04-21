@@ -1,4 +1,4 @@
-## Overview
+# ATTX Architecture Overview
 
 The following components are part of the ATTX architecture.
 * [Workflow Component](#workflow-component)
@@ -33,28 +33,28 @@ Acronyms:
 The ATTX Workflow Component provides a configurable framework with the main purpose of managing, scheduling and monitoring data ingestion, processing and distribution related workflows. WF provides the platform data related to provenance of the working data.
 
 * Github Repository: [workflow-component](https://github.com/ATTX-project/workflow-component)
-* Details about the [Workflow Component](https://github.com/ATTX-project/project-management/wiki/Workflow-Component).
+* Details about the [Workflow Component](Workflow-Component.md).
 
 ## Graph Component
 
 The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the platform, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.
 
 * Github Repository: [graph-component](https://github.com/ATTX-project/graph-component)
-* Details about the [Graph Component](https://github.com/ATTX-project/project-management/wiki/Graph-Component).
+* Details about the [Graph Component](Graph-Component.md).
 
 ## Distribution Component
 
 This ATTX Distribution Component provides the interface between the Workflow Component and/or Graph Component for public consumption of disseminated data.
 
 * Github Repository: [distribution-component](https://github.com/ATTX-project/distribution-component)
-* Details about the [Distribution Component](https://github.com/ATTX-project/project-management/wiki/Distribution-Component).
+* Details about the [Distribution Component](Distribution-Component.md).
 
 ## Platform Deployment
 
 This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.
 
 * Github Repository: [platform-deployment](https://github.com/ATTX-project/platform-deployment)
-* Details about the [Platform Deployment](https://github.com/ATTX-project/project-management/wiki/Platform-Deployment).
+* Details about the [Platform Deployment](Platform-Deployment.md).
 
 ## Inter-component Communication
 
@@ -72,4 +72,4 @@ Figure 2. Stage 1 of Inter-component Communication
 
 Figure 3. Stage 3 with Service discovery and processing services
 
-* **Stage 3** - in this stage the components take shape such as Pipeline2 functionality is provided by the [Graph Manager Component](https://github.com/ATTX-project/project-management/wiki/Graph-Component), and the Graph Manager also provides an API. The [Workflow Component](https://github.com/ATTX-project/project-management/wiki/Workflow-Component) instead of being depended on UnifiedViews as an ETL tool moves towards an Workflow tool (e.g. https://nifi.apache.org/ or https://github.com/spotify/luigi or http://www.dswarm.org/ etc. - TBD). Workflows can include steps where implementation is provided by other platform components and workflow step only provides the UI for configuring the service execution. In order manage and use these new service Service Discovery component is needed as one of the core components of the platform.
+* **Stage 3** - in this stage the components take shape such as Pipeline2 functionality is provided by the [Graph Manager Component](Graph-Component,md), and the Graph Manager also provides an API. The [Workflow Component](Workflow-Component.md) instead of being depended on UnifiedViews as an ETL tool moves towards an Workflow tool (e.g. https://nifi.apache.org/ or https://github.com/spotify/luigi or http://www.dswarm.org/ etc. - see [Workflow Management Tools](Workflow-Management-Tools.md) ). Workflows can include steps where implementation is provided by other platform components and workflow step only provides the UI for configuring the service execution. In order manage and use these new service Service Discovery component is needed as one of the core components of the platform.

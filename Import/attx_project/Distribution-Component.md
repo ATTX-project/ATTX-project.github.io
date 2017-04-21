@@ -9,4 +9,4 @@ The Distribution Component is composed of:
 * [ElasticSearch with Siren](ElasticSearch-with-Siren.md) artifact which has the role of indexing and making the Graph Store knowledge convenient accessible via an API;
 * ElasticSearch 5.2.0 which provides the latest functionality in order to index data as plain JSON \(after applying a JSON-LD frame\), JSON-LD or capturing logs.
 
-More on data indexing see: [Graph-Manager-API\#processing-and-indexing-graph-data](Graph-Manager-API#processing-and-indexing-graph-data.md)
+More on data indexing see: [Graph-Manager-API](Graph-Manager-API.md)

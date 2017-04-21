@@ -1,4 +1,4 @@
-#Linking Strategies
+# Linking Strategies
 
 This page describes how different graphs in the data store are linked together. There are two different scenarios for linking:
 * linking between platform's internal graphs (such as provenance and generated datasets)

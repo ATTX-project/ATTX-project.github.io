@@ -1,4 +1,6 @@
-This page describes the necessary steps required to run integration/bdd tests within a container or local environment alognside any required services running in their own containers.
+# Containerised Testing
+
+This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.
 
 <!-- TOC START min:1 max:3 link:true update:true -->
   - [Testing Workflow](#testing-workflow)

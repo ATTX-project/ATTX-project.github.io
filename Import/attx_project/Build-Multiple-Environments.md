@@ -1,14 +1,14 @@
+# Build Environment Setup
 
-# Working with build Environments
-
-
-<!-- TOC START min:1 max:3 link:true update:true -->
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Working with build Environments](#working-with-build-environments)
     - [Steps for Generating Release Version](#steps-for-generating-release-version)
     - [Example: Creating gmAPI test image for development](#example-creating-gmapi-test-image-for-development)
   - [References](#references)
 
 <!-- TOC END -->
+
+## Working with Build Environments
 
 Each artifact (.tar.gz, .jar etc.) associated with the platform has a specific version associated (e.g. `0.1`, `1.0`, `1.0-SNAPSHOT` etc.), and these versions are set up from either the Gradle gradle.build script associated with each project or Maven specific `pom.xml` file. The only option at the moment to change the version of the built artifacts is to change them in their Gradle or Maven specific build files.
 

@@ -35,4 +35,4 @@ or more visualisation examples:
 
 A list of data sets and APIs relevant to the project.
 * https://finto.fi/en/ - specifically https://finto.fi/okm-tieteenala/fi/
-* [UC1: Infrastructures and publications](https://github.com/ATTX-project/project-management/wiki/UC1---Infrastructures-and-publications) - data for Use Case 1 which handle Infrastructures and publications
+* [UC1: Infrastructures and publications](UC1---Infrastructures-and-publications.md) - data for Use Case 1 which handle Infrastructures and publications
