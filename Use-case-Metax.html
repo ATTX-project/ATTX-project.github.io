@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>ElasticSearch with Siren · GitBook</title>
+        <title>UC - Metax · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Applications-and-Use-Cases.html" />
+    <link rel="next" href="Feature-roadmap.html" />
     
     
-    <link rel="prev" href="Distribution-Component.html" />
+    <link rel="prev" href="UC1---Infrastructures-and-publications.html" />
     
 
     </head>
@@ -363,7 +363,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
+        <li class="chapter " data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
             
                 <a href="ElasticSearch-with-Siren.html">
             
@@ -408,7 +408,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.7.2" data-path="Use-case-Metax.html">
+        <li class="chapter active" data-level="1.7.2" data-path="Use-case-Metax.html">
             
                 <a href="Use-case-Metax.html">
             
@@ -683,7 +683,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >ElasticSearch with Siren</a>
+        <a href="." >UC - Metax</a>
     </h1>
 </div>
 
@@ -698,120 +698,38 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="elasticsearch-with-siren">Elasticsearch with Siren</h1>
-<p>This page describes the components and configuration needed to get the ATTX ES plugin up and running. This information should be used as the basis for creating a containerized version of the API component</p>
-<p><strong>Siren plugin only supports ES up till version 1.3.4.</strong></p>
-<h3 id="table-of-contents">Table of Contents</h3>
+                                <h1 id="proposal-use-case-metax-in-finnish">(Proposal) Use case Metax (in Finnish)</h1>
+<p>Osallistuja toimii ATTX-hankkeessa k&#xE4;ytt&#xF6;tapausosallistujan roolissa. Tuloksena on  ensimm&#xE4;inen konkreettinen k&#xE4;ytt&#xF6;tapaus, joka hy&#xF6;dynt&#xE4;&#xE4; uutta ATT-metatietomallia. Malli on kuvattu IOW-palvelussa ja l&#xF6;ytyy osoitteesta <a href="http://iow.csc.fi/model/att/" target="_blank">http://iow.csc.fi/model/att/</a>.</p>
+<p>Yhteisty&#xF6;n tavoitteena on testata ja analysoida ATT:n metatietomallin toimivuutta ja yhteensopivuutta k&#xE4;yt&#xF6;ss&#xE4; olevien j&#xE4;rjestelmien kanssa. Tuloksia voidaan h&#xF6;ydynt&#xE4;&#xE4; osana ATT-metatietoty&#xF6;ryhm&#xE4;n toimintaa sek&#xE4; Metax-projektia.</p>
+<p>Yhteisty&#xF6;n tuloksena toteutetaan:</p>
 <ul>
-<li><a href="#mapping">Mapping</a></li>
-<li><a href="#plugins">Plugins</a><ul>
-<li><a href="#siren-elasticsearch-14">siren-elasticsearch 1.4</a></li>
-<li><a href="#analysis-icu-134">analysis-icu 1.3.4</a></li>
-<li><a href="#attx-es-api">attx-es-api</a></li>
+<li>ATTX-alustan ominaisuus, joka mahdollistaa monimutkaisten mappausten toteuttamisen. Ominaisuutta tarvitaan Etsimen tietuetyyppisen (Record) datan muuntamisessa ATT-tietomallin mukaiseksi dataksi, joka koostuu useista toisiinsa linkitetyist&#xE4; identifioiduista resursseista (LinkedData).<ul>
+<li>ATTX-hanke</li>
+</ul>
+</li>
+<li>ATTX-alustan toiminnallisuus, joka mahdollistaa RDF-datan jakamisen julkisen rajapinnan (esim. LinkedDataFragments) avulla.<ul>
+<li>ATTX-hanke</li>
+</ul>
+</li>
+<li>ATTX-alustan ominaisuus, joka mahdollistaa datan validoinnin IOW:st&#xE4; haettujen tietomallikuvausten avulla.<ul>
+<li>ATTX-hanke ja CSC</li>
+</ul>
+</li>
+<li>Kuvaus Etsin (ja IDA?) j&#xE4;rjestelmien tietojen mappauksesta ATT:n metatietomalliin.<ul>
+<li>ATTX-hanke ja CSC</li>
+</ul>
+</li>
+<li>Etsin (ja IDA?) datan mappaus ATT:n tietomalliin.<ul>
+<li>ATTX-hanke ja CSC</li>
 </ul>
 </li>
 </ul>
-<h2 id="mapping">Mapping</h2>
-<p>In addition to the plugins listed below, the system requires that indexes are created with the following mapping.</p>
-<pre><code class="lang-{json}">{&quot;_default_&quot;:
-  {&quot;properties&quot;:
-    {&quot;_siren_source&quot;:
-      {&quot;analyzer&quot;: &quot;concise&quot;,
-       &quot;postings_format&quot;: &quot;Siren10AFor&quot;,
-       &quot;store&quot;: &quot;no&quot;,
-       &quot;type&quot;: &quot;string&quot;
-      }
-    },
-    &quot;_siren&quot;: {},
-    &quot;dynamic_templates&quot;: [
-      {&quot;rawstring&quot;:
-        {&quot;match&quot;: &quot;*&quot;,
-         &quot;match_mapping_type&quot;: &quot;string&quot;,
-         &quot;mapping&quot;: {
-           &quot;type&quot;: &quot;string&quot;,
-           &quot;index&quot;: &quot;analyzed&quot;,
-           &quot;fields&quot;: {
-             &quot;{name}_raw&quot;: {
-               &quot;type&quot;: &quot;string&quot;,
-               &quot;analyzer&quot;: &quot;case_insensitive_sort&quot;
-             }
-           }
-         }
-       }
-      }
-    ]
-  }
-}
-</code></pre>
-<h2 id="plugins">Plugins</h2>
-<p>These are the required plugins:</p>
-<ul>
-<li><a href="#siren-elasticsearch-14">siren-elasticsearch 1.4</a></li>
-<li><a href="#analysis-icu-134">analysis-icu 1.3.4</a></li>
-<li><a href="#attx-es-api">attx-es-api</a></li>
-</ul>
-<h3 id="siren-elasticsearch-14">siren-elasticsearch 1.4</h3>
-<p><a href="https://github.com/sirensolutions/siren" target="_blank">https://github.com/sirensolutions/siren</a></p>
-<p>Plugin that allows one to index and query nested documents easily and efficiently.<br>Unfortunately, it is not maintained any more and we should come up with a replacement.</p>
-<p>Installation:</p>
-<pre><code>bin/plugin --install com.sindicetech.siren/siren-elasticsearch/1.4
-</code></pre><p>Configuration:</p>
-<p>Add the following to the elasticsearch.yml</p>
-<pre><code class="lang-{yml}"># Settings for the SIREn Plugin
-siren:
-  analysis:
-    # Enabled the use of wildcard for node attribute - Only for the concise mode This will increase the index size,
-    # as it will expand terms at indexing time. It is recommended to deactivate it if one does not need attribute
-    # wildcards.
-    concise.attribute_wildcard.enabled: true
-    # Mappings between datatype and analyzers. The analyzers must be referenced by their registered logical name.
-    datatype:
-      http://www.w3.org/2001/XMLSchema#string:
-        index_analyzer: standard
-        search_analyzer: lowerWhitespaceAnalyzer # here we refer to a custom analyzer that is below
-      http://json.org/field:
-        index_analyzer: whitespace
-      http://www.w3.org/2001/XMLSchema#double:
-          index_analyzer: double
-      http://www.w3.org/2001/XMLSchema#long:
-          index_analyzer: long
-      http://www.w3.org/2001/XMLSchema#boolean:
-          index_analyzer: whitespace
-      uri: # for NCPR demo
-          index_analyzer: whitespace
-    qname:
-        xsd : http://www.w3.org/2001/XMLSchema#
-        json: http://json.org/
-</code></pre>
-<h3 id="analysis-icu-134">analysis-icu 1.3.4</h3>
-<p><a href="https://github.com/elastic/elasticsearch-analysis-icu" target="_blank">https://github.com/elastic/elasticsearch-analysis-icu</a></p>
-<p>Extended Unicode support for ES. Needed to get the sorting working. Version 2.3.0 works with ES 1.3.4.</p>
-<p>Installation:</p>
-<pre><code>bin/plugin install elasticsearch/elasticsearch-analysis-icu/2.3.0
-</code></pre><p>Configuration:</p>
-<pre><code class="lang-{yml}">index:
-    analysis:
-        analyzer:
-            lowerWhitespaceAnalyzer:
-                type: custom
-                tokenizer: whitespace
-                filter: [lowercase]
-
-            case_insensitive_sort:
-                tokenizer: keyword
-                filter: [ &quot;icu_collation&quot; ]
-</code></pre>
-<h3 id="attx-es-api">attx-es-api</h3>
-<p>Plugin that provides simple query interface and then transforms those queries into ones that can be executed by the siren plugin.</p>
-<p>Installation:</p>
-<p>Our plugin can be installed in the same manner as the other ones. <a href="https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html</a></p>
-<p>Releases can installed from github using the following command:</p>
-<pre><code>bin/plugin --install &lt;org&gt;/&lt;user/component&gt;/&lt;version&gt;
-</code></pre><p>dev version can use the file based installation method:</p>
-<pre><code>bin/plugin --url file:///path/to/plugin --install plugin-name
-</code></pre><p><strong>How it works</strong></p>
-<p>Simple queries like &quot;test&quot; are translated into simple NodeQuery.</p>
-<p><em>TODO: continue this!</em></p>
+<p>K&#xE4;ytt&#xF6;tapauksessa tuotettavia datasetteja voidaan potentiaalisesti linkitt&#xE4;&#xE4; muissa k&#xE4;ytt&#xF6;tapauksissa toteutettuihin CRIS-pohjaisiin datasetteihin (esim. julkaisut, projektit, infrat).</p>
+<p>Toteutusta pilotoidaan SMEAR-aineistolla ja siihen liittyv&#xE4;ll&#xE4; metatiedolla. Kyseisen aineiston k&#xE4;ytt&#xF6;&#xF6;n on saatu lupa X?.</p>
+<p>TODO:
+Esimerkki Etsimen ja IDAn tietojen mappamisesta ATT-malliin.</p>
+<p>Seuraavaksi:
+Tapaaminen CSC:n kanssa 10.3.</p>
 
                                 
                                 </section>
@@ -839,12 +757,12 @@ siren:
 
             
                 
-                <a href="Distribution-Component.html" class="navigation navigation-prev " aria-label="Previous page: Distribution Component">
+                <a href="UC1---Infrastructures-and-publications.html" class="navigation navigation-prev " aria-label="Previous page: UC1 - infras and pubs">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Applications-and-Use-Cases.html" class="navigation navigation-next " aria-label="Next page: Applications and Use Cases">
+                <a href="Feature-roadmap.html" class="navigation navigation-next " aria-label="Next page: Feature Roadmap">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -855,7 +773,7 @@ siren:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"next":{"title":"Applications and Use Cases","level":"1.7","depth":1,"path":"Applications-and-Use-Cases.md","ref":"Applications-and-Use-Cases.md","articles":[{"title":"UC1 - infras and pubs","level":"1.7.1","depth":2,"path":"UC1---Infrastructures-and-publications.md","ref":"UC1---Infrastructures-and-publications.md","articles":[]},{"title":"UC - Metax","level":"1.7.2","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]}]},"previous":{"title":"Distribution Component","level":"1.6","depth":1,"path":"Distribution-Component.md","ref":"Distribution-Component.md","articles":[{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-with-Siren.md","mtime":"2017-04-21T09:27:16.416Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-21T12:25:52.095Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UC - Metax","level":"1.7.2","depth":2,"next":{"title":"Feature Roadmap","level":"2.1","depth":1,"path":"Feature-roadmap.md","ref":"Feature-roadmap.md","articles":[]},"previous":{"title":"UC1 - infras and pubs","level":"1.7.1","depth":2,"path":"UC1---Infrastructures-and-publications.md","ref":"UC1---Infrastructures-and-publications.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Metax.md","mtime":"2017-04-21T12:19:20.606Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-21T12:25:52.095Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
