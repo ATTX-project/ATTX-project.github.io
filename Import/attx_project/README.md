@@ -1,10 +1,4 @@
-## ATTX project specific information
-
-Answering questions such as:
-
-* What is the Development process ? in [Project Development Environment](Project-Development-Environment.md)
-* What are some of the environments that the project makes use of ? in [CI/CD Enviroment](CI-CD-Enviroment.md)
-* The location of the ATTX-project website: [https://www.helsinki.fi/en/projects/attx-2016](https://www.helsinki.fi/en/projects/attx-2016)
+![ATTX Project logo](https://cdn.rawgit.com/ATTX-project/ATTX-project.github.io/2e533a00/images/attx_logo.svg)
 
 ## Technical information
 
@@ -17,10 +11,14 @@ Information about the components, the deployment and overall architecture of the
 * [Distribution Component](Distribution-Component.md)
 * [Applications and Use Cases](Applications-and-Use-Cases.md)
 
+Other information:
+* ATTX [Project Development Guidelines](Project-Development-Environment.md)
+* ATTX [CI/CD Enviroment](CI-CD-Enviroment.md)
+
 ## Contributions and Presentations
 
 Reports on technologies and related initiatives:
-  * [Gradle](Gradle.md)
+  * [Building with Gradle](Gradle.md)
   * [Messaging Service](Messaging-Service.md)
   * [Service Discovery](Service-Discovery.md)
   * [Workflow Management](Workflow-Management-Tools.md)

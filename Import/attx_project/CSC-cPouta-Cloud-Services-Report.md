@@ -1,6 +1,25 @@
-# CSC Cloud Services (cPouta) ReportHereby you can find a report about our experience in the usage of CSC IaaS Cloud Services (cPouta) for deploying the ATTX stack on 3-node and 5-node Docker Swarm configurations, formed by three Ubuntu 14.04 VMs in the cPouta environment (https://research.csc.fi/cpouta).
+# CSC Cloud Services (cPouta) Report
+
+Hereby you can find a report about our experience in the usage of CSC IaaS Cloud Services (cPouta) for deploying the ATTX stack on 3-node and 5-node Docker Swarm configurations, formed by three Ubuntu 14.04 VMs in the cPouta environment (https://research.csc.fi/cpouta).
+
+<!-- TOC START min:1 max:3 link:true update:false -->
+  - [Obtaining a CSC Account](#obtaining-a-csc-account)
+  - [Applying for a cPouta project](#applying-for-a-cpouta-project)
+  - [Pricing and IaaS Resource Packages](#pricing-and-iaas-resource-packages)
+  - [Deployment Test Scenarios](#deployment-test-scenarios)
+    - [5-node Configuration](#5-node-configuration)
+    - [3-node Configuration](#3-node-configuration)
+  - [Customer Services](#customer-services)
+  - [Documentation](#documentation)
+  - [API](#api)
+  - [Tools/services](#toolsservices)
+  - [Conclusions](#conclusions)
+  - [ATTX links](#attx-links)
+
+<!-- TOC END -->
 
 ## Obtaining a CSC Account
+
 Obtaining a CSC account is a pre-requisite for accessing the cPouta environment's IaaS resources. Requesting a CSC account for Academic use has found to be straightforward, requiring only filling up the respective form @https://research.csc.fi/accounts-and-projects.
 
 Once the form has been processed (the applicant being informed by email), it's possible to login to CSC's Scientist's User Interface @https://sui.csc.fi/.

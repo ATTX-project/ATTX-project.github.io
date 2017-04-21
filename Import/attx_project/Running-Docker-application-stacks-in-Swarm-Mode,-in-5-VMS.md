@@ -1,4 +1,5 @@
-# Docker Application Stacks in Swarm Mode
+# Building Swarm Mode on a PC or Mac
+
 This guide exemplifies 5 VMs created with Vagrant and configured with Ansible, however one can use Docker Swarm Mode with Docker-Machine (https://docs.docker.com/machine/) as well.
 
 <!-- TOC START min:1 max:3 link:true update:true -->

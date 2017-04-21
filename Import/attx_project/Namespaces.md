@@ -1,4 +1,4 @@
-# ATTX Namespaces
+# ATTX Graph Namespaces
 
 Base namespaces and named graphs:
 
