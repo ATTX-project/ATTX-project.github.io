@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Platform Deployment · GitBook</title>
+        <title>ElasticSearch 5.x · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="CSC-cPouta-Cloud-Services-Report.html" />
+    <link rel="next" href="Applications-and-Use-Cases.html" />
     
     
-    <link rel="prev" href="Architecture.html" />
+    <link rel="prev" href="ElasticSearch-with-Siren.html" />
     
 
     </head>
@@ -117,7 +117,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="Platform-Deployment.html">
+        <li class="chapter " data-level="1.3" data-path="Platform-Deployment.html">
             
                 <a href="Platform-Deployment.html">
             
@@ -376,7 +376,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.2" data-path="ElasticSearch-5.html">
+        <li class="chapter active" data-level="1.6.2" data-path="ElasticSearch-5.html">
             
                 <a href="ElasticSearch-5.html">
             
@@ -696,7 +696,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Platform Deployment</a>
+        <a href="." >ElasticSearch 5.x</a>
     </h1>
 </div>
 
@@ -711,24 +711,81 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="platform-deployment">Platform Deployment</h1>
-<p>This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.</p>
-<p><strong>Github Repository: <a href="https://github.com/ATTX-project/platform-deployment" target="_blank">platform-deployment</a></strong></p>
-<h2 id="prerequisites">Prerequisites</h2>
-<p>Preconditions for running the ATTX stack:</p>
-<ul>
-<li>8 GB RAM (minimum)</li>
-<li>Docker Engine (<a href="https://docs.docker.com/engine/installation/" target="_blank">https://docs.docker.com/engine/installation/</a>)</li>
-<li>Docker Compose (<a href="https://docs.docker.com/compose/" target="_blank">https://docs.docker.com/compose/</a>)</li>
-</ul>
-<h2 id="instructions">Instructions</h2>
-<p>Instructions for running or deploying the solution on a cloud or local environment are available:</p>
-<ul>
-<li><a href="Building-Docker-application-stacks-in-Swarm-Mode.html">Building Swarm Mode on a PC or Mac</a></li>
-<li><a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack (cPouta)</a></li>
-<li><a href="Deploying-ATTX-Components-on-Docker-Swarm.html">Deploying ATTX Components on Docker Swarm</a></li>
-<li><a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">Running the ATTX Stack on a PC or Mac</a></li>
-</ul>
+                                <h1 id="elasticsearch-5x">ElasticSearch 5.x</h1>
+<p>Version 5.x of ElasticSearch provides an alternative indexing endpoint for the distribution component exposed data, and the same time different data structure.</p>
+<p>Another functionality is the centralised logging which aims to connect provenance information with the components processes.</p>
+<h2 id="data-structure">Data structure</h2>
+<p>Currently ATTX Semantic Broker offers functionality for indexing semantic data as plain JSON (formatted via a JSON-LD frame) or a whole JSON-LD.</p>
+<h3 id="elasticsearch-5x-and-json-derived-from-json-ld-frame">Elasticsearch 5.x and JSON derived from JSON-LD frame</h3>
+<p>Indexing data formatted via a JSON-LD frame, takes the complexity of formatting the data from the client, exposing only the necessary information for the client to use in a specific application.</p>
+<p>Given a JSON-LD frame (included in the POST <code>index</code> request):</p>
+<pre><code class="lang-{json}">{
+  &quot;@context&quot;: {
+    &quot;@vocab&quot;: &quot;http://data.hulib.helsinki.fi/attx/&quot;,
+    &quot;dcterms&quot;: &quot;http://purl.org/dc/terms/&quot;,
+    &quot;rdf&quot;: &quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;,
+    &quot;rdfs&quot;: &quot;http://www.w3.org/2000/01/rdf-schema#&quot;,
+    &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+    &quot;attx-types&quot;: &quot;http://data.hulib.helsinki.fi/attx/types/&quot;,
+    &quot;attx-types:Infrastructure&quot;: {
+    &quot;@type&quot;: &quot;@id&quot;
+  },
+    &quot;attx:hasclusteredID&quot;: {
+      &quot;@id&quot;: &quot;http://data.hulib.helsinki.fi/attx/id&quot;
+    }
+    ,
+    &quot;dcterms:identifier&quot;: {
+      &quot;@type&quot;: &quot;@id&quot;,
+      &quot;@id&quot;: &quot;http://purl.org/dc/terms/identifier&quot;
+    }
+  },
+  &quot;@type&quot;: &quot;attx-types:Infrastructure&quot;
+}
+</code></pre>
+<p>The resulting JSON-LD would have the following structure:</p>
+<pre><code class="lang-{json}">{
+  &quot;@context&quot;: {
+    &quot;@vocab&quot;: &quot;http://data.hulib.helsinki.fi/attx/&quot;,
+    &quot;dcterms&quot;: &quot;http://purl.org/dc/terms/&quot;,
+    &quot;rdf&quot;: &quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;,
+    &quot;rdfs&quot;: &quot;http://www.w3.org/2000/01/rdf-schema#&quot;,
+    &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+    &quot;attx-types&quot;: &quot;http://data.hulib.helsinki.fi/attx/types/&quot;,
+    &quot;attx-types:Infrastructure&quot;: {
+      &quot;@type&quot;: &quot;@id&quot;
+    },
+    &quot;attx:hasclusteredID&quot;: {
+      &quot;@id&quot;: &quot;http://data.hulib.helsinki.fi/attx/id&quot;
+    },
+    &quot;dcterms:identifier&quot;: {
+      &quot;@type&quot;: &quot;@id&quot;,
+      &quot;@id&quot;: &quot;http://purl.org/dc/terms/identifier&quot;
+    }
+  },
+  &quot;@graph&quot;: [
+    {
+      &quot;@id&quot;: &quot;http://data.hulib.helsinki.fi/attx/3/work/infra/urn:nbn:fi:research-infras-201607251&quot;,
+      &quot;@type&quot;: &quot;attx-types:Infrastructure&quot;,
+      &quot;attx:hasclusteredID&quot;: {
+        &quot;@id&quot;: &quot;urn:nbn:fi:research-infras-201607251&quot;
+      },
+      &quot;dcterms:identifier&quot;: &quot;urn:nbn:fi:research-infras-201607251&quot;,
+      &quot;dcterms:title&quot;: &quot;European Social Survey&quot;
+    },
+    {
+      &quot;@id&quot;: &quot;http://data.hulib.helsinki.fi/attx/3/work/infra/urn:nbn:fi:research-infras-2016072510&quot;,
+      &quot;@type&quot;: &quot;attx-types:Infrastructure&quot;,
+      &quot;attx:hasclusteredID&quot;: {
+        &quot;@id&quot;: &quot;urn:nbn:fi:research-infras-2016072510&quot;
+      },
+      &quot;dcterms:identifier&quot;: &quot;urn:nbn:fi:research-infras-2016072510&quot;,
+      &quot;dcterms:title&quot;: &quot;Finnish Marine Research Infrastructure&quot;
+    }]
+  }
+</code></pre>
+<h3 id="elasticsearch-5x-indexing-json-ld">Elasticsearch 5.x indexing JSON-LD</h3>
+<p>Provides more flexibility on the client side for formatting the data, and at the same adding more complexity to the client requests.</p>
+<p>To Be Continued.</p>
 
                                 
                                 </section>
@@ -756,12 +813,12 @@
 
             
                 
-                <a href="Architecture.html" class="navigation navigation-prev " aria-label="Previous page: Architecture">
+                <a href="ElasticSearch-with-Siren.html" class="navigation navigation-prev " aria-label="Previous page: ElasticSearch with Siren">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="CSC-cPouta-Cloud-Services-Report.html" class="navigation navigation-next " aria-label="Next page: CSC cPouta Cloud Services Report">
+                <a href="Applications-and-Use-Cases.html" class="navigation navigation-next " aria-label="Next page: Applications and Use Cases">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -772,7 +829,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Platform Deployment","level":"1.3","depth":1,"next":{"title":"CSC cPouta Cloud Services Report","level":"1.3.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},"previous":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Platform-Deployment.md","mtime":"2017-04-24T10:19:23.238Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-24T11:35:03.797Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ElasticSearch 5.x","level":"1.6.2","depth":2,"next":{"title":"Applications and Use Cases","level":"1.7","depth":1,"path":"Applications-and-Use-Cases.md","ref":"Applications-and-Use-Cases.md","articles":[{"title":"UC1 - infras and pubs","level":"1.7.1","depth":2,"path":"UC1---Infrastructures-and-publications.md","ref":"UC1---Infrastructures-and-publications.md","articles":[]},{"title":"UC - Metax","level":"1.7.2","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]}]},"previous":{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-5.md","mtime":"2017-04-24T11:31:55.735Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-24T11:35:03.797Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

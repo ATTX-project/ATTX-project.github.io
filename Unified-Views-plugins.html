@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Platform Deployment · GitBook</title>
+        <title>UnifiedViews plugins · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="CSC-cPouta-Cloud-Services-Report.html" />
+    <link rel="next" href="WF-API.html" />
     
     
-    <link rel="prev" href="Architecture.html" />
+    <link rel="prev" href="ETL-Artifacts.html" />
     
 
     </head>
@@ -117,7 +117,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="Platform-Deployment.html">
+        <li class="chapter " data-level="1.3" data-path="Platform-Deployment.html">
             
                 <a href="Platform-Deployment.html">
             
@@ -228,7 +228,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2" data-path="Unified-Views-plugins.html">
+        <li class="chapter active" data-level="1.4.2" data-path="Unified-Views-plugins.html">
             
                 <a href="Unified-Views-plugins.html">
             
@@ -696,7 +696,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Platform Deployment</a>
+        <a href="." >UnifiedViews plugins</a>
     </h1>
 </div>
 
@@ -711,24 +711,24 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="platform-deployment">Platform Deployment</h1>
-<p>This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.</p>
-<p><strong>Github Repository: <a href="https://github.com/ATTX-project/platform-deployment" target="_blank">platform-deployment</a></strong></p>
-<h2 id="prerequisites">Prerequisites</h2>
-<p>Preconditions for running the ATTX stack:</p>
+                                <h1 id="unifiedviews-plugins">UnifiedViews plugins</h1>
+<p>Custom Unified Views plugins developed:</p>
 <ul>
-<li>8 GB RAM (minimum)</li>
-<li>Docker Engine (<a href="https://docs.docker.com/engine/installation/" target="_blank">https://docs.docker.com/engine/installation/</a>)</li>
-<li>Docker Compose (<a href="https://docs.docker.com/compose/" target="_blank">https://docs.docker.com/compose/</a>)</li>
+<li><code>uv-t-attx-template</code> plugin - basic template for creating a plugin</li>
+<li><code>uv-t-attx-metadata</code> plugin - collecting metadata specific to the input and output graphs</li>
 </ul>
-<h2 id="instructions">Instructions</h2>
-<p>Instructions for running or deploying the solution on a cloud or local environment are available:</p>
-<ul>
-<li><a href="Building-Docker-application-stacks-in-Swarm-Mode.html">Building Swarm Mode on a PC or Mac</a></li>
-<li><a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack (cPouta)</a></li>
-<li><a href="Deploying-ATTX-Components-on-Docker-Swarm.html">Deploying ATTX Components on Docker Swarm</a></li>
-<li><a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">Running the ATTX Stack on a PC or Mac</a></li>
-</ul>
+<h2 id="creating-new-plugins">Creating new plugins</h2>
+<p><a href="https://grips.semantic-web.at/display/UDDOC/Tutorial%3A+Creating+new+DPU" target="_blank">https://grips.semantic-web.at/display/UDDOC/Tutorial%3A+Creating+new+DPU</a></p>
+<p>These instructions create a Maven project. We can integrate it with Gradle using a Maven plugin.</p>
+<p>build.gradle</p>
+<pre><code class="lang-{groovy}">plugins {
+    id &quot;com.github.dkorotych.gradle-maven-exec&quot; version &quot;1.0&quot;
+}
+
+task repackage(type: MavenExec) {
+    goals &apos;clean&apos;, &apos;package&apos;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -756,12 +756,12 @@
 
             
                 
-                <a href="Architecture.html" class="navigation navigation-prev " aria-label="Previous page: Architecture">
+                <a href="ETL-Artifacts.html" class="navigation navigation-prev " aria-label="Previous page: ETL Artifacts">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="CSC-cPouta-Cloud-Services-Report.html" class="navigation navigation-next " aria-label="Next page: CSC cPouta Cloud Services Report">
+                <a href="WF-API.html" class="navigation navigation-next " aria-label="Next page: Workflow API">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -772,7 +772,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Platform Deployment","level":"1.3","depth":1,"next":{"title":"CSC cPouta Cloud Services Report","level":"1.3.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},"previous":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Platform-Deployment.md","mtime":"2017-04-24T10:19:23.238Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-24T11:35:03.797Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UnifiedViews plugins","level":"1.4.2","depth":2,"next":{"title":"Workflow API","level":"1.4.3","depth":2,"path":"WF-API.md","ref":"WF-API.md","articles":[]},"previous":{"title":"ETL Artifacts","level":"1.4.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Unified-Views-plugins.md","mtime":"2017-04-24T10:38:06.078Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-24T11:35:03.797Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
