@@ -6,6 +6,7 @@ Issue/Bug reporting:
 * dCompose Gradle plugin
   * https://github.com/chrisgahlert/gradle-dcompose-plugin/issues/9
   * https://github.com/chrisgahlert/gradle-dcompose-plugin/issues/10
+  * https://github.com/chrisgahlert/gradle-dcompose-plugin/issues/11
 * pyGradle
   * https://github.com/linkedin/pygradle/issues/107
   * https://github.com/linkedin/pygradle/issues/96
@@ -20,3 +21,7 @@ Issue/Bug reporting:
 
 Projects/Repositories:
 * PypiRepo for PyGradle (Python Gradle) builds https://github.com/blankdots/ivy-pypi-repo
+
+Repositories:
+* https://hub.docker.com/u/attxproject/ - Docker images repository
+* https://github.com/ATTX-project/ - source code repository

@@ -357,8 +357,8 @@ or
 ## Processing and Indexing Graph Data
 
 The information is processed and indexed according to the plugins specification. Plugins provided with the current version of the implementation are:
-* `python` - simple JSON indexing of a resource/document (a particular set of triples associated with a subject in a graph) which was processed by a JSON-LD frame
-* `Java`
+* `python` - simple JSON indexing of a resource/document (a particular set of triples associated with a subject in a graph) which was processed by a JSON-LD frame;
+* `Java` - makes use of ElasticSearch Siren plugin to index and structure data.
 
 Proposed plugins:
 * `python-ld` - framed JSON-LD will be indexed in Elasticsearch and each indexed resource/document would take shape of sub-graph (or tree based on the subject/JSON-LD frame).

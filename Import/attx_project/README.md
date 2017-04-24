@@ -18,8 +18,8 @@ Other information:
 ## Contributions and Presentations
 
 Reports on technologies and related initiatives:
-  * [Building with Gradle](Gradle.md)
-  * [Messaging Service](Messaging-Service.md)
+  * [Building with Gradle](Building-with-Gradle.md)
+  * [Messaging Brokers](Messaging-Brokers.md)
   * [Service Discovery](Service-Discovery.md)
   * [Workflow Management](Workflow-Management-Tools.md)
 
