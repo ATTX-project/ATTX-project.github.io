@@ -10,7 +10,7 @@
 
 Working directory for the Markdown files  is `Import/attx_project`, change any of the Markdown files or add new ones, in the respective directory. **In order for the files to be visible in the table of contents, make changes to SUMMARY.md . The index is generated based on README.md**
 
-Preview and serve your book using:
+Preview and serve your book using (in Import/attx_project directory):
 
 ```
 $ gitbook serve
