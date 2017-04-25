@@ -131,12 +131,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html">
+        <li class="chapter " data-level="1.3.1" data-path="CSC-cPouta-Cloud-Services-Report.html">
             
-                <a href="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html">
+                <a href="CSC-cPouta-Cloud-Services-Report.html">
             
                     
-                    Building Swarm Mode on a PC or Mac
+                    CSC cPouta Cloud Services Report
             
                 </a>
             
@@ -144,12 +144,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="CSC-cPouta-Cloud-Services-Report.html">
+        <li class="chapter " data-level="1.3.2" data-path="Building-Docker-application-stacks-in-Swarm-Mode.html">
             
-                <a href="CSC-cPouta-Cloud-Services-Report.html">
+                <a href="Building-Docker-application-stacks-in-Swarm-Mode.html">
             
                     
-                    CSC cPouta Cloud Services Report
+                    Building Swarm Mode on a PC or Mac
             
                 </a>
             
@@ -170,12 +170,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+        <li class="chapter " data-level="1.3.4" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
             
-                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
             
                     
-                    Running the ATTX Stack on a PC or Mac
+                    Deploying ATTX Components on Docker Swarm
             
                 </a>
             
@@ -183,12 +183,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+        <li class="chapter " data-level="1.3.5" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
             
-                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
+                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
             
                     
-                    Deploying ATTX Components on Docker Swarm
+                    Running the ATTX Stack on a PC or Mac
             
                 </a>
             
@@ -326,9 +326,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5.2.3" data-path="Linking-graphs.html">
+        <li class="chapter " data-level="1.5.2.3" data-path="Linking-Strategies.html">
             
-                <a href="Linking-graphs.html">
+                <a href="Linking-Strategies.html">
             
                     
                     Linking Strategies
@@ -369,6 +369,19 @@
             
                     
                     ElasticSearch with Siren
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="ElasticSearch-5.html">
+            
+                <a href="ElasticSearch-5.html">
+            
+                    
+                    ElasticSearch 5.x
             
                 </a>
             
@@ -504,7 +517,7 @@
                 <a href="Build-Multiple-Environments.html">
             
                     
-                    Build Multiple Environments
+                    Build Environment Setup
             
                 </a>
             
@@ -544,9 +557,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.5.1" data-path="Gradle.html">
+        <li class="chapter " data-level="2.5.1" data-path="Building-with-Gradle.html">
             
-                <a href="Gradle.html">
+                <a href="Building-with-Gradle.html">
             
                     
                     Building with Gradle
@@ -557,12 +570,12 @@
             
         </li>
     
-        <li class="chapter " data-level="2.5.2" data-path="Messaging-Service.html">
+        <li class="chapter " data-level="2.5.2" data-path="Messaging-Brokers.html">
             
-                <a href="Messaging-Service.html">
+                <a href="Messaging-Brokers.html">
             
                     
-                    Messaging Service
+                    Messaging Brokers
             
                 </a>
             
@@ -699,10 +712,10 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="jenkins-ci">Jenkins CI</h1>
-<p>The basic idea:</p>
+<p>The role of Jenkins in the ATTX development infrastructure:</p>
 <ul>
-<li>Jenkins triggers, orchestrates, executes and monitors running of Gradle tasks using pipelines</li>
-<li>Gradle tasks are used to implement all the required actions related to pipelines (e.g. :buildDockerImage)</li>
+<li>Jenkins triggers, orchestrates, executes and monitors running of Gradle tasks using pipelines;</li>
+<li>Gradle tasks are used to implement all the required actions related to pipelines (e.g. :buildDockerImage, running integration tests, deploying artifacts).</li>
 </ul>
 <p>So instead of using Jenkins plugin to call Docker and create images, we should create a Gradle task that uses Docker and call that task from a Jenkins pipeline.</p>
 <p>Orchestration is handled using Jenkins pipelines that all should share some of the common stages listed below.</p>
@@ -723,32 +736,70 @@
 </ul>
 <!-- TOC END -->
 <h2 id="stages">Stages</h2>
+<p>Example configuration:</p>
+<pre><code>pipeline {
+    agent any
+    stages {
+        stage(&apos;Checkout&apos;) { // for display purposes
+            steps {
+                // Get some code from a GitHub repository
+                git branch: &apos;dev&apos;, url: &apos;https://github.com/ATTX-project/platform-deployment.git&apos;
+            }
+        }
+        stage(&apos;Compile/Package/Test&apos;) {
+            steps {
+                echo sh (script: &quot;${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=dev -PtestEnv=CI :pd-feature-tests:clean :pd-feature-tests:runContainerTests&quot;, returnStdout: true)
+            }
+            post {
+                always {
+                    echo &apos;publishing reports&apos;
+                    publishHTML target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: false,
+                        reportDir: &apos;pd-feature-tests/build/reports/tests/integTest&apos;,
+                        reportFiles: &apos;index.html&apos;,
+                        reportName: &apos;pd-feature-tests-reports&apos;
+                        ]                    
+                }
+                failure {
+                    echo sh (script: &quot;${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=dev -PtestEnv=CI :pd-feature-tests:clean :pd-feature-tests:removeImages&quot;, returnStdout: true)
+                }
+            }
+        }
+    }
+
+}
+</code></pre><p>In the following we will be breaking down the configuration steps and expected output.</p>
 <h3 id="checkout">Checkout</h3>
-<p>Getting the code from Github.</p>
+<p>Getting the code from Github, repository.</p>
 <p>Example:</p>
 <p><code>git branch: &apos;dev&apos;, url: &apos;https://github.com/ATTX-project/distribution-component.git&apos;</code></p>
-<h3 id="buildtestpackage">Build/Test/Package</h3>
+<h3 id="compilepackagetest">Compile/Package/Test</h3>
 <p>Example:</p>
-<p><code>echo sh (script: &quot;${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle :dc-elasticsearch-siren:attx-api-plugin:clean :dc-elasticsearch-siren:attx-api-plugin:build&quot;, returnStdout: true)</code></p>
-<p>We need both &quot;echo&quot; and &quot;returnStdout: true&quot; to get the output of the Gradle execution to Jenkins logs.</p>
+<pre><code>echo sh (script: &quot;${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=dev -PtestEnv=CI :pd-feature-tests:clean :pd-feature-tests:runContainerTests&quot;, returnStdout: true)
+</code></pre><p>We need both &quot;echo&quot; and <code>returnStdout: true</code> to get the output of the Gradle execution to Jenkins logs.</p>
 <h3 id="deploy-artifacts">Deploy artifacts</h3>
 <p>Copies output artifacts to somewhere where they can be used by other pipelines.</p>
-<h3 id="publish-reports">Publish reports</h3>
-<p>Copies output of HTML reports to somewhere where Jenkins can access them.</p>
 <p>Example:</p>
-<p><code>archiveArtifacts artifacts: &apos;dc-elasticsearch-siren/attx-api-plugin/build/libs/*.jar&apos;, onlyIfSuccessful: true</code></p>
+<pre><code>archiveArtifacts artifacts: &apos;dc-elasticsearch-siren/attx-api-plugin/build/libs/*.jar&apos;, onlyIfSuccessful: true
+</code></pre><h3 id="publish-reports">Publish reports</h3>
+<p>Copies output of HTML reports to somewhere where Jenkins can access them. It is important for the results to be displayed even if there was a failure in the build process in order to achieve such functionality we use the syntax provided by Jenkins: <a href="https://jenkins.io/doc/book/pipeline/syntax/#post" target="_blank">https://jenkins.io/doc/book/pipeline/syntax/#post</a></p>
 <p>Example: publishing test reports</p>
-<pre><code>        publishHTML([
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: false,
-            reportDir: &apos;dc-elasticsearch-siren/attx-api-plugin/build/reports/tests/test&apos;,
-            reportFiles: &apos;index.html&apos;,
-            reportName: &apos;dc-elasticsearch-siren-test-reports&apos;
-            ])
+<pre><code>publishHTML target: [
+    allowMissing: false,
+    alwaysLinkToLastBuild: false,
+    keepAll: false,
+    reportDir: &apos;pd-feature-tests/build/reports/tests/integTest&apos;,
+    reportFiles: &apos;index.html&apos;,
+    reportName: &apos;pd-feature-tests-reports&apos;
+    ]                    
+}
 </code></pre><h3 id="build-image">Build image</h3>
 <p>Artifacts are accessed from Jenkins. Normally artifacts are restricted to authenticated clients, but this can be changed by first setting property hudson.security.ArtifactsPermission = true (<a href="https://issues.jenkins-ci.org/browse/JENKINS-1871" target="_blank">https://issues.jenkins-ci.org/browse/JENKINS-1871</a> and <a href="https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties</a>) and then giving everyone access to the artifacts in the Jenkins security matrix.</p>
 <p>Other option is to set &quot;Allow anonymous read access&quot; in the security settings.</p>
+<h3 id="failure">Failure</h3>
+<p>Some of the pipelines required a failure step, more precisely the integration test related tasks, as the tasks created and run containers. In case of failure of correctly executing the Compile/Package/Test task, the containers are not removed and the task is stopped mid execution, thus such a &quot;post execution&quot; task is required.</p>
 <h1 id="plugins">Plugins</h1>
 <ul>
 <li>Join (<a href="https://wiki.jenkins-ci.org/display/JENKINS/Join+Plugin" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/Join+Plugin</a>)</li>
@@ -760,12 +811,16 @@
 </ul>
 <h1 id="additions-to-the-jenkins-image">Additions to the Jenkins image</h1>
 <p>Jenkins container must be linked to the pivy repository container:</p>
-<p><code>docker run -d --restart=always --link pivy_repo:pivyrepo  -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 49001:8080 -v /data/jenkins:/var/jenkins_home -t attxproject/attx-jenkins</code></p>
-<p>The following packages needs to added in order to build the wf-API python project:</p>
+<pre><code>docker run -d --restart=always --link pivy_repo:pivyrepo  -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 49001:8080 -v /data/jenkins:/var/jenkins_home -t attxproject/attx-jenkins
+</code></pre><p>The following packages needs to added in order to make use of the libXML in any of the Python projects:</p>
 <ul>
 <li>apt-get install libxml2-dev libxslt1-dev python-dev</li>
 <li>apt-get install build-essential</li>
 <li>apt-get install zlib1g-dev</li>
+</ul>
+<p>In order to build Maven project it needs to be installed:</p>
+<ul>
+<li>apt-get install -y maven</li>
 </ul>
 
                                 
@@ -799,7 +854,7 @@
                 </a>
                 
                 
-                <a href="Build-Multiple-Environments.html" class="navigation navigation-next " aria-label="Next page: Build Multiple Environments">
+                <a href="Build-Multiple-Environments.html" class="navigation navigation-next " aria-label="Next page: Build Environment Setup">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -810,7 +865,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Jenkins CI","level":"2.4.1","depth":2,"next":{"title":"Build Multiple Environments","level":"2.4.2","depth":2,"path":"Build-Multiple-Environments.md","ref":"Build-Multiple-Environments.md","articles":[]},"previous":{"title":"CI/CD Enviroment","level":"2.4","depth":1,"path":"CI-CD-Enviroment.md","ref":"CI-CD-Enviroment.md","articles":[{"title":"Jenkins CI","level":"2.4.1","depth":2,"path":"Jenkins.md","ref":"Jenkins.md","articles":[]},{"title":"Build Multiple Environments","level":"2.4.2","depth":2,"path":"Build-Multiple-Environments.md","ref":"Build-Multiple-Environments.md","articles":[]},{"title":"Containerized testing","level":"2.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Jenkins.md","mtime":"2017-04-21T09:27:16.428Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-21T12:25:52.095Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Jenkins CI","level":"2.4.1","depth":2,"next":{"title":"Build Environment Setup","level":"2.4.2","depth":2,"path":"Build-Multiple-Environments.md","ref":"Build-Multiple-Environments.md","articles":[]},"previous":{"title":"CI/CD Enviroment","level":"2.4","depth":1,"path":"CI-CD-Enviroment.md","ref":"CI-CD-Enviroment.md","articles":[{"title":"Jenkins CI","level":"2.4.1","depth":2,"path":"Jenkins.md","ref":"Jenkins.md","articles":[]},{"title":"Build Environment Setup","level":"2.4.2","depth":2,"path":"Build-Multiple-Environments.md","ref":"Build-Multiple-Environments.md","articles":[]},{"title":"Containerized testing","level":"2.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Jenkins.md","mtime":"2017-04-24T10:09:25.381Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-24T11:35:03.797Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

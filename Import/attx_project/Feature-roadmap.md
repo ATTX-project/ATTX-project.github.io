@@ -11,6 +11,7 @@ Deliverables:
 - [X] Implement the distributed docker environment
 - [X] **Platform Release 1 for the public**
 - [X] Use case 1 Infrastructures and Publications
+- [X] Publish Wiki
 
 ### Q2 - 30th of June
 - All: Service discovery (finish)
@@ -37,4 +38,4 @@ Deliverable:
 
 Deliverable:
 - [ ] SWIB 2017 Workshop and/or presentation
-- [ ] Publish Wiki
+- [ ] https://www.it2017.fi/

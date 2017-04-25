@@ -19,7 +19,7 @@ In ATTX github repositories, IT/BDD (tests from now on) should be located in sep
 
 ## Testing Workflow
 
-Overview of the steps performed during the test setup:
+Overview of the steps performed during the test suite:
 * Start all required platform containers
 * Wait for the services to come up
 * Build test code

@@ -131,12 +131,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html">
+        <li class="chapter " data-level="1.3.1" data-path="CSC-cPouta-Cloud-Services-Report.html">
             
-                <a href="Running-Docker-application-stacks-in-Swarm-Mode,-in-5-VMS.html">
+                <a href="CSC-cPouta-Cloud-Services-Report.html">
             
                     
-                    Building Swarm Mode on a PC or Mac
+                    CSC cPouta Cloud Services Report
             
                 </a>
             
@@ -144,12 +144,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="CSC-cPouta-Cloud-Services-Report.html">
+        <li class="chapter " data-level="1.3.2" data-path="Building-Docker-application-stacks-in-Swarm-Mode.html">
             
-                <a href="CSC-cPouta-Cloud-Services-Report.html">
+                <a href="Building-Docker-application-stacks-in-Swarm-Mode.html">
             
                     
-                    CSC cPouta Cloud Services Report
+                    Building Swarm Mode on a PC or Mac
             
                 </a>
             
@@ -170,12 +170,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+        <li class="chapter " data-level="1.3.4" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
             
-                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
             
                     
-                    Running the ATTX Stack on a PC or Mac
+                    Deploying ATTX Components on Docker Swarm
             
                 </a>
             
@@ -183,12 +183,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+        <li class="chapter " data-level="1.3.5" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
             
-                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
+                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
             
                     
-                    Deploying ATTX Components on Docker Swarm
+                    Running the ATTX Stack on a PC or Mac
             
                 </a>
             
@@ -326,9 +326,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5.2.3" data-path="Linking-graphs.html">
+        <li class="chapter " data-level="1.5.2.3" data-path="Linking-Strategies.html">
             
-                <a href="Linking-graphs.html">
+                <a href="Linking-Strategies.html">
             
                     
                     Linking Strategies
@@ -369,6 +369,19 @@
             
                     
                     ElasticSearch with Siren
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="ElasticSearch-5.html">
+            
+                <a href="ElasticSearch-5.html">
+            
+                    
+                    ElasticSearch 5.x
             
                 </a>
             
@@ -504,7 +517,7 @@
                 <a href="Build-Multiple-Environments.html">
             
                     
-                    Build Multiple Environments
+                    Build Environment Setup
             
                 </a>
             
@@ -544,9 +557,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.5.1" data-path="Gradle.html">
+        <li class="chapter " data-level="2.5.1" data-path="Building-with-Gradle.html">
             
-                <a href="Gradle.html">
+                <a href="Building-with-Gradle.html">
             
                     
                     Building with Gradle
@@ -557,12 +570,12 @@
             
         </li>
     
-        <li class="chapter " data-level="2.5.2" data-path="Messaging-Service.html">
+        <li class="chapter " data-level="2.5.2" data-path="Messaging-Brokers.html">
             
-                <a href="Messaging-Service.html">
+                <a href="Messaging-Brokers.html">
             
                     
-                    Messaging Service
+                    Messaging Brokers
             
                 </a>
             
@@ -733,7 +746,7 @@
 <ul>
 <li><code>index</code> - on given indexing parameters index the data from the Graph Store and insert it into Distribution Component endpoint;</li>
 <li><code>cluster</code> - cluster the IDs from the working data in the Graph Store;</li>
-<li><code>link</code> - retrieve the links in the Graph Store see: <a href="Linking-graphs.html">Linking Graphs</a>;</li>
+<li><code>link</code> - retrieve the links in the Graph Store see: <a href="Linking-graphs.md">Linking Graphs</a>;</li>
 <li><code>linkstrategy</code> - retrieve either all or specific linking strategies from the Graph Store;</li>
 <li><code>prov</code> - retrieve provenance from the Workflow API and update the Graph Store with the provenance information.</li>
 <li><code>health</code> - checks if the application is running.</li>
@@ -957,7 +970,7 @@ In case the Clustering of IDs is not possible the response status code is <code>
 </ul>
 </li>
 </ul>
-<p>The strategy for linking graphs is detailed at: <a href="Linking-graphs.html">Linking Graphs</a></p>
+<p>The strategy for linking graphs is detailed at: <a href="Linking-graphs.md">Linking Graphs</a></p>
 <ul>
 <li><code>link/{id}</code> GET API:<ul>
 <li>simple:  <a href="http://localhost:4302/0.1/link/{id}" target="_blank">http://localhost:4302/0.1/link/{id}</a></li>
@@ -1060,8 +1073,8 @@ or<pre><code class="lang-{json}">{
 <h2 id="processing-and-indexing-graph-data">Processing and Indexing Graph Data</h2>
 <p>The information is processed and indexed according to the plugins specification. Plugins provided with the current version of the implementation are:</p>
 <ul>
-<li><code>python</code> - simple JSON indexing of a resource/document (a particular set of triples associated with a subject in a graph) which was processed by a JSON-LD frame</li>
-<li><code>Java</code></li>
+<li><code>python</code> - simple JSON indexing of a resource/document (a particular set of triples associated with a subject in a graph) which was processed by a JSON-LD frame;</li>
+<li><code>Java</code> - makes use of ElasticSearch Siren plugin to index and structure data.</li>
 </ul>
 <p>Proposed plugins:</p>
 <ul>
@@ -1180,7 +1193,7 @@ or<pre><code class="lang-{json}">{
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Graph Manager API","level":"1.5.1","depth":2,"next":{"title":"Graph Store","level":"1.5.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.5.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Graph Namespaces","level":"1.5.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking Strategies","level":"1.5.2.3","depth":3,"path":"Linking-graphs.md","ref":"Linking-graphs.md","articles":[]}]},"previous":{"title":"Graph Component","level":"1.5","depth":1,"path":"Graph-Component.md","ref":"Graph-Component.md","articles":[{"title":"Graph Manager API","level":"1.5.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},{"title":"Graph Store","level":"1.5.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.5.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Graph Namespaces","level":"1.5.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking Strategies","level":"1.5.2.3","depth":3,"path":"Linking-graphs.md","ref":"Linking-graphs.md","articles":[]}]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Manager-API.md","mtime":"2017-04-21T12:24:52.642Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-21T12:25:52.095Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Graph Manager API","level":"1.5.1","depth":2,"next":{"title":"Graph Store","level":"1.5.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.5.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Graph Namespaces","level":"1.5.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking Strategies","level":"1.5.2.3","depth":3,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]}]},"previous":{"title":"Graph Component","level":"1.5","depth":1,"path":"Graph-Component.md","ref":"Graph-Component.md","articles":[{"title":"Graph Manager API","level":"1.5.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},{"title":"Graph Store","level":"1.5.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.5.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Graph Namespaces","level":"1.5.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking Strategies","level":"1.5.2.3","depth":3,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]}]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Manager-API.md","mtime":"2017-04-24T10:53:57.504Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-24T11:35:03.797Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Platform Deployment · GitBook</title>
+        <title>Messaging Brokers · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="CSC-cPouta-Cloud-Services-Report.html" />
+    <link rel="next" href="Service-Discovery.html" />
     
     
-    <link rel="prev" href="Architecture.html" />
+    <link rel="prev" href="Building-with-Gradle.html" />
     
 
     </head>
@@ -117,7 +117,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="Platform-Deployment.html">
+        <li class="chapter " data-level="1.3" data-path="Platform-Deployment.html">
             
                 <a href="Platform-Deployment.html">
             
@@ -570,7 +570,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.5.2" data-path="Messaging-Brokers.html">
+        <li class="chapter active" data-level="2.5.2" data-path="Messaging-Brokers.html">
             
                 <a href="Messaging-Brokers.html">
             
@@ -696,7 +696,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Platform Deployment</a>
+        <a href="." >Messaging Brokers</a>
     </h1>
 </div>
 
@@ -711,23 +711,94 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="platform-deployment">Platform Deployment</h1>
-<p>This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.</p>
-<p><strong>Github Repository: <a href="https://github.com/ATTX-project/platform-deployment" target="_blank">platform-deployment</a></strong></p>
-<h2 id="prerequisites">Prerequisites</h2>
-<p>Preconditions for running the ATTX stack:</p>
+                                <h2 id="messaging-brokers">Messaging Brokers</h2>
+<p>Overview based on:</p>
 <ul>
-<li>8 GB RAM (minimum)</li>
-<li>Docker Engine (<a href="https://docs.docker.com/engine/installation/" target="_blank">https://docs.docker.com/engine/installation/</a>)</li>
-<li>Docker Compose (<a href="https://docs.docker.com/compose/" target="_blank">https://docs.docker.com/compose/</a>)</li>
+<li><strong>Ecosystem</strong> - Documentation, Active Development, Open License, Ease of Use</li>
+<li><strong>Features</strong> - Topics and Queues, Reliable Messaging, REST Management API, Streams processing</li>
 </ul>
-<h2 id="instructions">Instructions</h2>
-<p>Instructions for running or deploying the solution on a cloud or local environment are available:</p>
+<table>
+<thead>
+<tr>
+<th>Broker Tool / Messaging Platform</th>
+<th>Ok</th>
+<th>Ecosystem</th>
+<th>Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://kafka.apache.org/" target="_blank">Apache Kafka</a></td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+</tr>
+<tr>
+<td><a href="http://www.nats.io/" target="_blank">NATS</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://activemq.apache.org/" target="_blank">Active MQ</a> with &quot;new&quot; version <a href="http://activemq.apache.org/apollo/" target="_blank">Appolo</a></td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+</tr>
+<tr>
+<td><a href="https://www.rabbitmq.com/" target="_blank">RabbitMQ</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://www.celeryproject.org/" target="_blank">Celery</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://nsq.io/" target="_blank">nsq.io</a></td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>~</td>
+</tr>
+<tr>
+<td><a href="http://zeromq.org/" target="_blank">ZeroMQ</a></td>
+<td>&#x2714;&#xFE0F;&#xFE0F;</td>
+<td>~</td>
+<td>~</td>
+</tr>
+<tr>
+<td><a href="https://qpid.apache.org/" target="_blank">Apache Qpid</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://restmq.com/" target="_blank">RestMQ</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://kr.github.io/beanstalkd/" target="_blank">beanstalkd</a></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Worth mentioning:</p>
 <ul>
-<li><a href="Building-Docker-application-stacks-in-Swarm-Mode.html">Building Swarm Mode on a PC or Mac</a></li>
-<li><a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack (cPouta)</a></li>
-<li><a href="Deploying-ATTX-Components-on-Docker-Swarm.html">Deploying ATTX Components on Docker Swarm</a></li>
-<li><a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">Running the ATTX Stack on a PC or Mac</a></li>
+<li><a href="https://storm.apache.org/" target="_blank">Apache Storm</a> - distributed realtime computation system</li>
+<li><p><a href="http://samza.apache.org/" target="_blank">Apache Samza</a> -  distributed stream processing framework uses <a href="http://kafka.apache.org/" target="_blank">Apache Kafka</a></p>
+<h2 id="references">References</h2>
+</li>
+<li><p><a href="http://queues.io/" target="_blank">http://queues.io/</a></p>
+</li>
+<li><a href="http://data-artisans.com/kafka-flink-a-practical-how-to/" target="_blank">http://data-artisans.com/kafka-flink-a-practical-how-to/</a></li>
+<li>From Kafka to ZeroMQ for real-time log aggregation <a href="https://tomasz.janczuk.org/2015/09/from-kafka-to-zeromq-for-log-aggregation.html" target="_blank">https://tomasz.janczuk.org/2015/09/from-kafka-to-zeromq-for-log-aggregation.html</a></li>
+<li>Reactive Streams for Kafka <a href="https://github.com/akka/reactive-kafka" target="_blank">https://github.com/akka/reactive-kafka</a></li>
 </ul>
 
                                 
@@ -756,12 +827,12 @@
 
             
                 
-                <a href="Architecture.html" class="navigation navigation-prev " aria-label="Previous page: Architecture">
+                <a href="Building-with-Gradle.html" class="navigation navigation-prev " aria-label="Previous page: Building with Gradle">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="CSC-cPouta-Cloud-Services-Report.html" class="navigation navigation-next " aria-label="Next page: CSC cPouta Cloud Services Report">
+                <a href="Service-Discovery.html" class="navigation navigation-next " aria-label="Next page: Service Discovery">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -772,7 +843,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Platform Deployment","level":"1.3","depth":1,"next":{"title":"CSC cPouta Cloud Services Report","level":"1.3.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},"previous":{"title":"Architecture","level":"1.2","depth":1,"path":"Architecture.md","ref":"Architecture.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Platform-Deployment.md","mtime":"2017-04-24T10:19:23.238Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-24T11:35:03.797Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Messaging Brokers","level":"2.5.2","depth":2,"next":{"title":"Service Discovery","level":"2.5.3","depth":2,"path":"Service-Discovery.md","ref":"Service-Discovery.md","articles":[]},"previous":{"title":"Building with Gradle","level":"2.5.1","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Messaging-Brokers.md","mtime":"2017-04-21T09:27:16.428Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-24T11:35:03.797Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

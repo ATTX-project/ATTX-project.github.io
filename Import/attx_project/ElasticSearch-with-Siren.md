@@ -1,4 +1,4 @@
-# Elasticsearch with Siren
+# ElasticSearch with Siren
 
 This page describes the components and configuration needed to get the ATTX ES plugin up and running. This information should be used as the basis for creating a containerized version of the API component
 
@@ -154,4 +154,3 @@ bin/plugin --url file:///path/to/plugin --install plugin-name
 Simple queries like "test" are translated into simple NodeQuery.
 
 _TODO: continue this!_
-

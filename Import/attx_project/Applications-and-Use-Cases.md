@@ -1,9 +1,17 @@
-## Use Cases
+# Applications and Use Cases
 
 * Jyväskylä partnership
 * Hanken partnership
 
-## Visualizations
+## Ideas
+
+A series of results during brainstorming sessions, that resulted in features which might be implement or not.
+
+*  we integrate data via a workflow, for example from 3 sources, at the end an entity which combines all the information from the 3 data sources. At the end we do a quality evaluation of the provenance which provided a larger quantity of information to the result, assuming that the entity should be `skos:exactMatch` in all 3 datasets. Because we can tell people what is missing in their data.  It can also be a mechanism to tell we can link or not your data.
+* grouping different editions together
+* URI dereferencing and reconciliation consistency
+
+### Visualizations
 
 * https://github.com/Data2Semantics/provoviz
 * http://www.ontodia.org/
@@ -25,13 +33,8 @@ or more visualisation examples:
 * https://github.com/neerajdembla212/d3-snake-chart
 * http://square.github.io/crossfilter/ - multidimensional filtering
 
-## Ideas
 
-*  we integrate data via a workflow, for example from 3 sources, at the end an entity which combines all the information from the 3 data sources. At the end we do a quality evaluation of the provenance which provided a larger quantity of information to the result, assuming that the entity should be `skos:exactMatch` in all 3 datasets. Because we can tell people what is missing in their data.  It can also be a mechanism to tell we can link or not your data.
-* grouping different editions together
-* URI dereferencing and reconciliation consistency
-
-# Project related data sources
+## Project related data sources
 
 A list of data sets and APIs relevant to the project.
 * https://finto.fi/en/ - specifically https://finto.fi/okm-tieteenala/fi/
