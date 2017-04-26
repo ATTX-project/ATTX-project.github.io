@@ -10,6 +10,7 @@
   * [Provisioning ATTX Components on CSC Open Stack \(cPouta\)](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)
   * [Deploying ATTX Components on Docker Swarm](Deploying-ATTX-Components-on-Docker-Swarm.md)
   * [Running the ATTX Stack on a PC or Mac](Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md)
+  * [Using Consul for Service Discovery on Docker Swarm](Using-Consul-for-Service-Discovery-on-Docker-Swarm.md)
 
 * [Workflow Component](Workflow-Component.md)
   * [ETL Artifacts](ETL-Artifacts.md)
