@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Building with Gradle · GitBook</title>
+        <title>Building with (Py)Gradle · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -573,7 +573,7 @@
                 <a href="Building-with-Gradle.html">
             
                     
-                    Building with Gradle
+                    Building with (Py)Gradle
             
                 </a>
             
@@ -707,7 +707,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Building with Gradle</a>
+        <a href="." >Building with (Py)Gradle</a>
     </h1>
 </div>
 
@@ -722,14 +722,14 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="building-with-gradle">Building with Gradle</h1>
+                                <h1 id="building-with-pygradle">Building with (Py)Gradle</h1>
 <p>Brief report on interacting and working with Gradle within the project.</p>
 <!-- TOC START min:1 max:4 link:true update:true -->
 <ul>
+<li><a href="#building-with-pygradle">Building with (Py)Gradle</a><ul>
 <li><a href="#gradle">Gradle</a><ul>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#setting-up">Setting up</a></li>
-<li><a href="#building-and-running-tasks">Building and Running Tasks</a></li>
 </ul>
 </li>
 <li><a href="#python--gradle--">Python + Gradle = &#x2665;&#xFE0F;</a><ul>
@@ -739,10 +739,13 @@
 <li><a href="#excluding-depenencies">Excluding depenencies</a></li>
 </ul>
 </li>
-<li><a href="#building-and-running-tasks-1">Building and Running Tasks</a></li>
+<li><a href="#building-and-running-tasks">Building and Running Tasks</a></li>
+<li><a href="#example-pygradle-projects">Example PyGradle Projects</a></li>
 </ul>
 </li>
 <li><a href="#documentation">Documentation</a></li>
+</ul>
+</li>
 </ul>
 <!-- TOC END -->
 <h2 id="gradle">Gradle</h2>
@@ -750,7 +753,7 @@
 <p>Installing on Ubuntu:</p>
 <ul>
 <li><code>curl -s https://get.sdkman.io | bash</code> - install sdk</li>
-<li><code>sdk install gradle 3.3</code> - install gradle 3.3 (or latest version)</li>
+<li><code>sdk install gradle 3.5</code> - install gradle 3.3 (or latest version)</li>
 <li>check the installed version <code>gradle -v</code></li>
 </ul>
 <p>Installing on MacOS (assuming <a href="http://brew.sh/" target="_blank">homebrew</a> is installed):</p>
@@ -759,43 +762,31 @@
 <li>check the installed version <code>gradle -v</code></li>
 </ul>
 <h3 id="setting-up">Setting up</h3>
-<p>There are two ways to work with gradle:</p>
+<p>There are two ways to work with Gradle:</p>
 <ul>
 <li>install it on your machine - see <a href="#installation">Installation</a></li>
 <li>provide a <a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html" target="_blank">wrapper</a> so that others can also work with the same version or we can distribute the project for others that do no have Gradle installed, or need to work with a specific version of Gradle.</li>
 </ul>
 <p>There are two ways to create a Gradle Wrapper (both require Gradle installed):</p>
 <ul>
-<li>use command <code>gradle wrapper --gradle-version 3.3</code> (last value is the version of gradle set for the wrapper);</li>
+<li>use command <code>gradle wrapper --gradle-version 3.5</code> (last value is the version of gradle set for the wrapper);</li>
 <li>in the <code>build.gradle</code> file create a wrapper task (see below) and use command <code>gradle wrapper</code></li>
 </ul>
 <pre><code class="lang-{groovy}">task wrapper(type: Wrapper) {
-   gradleVersion = &apos;3.3&apos;
+   gradleVersion = &apos;3.5&apos;
 }
 </code></pre>
-<h3 id="building-and-running-tasks">Building and Running Tasks</h3>
-<p>There are two ways to run the tasks and build either with <code>gradle</code> or <code>./gradlew</code> commands. In the working directory where <code>build.gradle</code> file is available one can make use of the following commands.</p>
-<p>Tasks:</p>
-<ul>
-<li>clean: <code>./gradlew clean</code></li>
-<li>build: <code>./gradlew build</code></li>
-<li>dependencies: <code>./gradlew dependencies</code> - outputs a nice dependency tree.</li>
-<li>other tasks: <code>./gradlew :runTests</code> or <code>./gradlew :project:runtTests</code></li>
-<li>exclude tasks: <code>./gradlew build -x :project:runTests</code></li>
-<li>debugging: <code>./gradlew :project:testsReport --stacktrace</code></li>
-<li>do all: <code>./gradlew clean build -x :project:runTests -x :project:testsReport</code></li>
-</ul>
 <h2 id="python--gradle--&#xFE0F;">Python + Gradle = &#x2665;&#xFE0F;</h2>
 <h3 id="setting-up">Setting up</h3>
 <p>Setting up steps overview - all these steps are detailed in this section:</p>
 <ol>
-<li>acquire Gradle and (optional) create a gradle wrapper - see <a href="#installation">Installation</a>;</li>
+<li>acquire Gradle and (optional) create a Gradle wrapper - see <a href="#installation">Installation</a>;</li>
 <li>create PyPi repository - see <a href="#creating-a-pypi-repository">Creating a PyPi repository</a>;</li>
 <li>set up Python project structure;</li>
 <li>create <code>build.gradle</code> file with appropriate PyGradle plugin;</li>
 <li>generate project <code>setup.py</code>.</li>
 </ol>
-<p>One of the best way to work with gradle in Python is using <a href="https://github.com/linkedin/pygradle" target="_blank">PyGradle</a>. It is also recommended using Gradle version 3.0+ .</p>
+<p>One of the best way to work with gradle in Python is using <a href="https://github.com/linkedin/pygradle" target="_blank">PyGradle</a>. It is also recommended using Gradle version 3.+ .</p>
 <p>PyGradle comes with several plugins available (for specific details refer to PyGradle github repository).</p>
 <table>
 <thead>
@@ -834,7 +825,7 @@
 <p>PyGradle depends on Ivy metadata to build a dependency graph, thus one cannot use pypi directly. For this reason it is recommended to build a local pypi repository using the <a href="https://github.com/linkedin/pygradle/tree/master/pivy-importer" target="_blank">pivy-importer</a>; for the latest pivy-importer jre see <a href="https://bintray.com/linkedin/maven/pivy-importer" target="_blank">pivy-importer jfrog bintray</a>.</p>
 <p>The plugins can be added from Gradle plugins repository:</p>
 <pre><code class="lang-{groovy}">plugins {
-  id &quot;com.linkedin.python-cli&quot; version &quot;0.3.36&quot;
+  id &quot;com.linkedin.python-cli&quot; version &quot;0.4.9&quot;
 }
 </code></pre>
 <p>or by jcenter</p>
@@ -843,7 +834,7 @@
         jcenter()
     }
     dependencies {
-        classpath group: &apos;com.linkedin.pygradle&apos;, name: &apos;pygradle-plugin&apos;, version: &apos;0.4.1&apos;
+        classpath group: &apos;com.linkedin.pygradle&apos;, name: &apos;pygradle-plugin&apos;, version: &apos;0.4.9&apos;
     }
 }
 apply plugin: &apos;com.linkedin.python-cli&apos;
@@ -854,9 +845,28 @@ apply plugin: &apos;com.linkedin.python-cli&apos;
 <li><p>local - that can be built following the instructions:
 Requires the pivy repository locally check build.gradle</p>
 <ul>
-<li>download from <a href="https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.3.39" target="_blank">https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.3.39</a></li>
+<li>download from <a href="https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.4.9" target="_blank">https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.4.9</a></li>
 <li><p>run as below</p>
-<pre><code>java -jar ~/Software/pivy-importer-0.3.37-all.jar --repo /home/stefanne/Software/pivy virtualenv:15.0.1 pip:7.1.2 connexion:1.0.129 gunicorn:19.6.0 lxml:3.6.4 rdflib:4.2.1 rdflib-jsonld:0.4.0 PyMySQL:0.7.9 setuptools:19.1.1 swagger-spec-validator:2.0.2 pathlib:1.0.1 wheel:0.26.0 setuptools-git:1.1 flake8:2.5.4 Sphinx:1.4.1 pex:1.1.4 pytest:2.9.1 pytest-cov:2.2.1 pytest-xdist:1.14 setuptools:28.0.0 pytest-html:1.12.0 --replace alabaster:0.7=alabaster:0.7.1,pytz:0a=pytz:2016.4,Babel:0.8=Babel:1.0,sphinx_rtd_theme:0.1=sphinx_rtd_theme:0.1.1,idna:2.0.0=idna:2.1,chardet:2.2=chardet:2.3,setuptools:0.6a2=setuptools:32.1.0
+<pre><code>java -jar ~/Software/pivy-importer-0.4.9-all.jar --repo /home/user/repository \
+  virtualenv:15.0.1 \
+  pip:7.1.2 \
+  gunicorn:19.6.0 \
+  lxml:3.6.4 rdflib:4.2.1 \
+  rdflib-jsonld:0.4.0  \
+  PyMySQL:0.7.9 \
+  setuptools:19.1.1 \
+  pytest:2.9.1 \
+  pytest-cov:2.2.1 \
+  pytest-xdist:1.14 \
+  setuptools:32.1.0 \
+  pytest-html:1.12.0  \
+--replace alabaster:0.7=alabaster:0.7.1, \
+  pytz:0a=pytz:2016.4, \
+  Babel:0.8=Babel:1.0, \
+  sphinx_rtd_theme:0.1=sphinx_rtd_theme:0.1.1, \
+  idna:2.0.0=idna:2.1, \
+  chardet:2.2=chardet:2.3, \
+  setuptools:0.6a2=setuptools:32.1.0
 </code></pre></li>
 </ul>
 </li>
@@ -876,7 +886,7 @@ Requires the pivy repository locally check build.gradle</p>
 </code></pre>
 <p>Create a <code>build.gradle</code> file. An example of a such a file is bellow with some specific options.</p>
 <pre><code class="lang-{groovy}">plugins {
-  id &quot;com.linkedin.python-cli&quot; version &quot;0.3.36&quot;
+  id &quot;com.linkedin.python-cli&quot; version &quot;0.4.9&quot;
 }
 
 python {
@@ -916,11 +926,12 @@ repositories {
    }
 }
 </code></pre>
-<p>Create the <code>setup.py</code>:</p>
-<pre><code>./gradlew generateSetupPy
-</code></pre><p>The <code>setup.py</code> in this example was created using the above task, by default the &quot;setup&quot; section at the bottom is commented out, so please look it over before continuing. One would want to un-comment the whole section at the bottom of the <code>setup.py</code>. - <strong>Noticed that this was not required anymore as of 0.3.38</strong></p>
-<p><em>Note:</em> The <code>generateSetupPy</code> task should only be used to bootstrap a project and should be checked in to a project.</p>
-<h4 id="excluding-depenencies">Excluding depenencies</h4>
+<p>Create the <code>setup.py</code> using <code>gradle generateSetupPy</code></p>
+<p>The <code>setup.py</code> in this example was created using the above task, by default the &quot;setup&quot; section at the bottom is commented out, <strong>so please look it over before continuing. One would want to un-comment the whole section at the bottom of the <code>setup.py</code>.</strong> One would also like to add a <code>setup.cfg</code> e.g.:</p>
+<pre><code>[flake8]
+ignore = E121,E123,E226,W292
+max-line-length = 160
+</code></pre><h4 id="excluding-depenencies">Excluding depenencies</h4>
 <p>If there are issues with depenencies in your project e.g. : <a href="https://github.com/linkedin/pygradle/issues/96" target="_blank">https://github.com/linkedin/pygradle/issues/96</a> one could exclude the dependency as follows:</p>
 <pre><code class="lang-{groovy}">dependencies {
     python (&apos;pypi:connexion:1.0.129&apos;) {
@@ -929,19 +940,19 @@ repositories {
 }
 </code></pre>
 <h3 id="building-and-running-tasks">Building and Running Tasks</h3>
-<p>Building an running tasks is the same as the Gradle, however here are some examples customised to PyGradle:
-Tasks:</p>
+<p>There are two ways to run the tasks and build either with <code>gradle</code> or <code>./gradlew</code> commands. In the working directory where <code>build.gradle</code> file is available one can make use of the following commands.</p>
+<p>Building an running tasks is the same as the Gradle, however here are some examples customised to PyGradle:</p>
+<p>Tasks:</p>
 <ul>
-<li>clean: <code>./gradlew clean</code></li>
-<li>build: <code>./gradlew build</code></li>
-<li>other tasks: <code>./gradlew :runTests</code> or <code>./gradlew :project:pytest</code></li>
-<li>exclude tasks: <code>./gradlew build -x :project:pytest</code></li>
-<li>debugging: <code>./gradlew :project:testsReport --stacktrace</code></li>
-<li>do all: <code>./gradlew clean build -x :project:pytest -x :project:testsReport</code></li>
-<li>see tasks: <code>./gradlew tasks --all</code> and depenencies <code>./gradlew depenencies</code> (previous to Gradle 3.3 all the tasks could be seen simply with <code>./gradlew tasks</code> with 3.3 the <code>--all</code> parameter was added to limit the number of tasks shown)</li>
-<li>see test coverage <code>./gradlew :project:pytest coverage</code> it will generate a html report in <code>build/coverage/htmlcov</code></li>
+<li>clean: <code>gradle clean</code></li>
+<li>build: <code>gradle build</code></li>
+<li>other tasks: <code>gradle :runTests</code> (see below how to add this task) or <code>gradle pytest</code></li>
+<li>exclude tasks: <code>gradle build -x pytest</code></li>
+<li>do all: <code>gradle clean build -x pytest</code></li>
+<li>see tasks: <code>gradle tasks --all</code> and depenencies <code>gradle depenencies</code> (previous to Gradle 3.+ all the tasks could be seen simply with <code>gradle tasks</code> with 3.+ the <code>--all</code> parameter was added to limit the number of tasks shown)</li>
+<li>see test coverage <code>gradle pytest coverage</code> it will generate a html report in <code>build/coverage/htmlcov</code></li>
 </ul>
-<p>In order to generate a HTML test report one could use <code>pytest-html</code> and creating a gradle task for that:</p>
+<p>In order to generate a HTML test report one could use <code>pytest-html</code> dependency and creating a Gradle task for that:</p>
 <pre><code class="lang-{groovy}">// generate Tests report via a script.
 task runTests(type:Exec) {
   workingDir &apos;.&apos;
@@ -961,6 +972,12 @@ command -v source &gt;/dev/null 2&gt;&amp;1 || {
 source activate
 py.test tests --html=build/test-report/index.html --self-contained-html
 </code></pre>
+<h3 id="example-pygradle-projects">Example PyGradle Projects</h3>
+<p>Besides the examples provided <a href="https://github.com/linkedin/pygradle/tree/master/examples" target="_blank">https://github.com/linkedin/pygradle/tree/master/examples</a> we provide two additional ones:</p>
+<ul>
+<li>Example of of building a Falcon REST API using PyGradle (using python-web-app plugin) <a href="https://github.com/blankdots/pygradle-falcon-api" target="_blank">https://github.com/blankdots/pygradle-falcon-api</a></li>
+<li>Command line utility using <a href="http://click.pocoo.org/6/" target="_blank">Click</a> for converting RDF to JSON using a <a href="http://json-ld.org/spec/latest/json-ld-framing/" target="_blank">JSON-LD frame</a> <a href="https://github.com/blankdots/pygradle-jsonld-cli" target="_blank">https://github.com/blankdots/pygradle-jsonld-cli</a></li>
+</ul>
 <h2 id="documentation">Documentation</h2>
 <p>Getting started:</p>
 <ul>
@@ -1026,7 +1043,7 @@ py.test tests --html=build/test-report/index.html --self-contained-html
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Building with Gradle","level":"2.5.1","depth":2,"next":{"title":"Messaging Brokers","level":"2.5.2","depth":2,"path":"Messaging-Brokers.md","ref":"Messaging-Brokers.md","articles":[]},"previous":{"title":"Reports","level":"2.5","depth":1,"ref":"","articles":[{"title":"Building with Gradle","level":"2.5.1","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers","level":"2.5.2","depth":2,"path":"Messaging-Brokers.md","ref":"Messaging-Brokers.md","articles":[]},{"title":"Service Discovery","level":"2.5.3","depth":2,"path":"Service-Discovery.md","ref":"Service-Discovery.md","articles":[]},{"title":"Workflow Management","level":"2.5.4","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Building-with-Gradle.md","mtime":"2017-04-26T07:43:36.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-03T10:04:02.626Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Building with (Py)Gradle","level":"2.5.1","depth":2,"next":{"title":"Messaging Brokers","level":"2.5.2","depth":2,"path":"Messaging-Brokers.md","ref":"Messaging-Brokers.md","articles":[]},"previous":{"title":"Reports","level":"2.5","depth":1,"ref":"","articles":[{"title":"Building with (Py)Gradle","level":"2.5.1","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers","level":"2.5.2","depth":2,"path":"Messaging-Brokers.md","ref":"Messaging-Brokers.md","articles":[]},{"title":"Service Discovery","level":"2.5.3","depth":2,"path":"Service-Discovery.md","ref":"Service-Discovery.md","articles":[]},{"title":"Workflow Management","level":"2.5.4","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Building-with-Gradle.md","mtime":"2017-05-03T10:46:23.686Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-03T10:53:32.745Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
