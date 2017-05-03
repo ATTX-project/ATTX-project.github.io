@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Building with Gradle · GitBook</title>
+        <title>Using Consul for Service Discovery on Docker Swarm · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,8 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Messaging-Brokers.html" />
+    <link rel="next" href="Workflow-Component.html" />
     
+    
+    <link rel="prev" href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html" />
     
 
     </head>
@@ -194,7 +196,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.6" data-path="Using-Consul-for-Service-Discovery-on-Docker-Swarm.html">
+        <li class="chapter active" data-level="1.3.6" data-path="Using-Consul-for-Service-Discovery-on-Docker-Swarm.html">
             
                 <a href="Using-Consul-for-Service-Discovery-on-Docker-Swarm.html">
             
@@ -568,7 +570,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="2.5.1" data-path="Building-with-Gradle.html">
+        <li class="chapter " data-level="2.5.1" data-path="Building-with-Gradle.html">
             
                 <a href="Building-with-Gradle.html">
             
@@ -707,7 +709,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Building with Gradle</a>
+        <a href="." >Using Consul for Service Discovery on Docker Swarm</a>
     </h1>
 </div>
 
@@ -722,271 +724,145 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="building-with-gradle">Building with Gradle</h1>
-<p>Brief report on interacting and working with Gradle within the project.</p>
-<!-- TOC START min:1 max:4 link:true update:true -->
-<ul>
-<li><a href="#gradle">Gradle</a><ul>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#setting-up">Setting up</a></li>
-<li><a href="#building-and-running-tasks">Building and Running Tasks</a></li>
-</ul>
-</li>
-<li><a href="#python--gradle--">Python + Gradle = &#x2665;&#xFE0F;</a><ul>
-<li><a href="#setting-up-1">Setting up</a><ul>
-<li><a href="#creating-a-pypi-repository">Creating a PyPi repository</a></li>
-<li><a href="#python-project-setup">Python project setup</a></li>
-<li><a href="#excluding-depenencies">Excluding depenencies</a></li>
-</ul>
-</li>
-<li><a href="#building-and-running-tasks-1">Building and Running Tasks</a></li>
-</ul>
-</li>
-<li><a href="#documentation">Documentation</a></li>
-</ul>
-<!-- TOC END -->
-<h2 id="gradle">Gradle</h2>
-<h3 id="installation">Installation</h3>
-<p>Installing on Ubuntu:</p>
-<ul>
-<li><code>curl -s https://get.sdkman.io | bash</code> - install sdk</li>
-<li><code>sdk install gradle 3.3</code> - install gradle 3.3 (or latest version)</li>
-<li>check the installed version <code>gradle -v</code></li>
-</ul>
-<p>Installing on MacOS (assuming <a href="http://brew.sh/" target="_blank">homebrew</a> is installed):</p>
-<ul>
-<li><code>brew install gradle</code></li>
-<li>check the installed version <code>gradle -v</code></li>
-</ul>
-<h3 id="setting-up">Setting up</h3>
-<p>There are two ways to work with gradle:</p>
-<ul>
-<li>install it on your machine - see <a href="#installation">Installation</a></li>
-<li>provide a <a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html" target="_blank">wrapper</a> so that others can also work with the same version or we can distribute the project for others that do no have Gradle installed, or need to work with a specific version of Gradle.</li>
-</ul>
-<p>There are two ways to create a Gradle Wrapper (both require Gradle installed):</p>
-<ul>
-<li>use command <code>gradle wrapper --gradle-version 3.3</code> (last value is the version of gradle set for the wrapper);</li>
-<li>in the <code>build.gradle</code> file create a wrapper task (see below) and use command <code>gradle wrapper</code></li>
-</ul>
-<pre><code class="lang-{groovy}">task wrapper(type: Wrapper) {
-   gradleVersion = &apos;3.3&apos;
-}
-</code></pre>
-<h3 id="building-and-running-tasks">Building and Running Tasks</h3>
-<p>There are two ways to run the tasks and build either with <code>gradle</code> or <code>./gradlew</code> commands. In the working directory where <code>build.gradle</code> file is available one can make use of the following commands.</p>
-<p>Tasks:</p>
-<ul>
-<li>clean: <code>./gradlew clean</code></li>
-<li>build: <code>./gradlew build</code></li>
-<li>dependencies: <code>./gradlew dependencies</code> - outputs a nice dependency tree.</li>
-<li>other tasks: <code>./gradlew :runTests</code> or <code>./gradlew :project:runtTests</code></li>
-<li>exclude tasks: <code>./gradlew build -x :project:runTests</code></li>
-<li>debugging: <code>./gradlew :project:testsReport --stacktrace</code></li>
-<li>do all: <code>./gradlew clean build -x :project:runTests -x :project:testsReport</code></li>
-</ul>
-<h2 id="python--gradle--&#xFE0F;">Python + Gradle = &#x2665;&#xFE0F;</h2>
-<h3 id="setting-up">Setting up</h3>
-<p>Setting up steps overview - all these steps are detailed in this section:</p>
+                                <h1 id="using-consul-for-service-discovery-in-docker-swarm">Using Consul for Service Discovery in Docker Swarm</h1>
+<p>Hereby you can find a report of a test implementation of <a href="https://www.consul.io/" target="_blank">Consul</a> as a <a href="Service-Discovery.html">Service Discovery</a> solution in a <a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a> cluster.</p>
+<!-- TOC START min:1 max:3 link:true update:false -->
 <ol>
-<li>acquire Gradle and (optional) create a gradle wrapper - see <a href="#installation">Installation</a>;</li>
-<li>create PyPi repository - see <a href="#creating-a-pypi-repository">Creating a PyPi repository</a>;</li>
-<li>set up Python project structure;</li>
-<li>create <code>build.gradle</code> file with appropriate PyGradle plugin;</li>
-<li>generate project <code>setup.py</code>.</li>
+<li>Deployment on Docker Swarm</li>
+<li>Possibilities</li>
+<li>Limitations and a possible solution</li>
+<li>Conclusions<!-- TOC END -->
+</li>
 </ol>
-<p>One of the best way to work with gradle in Python is using <a href="https://github.com/linkedin/pygradle" target="_blank">PyGradle</a>. It is also recommended using Gradle version 3.0+ .</p>
-<p>PyGradle comes with several plugins available (for specific details refer to PyGradle github repository).</p>
-<table>
-<thead>
-<tr>
-<th>Plugin Name</th>
-<th>Used When</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python.md" target="_blank">com.linkedin.python</a></td>
-<td>Base Python Plugin</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-sdist.md" target="_blank">com.linkedin.python-sdist</a></td>
-<td>Developing Libraries</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-web-app.md" target="_blank">com.linkedin.python-web-app</a></td>
-<td>Developing Deployable Applications</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-cli.md" target="_blank">com.linkedin.python-cli</a></td>
-<td>Developing Command Line Applications</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-flyer.md" target="_blank">com.linkedin.python-flyer</a></td>
-<td>Developing Flyer (Flask + Ember) Applications</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-pex.md" target="_blank">com.linkedin.python-pex</a></td>
-<td>Developing Pex Applications</td>
-</tr>
-</tbody>
-</table>
-<p>PyGradle depends on Ivy metadata to build a dependency graph, thus one cannot use pypi directly. For this reason it is recommended to build a local pypi repository using the <a href="https://github.com/linkedin/pygradle/tree/master/pivy-importer" target="_blank">pivy-importer</a>; for the latest pivy-importer jre see <a href="https://bintray.com/linkedin/maven/pivy-importer" target="_blank">pivy-importer jfrog bintray</a>.</p>
-<p>The plugins can be added from Gradle plugins repository:</p>
-<pre><code class="lang-{groovy}">plugins {
-  id &quot;com.linkedin.python-cli&quot; version &quot;0.3.36&quot;
-}
-</code></pre>
-<p>or by jcenter</p>
-<pre><code class="lang-{groovy}">buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath group: &apos;com.linkedin.pygradle&apos;, name: &apos;pygradle-plugin&apos;, version: &apos;0.4.1&apos;
-    }
-}
-apply plugin: &apos;com.linkedin.python-cli&apos;
-</code></pre>
-<h4 id="creating-a-pypi-repository">Creating a PyPi repository</h4>
-<p>There are two methods to provide a PyPi repository:</p>
-<ul>
-<li><p>local - that can be built following the instructions:
-Requires the pivy repository locally check build.gradle</p>
-<ul>
-<li>download from <a href="https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.3.39" target="_blank">https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.3.39</a></li>
-<li><p>run as below</p>
-<pre><code>java -jar ~/Software/pivy-importer-0.3.37-all.jar --repo /home/stefanne/Software/pivy virtualenv:15.0.1 pip:7.1.2 connexion:1.0.129 gunicorn:19.6.0 lxml:3.6.4 rdflib:4.2.1 rdflib-jsonld:0.4.0 PyMySQL:0.7.9 setuptools:19.1.1 swagger-spec-validator:2.0.2 pathlib:1.0.1 wheel:0.26.0 setuptools-git:1.1 flake8:2.5.4 Sphinx:1.4.1 pex:1.1.4 pytest:2.9.1 pytest-cov:2.2.1 pytest-xdist:1.14 setuptools:28.0.0 pytest-html:1.12.0 --replace alabaster:0.7=alabaster:0.7.1,pytz:0a=pytz:2016.4,Babel:0.8=Babel:1.0,sphinx_rtd_theme:0.1=sphinx_rtd_theme:0.1.1,idna:2.0.0=idna:2.1,chardet:2.2=chardet:2.3,setuptools:0.6a2=setuptools:32.1.0
-</code></pre></li>
-</ul>
-</li>
-<li>hosted: one can build his own hosted PyPi repo for PyGradle using a <a href="https://github.com/ATTX-project/development-environment/tree/dev/pivy-repo" target="_blank">Docker image</a> - build your own repository using <a href="https://github.com/blankdots/ivy-pypi-repo" target="_blank">https://github.com/blankdots/ivy-pypi-repo</a></li>
-</ul>
-<h4 id="python-project-setup">Python project setup</h4>
-<p>For a full example and detailed description visit: <a href="https://github.com/linkedin/pygradle/tree/master/examples/example-project" target="_blank">https://github.com/linkedin/pygradle/tree/master/examples/example-project</a> .</p>
-<p>Standard python project tree -  <em>Note the lack of a setup.py, more on this in a moment</em>:</p>
-<pre><code class="lang-.">&#x251C;&#x2500;&#x2500; README.md
-&#x251C;&#x2500;&#x2500; setup.cfg
-&#x251C;&#x2500;&#x2500; src
-&#x2502;   &#x2514;&#x2500;&#x2500; project
-&#x2502;       &#x2514;&#x2500;&#x2500; __init__.py
-&#x2502;       &#x2514;&#x2500;&#x2500; example.py
-&#x2514;&#x2500;&#x2500; test
-    &#x2514;&#x2500;&#x2500; test_example.py
-</code></pre>
-<p>Create a <code>build.gradle</code> file. An example of a such a file is bellow with some specific options.</p>
-<pre><code class="lang-{groovy}">plugins {
-  id &quot;com.linkedin.python-cli&quot; version &quot;0.3.36&quot;
-}
+<h2 id="1-deployment-on-docker-swarm">1. Deployment on Docker Swarm</h2>
+<p>For this exercise, we deployed a 3-node Docker Swarm with one Master and two workers (identical to the one running in cPouta).</p>
+<p>Such 3-node swarm was created with docker-machine (requires not only <a href="https://docs.docker.com/machine/install-machine/" target="_blank">Docker Machine</a>, but also  <a href="https://www.virtualbox.org/wiki/VirtualBox" target="_blank">Virtualbox</a>), and can be automated by a <a href="https://github.com/ATTX-project/platform-deployment/blob/feature-docker-machine/swarm-mode-docker-machine/createSwarm.sh" target="_blank">BASH script</a>.</p>
+<p>Once the Swarm is created, we can deploy Consul in our Docker Machine Swarm hosts. Given that Consul doesn&apos;t yet support deployment in native Docker Swarm mode, it will have to be deployed in <a href="https://docs.docker.com/compose/compose-file/#networkmode" target="_blank">host mode</a>, as per the following <code>docker-compose.yml</code> example file:</p>
+<pre><code>version: &apos;2&apos;
 
-python {
-  // force to use a specific version for a plugin
-  forceVersion(&apos;pypi&apos;, &apos;pip&apos;, &apos;7.1.2&apos;)
-  // set the test directory to be used by py.test
-  // by default it is test directory.
-  testDir = file(&apos;tests&apos;)
+services:
+  consul:
+    container_name: consul
+    image: progrium/consul
+    ports:
+      - 8500:8500
+      - 8301:8301
+      - 8300:8300
+    command: -server -bootstrap
 
-  // Use a specific python version if it is available in the PATH it
-  // will use it
-  details.prependExecutableDirectory(new File(&apos;/usr/bin/python3.4&apos;))
-  // or details.appendExecutableDirectory(new File(&apos;/usr/bin/python3.4&apos;))
-  details.pythonVersion = &apos;3.4&apos;
-}
+  consul-server:
+    container_name: consul
+    image: consul
+    network_mode: host
+    environment:
+      - &apos;CONSUL_LOCAL_CONFIG={&quot;skip_leave_on_interrupt&quot;: true}&apos;
+    command: agent -server -bind=$DOCKER_IP -bootstrap-expect=1 -client=$DOCKER_IP
 
-// define an explicit installation sequence for the dependencies.
-project.tasks.findByName(&apos;installPythonRequirements&apos;).sorted = false
+  consul-agent:
+    container_name: consul
+    image: consul
+    network_mode: host
+    environment:
+      - &apos;CONSUL_LOCAL_CONFIG={&quot;leave_on_terminate&quot;: true}&apos;
+    command: agent -bind=$DOCKER_IP -retry-join=$CONSUL_SERVER_IP -client=$DOCKER_IP
+</code></pre><p>This example <code>docker-compose.file</code> can be used to deploy the Consul Server in our running Swarm Master with the following commands:</p>
+<ol>
+<li><code>eval $(docker-machine env swarm-1</code></li>
+<li><code>export DOCKER_IP=$(docker-machine ip swarm-1)</code></li>
+<li><code>docker-compose -f docker-compose-proxy.yml up -d consul-server</code></li>
+</ol>
+<p>With the Consul Server running, we can test Consul&apos;s Key-Value Store HTTP API:</p>
+<ol>
+<li>Check the status of Consul&apos;s Key-Value Store HTTP API (should be empty at this point):
+<code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/catalog/service/web&quot;</code></li>
+<li>Create a test entry in Consul&apos;s Key-Value Store: <code>curl -X PUT -d &apos;this is a test&apos; &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/msg1&quot;</code></li>
+<li>Retrieve your key value entry from Consul&apos;s HTTP API: <code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/msg1?raw&quot;</code></li>
+</ol>
+<p>We can now deploy the Consul agents to the other two nodes in the cluster:</p>
+<pre><code>export CONSUL_SERVER_IP=$(docker-machine ip swarm-1)
+for i in 2 3; do eval $(docker-machine env swarm-$i); \
+export DOCKER_IP=$(docker-machine ip swarm-$i); \
+docker-compose -f docker-compose-proxy.yml up -d consul-agent; \
+done
+</code></pre><p>And test the availability of the Consul agents in the worker nodes and that replication between the different instances is working:</p>
+<ol>
+<li>Create a Key-Value entry in the Consul Agent running in the second Swarm node: <code>curl -X PUT -d &apos;this is another test&apos; &quot;http://$(docker-machine ip swarm-2):8500/v1/kv/msg2&quot;</code></li>
+<li>Verify that our new Key-Value has been replicated to the Consul Server: <code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/msg2?raw&quot;</code></li>
+<li>Check that it has been replicated to the the Consul Agent running in the third Swarm Node: <code>curl &quot;http://$(docker-machine ip swarm-3):8500/v1/kv/msg2?raw&quot;</code></li>
+</ol>
+<h2 id="2-possibilities">2. Possibilities</h2>
+<p>With Consul is thus possible to run a Service Discovery service in Docker Swarm (albeit in &quot;host&quot; mode), that enables us to register the ATTX services via a HTTP API, and query the registered information as well.</p>
+<p>Consul also replicates the registered information across its instances across the Swarm, thus enabling true elasticity in case new containers need to be replicated to new nodes</p>
+<p>By registering and replicating service information, a Service Discovery solution such as Consul also brings in the possibility of scaling up stateful services that don&apos;t scale up so well with Docker Swarm (e.g. stateful services without a persistent storage).</p>
+<h2 id="3-limitations-and-a-possible-solution">3. Limitations and a possible solution</h2>
+<p>Given that Consul has to be run in host mode (it doesn&apos;t support running natively in Swarm mode yet), scaling up or adding more Consul Server instances in new nodes in our Swarm will pose challenges in terms of high availability and elasticity. If the Consul Server node goes down then so go the Consul cluster and hence we lose Service Discovery. And also, what will be the status of a new Consul Server instance Key-Value Store in a new Swarm host if we need to scale up the Docker Swarm?</p>
+<p>One possible solution is to use Consul in conjunction with a distributed reverse proxy and load balancer. <a href="https://github.com/vfarcic/docker-flow-proxy" target="_blank">Docker Flow Proxy</a>, is one such solution. It is a Swarm-enabled implementation of <a href="http://www.haproxy.org/" target="_blank">HA Proxy</a> that integrates well with Consul that would bring true fault tolerance and elasticity to our ATTX Docker Swarm, and could be re-used as a reverse proxy as well.</p>
+<p>We can thus start by creating a new Swarm network and attach to it all services that should be accessible through a reverse proxy (all other services would use a &quot;attx-backend&quot; network):</p>
+<p><code>docker network create --driver overlay proxy</code></p>
+<p>Hence, an example service (e.g. &quot;Nginx&quot;) would use the &quot;proxy&quot; and &quot;attx-backend&quot; networks:</p>
+<pre><code>docker service create --name my_web \
+--publish 49001:80 \
+--network attx-backend \
+--network proxy nginx
+</code></pre><p>With the reverse proxy network in place, we can now deploy the Docker Flow Proxy across t our Swarm, and configure it to communicate with the Consul services:</p>
+<pre><code>docker service create --name proxy -p 80:80 -p 443:443 -p 8080:8080 --network proxy -e MODE=swarm --replicas 3 -e CONSUL_ADDRESS=&quot;$(docker-machine ip swarm-1):8500,(docker-machine ip swarm-2):8500,$(docker-machine ip swarm-3):8500&quot; vfarcic/docker-flow-proxy
+</code></pre><p>Once the Proxy is up and running (check with <code>docker service ps proxy</code>), we can request Docker Flow Proxy to distribute a Service Discovery registration/reconfiguration request across the Swarm&apos;s Consul instances for our Nginx test service:</p>
+<p><code>curl &quot;$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=my_web&amp;servicePath=/var/www&amp;port=49001&amp;distribute=true&quot;</code></p>
+<p>And we can test whether the service registration is stored in Consul:</p>
+<p><code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/my_web?recurse&quot;</code></p>
+<p>The output should include Service Discovery data in key value format, and be available in all Consul instances (replace &quot;docker-machine ip swarm-1&quot; with &quot;docker-machine ip swarm-2&quot; and &quot;docker-machine ip swarm-3&quot;):</p>
+<pre><code>{
+LockIndex: 0,
+Key: &quot;docker-flow/my_web/path&quot;,
+Flags: 0,
+Value: &quot;L3Zhci93d3c=&quot;,
+CreateIndex: 14224,
+ModifyIndex: 14384
+},
+{
+LockIndex: 0,
+Key: &quot;docker-flow/my_web/pathtype&quot;,
+Flags: 0,
+Value: &quot;cGF0aF9iZWc=&quot;,
+CreateIndex: 14221,
+ModifyIndex: 14381
+},
+{
+LockIndex: 0,
+Key: &quot;docker-flow/my_web/port&quot;,
+Flags: 0,
+Value: &quot;NDkwMDE=&quot;,
+CreateIndex: 14218,
+ModifyIndex: 14377
+},
+</code></pre><p>Let&apos;s scale up the instances of Docker Flow Proxy and check whether the status was replicated.</p>
+<p>Increase the number of instances from three to six:
+<code>docker service scale proxy=6</code></p>
+<p>Find in which node is running instance number 6 of the Docker Flow Proxy (&quot;proxy.6&quot;) and the respective ID:</p>
+<pre><code>NODE=$(docker service ps proxy | grep &quot;proxy.6&quot; | awk &apos;{print $4}&apos;)
+eval $(docker-machine env $NODE)
+ID=$(docker ps | grep &quot;proxy.6&quot; | awk &apos;{print $1}&apos;)
+</code></pre><p>Query proxy.6 to check whether the service registration for the &quot;my_web&quot; service has been replicated.
+<code>docker exec -it $ID cat /cfg/haproxy.cfg</code>.</p>
+<p>The service registration information should be as follows (like originally registered right after service creation):</p>
+<pre><code>frontend services
+    bind *:80
+    bind *:443
+    mode http
 
-dependencies {
-    python &apos;pypi:requests:2.9.1&apos;
-    test &apos;pypi:mock:1.0.1&apos;
-}
+    acl url_my_web49001 path_beg /var/www
+    use_backend my_web-be49001 if url_my_web49001
 
-repositories {
-  // provided by LinkedIn as an example
-   pyGradlePyPi()
-
-   // using a local repository
-   ivy{
-     name &apos;pypi-local&apos;
-     url &quot;/home/user/pivy&quot;
-     layout &apos;pattern&apos; , {
-       artifact &apos;[organisation]/[module]/[revision]/[artifact]-[revision](-[classifier]).[ext]&apos;
-       ivy &apos;[organisation]/[module]/[revision]/[module]-[revision].ivy&apos;
-     }
-   }
-}
-</code></pre>
-<p>Create the <code>setup.py</code>:</p>
-<pre><code>./gradlew generateSetupPy
-</code></pre><p>The <code>setup.py</code> in this example was created using the above task, by default the &quot;setup&quot; section at the bottom is commented out, so please look it over before continuing. One would want to un-comment the whole section at the bottom of the <code>setup.py</code>. - <strong>Noticed that this was not required anymore as of 0.3.38</strong></p>
-<p><em>Note:</em> The <code>generateSetupPy</code> task should only be used to bootstrap a project and should be checked in to a project.</p>
-<h4 id="excluding-depenencies">Excluding depenencies</h4>
-<p>If there are issues with depenencies in your project e.g. : <a href="https://github.com/linkedin/pygradle/issues/96" target="_blank">https://github.com/linkedin/pygradle/issues/96</a> one could exclude the dependency as follows:</p>
-<pre><code class="lang-{groovy}">dependencies {
-    python (&apos;pypi:connexion:1.0.129&apos;) {
-        exclude module: &apos;functools32&apos;
-    }
-}
-</code></pre>
-<h3 id="building-and-running-tasks">Building and Running Tasks</h3>
-<p>Building an running tasks is the same as the Gradle, however here are some examples customised to PyGradle:
-Tasks:</p>
-<ul>
-<li>clean: <code>./gradlew clean</code></li>
-<li>build: <code>./gradlew build</code></li>
-<li>other tasks: <code>./gradlew :runTests</code> or <code>./gradlew :project:pytest</code></li>
-<li>exclude tasks: <code>./gradlew build -x :project:pytest</code></li>
-<li>debugging: <code>./gradlew :project:testsReport --stacktrace</code></li>
-<li>do all: <code>./gradlew clean build -x :project:pytest -x :project:testsReport</code></li>
-<li>see tasks: <code>./gradlew tasks --all</code> and depenencies <code>./gradlew depenencies</code> (previous to Gradle 3.3 all the tasks could be seen simply with <code>./gradlew tasks</code> with 3.3 the <code>--all</code> parameter was added to limit the number of tasks shown)</li>
-<li>see test coverage <code>./gradlew :project:pytest coverage</code> it will generate a html report in <code>build/coverage/htmlcov</code></li>
-</ul>
-<p>In order to generate a HTML test report one could use <code>pytest-html</code> and creating a gradle task for that:</p>
-<pre><code class="lang-{groovy}">// generate Tests report via a script.
-task runTests(type:Exec) {
-  workingDir &apos;.&apos;
-  // Create the output folder
-  doFirst {
-    mkdir(&apos;build/test-report&apos;)
-  }
-
-  commandLine &apos;./runTests.sh&apos;
-}
-</code></pre>
-<p>where <code>runTests.sh</code> contains the command to activate the virtualenv created by PyGradle and run the tests.</p>
-<pre><code class="lang-{bash}">#! /bin/bash
-command -v source &gt;/dev/null 2&gt;&amp;1 || {
-  echo &quot;I require source but it&apos;s not installed.  Aborting.&quot; &gt;&amp;2; exit 1;
-}
-source activate
-py.test tests --html=build/test-report/index.html --self-contained-html
-</code></pre>
-<h2 id="documentation">Documentation</h2>
-<p>Getting started:</p>
-<ul>
-<li>video<ul>
-<li>Gradle: Novice to Master @LinkedIn - Gradle Summit 2016 - <a href="https://www.youtube.com/watch?v=B79g5YuU_2Y" target="_blank">https://www.youtube.com/watch?v=B79g5YuU_2Y</a></li>
-</ul>
-</li>
-<li>source code<ul>
-<li><a href="https://github.com/ethankhall/gradle-summit-novice-to-master" target="_blank">https://github.com/ethankhall/gradle-summit-novice-to-master</a></li>
-</ul>
-</li>
-</ul>
-<p>Little as there is the documentation for PyGradle is somewhat useful:</p>
-<ul>
-<li>videos<ul>
-<li>GradleSummit2015 Python builds with Gradle - <a href="https://www.youtube.com/watch?v=NRZAIcTA0N0" target="_blank">https://www.youtube.com/watch?v=NRZAIcTA0N0</a></li>
-<li>PyGradle @ LinkedIn - Gradle Summit 2016 - <a href="https://www.youtube.com/watch?v=kZWLcHtHx2U" target="_blank">https://www.youtube.com/watch?v=kZWLcHtHx2U</a></li>
-<li>Python Build Automation with Gradle at Linkedin - <a href="https://www.youtube.com/watch?v=At5X0bamEFI" target="_blank">https://www.youtube.com/watch?v=At5X0bamEFI</a></li>
-</ul>
-</li>
-<li>source code<ul>
-<li>Gradle examples for different code and IDEs: <a href="https://github.com/gradle/gradle/tree/f001402c8b7f404c923d972f1bc524b2de7b3fcd/subprojects/docs/src/samples" target="_blank">https://github.com/gradle/gradle/tree/f001402c8b7f404c923d972f1bc524b2de7b3fcd/subprojects/docs/src/samples</a></li>
-<li>PyGradle example project <a href="https://github.com/linkedin/pygradle/tree/master/examples/example-project" target="_blank">https://github.com/linkedin/pygradle/tree/master/examples/example-project</a></li>
-</ul>
-</li>
-</ul>
+backend my_web-be49001
+    mode http
+    server my_web my_web:49001
+</code></pre><h2 id="4-conclusions">4. Conclusions</h2>
+<ol>
+<li>Consul is a distributed Service Discovery solution with a well documented API (<a href="https://www.consul.io/api/index.html" target="_blank">https://www.consul.io/api/index.html</a>) and <a href="https://www.consul.io/api/kv.html" target="_blank">Key-Value Store</a>.</li>
+<li>Consul doesn&apos;t support running in &quot;swarm&quot; mode yet, but it can be run in &quot;host&quot; mode across a Docker Swarm. The downside is that this creates a non-highly-available Consul cluster, should the Consul Server instance go down. It also makes uncertain the status of a new Consul Server instance in a scaled-up Docker Swarm.</li>
+<li>Consul&apos;s Docker Swarm limitations can be addressed by using Docker Flow Proxy capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project.</li>
+<li>It&apos;s possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through <a href="https://docs.docker.com/compose/compose-file/" target="_blank">Docker Compose files</a>, and its deployment via BASH scripts in <a href="https://www.ansible.com/" target="_blank">Ansible</a> playbook.</li>
+</ol>
 
                                 
                                 </section>
@@ -1014,8 +890,12 @@ py.test tests --html=build/test-report/index.html --self-contained-html
 
             
                 
+                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html" class="navigation navigation-prev " aria-label="Previous page: Running the ATTX Stack on a PC or Mac">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Messaging-Brokers.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Messaging Brokers">
+                
+                <a href="Workflow-Component.html" class="navigation navigation-next " aria-label="Next page: Workflow Component">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1026,7 +906,7 @@ py.test tests --html=build/test-report/index.html --self-contained-html
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Building with Gradle","level":"2.5.1","depth":2,"next":{"title":"Messaging Brokers","level":"2.5.2","depth":2,"path":"Messaging-Brokers.md","ref":"Messaging-Brokers.md","articles":[]},"previous":{"title":"Reports","level":"2.5","depth":1,"ref":"","articles":[{"title":"Building with Gradle","level":"2.5.1","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers","level":"2.5.2","depth":2,"path":"Messaging-Brokers.md","ref":"Messaging-Brokers.md","articles":[]},{"title":"Service Discovery","level":"2.5.3","depth":2,"path":"Service-Discovery.md","ref":"Service-Discovery.md","articles":[]},{"title":"Workflow Management","level":"2.5.4","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Building-with-Gradle.md","mtime":"2017-04-26T07:43:36.075Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-03T10:04:02.626Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Using Consul for Service Discovery on Docker Swarm","level":"1.3.6","depth":2,"next":{"title":"Workflow Component","level":"1.4","depth":1,"path":"Workflow-Component.md","ref":"Workflow-Component.md","articles":[{"title":"ETL Artifacts","level":"1.4.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},{"title":"UnifiedViews plugins","level":"1.4.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},{"title":"Workflow API","level":"1.4.3","depth":2,"path":"WF-API.md","ref":"WF-API.md","articles":[]}]},"previous":{"title":"Running the ATTX Stack on a PC or Mac","level":"1.3.5","depth":2,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Using-Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-05-03T10:03:30.360Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-03T10:04:02.626Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
