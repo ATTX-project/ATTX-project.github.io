@@ -50,8 +50,8 @@ services:
 
 ```
 
-This example `docker-compose.file` can be used to deploy the Consul Server in our running Swarm Master with the following commands:
-1. `eval $(docker-machine env swarm-1`
+This example `docker-compose.yml` can be used to deploy the Consul Server in our running Swarm Master with the following commands:
+1. `eval $(docker-machine env swarm-1)`
 2. `export DOCKER_IP=$(docker-machine ip swarm-1)`
 3. `docker-compose -f docker-compose-proxy.yml up -d consul-server`
 
@@ -77,8 +77,31 @@ And test the availability of the Consul agents in the worker nodes and that repl
 2. Verify that our new Key-Value has been replicated to the Consul Server: `curl "http://$(docker-machine ip swarm-1):8500/v1/kv/msg2?raw"`
 3. Check that it has been replicated to the the Consul Agent running in the third Swarm Node: `curl "http://$(docker-machine ip swarm-3):8500/v1/kv/msg2?raw"`
 
+At the end of this initial step of our exercise, our system will look like this:
+```
++--------+
+|  User  |
+|requests|
++-----^--+
+      |
+      |
+      |
++---------------------------------------------------------------------------------+
+|     |                              DOCKER SWARM                                 |
+|     |                                                                           |
++---------------------------------------------------------------------------------+
+      |
++------------------+             +------------------+          +------------------+
+|   +-v--------+   |             |   +----------+   |          |   +----------+   |
+|   |  Consul  |   |             |   |  Consul  |   |          |   |  Consul  |   |
+|   |  server  <--------------------->  agent   <------------------>  agent   |   |
+|   |          |   |             |   |          |   |          |   |          |   |
+|   +----------+   |             |   +----------+   |          |   +----------+   |
+|                  |             |                  |          |                  |
+|     swarm-1      |             |     swarm-2      |          |      swarm-3     |
++------------------+             +------------------+          +------------------+
 
-
+```
 
 ## 2. Possibilities
 
@@ -86,13 +109,17 @@ With Consul is thus possible to run a Service Discovery service in Docker Swarm 
 
 Consul also replicates the registered information across its instances across the Swarm, thus enabling true elasticity in case new containers need to be replicated to new nodes
 
-By registering and replicating service information, a Service Discovery solution such as Consul also brings in the possibility of scaling up stateful services that don't scale up so well with Docker Swarm (e.g. stateful services without a persistent storage).
+By registering and replicating service information, a Service Discovery solution such as Consul also brings in the possibility of scaling up stateful services that don't scale up so well with Docker Swarm (e.g. stateful services without a persistent storage volume, such as Consul).
 
 
 
 ## 3. Limitations and a possible solution
 
-Given that Consul has to be run in host mode (it doesn't support running natively in Swarm mode yet), scaling up or adding more Consul Server instances in new nodes in our Swarm will pose challenges in terms of high availability and elasticity. If the Consul Server node goes down then so go the Consul cluster and hence we lose Service Discovery. And also, what will be the status of a new Consul Server instance Key-Value Store in a new Swarm host if we need to scale up the Docker Swarm?
+Given that Consul has to be run in host mode (it doesn't support running natively in Swarm mode yet), scaling up or adding more Consul Server instances in new nodes in our Swarm will pose challenges in terms of fault tolerance and elasticity.
+
+If the Consul Server node goes down, then so go the Consul cluster and hence we lose Service Discovery.
+
+Furthermore, if we need to scale up the Docker Swarm and deploy a new Consul Server instance in a new node, what will be the status of the Key-Value Store of that new Consul instance?
 
 One possible solution is to use Consul in conjunction with a distributed reverse proxy and load balancer. [Docker Flow Proxy](https://github.com/vfarcic/docker-flow-proxy), is one such solution. It is a Swarm-enabled implementation of [HA Proxy](http://www.haproxy.org/) that integrates well with Consul that would bring true fault tolerance and elasticity to our ATTX Docker Swarm, and could be re-used as a reverse proxy as well.
 
@@ -108,15 +135,57 @@ docker service create --name my_web \
 --network proxy nginx
 ```
 
-With the reverse proxy network in place, we can now deploy the Docker Flow Proxy across t our Swarm, and configure it to communicate with the Consul services:
+With the reverse proxy network in place, we can now deploy the Docker Flow Proxy across our Swarm, and configure it to communicate with the Consul services:
 
 ```
-docker service create --name proxy -p 80:80 -p 443:443 -p 8080:8080 --network proxy -e MODE=swarm --replicas 3 -e CONSUL_ADDRESS="$(docker-machine ip swarm-1):8500,(docker-machine ip swarm-2):8500,$(docker-machine ip swarm-3):8500" vfarcic/docker-flow-proxy
+docker service create --name proxy \
+-p 80:80 -p 443:443 -p 8080:8080 \
+--network proxy -e MODE=swarm --replicas 3 \
+-e CONSUL_ADDRESS="$(docker-machine ip swarm-1):8500,(docker-machine ip swarm-2):8500,$(docker-machine ip swarm-3):8500" \
+vfarcic/docker-flow-proxy
 ```
 
-Once the Proxy is up and running (check with `docker service ps proxy`), we can request Docker Flow Proxy to distribute a Service Discovery registration/reconfiguration request across the Swarm's Consul instances for our Nginx test service:
+Once the Proxy is up and running (check with `docker service ps proxy`), our system's status can be represented by the following diagram:
 
-`curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=my_web&servicePath=/var/www&port=49001&distribute=true"`
+```
++--------+
+|  User  |
+|requests|
++-------^+
+        |
+        |
+        |
++---------------------------------------------------------------------------------+
+|       |                                                                         |
+|       |                             DOCKER SWARM                                |
+|       |                                                                         |
+|       |                                                                         |
+|       |                                                                         |
+|      +v-----+                        +------+                       +------+    |
+|      |Docker|                        |Docker|                       |Docker|    |
+|      |Flow  <------------------------>Flow  <----------------------->Flow  |    |
+|      |Proxy |                        |Proxy |                       |Proxy |    |
+|      +--+---+                        +--+---+                       +--+---+    |
+|         |                               |                              |        |
++---------------------------------------------------------------------------------+
+          |                               |                              |
++------------------+             +------------------+            +----------------+
+|   +-----v----+   |             |   +----v-----+   |            |   +---v----+   |
+|   |  Consul  |   |             |   |  Consul  |   |            |   | Consul |   |
+|   |  server  <--------------------->  agent   <--------------------> agent  |   |
+|   |          |   |             |   |          |   |            |   |        |   |
+|   +----------+   |             |   +----------+   |            |   +--------+   |
+|                  |             |                  |            |                |
+|     swarm+1      |             |     swarm+2      |            |    swarm+3     |
++------------------+             +------------------+            +----------------+
+
+```
+
+We can test Docker Flow Proxy by issuing it to distribute a Service Discovery registration/reconfiguration request across the Swarm's Consul instances for our Nginx test service:
+
+```
+curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=my_web&servicePath=/var/www&port=49001&distribute=true"
+```
 
 And we can test whether the service registration is stored in Consul:
 
