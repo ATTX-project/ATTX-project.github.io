@@ -27,7 +27,9 @@ For other instructions check: https://github.com/GitbookIO/gitbook/blob/master/d
 The output is generated in `Import/attx_project/_book` folder.
 **In order to deploy/update the ATTX Github.io copy the contents of the folder `Import/attx_project/_book` to the root directory.**
 
-In the root directory enter the command: `$ cp -r Import/attx_project/_book/* .`
+If you're using ZSH, enter the command in the project root directory: `$ cp -r Import/attx_project/_book/* .`
+
+In case you're using BASH, enter the copy command as follows: `$ cp -r Import/attx_project/_book/. .`
 
 ## Troubleshooting
 
