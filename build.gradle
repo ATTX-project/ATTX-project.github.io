@@ -74,9 +74,9 @@ gitPullRequest {
     // source = '.'
 
     // optional, the title of the pull request
-    title = 'Automatic pull request'
+    title = "Automatic pull request: Jenkins build#${jenkinsBuild}"
 
     // // optional, the message of the commit
-    // message = 'TICKET-1234: automatic pull request'
+    message = 'Automatic pull request from Jenkins. Please review'
 
 }
