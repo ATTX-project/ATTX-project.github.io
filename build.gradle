@@ -3,7 +3,7 @@ buildscript {
     maven { url "${artifactRepoURL}/repository/attx-releases"}
   }
   dependencies {
-    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.5.4-SNAPSHOT"
+    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.5.5-SNAPSHOT"
   }
 }
 
@@ -65,7 +65,7 @@ gitPullRequest {
     accessToken = "${token}"
 
     // the name the branch should start with (will be added by timestamp to avoid collisions)
-    branchSuffix = 'pullRequest-generated'
+    branchSuffix = 'feature-automate'
 
     // the target branch to send pull request to
     master = 'dev'
