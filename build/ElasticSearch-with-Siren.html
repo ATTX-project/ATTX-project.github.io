@@ -1,0 +1,920 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ElasticSearch with Siren · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ElasticSearch-5.html" />
+    
+    
+    <link rel="prev" href="Distribution-Component.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">ATTX Project</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Architecture.html">
+            
+                <a href="Architecture.html">
+            
+                    
+                    Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="Platform-Deployment.html">
+            
+                <a href="Platform-Deployment.html">
+            
+                    
+                    Platform Deployment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="CSC-cPouta-Cloud-Services-Report.html">
+            
+                <a href="CSC-cPouta-Cloud-Services-Report.html">
+            
+                    
+                    CSC cPouta Cloud Services Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="Building-Docker-application-stacks-in-Swarm-Mode.html">
+            
+                <a href="Building-Docker-application-stacks-in-Swarm-Mode.html">
+            
+                    
+                    Building Swarm Mode on a PC or Mac
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                    
+                    Provisioning ATTX Components on CSC Open Stack (cPouta)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                    
+                    Deploying ATTX Components on Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+            
+                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+            
+                    
+                    Running the ATTX Stack on a PC or Mac
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="Using-Consul-for-Service-Discovery-on-Docker-Swarm.html">
+            
+                <a href="Using-Consul-for-Service-Discovery-on-Docker-Swarm.html">
+            
+                    
+                    Using Consul for Service Discovery on Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="Workflow-Component.html">
+            
+                <a href="Workflow-Component.html">
+            
+                    
+                    Workflow Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="ETL-Artifacts.html">
+            
+                <a href="ETL-Artifacts.html">
+            
+                    
+                    ETL Artifacts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="Unified-Views-plugins.html">
+            
+                <a href="Unified-Views-plugins.html">
+            
+                    
+                    UnifiedViews plugins
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="WF-API.html">
+            
+                <a href="WF-API.html">
+            
+                    
+                    Workflow API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Graph-Component.html">
+            
+                <a href="Graph-Component.html">
+            
+                    
+                    Graph Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="Graph-Manager-API.html">
+            
+                <a href="Graph-Manager-API.html">
+            
+                    
+                    Graph Manager API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="Graph-Store.html">
+            
+                <a href="Graph-Store.html">
+            
+                    
+                    Graph Store
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.2.1" data-path="Data-Model.html">
+            
+                <a href="Data-Model.html">
+            
+                    
+                    Ontology/Data model
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.2" data-path="Namespaces.html">
+            
+                <a href="Namespaces.html">
+            
+                    
+                    Graph Namespaces
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2.3" data-path="Linking-Strategies.html">
+            
+                <a href="Linking-Strategies.html">
+            
+                    
+                    Linking Strategies
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Distribution-Component.html">
+            
+                <a href="Distribution-Component.html">
+            
+                    
+                    Distribution Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.6.1" data-path="ElasticSearch-with-Siren.html">
+            
+                <a href="ElasticSearch-with-Siren.html">
+            
+                    
+                    ElasticSearch with Siren
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="ElasticSearch-5.html">
+            
+                <a href="ElasticSearch-5.html">
+            
+                    
+                    ElasticSearch 5.x
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Applications-and-Use-Cases.html">
+            
+                <a href="Applications-and-Use-Cases.html">
+            
+                    
+                    Applications and Use Cases
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="UC1---Infrastructures-and-publications.html">
+            
+                <a href="UC1---Infrastructures-and-publications.html">
+            
+                    
+                    UC1 - infras and pubs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="Use-case-Metax.html">
+            
+                <a href="Use-case-Metax.html">
+            
+                    
+                    UC - Metax
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project Guidelines</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="Feature-roadmap.html">
+            
+                <a href="Feature-roadmap.html">
+            
+                    
+                    Feature Roadmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="Release-Plan.html">
+            
+                <a href="Release-Plan.html">
+            
+                    
+                    Release Plan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="Project-Development-Environment.html">
+            
+                <a href="Project-Development-Environment.html">
+            
+                    
+                    Project Development Environment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="CI-CD-Enviroment.html">
+            
+                <a href="CI-CD-Enviroment.html">
+            
+                    
+                    CI/CD Enviroment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.1" data-path="Jenkins.html">
+            
+                <a href="Jenkins.html">
+            
+                    
+                    Jenkins CI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.2" data-path="Build-Multiple-Environments.html">
+            
+                <a href="Build-Multiple-Environments.html">
+            
+                    
+                    Build Environment Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.3" data-path="Containerized-testing.html">
+            
+                <a href="Containerized-testing.html">
+            
+                    
+                    Containerized testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" >
+            
+                <span>
+            
+                    
+                    Reports
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.5.1" data-path="Building-with-Gradle.html">
+            
+                <a href="Building-with-Gradle.html">
+            
+                    
+                    Building with (Py)Gradle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.2" data-path="Messaging-Brokers.html">
+            
+                <a href="Messaging-Brokers.html">
+            
+                    
+                    Messaging Brokers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.3" data-path="Service-Discovery.html">
+            
+                <a href="Service-Discovery.html">
+            
+                    
+                    Service Discovery
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5.4" data-path="Workflow-Management-Tools.html">
+            
+                <a href="Workflow-Management-Tools.html">
+            
+                    
+                    Workflow Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="Contributions.html">
+            
+                <a href="Contributions.html">
+            
+                    
+                    Contributions
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.6.1" data-path="ELAG-2017.html">
+            
+                <a href="ELAG-2017.html">
+            
+                    
+                    ELAG2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" >
+            
+                <a target="_blank" href="https://www.helsinki.fi/en/projects/attx-2016">
+            
+                    
+                    ATTX website
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ElasticSearch with Siren</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="elasticsearch-with-siren">ElasticSearch with Siren</h1>
+<p>This page describes the components and configuration needed to get the ATTX ES plugin up and running. This information should be used as the basis for creating a containerized version of the API component</p>
+<p><strong>Siren plugin only supports ES up till version 1.3.4.</strong></p>
+<h3 id="table-of-contents">Table of Contents</h3>
+<ul>
+<li><a href="#mapping">Mapping</a></li>
+<li><a href="#plugins">Plugins</a><ul>
+<li><a href="#siren-elasticsearch-14">siren-elasticsearch 1.4</a></li>
+<li><a href="#analysis-icu-134">analysis-icu 1.3.4</a></li>
+<li><a href="#attx-es-api">attx-es-api</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="mapping">Mapping</h2>
+<p>In addition to the plugins listed below, the system requires that indexes are created with the following mapping.</p>
+<pre><code class="lang-{json}">{&quot;_default_&quot;:
+  {&quot;properties&quot;:
+    {&quot;_siren_source&quot;:
+      {&quot;analyzer&quot;: &quot;concise&quot;,
+       &quot;postings_format&quot;: &quot;Siren10AFor&quot;,
+       &quot;store&quot;: &quot;no&quot;,
+       &quot;type&quot;: &quot;string&quot;
+      }
+    },
+    &quot;_siren&quot;: {},
+    &quot;dynamic_templates&quot;: [
+      {&quot;rawstring&quot;:
+        {&quot;match&quot;: &quot;*&quot;,
+         &quot;match_mapping_type&quot;: &quot;string&quot;,
+         &quot;mapping&quot;: {
+           &quot;type&quot;: &quot;string&quot;,
+           &quot;index&quot;: &quot;analyzed&quot;,
+           &quot;fields&quot;: {
+             &quot;{name}_raw&quot;: {
+               &quot;type&quot;: &quot;string&quot;,
+               &quot;analyzer&quot;: &quot;case_insensitive_sort&quot;
+             }
+           }
+         }
+       }
+      }
+    ]
+  }
+}
+</code></pre>
+<h2 id="plugins">Plugins</h2>
+<p>These are the required plugins:</p>
+<ul>
+<li><a href="#siren-elasticsearch-14">siren-elasticsearch 1.4</a></li>
+<li><a href="#analysis-icu-134">analysis-icu 1.3.4</a></li>
+<li><a href="#attx-es-api">attx-es-api</a></li>
+</ul>
+<h3 id="siren-elasticsearch-14">siren-elasticsearch 1.4</h3>
+<p><a href="https://github.com/sirensolutions/siren" target="_blank">https://github.com/sirensolutions/siren</a></p>
+<p>Plugin that allows one to index and query nested documents easily and efficiently.<br>Unfortunately, it is not maintained any more and we should come up with a replacement.</p>
+<p>Installation:</p>
+<pre><code>bin/plugin --install com.sindicetech.siren/siren-elasticsearch/1.4
+</code></pre><p>Configuration:</p>
+<p>Add the following to the elasticsearch.yml</p>
+<pre><code class="lang-{yml}"># Settings for the SIREn Plugin
+siren:
+  analysis:
+    # Enabled the use of wildcard for node attribute - Only for the concise mode This will increase the index size,
+    # as it will expand terms at indexing time. It is recommended to deactivate it if one does not need attribute
+    # wildcards.
+    concise.attribute_wildcard.enabled: true
+    # Mappings between datatype and analyzers. The analyzers must be referenced by their registered logical name.
+    datatype:
+      http://www.w3.org/2001/XMLSchema#string:
+        index_analyzer: standard
+        search_analyzer: lowerWhitespaceAnalyzer # here we refer to a custom analyzer that is below
+      http://json.org/field:
+        index_analyzer: whitespace
+      http://www.w3.org/2001/XMLSchema#double:
+          index_analyzer: double
+      http://www.w3.org/2001/XMLSchema#long:
+          index_analyzer: long
+      http://www.w3.org/2001/XMLSchema#boolean:
+          index_analyzer: whitespace
+      uri: # for NCPR demo
+          index_analyzer: whitespace
+    qname:
+        xsd : http://www.w3.org/2001/XMLSchema#
+        json: http://json.org/
+</code></pre>
+<h3 id="analysis-icu-134">analysis-icu 1.3.4</h3>
+<p><a href="https://github.com/elastic/elasticsearch-analysis-icu" target="_blank">https://github.com/elastic/elasticsearch-analysis-icu</a></p>
+<p>Extended Unicode support for ES. Needed to get the sorting working. Version 2.3.0 works with ES 1.3.4.</p>
+<p>Installation:</p>
+<pre><code>bin/plugin install elasticsearch/elasticsearch-analysis-icu/2.3.0
+</code></pre><p>Configuration:</p>
+<pre><code class="lang-{yml}">index:
+    analysis:
+        analyzer:
+            lowerWhitespaceAnalyzer:
+                type: custom
+                tokenizer: whitespace
+                filter: [lowercase]
+
+            case_insensitive_sort:
+                tokenizer: keyword
+                filter: [ &quot;icu_collation&quot; ]
+</code></pre>
+<h3 id="attx-es-api">attx-es-api</h3>
+<p>Plugin that provides simple query interface and then transforms those queries into ones that can be executed by the siren plugin.</p>
+<p>Installation:</p>
+<p>Our plugin can be installed in the same manner as the other ones. <a href="https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html</a></p>
+<p>Releases can installed from github using the following command:</p>
+<pre><code>bin/plugin --install &lt;org&gt;/&lt;user/component&gt;/&lt;version&gt;
+</code></pre><p>dev version can use the file based installation method:</p>
+<pre><code>bin/plugin --url file:///path/to/plugin --install plugin-name
+</code></pre><p><strong>How it works</strong></p>
+<p>Simple queries like &quot;test&quot; are translated into simple NodeQuery.</p>
+<p><em>TODO: continue this!</em></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Distribution-Component.html" class="navigation navigation-prev " aria-label="Previous page: Distribution Component">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ElasticSearch-5.html" class="navigation navigation-next " aria-label="Next page: ElasticSearch 5.x">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"next":{"title":"ElasticSearch 5.x","level":"1.6.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]},"previous":{"title":"Distribution Component","level":"1.6","depth":1,"path":"Distribution-Component.md","ref":"Distribution-Component.md","articles":[{"title":"ElasticSearch with Siren","level":"1.6.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]},{"title":"ElasticSearch 5.x","level":"1.6.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-with-Siren.md","mtime":"2017-05-04T09:15:00.999Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-04T09:24:07.936Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
