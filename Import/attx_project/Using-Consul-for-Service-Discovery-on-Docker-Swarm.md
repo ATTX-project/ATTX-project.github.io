@@ -79,27 +79,27 @@ And test the availability of the Consul agents in the worker nodes and that repl
 
 At the end of this initial step of our exercise, our system will look like this:
 ```
-+--------+
-|  User  |
-|requests|
-+-----^--+
-      |
-      |
-      |
 +---------------------------------------------------------------------------------+
-|     |                              DOCKER SWARM                                 |
-|     |                                                                           |
+|                                    DOCKER SWARM                                 |
+|                                                                                 |
 +---------------------------------------------------------------------------------+
-      |
+
 +------------------+             +------------------+          +------------------+
-|   +-v--------+   |             |   +----------+   |          |   +----------+   |
+|   +----------+   |             |   +----------+   |          |   +----------+   |
 |   |  Consul  |   |             |   |  Consul  |   |          |   |  Consul  |   |
 |   |  server  <--------------------->  agent   <------------------>  agent   |   |
 |   |          |   |             |   |          |   |          |   |          |   |
-|   +----------+   |             |   +----------+   |          |   +----------+   |
-|                  |             |                  |          |                  |
-|     swarm-1      |             |     swarm-2      |          |      swarm-3     |
+|   +^---------+   |             |   +----------+   |          |   +----------+   |
+|    |             |             |                  |          |                  |
+|    |swarm-1      |             |     swarm-2      |          |      swarm-3     |
 +------------------+             +------------------+          +------------------+
+     |
+     |
+     |
++----+---+
+|  User  |
+|requests|
++--------+
 
 ```
 
@@ -254,6 +254,6 @@ backend my_web-be49001
 
 ## 4. Conclusions
 1. Consul is a distributed Service Discovery solution with a well documented API (https://www.consul.io/api/index.html) and [Key-Value Store](https://www.consul.io/api/kv.html).
-2. Consul doesn't support running in "swarm" mode yet, but it can be run in "host" mode across a Docker Swarm. The downside is that this creates a non-highly-available Consul cluster, should the Consul Server instance go down. It also makes uncertain the status of a new Consul Server instance in a scaled-up Docker Swarm.
+2. Consul doesn't support running in "swarm" mode yet, but it can be run in "host" mode across a Docker Swarm. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.
 3. Consul's Docker Swarm limitations can be addressed by using Docker Flow Proxy capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project.
 4. It's possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through [Docker Compose files](https://docs.docker.com/compose/compose-file/), and its deployment via BASH scripts in [Ansible](https://www.ansible.com/) playbook.
