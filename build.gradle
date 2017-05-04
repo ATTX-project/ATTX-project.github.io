@@ -65,10 +65,10 @@ gitPullRequest {
     accessToken = "${token}"
 
     // the name the branch should start with (will be added by timestamp to avoid collisions)
-    branchSuffix = 'feature-automate'
+    branchSuffix = 'dev'
 
     // the target branch to send pull request to
-    master = 'dev'
+    master = 'master'
 
     // // optional, the folder to commit all new or changed files from (default=src)
     // source = '.'
