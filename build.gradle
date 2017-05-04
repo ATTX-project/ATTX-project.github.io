@@ -59,10 +59,10 @@ gitPullRequest {
     githubUri = 'https://github.com/ATTX-project/ATTX-project.github.io'
 
     // github user name to use
-    user = 'blankdots'
+    user = "${user}"
 
     // github password or better access token
-    accessToken = 'b617dd4c40e2cf8be900222eeb3c12c2773db59d'
+    accessToken = "${token}"
 
     // the name the branch should start with (will be added by timestamp to avoid collisions)
     branchSuffix = 'pullRequest-generated'
