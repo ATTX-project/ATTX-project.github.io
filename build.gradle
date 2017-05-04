@@ -1,11 +1,9 @@
 buildscript {
   repositories {
-    maven {
-      url "https://plugins.gradle.org/m2/"
-    }
+    maven { url "${artifactRepoURL}/repository/attx-releases"}
   }
   dependencies {
-    classpath "gradle.plugin.de.jodamob.gradle:gradle-pullrequest-builder:1.0.RC1"
+    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.5.4-SNAPSHOT"
   }
 }
 
@@ -14,7 +12,7 @@ plugins {
 }
 
 
-apply plugin: "de.jodamob.gradle.github"
+apply plugin: "attx.pullrequest.gradle.github"
 apply plugin: 'com.moowork.node'
 apply plugin: 'base'
 
@@ -30,7 +28,7 @@ node {
 
     // If true, it will download node using above parameters.
     // If false, it will try to use globally installed node.
-    download = false
+    download = true
     workDir = file("${project.buildDir}/Import/attx_project")
 }
 
@@ -64,16 +62,16 @@ gitPullRequest {
     user = 'blankdots'
 
     // github password or better access token
-    accessToken = '5e1e3d7fa19f7a84a32b20096281b3f92aaafcdb'
+    accessToken = 'b617dd4c40e2cf8be900222eeb3c12c2773db59d'
 
     // the name the branch should start with (will be added by timestamp to avoid collisions)
-    branchSuffix = 'feature-automate'
+    branchSuffix = 'pullRequest-generated'
 
     // the target branch to send pull request to
     master = 'dev'
 
-    // optional, the folder to commit all new or changed files from (default=src)
-    source = '.'
+    // // optional, the folder to commit all new or changed files from (default=src)
+    // source = '.'
 
     // optional, the title of the pull request
     title = 'Automatic pull request'
