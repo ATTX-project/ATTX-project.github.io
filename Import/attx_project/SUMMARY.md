@@ -11,6 +11,7 @@
   * [Deploying ATTX Components on Docker Swarm](Deploying-ATTX-Components-on-Docker-Swarm.md)
   * [Running the ATTX Stack on a PC or Mac](Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md)
   * [Using Consul for Service Discovery on Docker Swarm](Using-Consul-for-Service-Discovery-on-Docker-Swarm.md)
+  * [Applying Rolling Updates to services in Docker Swarm](Applying-Rolling-Updates-to-services-in-Docker-Swarm.md)
 
 * [Workflow Component](Workflow-Component.md)
   * [ETL Artifacts](ETL-Artifacts.md)
