@@ -765,9 +765,9 @@ services:
     environment:
       - &apos;CONSUL_LOCAL_CONFIG={&quot;leave_on_terminate&quot;: true}&apos;
     command: agent -bind=$DOCKER_IP -retry-join=$CONSUL_SERVER_IP -client=$DOCKER_IP
-</code></pre><p>This example <code>docker-compose.file</code> can be used to deploy the Consul Server in our running Swarm Master with the following commands:</p>
+</code></pre><p>This example <code>docker-compose.yml</code> can be used to deploy the Consul Server in our running Swarm Master with the following commands:</p>
 <ol>
-<li><code>eval $(docker-machine env swarm-1</code></li>
+<li><code>eval $(docker-machine env swarm-1)</code></li>
 <li><code>export DOCKER_IP=$(docker-machine ip swarm-1)</code></li>
 <li><code>docker-compose -f docker-compose-proxy.yml up -d consul-server</code></li>
 </ol>
@@ -790,12 +790,36 @@ done
 <li>Verify that our new Key-Value has been replicated to the Consul Server: <code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/msg2?raw&quot;</code></li>
 <li>Check that it has been replicated to the the Consul Agent running in the third Swarm Node: <code>curl &quot;http://$(docker-machine ip swarm-3):8500/v1/kv/msg2?raw&quot;</code></li>
 </ol>
-<h2 id="2-possibilities">2. Possibilities</h2>
+<p>At the end of this initial step of our exercise, our system will look like this:</p>
+<pre><code>+---------------------------------------------------------------------------------+
+|                                    DOCKER SWARM                                 |
+|                                                                                 |
++---------------------------------------------------------------------------------+
+
++------------------+             +------------------+          +------------------+
+|   +----------+   |             |   +----------+   |          |   +----------+   |
+|   |  Consul  |   |             |   |  Consul  |   |          |   |  Consul  |   |
+|   |  server  &lt;---------------------&gt;  agent   &lt;------------------&gt;  agent   |   |
+|   |          |   |             |   |          |   |          |   |          |   |
+|   +^---------+   |             |   +----------+   |          |   +----------+   |
+|    |             |             |                  |          |                  |
+|    |swarm-1      |             |     swarm-2      |          |      swarm-3     |
++------------------+             +------------------+          +------------------+
+     |
+     |
+     |
++----+---+
+|  User  |
+|requests|
++--------+
+</code></pre><h2 id="2-possibilities">2. Possibilities</h2>
 <p>With Consul is thus possible to run a Service Discovery service in Docker Swarm (albeit in &quot;host&quot; mode), that enables us to register the ATTX services via a HTTP API, and query the registered information as well.</p>
 <p>Consul also replicates the registered information across its instances across the Swarm, thus enabling true elasticity in case new containers need to be replicated to new nodes</p>
-<p>By registering and replicating service information, a Service Discovery solution such as Consul also brings in the possibility of scaling up stateful services that don&apos;t scale up so well with Docker Swarm (e.g. stateful services without a persistent storage).</p>
+<p>By registering and replicating service information, a Service Discovery solution such as Consul also brings in the possibility of scaling up stateful services that don&apos;t scale up so well with Docker Swarm (e.g. stateful services without a persistent storage volume, such as Consul).</p>
 <h2 id="3-limitations-and-a-possible-solution">3. Limitations and a possible solution</h2>
-<p>Given that Consul has to be run in host mode (it doesn&apos;t support running natively in Swarm mode yet), scaling up or adding more Consul Server instances in new nodes in our Swarm will pose challenges in terms of high availability and elasticity. If the Consul Server node goes down then so go the Consul cluster and hence we lose Service Discovery. And also, what will be the status of a new Consul Server instance Key-Value Store in a new Swarm host if we need to scale up the Docker Swarm?</p>
+<p>Given that Consul has to be run in host mode (it doesn&apos;t support running natively in Swarm mode yet), scaling up or adding more Consul Server instances in new nodes in our Swarm will pose challenges in terms of fault tolerance and elasticity.</p>
+<p>If the Consul Server node goes down, then so go the Consul cluster and hence we lose Service Discovery.</p>
+<p>Furthermore, if we need to scale up the Docker Swarm and deploy a new Consul Server instance in a new node, what will be the status of the Key-Value Store of that new Consul instance?</p>
 <p>One possible solution is to use Consul in conjunction with a distributed reverse proxy and load balancer. <a href="https://github.com/vfarcic/docker-flow-proxy" target="_blank">Docker Flow Proxy</a>, is one such solution. It is a Swarm-enabled implementation of <a href="http://www.haproxy.org/" target="_blank">HA Proxy</a> that integrates well with Consul that would bring true fault tolerance and elasticity to our ATTX Docker Swarm, and could be re-used as a reverse proxy as well.</p>
 <p>We can thus start by creating a new Swarm network and attach to it all services that should be accessible through a reverse proxy (all other services would use a &quot;attx-backend&quot; network):</p>
 <p><code>docker network create --driver overlay proxy</code></p>
@@ -804,11 +828,46 @@ done
 --publish 49001:80 \
 --network attx-backend \
 --network proxy nginx
-</code></pre><p>With the reverse proxy network in place, we can now deploy the Docker Flow Proxy across t our Swarm, and configure it to communicate with the Consul services:</p>
-<pre><code>docker service create --name proxy -p 80:80 -p 443:443 -p 8080:8080 --network proxy -e MODE=swarm --replicas 3 -e CONSUL_ADDRESS=&quot;$(docker-machine ip swarm-1):8500,(docker-machine ip swarm-2):8500,$(docker-machine ip swarm-3):8500&quot; vfarcic/docker-flow-proxy
-</code></pre><p>Once the Proxy is up and running (check with <code>docker service ps proxy</code>), we can request Docker Flow Proxy to distribute a Service Discovery registration/reconfiguration request across the Swarm&apos;s Consul instances for our Nginx test service:</p>
-<p><code>curl &quot;$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=my_web&amp;servicePath=/var/www&amp;port=49001&amp;distribute=true&quot;</code></p>
-<p>And we can test whether the service registration is stored in Consul:</p>
+</code></pre><p>With the reverse proxy network in place, we can now deploy the Docker Flow Proxy across our Swarm, and configure it to communicate with the Consul services:</p>
+<pre><code>docker service create --name proxy \
+-p 80:80 -p 443:443 -p 8080:8080 \
+--network proxy -e MODE=swarm --replicas 3 \
+-e CONSUL_ADDRESS=&quot;$(docker-machine ip swarm-1):8500,(docker-machine ip swarm-2):8500,$(docker-machine ip swarm-3):8500&quot; \
+vfarcic/docker-flow-proxy
+</code></pre><p>Once the Proxy is up and running (check with <code>docker service ps proxy</code>), our system&apos;s status can be represented by the following diagram:</p>
+<pre><code>+--------+
+|  User  |
+|requests|
++-------^+
+        |
+        |
+        |
++---------------------------------------------------------------------------------+
+|       |                                                                         |
+|       |                             DOCKER SWARM                                |
+|       |                                                                         |
+|       |                                                                         |
+|       |                                                                         |
+|      +v-----+                        +------+                       +------+    |
+|      |Docker|                        |Docker|                       |Docker|    |
+|      |Flow  &lt;------------------------&gt;Flow  &lt;-----------------------&gt;Flow  |    |
+|      |Proxy |                        |Proxy |                       |Proxy |    |
+|      +--+---+                        +--+---+                       +--+---+    |
+|         |                               |                              |        |
++---------------------------------------------------------------------------------+
+          |                               |                              |
++------------------+             +------------------+            +----------------+
+|   +-----v----+   |             |   +----v-----+   |            |   +---v----+   |
+|   |  Consul  |   |             |   |  Consul  |   |            |   | Consul |   |
+|   |  server  &lt;---------------------&gt;  agent   &lt;--------------------&gt; agent  |   |
+|   |          |   |             |   |          |   |            |   |        |   |
+|   +----------+   |             |   +----------+   |            |   +--------+   |
+|                  |             |                  |            |                |
+|     swarm+1      |             |     swarm+2      |            |    swarm+3     |
++------------------+             +------------------+            +----------------+
+</code></pre><p>We can test Docker Flow Proxy by issuing it to distribute a Service Discovery registration/reconfiguration request across the Swarm&apos;s Consul instances for our Nginx test service:</p>
+<pre><code>curl &quot;$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=my_web&amp;servicePath=/var/www&amp;port=49001&amp;distribute=true&quot;
+</code></pre><p>And we can test whether the service registration is stored in Consul:</p>
 <p><code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/my_web?recurse&quot;</code></p>
 <p>The output should include Service Discovery data in key value format, and be available in all Consul instances (replace &quot;docker-machine ip swarm-1&quot; with &quot;docker-machine ip swarm-2&quot; and &quot;docker-machine ip swarm-3&quot;):</p>
 <pre><code>{
@@ -859,7 +918,7 @@ backend my_web-be49001
 </code></pre><h2 id="4-conclusions">4. Conclusions</h2>
 <ol>
 <li>Consul is a distributed Service Discovery solution with a well documented API (<a href="https://www.consul.io/api/index.html" target="_blank">https://www.consul.io/api/index.html</a>) and <a href="https://www.consul.io/api/kv.html" target="_blank">Key-Value Store</a>.</li>
-<li>Consul doesn&apos;t support running in &quot;swarm&quot; mode yet, but it can be run in &quot;host&quot; mode across a Docker Swarm. The downside is that this creates a non-highly-available Consul cluster, should the Consul Server instance go down. It also makes uncertain the status of a new Consul Server instance in a scaled-up Docker Swarm.</li>
+<li>Consul doesn&apos;t support running in &quot;swarm&quot; mode yet, but it can be run in &quot;host&quot; mode across a Docker Swarm. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.</li>
 <li>Consul&apos;s Docker Swarm limitations can be addressed by using Docker Flow Proxy capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project.</li>
 <li>It&apos;s possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through <a href="https://docs.docker.com/compose/compose-file/" target="_blank">Docker Compose files</a>, and its deployment via BASH scripts in <a href="https://www.ansible.com/" target="_blank">Ansible</a> playbook.</li>
 </ol>
@@ -906,7 +965,7 @@ backend my_web-be49001
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Using Consul for Service Discovery on Docker Swarm","level":"1.3.6","depth":2,"next":{"title":"Workflow Component","level":"1.4","depth":1,"path":"Workflow-Component.md","ref":"Workflow-Component.md","articles":[{"title":"ETL Artifacts","level":"1.4.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},{"title":"UnifiedViews plugins","level":"1.4.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},{"title":"Workflow API","level":"1.4.3","depth":2,"path":"WF-API.md","ref":"WF-API.md","articles":[]}]},"previous":{"title":"Running the ATTX Stack on a PC or Mac","level":"1.3.5","depth":2,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Using-Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-05-04T09:15:23.035Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-04T13:48:35.292Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Using Consul for Service Discovery on Docker Swarm","level":"1.3.6","depth":2,"next":{"title":"Workflow Component","level":"1.4","depth":1,"path":"Workflow-Component.md","ref":"Workflow-Component.md","articles":[{"title":"ETL Artifacts","level":"1.4.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},{"title":"UnifiedViews plugins","level":"1.4.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},{"title":"Workflow API","level":"1.4.3","depth":2,"path":"WF-API.md","ref":"WF-API.md","articles":[]}]},"previous":{"title":"Running the ATTX Stack on a PC or Mac","level":"1.3.5","depth":2,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight"],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Using-Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-05-05T07:24:14.157Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-05T09:25:06.553Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

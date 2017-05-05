@@ -3,7 +3,7 @@ buildscript {
     maven { url "${artifactRepoURL}/repository/attx-releases"}
   }
   dependencies {
-    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.5.5-SNAPSHOT"
+    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.6-SNAPSHOT"
   }
 }
 
@@ -54,6 +54,8 @@ task distributeDocs(type: Copy) {
     into "${project.projectDir}"
 }
 
+gitCommit.dependsOn distributeDocs
+
 gitPullRequest {
     // where to publish to (repo must exist)
     githubUri = 'https://github.com/ATTX-project/ATTX-project.github.io'
@@ -65,10 +67,10 @@ gitPullRequest {
     accessToken = "${token}"
 
     // the name the branch should start with (will be added by timestamp to avoid collisions)
-    branchSuffix = 'dev'
+    branchSuffix = 'test-update'
 
     // the target branch to send pull request to
-    master = 'master'
+    master = 'dev'
 
     // // optional, the folder to commit all new or changed files from (default=src)
     // source = '.'
@@ -77,6 +79,6 @@ gitPullRequest {
     title = "Automatic pull request: Jenkins build#${jenkinsBuild}"
 
     // // optional, the message of the commit
-    message = 'Automatic pull request from Jenkins. Please review'
+    message = "Commited by Jenkins build#${jenkinsBuild}."
 
 }
