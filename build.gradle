@@ -3,7 +3,7 @@ buildscript {
     maven { url "${artifactRepoURL}/repository/attx-releases"}
   }
   dependencies {
-    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.5.92-SNAPSHOT"
+    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.5.94-SNAPSHOT"
   }
 }
 
