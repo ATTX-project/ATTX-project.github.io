@@ -1,17 +1,18 @@
-# Building with Gradle
+# Building with (Py)Gradle
+
 Brief report on interacting and working with Gradle within the project.
 
 <!-- TOC START min:1 max:4 link:true update:true -->
   - [Gradle](#gradle)
     - [Installation](#installation)
     - [Setting up](#setting-up)
-    - [Building and Running Tasks](#building-and-running-tasks)
   - [Python + Gradle = ♥️](#python--gradle--)
     - [Setting up](#setting-up-1)
       - [Creating a PyPi repository](#creating-a-pypi-repository)
       - [Python project setup](#python-project-setup)
       - [Excluding depenencies](#excluding-depenencies)
-    - [Building and Running Tasks](#building-and-running-tasks-1)
+    - [Building and Running Tasks](#building-and-running-tasks)
+    - [Example PyGradle Projects](#example-pygradle-projects)
   - [Documentation](#documentation)
 
 <!-- TOC END -->
@@ -22,7 +23,7 @@ Brief report on interacting and working with Gradle within the project.
 
 Installing on Ubuntu:
 * `curl -s https://get.sdkman.io | bash` - install sdk
-* `sdk install gradle 3.3` - install gradle 3.3 (or latest version)
+* `sdk install gradle 3.5` - install gradle 3.3 (or latest version)
 * check the installed version `gradle -v`
 
 Installing on MacOS (assuming [homebrew](http://brew.sh/) is installed):
@@ -31,32 +32,19 @@ Installing on MacOS (assuming [homebrew](http://brew.sh/) is installed):
 
 ### Setting up
 
-There are two ways to work with gradle:
+There are two ways to work with Gradle:
 * install it on your machine - see [Installation](#installation)
 * provide a [wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) so that others can also work with the same version or we can distribute the project for others that do no have Gradle installed, or need to work with a specific version of Gradle.
 
 There are two ways to create a Gradle Wrapper (both require Gradle installed):
-* use command `gradle wrapper --gradle-version 3.3` (last value is the version of gradle set for the wrapper);
+* use command `gradle wrapper --gradle-version 3.5` (last value is the version of gradle set for the wrapper);
 * in the `build.gradle` file create a wrapper task (see below) and use command `gradle wrapper`
 
 ```{groovy}
 task wrapper(type: Wrapper) {
-   gradleVersion = '3.3'
+   gradleVersion = '3.5'
 }
 ```
-
-### Building and Running Tasks
-
-There are two ways to run the tasks and build either with `gradle` or `./gradlew` commands. In the working directory where `build.gradle` file is available one can make use of the following commands.
-
-Tasks:
-* clean: `./gradlew clean`
-* build: `./gradlew build`
-* dependencies: `./gradlew dependencies` - outputs a nice dependency tree.
-* other tasks: `./gradlew :runTests` or `./gradlew :project:runtTests`
-* exclude tasks: `./gradlew build -x :project:runTests`
-* debugging: `./gradlew :project:testsReport --stacktrace`
-* do all: `./gradlew clean build -x :project:runTests -x :project:testsReport`
 
 ## Python + Gradle = ♥️
 
@@ -64,13 +52,13 @@ Tasks:
 
 Setting up steps overview - all these steps are detailed in this section:
 
-1. acquire Gradle and (optional) create a gradle wrapper - see [Installation](#installation);
+1. acquire Gradle and (optional) create a Gradle wrapper - see [Installation](#installation);
 2. create PyPi repository - see [Creating a PyPi repository](#creating-a-pypi-repository);
 3. set up Python project structure;
 4. create `build.gradle` file with appropriate PyGradle plugin;
 5. generate project `setup.py`.
 
-One of the best way to work with gradle in Python is using [PyGradle](https://github.com/linkedin/pygradle). It is also recommended using Gradle version 3.0+ .
+One of the best way to work with gradle in Python is using [PyGradle](https://github.com/linkedin/pygradle). It is also recommended using Gradle version 3.+ .
 
 PyGradle comes with several plugins available (for specific details refer to PyGradle github repository).
 
@@ -88,7 +76,7 @@ PyGradle depends on Ivy metadata to build a dependency graph, thus one cannot us
 The plugins can be added from Gradle plugins repository:
 ```{groovy}
 plugins {
-  id "com.linkedin.python-cli" version "0.3.36"
+  id "com.linkedin.python-cli" version "0.4.9"
 }
 ```
 or by jcenter
@@ -98,7 +86,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath group: 'com.linkedin.pygradle', name: 'pygradle-plugin', version: '0.4.1'
+        classpath group: 'com.linkedin.pygradle', name: 'pygradle-plugin', version: '0.4.9'
     }
 }
 apply plugin: 'com.linkedin.python-cli'
@@ -109,11 +97,30 @@ apply plugin: 'com.linkedin.python-cli'
 There are two methods to provide a PyPi repository:
 * local - that can be built following the instructions:
 Requires the pivy repository locally check build.gradle
-  * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.3.39
+  * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.4.9
   * run as below
 
     ```
-    java -jar ~/Software/pivy-importer-0.3.37-all.jar --repo /home/stefanne/Software/pivy virtualenv:15.0.1 pip:7.1.2 connexion:1.0.129 gunicorn:19.6.0 lxml:3.6.4 rdflib:4.2.1 rdflib-jsonld:0.4.0 PyMySQL:0.7.9 setuptools:19.1.1 swagger-spec-validator:2.0.2 pathlib:1.0.1 wheel:0.26.0 setuptools-git:1.1 flake8:2.5.4 Sphinx:1.4.1 pex:1.1.4 pytest:2.9.1 pytest-cov:2.2.1 pytest-xdist:1.14 setuptools:28.0.0 pytest-html:1.12.0 --replace alabaster:0.7=alabaster:0.7.1,pytz:0a=pytz:2016.4,Babel:0.8=Babel:1.0,sphinx_rtd_theme:0.1=sphinx_rtd_theme:0.1.1,idna:2.0.0=idna:2.1,chardet:2.2=chardet:2.3,setuptools:0.6a2=setuptools:32.1.0
+    java -jar ~/Software/pivy-importer-0.4.9-all.jar --repo /home/user/repository \
+      virtualenv:15.0.1 \
+      pip:7.1.2 \
+      gunicorn:19.6.0 \
+      lxml:3.6.4 rdflib:4.2.1 \
+      rdflib-jsonld:0.4.0  \
+      PyMySQL:0.7.9 \
+      setuptools:19.1.1 \
+      pytest:2.9.1 \
+      pytest-cov:2.2.1 \
+      pytest-xdist:1.14 \
+      setuptools:32.1.0 \
+      pytest-html:1.12.0  \
+      --replace alabaster:0.7=alabaster:0.7.1, \
+      pytz:0a=pytz:2016.4, \
+      Babel:0.8=Babel:1.0, \
+      sphinx_rtd_theme:0.1=sphinx_rtd_theme:0.1.1, \
+      idna:2.0.0=idna:2.1, \
+      chardet:2.2=chardet:2.3, \
+      setuptools:0.6a2=setuptools:32.1.0
 
     ```
 * hosted: one can build his own hosted PyPi repo for PyGradle using a [Docker image](https://github.com/ATTX-project/development-environment/tree/dev/pivy-repo) - build your own repository using https://github.com/blankdots/ivy-pypi-repo
@@ -140,7 +147,7 @@ Create a `build.gradle` file. An example of a such a file is bellow with some sp
 
 ```{groovy}
 plugins {
-  id "com.linkedin.python-cli" version "0.3.36"
+  id "com.linkedin.python-cli" version "0.4.9"
 }
 
 python {
@@ -181,14 +188,15 @@ repositories {
 }
 ```
 
-Create the `setup.py`:
-```
-./gradlew generateSetupPy
-```
+Create the `setup.py` using `gradle generateSetupPy`
 
-The `setup.py` in this example was created using the above task, by default the "setup" section at the bottom is commented out, so please look it over before continuing. One would want to un-comment the whole section at the bottom of the `setup.py`. - **Noticed that this was not required anymore as of 0.3.38**
+The `setup.py` in this example was created using the above task, by default the "setup" section at the bottom is commented out, **so please look it over before continuing. One would want to un-comment the whole section at the bottom of the `setup.py`.** One would also like to add a `setup.cfg` e.g.:
 
-*Note:* The `generateSetupPy` task should only be used to bootstrap a project and should be checked in to a project.
+```
+[flake8]
+ignore = E121,E123,E226,W292
+max-line-length = 160
+```
 
 #### Excluding depenencies
 
@@ -204,18 +212,20 @@ dependencies {
 
 ### Building and Running Tasks
 
-Building an running tasks is the same as the Gradle, however here are some examples customised to PyGradle:
-Tasks:
-* clean: `./gradlew clean`
-* build: `./gradlew build`
-* other tasks: `./gradlew :runTests` or `./gradlew :project:pytest`
-* exclude tasks: `./gradlew build -x :project:pytest`
-* debugging: `./gradlew :project:testsReport --stacktrace`
-* do all: `./gradlew clean build -x :project:pytest -x :project:testsReport`
-* see tasks: `./gradlew tasks --all` and depenencies `./gradlew depenencies` (previous to Gradle 3.3 all the tasks could be seen simply with `./gradlew tasks` with 3.3 the `--all` parameter was added to limit the number of tasks shown)
-* see test coverage `./gradlew :project:pytest coverage` it will generate a html report in `build/coverage/htmlcov`
+There are two ways to run the tasks and build either with `gradle` or `./gradlew` commands. In the working directory where `build.gradle` file is available one can make use of the following commands.
 
-In order to generate a HTML test report one could use `pytest-html` and creating a gradle task for that:
+Building an running tasks is the same as the Gradle, however here are some examples customised to PyGradle:
+
+Tasks:
+* clean: `gradle clean`
+* build: `gradle build`
+* other tasks: `gradle :runTests` (see below how to add this task) or `gradle pytest`
+* exclude tasks: `gradle build -x pytest`
+* do all: `gradle clean build -x pytest`
+* see tasks: `gradle tasks --all` and depenencies `gradle depenencies` (previous to Gradle 3.+ all the tasks could be seen simply with `gradle tasks` with 3.+ the `--all` parameter was added to limit the number of tasks shown)
+* see test coverage `gradle pytest coverage` it will generate a html report in `build/coverage/htmlcov`
+
+In order to generate a HTML test report one could use `pytest-html` dependency and creating a Gradle task for that:
 ```{groovy}
 // generate Tests report via a script.
 task runTests(type:Exec) {
@@ -238,6 +248,12 @@ command -v source >/dev/null 2>&1 || {
 source activate
 py.test tests --html=build/test-report/index.html --self-contained-html
 ```
+
+### Example PyGradle Projects
+
+Besides the examples provided https://github.com/linkedin/pygradle/tree/master/examples we provide two additional ones:
+- Example of of building a Falcon REST API using PyGradle (using python-web-app plugin) https://github.com/blankdots/pygradle-falcon-api
+- Command line utility using [Click](http://click.pocoo.org/6/) for converting RDF to JSON using a [JSON-LD frame](http://json-ld.org/spec/latest/json-ld-framing/) https://github.com/blankdots/pygradle-jsonld-cli
 
 ## Documentation
 
