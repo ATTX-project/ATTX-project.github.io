@@ -115,7 +115,7 @@ Requires the pivy repository locally check build.gradle
       pytest-xdist:1.14 \
       setuptools:32.1.0 \
       pytest-html:1.12.0  \
-  --replace alabaster:0.7=alabaster:0.7.1, \
+      --replace alabaster:0.7=alabaster:0.7.1, \
       pytz:0a=pytz:2016.4, \
       Babel:0.8=Babel:1.0, \
       sphinx_rtd_theme:0.1=sphinx_rtd_theme:0.1.1, \
