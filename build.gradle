@@ -1,9 +1,11 @@
 buildscript {
   repositories {
-    maven { url "${artifactRepoURL}/repository/attx-releases"}
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
   }
   dependencies {
-    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.5.92-SNAPSHOT"
+    classpath "gradle.plugin.de.jodamob.gradle:gradle-pullrequest-builder:1.0.RC1"
   }
 }
 
@@ -11,8 +13,7 @@ plugins {
     id "com.moowork.node" version "1.1.1"
 }
 
-
-apply plugin: "attx.pullrequest.gradle.github"
+apply plugin: "de.jodamob.gradle.github"
 apply plugin: 'com.moowork.node'
 apply plugin: 'base'
 
@@ -65,7 +66,7 @@ gitPullRequest {
     accessToken = "${token}"
 
     // the name the branch should start with (will be added by timestamp to avoid collisions)
-    branchSuffix = 'test-update'
+    branchSuffix = 'update'
 
     // the target branch to send pull request to
     master = 'dev'
