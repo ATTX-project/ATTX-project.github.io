@@ -3,7 +3,7 @@ buildscript {
     maven { url "${artifactRepoURL}/repository/attx-releases"}
   }
   dependencies {
-    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.5.9991-SNAPSHOT"
+    classpath "org.uh.hulib.attx.gradle:gradle-pullrequest-builder:1.6-SNAPSHOT"
   }
 }
 
@@ -79,6 +79,6 @@ gitPullRequest {
     title = "Automatic pull request: Jenkins build#${jenkinsBuild}"
 
     // // optional, the message of the commit
-    message = 'Automatic pull request from Jenkins. Please review'
+    message = "Commited by Jenkins build#${jenkinsBuild}."
 
 }
