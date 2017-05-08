@@ -151,3 +151,4 @@ The following packages needs to added in order to make use of the libXML in any 
 In order to build Maven project it needs to be installed:
 * apt-get install -y maven
 
+Testing
