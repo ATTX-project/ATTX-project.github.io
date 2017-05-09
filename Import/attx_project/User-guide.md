@@ -311,7 +311,7 @@ Every pipeline essentially represents one or more datasets.
 
 The simplest ingestion pipeline consists of three DPUs as depicted in figure X. In this example the downloaded data is already in RDF format and requires no transformations. Replace dataset loader means that old version of the data are always completely replaces with the new version.
 
-![Download](../../images/Pipeline-DownloadRDF.png | width=225)
+![Download](../../images/Pipeline-DownloadRDF.png)
 
 This kind of pipelines can be used to download ontologies or vocabularies to the platform.
 
@@ -319,7 +319,7 @@ This kind of pipelines can be used to download ontologies or vocabularies to the
 
 It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where `RMLTransformer` is used to transform from example CSV file into RDF before adding in to the platform's data storage.
 
-![Download and transform](../../images/Pipeline-DownloadAndTransform.png | width=500)
+![Download and transform](../../images/Pipeline-DownloadAndTransform.png)
 
 Both replace and update data set DPUs require RDF input, so transformation step is required for all input data that is not available in RDF format.
 
