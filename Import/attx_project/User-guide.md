@@ -63,7 +63,7 @@ Output:
 
 ### OAI-PMH harvester
 
-This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are `YYYY-MM-DD` (date) formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by timestamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
+This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](http://www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are `YYYY-MM-DD` (date) formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by timestamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
 
 If the data source supports tracking of deleted records, those are outputted as a separate set of OAI-PMH identifiers.
 
