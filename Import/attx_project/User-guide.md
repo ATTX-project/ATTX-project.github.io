@@ -1,12 +1,12 @@
-# User guide
+# ATTX Semantic Broker - User guide
 
-This user guide is for people who have ATTX platform instance up and running and want to start working with data.
+This user guide is for people who have an _ATTX Semantic Broker_ platform instance up and running and want to start working with data.
 
-ATTX platform has three types of pipelines: ingest, process and distribute. Each type has its own characteristics, but the main ideas are as follows:
+ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Distribution. Each type has its own characteristics, but the main ideas are as follows:
 
-* Ingestion pipelines are the only ones that work with external data
-* Processing pipelines only work with internal data
-* Distribution pipelines are the only ones that are used to expose/distribute/publish data to the public.
+* **Ingestion pipelines** are the only ones that work with external data;
+* **Processing pipelines** only work with internal data;
+* **Distribution pipelines** are the only ones that are used to expose/distribute/publish data to the public.
 
 <!-- TOC START min:1 max:3 link:true update:true -->
 - [User guide](#user-guide)
@@ -39,7 +39,7 @@ ATTX platform has three types of pipelines: ingest, process and distribute. Each
 
 # ATTX DPUs
 
-ATTX platform ships with custom DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and usually every pipeline contains at least one DPU from each category.
+ATTX platform ships with custom [UnifiedViews](https://github.com/UnifiedViews) DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and in most cases every pipeline contains at least one DPU from each category.
 
 ## Extractors
 
@@ -63,7 +63,7 @@ Output:
 
 ### OAI-PMH harvester
 
-This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are `YYYY-MM-DD` formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by timestamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
+This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are `YYYY-MM-DD` (date) formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by timestamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
 
 If the data source supports tracking of deleted records, those are outputted as a separate set of OAI-PMH identifiers.
 
@@ -94,7 +94,7 @@ ATTX transformers create new data. New data can be metadata about the datasets o
 
 ### Describe External Data source
 
-This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter **must** contain some type of indication of license. Same licensing information is then attached to any derived dataset from this data source.
+This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter **must** contain some type of indication of license. Same licensing information is then attached to any derived dataset from this data source. In the case two external datasets are used in the Processing pipeline with distinct licenses, the license associated with the derived dataset will be the most restrictive. 
 
 Configuration:
 - Name *
@@ -126,7 +126,7 @@ This DPU can also be used as part of a processing pipeline when paired with "Sel
 *How about a case where data about the same Thing is coming in from two different sources?*
 
 Configuration:
-- list of properties to use for clustering
+- list of properties to use for clustering as URIs
 
 Output:
 - Clustered IDs RDF
@@ -151,7 +151,6 @@ Output:
   <attx:id> <urn:2> .
 
 ```
-
 
 ### RML transformer
 
@@ -233,7 +232,6 @@ Uses [JSON-LD framing](http://json-ld.org/spec/latest/json-ld-framing/) to creat
 
 RDF to JSON mapper can only work on existing data sets and cannot therefore be part of a ingestion pipeline.
 
-
 Input:
 - dataset URIs
 
@@ -304,31 +302,31 @@ Configuration:
 
 # Pipelines
 
-Every pipeline essentially represents one or more dataset
+Every pipeline essentially represents one or more datasets.
 
 ## Ingestion pipelines
 
 
 **Simple download and replace**
 
-The simplest ingestion pipeline consists of three DPUs as depicted in figure X. In this example the downloaded data is already in RDF format and requires no tranformations. Replace dataset loader means that old version of the data are always completely replaces with the new version.
+The simplest ingestion pipeline consists of three DPUs as depicted in figure X. In this example the downloaded data is already in RDF format and requires no transformations. Replace dataset loader means that old version of the data are always completely replaces with the new version.
 
-![Download](../../images/Pipeline-DownloadRDF.png)
+![Download](../../images/Pipeline-DownloadRDF.png | width=225)
 
-This kind of pipeliens can be used to download ontologies or vocabularies to the platform.
+This kind of pipelines can be used to download ontologies or vocabularies to the platform.
 
 **Download and transform**
 
-It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where RMLTransformer is used to transform from example CSV file into RDF before adding in to the platform's data storage.
+It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where `RMLTransformer` is used to transform from example CSV file into RDF before adding in to the platform's data storage.
 
-![Download and transform](../../images/Pipeline-DownloadAndTransform.png)
+![Download and transform](../../images/Pipeline-DownloadAndTransform.png | width=500)
 
-Both replace and update data set DPUs require RDF input, so tranformation step is required for all input data that is not available in RDF format.
+Both replace and update data set DPUs require RDF input, so transformation step is required for all input data that is not available in RDF format.
 
 
 **Incremental harvesting**
 
-OAI-PMH harvesting interface allows one to harvest new records incrementally based on the timestamp they were last modified. Incremental harvesting requires UpdateDataSet DPU to be used, or otherwise the target dataset will only contain the latest changes.
+OAI-PMH harvesting interface allows one to harvest new records incrementally based on the timestamp they were last modified. Incremental harvesting requires `UpdateDataSet` DPU to be used, or otherwise the target dataset will only contain the latest changes.
 
 ![Ingestion pipeline example](../../images/Pipeline-HarvestData.png)
 
@@ -369,26 +367,26 @@ linkByID data set
 
 **Simple reasoning**
 
-OWNReasoner can be configured to use either pipeline specific ontology or ontology data set as it's configuration. This example shows an example of the latter case. SelectExistingDataSets DPU connected to the Ontology URI port is the data set that contains ontology triples where as the other SelectExistingDataSets DPU refers to the data set that contain triples that will the target of the reasoning process.
+`OWNReasoner` can be configured to use either pipeline specific ontology or ontology data set as it's configuration. This example shows an example of the latter case. `SelectExistingDataSets` DPU connected to the Ontology URI port is the data set that contains ontology triples where as the other `SelectExistingDataSets` DPU refers to the data set that contain triples that will the target of the reasoning process.
 
 ![Processing pipeline example - Reasoning](../../images/Pipeline-OWLReasoning.png)
 
 ## Distribution pipelines
 
-Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using PublishToAPI DPU.
+Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using `PublishToAPI` DPU.
 
 ![Publish to API](../../images/Pipeline-PublishToAPI.png)
 
-# Complete example
+# Semantic Broker End to End Usage Scenario
 
-This chapter describes a complete example that uses ATTX platform to harvest, link and distribute data maintained by three different sources.
+This section provides a end to end example that uses ATTX Semantic Broker platform from harvest, to linking and distributing the data maintained by three different sources.
 
 Data sources are:
 - Helda publication data  
 - Finto vocabularies
 - HY organization registry
 
-The example will first link publication metadata with finto vocabularies and organizational units using subject and contributor field respectively. Then it will use simple OWL reasoning on SKOS vocabulary to add links from linked subject's parent concepts to the publication. This allows users for example to search for "Beverage" and find things described as "Tea". Finally, the distribution pipeline will add multilingual labels for the linked subjects.
+A first step consists of linking publication metadata with finto vocabularies and organizational units using subject and contributor field respectively. In the following step it will use simple OWL reasoning on SKOS vocabulary to add links from linked subject's parent concepts to the publication. This allows users for example to search for "Beverage" and find things described as "Tea". Finally, the distribution pipeline will add multilingual labels for the linked subjects.
 
 Example of result document:
 ```
