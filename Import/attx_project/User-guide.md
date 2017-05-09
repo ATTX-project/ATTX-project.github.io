@@ -8,9 +8,38 @@ ATTX platform has three types of pipelines: ingest, process and distribute. Each
 * Processing pipelines only work with internal data
 * Distribution pipelines are the only ones that are used to expose/distribute/publish data to the public.
 
+<!-- TOC START min:1 max:3 link:true update:true -->
+- [User guide](#user-guide)
+- [ATTX DPUs](#attx-dpus)
+  - [Extractors](#extractors)
+    - [File download](#file-download)
+    - [OAI-PMH harvester](#oai-pmh-harvester)
+    - [Select existing datasets](#select-existing-datasets)
+  - [Transformers](#transformers)
+    - [Describe External Data source](#describe-external-data-source)
+    - [Describe data set](#describe-data-set)
+    - [Cluster IDs](#cluster-ids)
+    - [RML transformer](#rml-transformer)
+    - [Link by ID](#link-by-id)
+    - [Custom RDF to JSON mapper](#custom-rdf-to-json-mapper)
+    - [JSON-LD Framing based RDF to JSON Mapper](#json-ld-framing-based-rdf-to-json-mapper)
+  - [Loaders](#loaders)
+    - [Replace data set](#replace-data-set)
+    - [Update data set](#update-data-set)
+    - [Publish to API](#publish-to-api)
+    - [Publish to file](#publish-to-file)
+- [Pipelines](#pipelines)
+  - [Ingestion pipelines](#ingestion-pipelines)
+  - [Processing pipelines](#processing-pipelines)
+  - [Distribution pipelines](#distribution-pipelines)
+- [Complete example](#complete-example)
+
+<!-- TOC END -->
+
+
 # ATTX DPUs
 
-ATTX platform ships with custom DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and usually every pipeline contains at least one DPU from eact category.
+ATTX platform ships with custom DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and usually every pipeline contains at least one DPU from each category.
 
 ## Extractors
 
@@ -34,7 +63,7 @@ Output:
 
 ### OAI-PMH harvester
 
-This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are YYYY-MM-DD formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by timestamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
+This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are `YYYY-MM-DD` formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by timestamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
 
 If the data source supports tracking of deleted records, those are outputted as a separate set of OAI-PMH identifiers.
 
@@ -61,11 +90,11 @@ Configuration/Output:
 
 ## Transformers
 
-ATTX transformers create new data. New data can be metadata about the datasets or data that is generated through somekind of processing, such as linking, reasoning or transformation.  
+ATTX transformers create new data. New data can be metadata about the datasets or data that is generated through some type of processing, such as linking, reasoning or transformation.  
 
 ### Describe External Data source
 
-This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter **must** contain somekind of indication of license. Same licensing information is then attached to any derived dataset from this data source.
+This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter **must** contain some type of indication of license. Same licensing information is then attached to any derived dataset from this data source.
 
 Configuration:
 - Name *
