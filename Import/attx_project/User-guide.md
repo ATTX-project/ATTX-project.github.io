@@ -1,4 +1,9 @@
-# ATTX Semantic Broker - User guide
+# ATTX Semantic Broker - Data Administrator's User guide
+
+
+## Introduction 
+
+**User needs to have an introduction as this is too abrupt.**
 
 This user guide is for people who have an _ATTX Semantic Broker_ platform instance up and running and want to start working with data.
 
@@ -8,6 +13,7 @@ ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Dis
 * **Processing pipelines** only work with internal data;
 * **Distribution pipelines** are the only ones that are used to expose/distribute/publish data to the public.
 
+## Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
 - [User guide](#user-guide)
 - [ATTX DPUs](#attx-dpus)
