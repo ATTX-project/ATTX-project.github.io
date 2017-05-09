@@ -15,7 +15,10 @@ ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Dis
 
 ## Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
-- [User guide](#user-guide)
+- [Pipelines](#pipelines)
+  - [Ingestion pipelines](#ingestion-pipelines)
+  - [Processing pipelines](#processing-pipelines)
+  - [Distribution pipelines](#distribution-pipelines)
 - [ATTX DPUs](#attx-dpus)
   - [Extractors](#extractors)
     - [File download](#file-download)
@@ -34,14 +37,85 @@ ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Dis
     - [Update data set](#update-data-set)
     - [Publish to API](#publish-to-api)
     - [Publish to file](#publish-to-file)
-- [Pipelines](#pipelines)
-  - [Ingestion pipelines](#ingestion-pipelines)
-  - [Processing pipelines](#processing-pipelines)
-  - [Distribution pipelines](#distribution-pipelines)
 - [Complete example](#complete-example)
 
 <!-- TOC END -->
+# Pipeline types
 
+Every pipeline essentially represents one or more datasets.
+
+## Ingestion pipelines
+
+
+**Simple download and replace**
+
+The simplest ingestion pipeline consists of three DPUs as depicted in figure X. In this example the downloaded data is already in RDF format and requires no transformations. Replace dataset loader means that old version of the data are always completely replaces with the new version.
+
+![Download](../../images/Pipeline-DownloadRDF.png)
+
+This kind of pipelines can be used to download ontologies or vocabularies to the platform.
+
+**Download and transform**
+
+It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where `RMLTransformer` is used to transform from example CSV file into RDF before adding in to the platform's data storage.
+
+![Download and transform](../../images/Pipeline-DownloadAndTransform.png)
+
+Both replace and update data set DPUs require RDF input, so transformation step is required for all input data that is not available in RDF format.
+
+
+**Incremental harvesting**
+
+OAI-PMH harvesting interface allows one to harvest new records incrementally based on the timestamp they were last modified. Incremental harvesting requires `UpdateDataSet` DPU to be used, or otherwise the target dataset will only contain the latest changes.
+
+![Ingestion pipeline example](../../images/Pipeline-HarvestData.png)
+
+Example workflow has two Loader DPUs, because we want to store clustered ids in to a separate dataset so that we can update the clustering configuration more easily.
+
+
+## Processing pipelines
+
+**Link by ID**
+
+This example uses clustered ids and harvested datasets as the source data and generated new explicit links between resource. For example:
+
+Clustered ids:
+```
+:pub1
+  attx:id "urn:1"
+
+:org1
+  attx:id "orgID1"
+
+```
+
+working data 1
+```
+:pub1
+  a Publication
+  urn "urn:1"
+  org "orgID1"
+```
+
+linkByID data set
+```
+:pub1
+  orgLink :org1
+```
+
+![Processing pipeline example - Link by ID](../../images/Pipeline-LinkByID.png)
+
+**Simple reasoning**
+
+`OWNReasoner` can be configured to use either pipeline specific ontology or ontology data set as it's configuration. This example shows an example of the latter case. `SelectExistingDataSets` DPU connected to the Ontology URI port is the data set that contains ontology triples where as the other `SelectExistingDataSets` DPU refers to the data set that contain triples that will the target of the reasoning process.
+
+![Processing pipeline example - Reasoning](../../images/Pipeline-OWLReasoning.png)
+
+## Distribution pipelines
+
+Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using `PublishToAPI` DPU.
+
+![Publish to API](../../images/Pipeline-PublishToAPI.png)
 
 # ATTX DPUs
 
@@ -304,84 +378,6 @@ This DPU copies file to a web server with given path and file name.
 Configuration:
 - path
 - File name
-
-
-# Pipelines
-
-Every pipeline essentially represents one or more datasets.
-
-## Ingestion pipelines
-
-
-**Simple download and replace**
-
-The simplest ingestion pipeline consists of three DPUs as depicted in figure X. In this example the downloaded data is already in RDF format and requires no transformations. Replace dataset loader means that old version of the data are always completely replaces with the new version.
-
-![Download](../../images/Pipeline-DownloadRDF.png)
-
-This kind of pipelines can be used to download ontologies or vocabularies to the platform.
-
-**Download and transform**
-
-It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where `RMLTransformer` is used to transform from example CSV file into RDF before adding in to the platform's data storage.
-
-![Download and transform](../../images/Pipeline-DownloadAndTransform.png)
-
-Both replace and update data set DPUs require RDF input, so transformation step is required for all input data that is not available in RDF format.
-
-
-**Incremental harvesting**
-
-OAI-PMH harvesting interface allows one to harvest new records incrementally based on the timestamp they were last modified. Incremental harvesting requires `UpdateDataSet` DPU to be used, or otherwise the target dataset will only contain the latest changes.
-
-![Ingestion pipeline example](../../images/Pipeline-HarvestData.png)
-
-Example workflow has two Loader DPUs, because we want to store clustered ids in to a separate dataset so that we can update the clustering configuration more easily.
-
-
-## Processing pipelines
-
-**Link by ID**
-
-This example uses clustered ids and harvested datasets as the source data and generated new explicit links between resource. For example:
-
-Clustered ids:
-```
-:pub1
-  attx:id "urn:1"
-
-:org1
-  attx:id "orgID1"
-
-```
-
-working data 1
-```
-:pub1
-  a Publication
-  urn "urn:1"
-  org "orgID1"
-```
-
-linkByID data set
-```
-:pub1
-  orgLink :org1
-```
-
-![Processing pipeline example - Link by ID](../../images/Pipeline-LinkByID.png)
-
-**Simple reasoning**
-
-`OWNReasoner` can be configured to use either pipeline specific ontology or ontology data set as it's configuration. This example shows an example of the latter case. `SelectExistingDataSets` DPU connected to the Ontology URI port is the data set that contains ontology triples where as the other `SelectExistingDataSets` DPU refers to the data set that contain triples that will the target of the reasoning process.
-
-![Processing pipeline example - Reasoning](../../images/Pipeline-OWLReasoning.png)
-
-## Distribution pipelines
-
-Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using `PublishToAPI` DPU.
-
-![Publish to API](../../images/Pipeline-PublishToAPI.png)
 
 # Semantic Broker End to End Usage Scenario
 
