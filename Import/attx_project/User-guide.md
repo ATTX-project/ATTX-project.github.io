@@ -296,7 +296,7 @@ Input:
 This DPU copies file to a web server with given path and file name.
 
 Configuration:
-- ath
+- path
 - File name
 
 
