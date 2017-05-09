@@ -96,7 +96,7 @@ Configuration/Output:
 
 ## Transformers
 
-ATTX transformers create new data. New data can be metadata about the datasets or data that is generated through some type of processing, such as linking, reasoning or transformation.  
+ATTX transformers create new data. New data can be metadata about the datasets or data that is generated through some type of processing, such as linking, reasoning or any kind of transformation.  
 
 ### Describe External Data source
 
