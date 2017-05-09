@@ -3,14 +3,14 @@
 
 ## Introduction 
 
-**User needs to have an introduction as this is too abrupt.**
+This user guide is for people who have an _ATTX Semantic Broker_ platform instance up and running and want to start working with data. ATTX uses [UnifiedViews ETL tool](https://unifiedviews.eu/) as the tool to define, execute, monitor, debug, schedule data related processes. In UnifiedViews these processes are defined as pipelines, which consists of steps that are implemented using DPUs (Data Processing Unit). 
 
-This user guide is for people who have an _ATTX Semantic Broker_ platform instance up and running and want to start working with data.
+The traditional way of using ETL tools is to create potentionally complex pipelines that Extract data from one or more data sources, run multiple Transformations and finally Load the data to another system. In these scenarios, ETL tool sits in the middle, handling data flows from A to B. In ATTX Semantic Broker, ETL is part of the system itself and the system can use itself as the data source. From the ETL point of view, it is a opinionated framework for building pipelines. 
 
 ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Distribution. Each type has its own characteristics, but the main ideas are as follows:
 
 * **Ingestion pipelines** are the only ones that work with external data;
-* **Processing pipelines** only work with internal data;
+* **Processing pipelines** only work with internal data; 
 * **Distribution pipelines** are the only ones that are used to expose/distribute/publish data to the public.
 
 ## Table of Contents
