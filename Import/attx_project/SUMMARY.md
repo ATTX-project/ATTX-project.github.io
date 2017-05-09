@@ -27,8 +27,9 @@
   * [ElasticSearch with Siren](ElasticSearch-with-Siren.md)
   * [ElasticSearch 5.x](ElasticSearch-5.md)
 * [Applications and Use Cases](Applications-and-Use-Cases.md)
-  * [UC1 - infras and pubs](UC1---Infrastructures-and-publications.md)
-  * [UC - Metax](Use-case-Metax.md)
+  * [UC1 - Infras and pubs](UC1---Infrastructures-and-publications.md)
+  * [UC2 - Parallel publication dashboard](Use-case-Jyvaskyla.md)
+  * [UC-proposal - Metax](Use-case-Metax.md)
 
 ## Project Guidelines
 

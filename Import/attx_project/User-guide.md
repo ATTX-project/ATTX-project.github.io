@@ -1,53 +1,387 @@
-This user guide is for people who have ATTX platform instance up and running and want to start working with data. 
+# User guide
 
-# ATTX DPUs 
-ATTX platform ships with custom DPUs that must be used when designing pipelines. 
+This user guide is for people who have ATTX platform instance up and running and want to start working with data.
 
-## Metadata 
-This plugin defined the metadata for pipeline's source and target datasets. 
+ATTX platform has three types of pipelines: ingest, process and distribute. Each type has its own characteristics, but the main ideas are as follows:
 
-Source dataset can be external or internal. In case of an external data, user must add name, description, publisher and license for the dataset.  For internal datasets, i.e. data that is already part of the platform's graph, user only needs to selected the desired URI of the working graph. User can select multiple internal input graphs, but only one external (why?).
+* Ingestion pipelines are the only ones that work with external data
+* Processing pipelines only work with internal data
+* Distribution pipelines are the only ones that are used to expose/distribute/publish data to the public.
 
-Target dataset always requires name and description information.  
+# ATTX DPUs
 
-## Mapper 
+ATTX platform ships with custom DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and usually every pipeline contains at least one DPU from eact category.
 
-** This one is still missing ** 
+## Extractors
 
-Used to input/generate configurations for RML based mapping implementation.
+ATTX extractor DPU are used to configure ingestion of external data source to the platform or selection of existing platform data source for processing or dissemination.
 
-## Linker
+### File download
 
-**Maybe adding provenance generation to the GMAPI was not a good idea**
+This DPU simply downloads and stores file from the given URL and passes it on to further processing. It can be used update dataset that are based on for example CSV exports.
 
-This plugin is used to select and configure platforms different linking strategies. Input graph information is added by connecting DPU's inputGraphs edge to the Metadata DPU. 
+Configuration:
+- URL *
+- username
+- password
+- method
+- payload
+- ignore SSL errors
+- timeout
 
-Finally Linker's output should be connected to Uploader DPU. 
+Output:
+- files
 
-### Linking strategies
+### OAI-PMH harvester
 
-**Identifier based linking**
+This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are YYYY-MM-DD formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by timestamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
 
-Uses properties from the input datasets that have been classified as identifiers and tries to find exact matches.
+If the data source supports tracking of deleted records, those are outputted as a separate set of OAI-PMH identifiers.
 
-## Uploader 
+Configuration:
+- base URL *
+- metadata format *
+- set
+- Filter by date (bool)
+  - from date
+  - until date
+  - since previous successful harvesting
 
-Uploader is used to add the resulting RDF dataset to the internal graph. It has two required inputs: rdf data and target graph. RDF data should be connected from any DPU that generates the final version of the data, for example Linker, RDF merger or RMLMapper DPUs. Target graph information is added by connecting Uploader to the Metadata DPU.  
+Output:
+- deleted ids
+  - OAI-PMH identifiers of deleted records.
+- modified records  
 
-# UV DPUs
-UnifiedViews comes with many nice DPUs that allow users to do basic functions such as downloading files and interacting with REST APIs. 
+### Select existing datasets
 
-## uv-e-httpRequest
+This DPU provides search interface to the existing dataset metadata and allows users to reuse their content as the data source for pipelines. This DPU must be used as a loader for both processing and distribution pipelines.
+
+Configuration/Output:
+- Selected dataset URIs
+
+## Transformers
+
+ATTX transformers create new data. New data can be metadata about the datasets or data that is generated through somekind of processing, such as linking, reasoning or transformation.  
+
+### Describe External Data source
+
+This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter **must** contain somekind of indication of license. Same licensing information is then attached to any derived dataset from this data source.
+
+Configuration:
+- Name *
+- Description
+- License *
+
+Output:
+- Data source metadata
+
+### Describe data set
+
+Provides simple metadata for the internal dataset, which is used for example by the "Selected existing datasets" DPU.
+
+Configuration:
+- Name *
+- Description
+
+Output:
+- Data set metadata
+
+### Cluster IDs
+
+This DPU generates triples that cluster all the different resource identifier under one common property.
+
+When used as part of a ingest pipeline, one must use the RDF input connector. This provides the currently ingested RDF as the source for clustering.
+
+This DPU can also be used as part of a processing pipeline when paired with "Select existing data sets" DPU. This way the source data is the full content of one or more working graphs.
+
+*How about a case where data about the same Thing is coming in from two different sources?*
+
+Configuration:
+- list of properties to use for clustering
+
+Output:
+- Clustered IDs RDF
+
+Example:
+
+Configuration:
+- dc:identifier, custom:urn
+
+Input
+```
+<attx:ds/1/work/infra/1>
+  <dc:identifier> "infra/1" ;
+  <custom:urn> <urn:2> .
+
+```
+
+Output:
+```
+<attx:ds/1/work/infra/1>
+  <attx:id> "infra/1" ;
+  <attx:id> <urn:2> .
+
+```
 
 
-# Example
+### RML transformer
 
-Linking Helda thesis data and FINTO subject heading data. This example adds multilingual labels for thesis related subject headings. 
+Uses RML processor to transform CSV, XML and JSON files to RDF.
+
+Configuration:
+- RML configuration
+
+Output:
+- RDF
 
 
+### Link by ID
 
-**Helda thesis**
+Creates new explicit links from identifiers using the clustered IDs information.
 
-Dataset includes basic bibliographic information about theses made in the university of Helsinki. One of the fields is dc.subject.YSO 
+Configuration:
+- Source type
+- Source property
+- Target property
 
-https://ethesis.helsinki.fi/repository/handle/123456789/6350?show=full
+Output:
+- RDF
+
+Example:
+
+working data 1
+```
+:pub1
+  a Publication
+  urn "urn:1"
+  org "orgID1"
+
+:org1
+  extID "orgID1"
+```
+
+ids graph
+```
+:pub1
+  attx:id "urn:1"
+
+:org1
+  attx:id "orgID1"
+
+```
+
+Configuration
+- source type: Publication
+- source property: org
+- target property: orgLink
+
+New data
+
+```
+:pub1
+  orgLink :org1
+```
+
+### Custom RDF to JSON mapper
+
+Uses custom configuration file to traverse and transform RDF to nested JSON documents.
+
+TODO:
+Add more detailed description of mapping file.
+
+RDF to JSON mapper can only work on existing data sets and cannot therefore be part of a ingestion pipeline.
+
+Input:
+- dataset URIs
+
+Output:
+- Custom mapping configuration
+
+
+### JSON-LD Framing based RDF to JSON Mapper
+
+Uses [JSON-LD framing](http://json-ld.org/spec/latest/json-ld-framing/) to create deterministic serialization of a graph to JSON document.
+
+RDF to JSON mapper can only work on existing data sets and cannot therefore be part of a ingestion pipeline.
+
+
+Input:
+- dataset URIs
+
+Output:
+- Framing configuration
+
+
+## Loaders
+
+ATTX Loaders are components handle generated data by either storing it internally or handing it over to a distribution component for public consumption. Loader DPUs only have inputs.
+
+### Replace data set
+
+DPU that replaces all the old content with new data. This DPU should be used, when the source data is from a data dump.
+
+Input data can be configured to be RDF passed down from previous DPUs or file generated by some other DPU.
+
+Inputs:
+- Data set metadata
+- New data
+- New data files
+
+### Update data set
+
+Update DPU uses input data to create a SPARQL update request, which will preserve any existing data that is not part of the update. It also handles situations where value of a certain property has changed without creating duplicate property values. For example:
+
+Old data:
+```
+<subject> <dct:title> "Test"
+```
+
+SPARQL update:
+```
+DELETE { <subject> <dct:title> "Test" }
+INSERT { <subject> <dct:title> "Testing" }
+```
+
+New data:
+
+```
+<subject> <dct:title> "Testing"
+```
+
+Inputs
+- Data set metadata
+- Deleted IDs
+- Updated data
+
+
+Target graph is generated based on the contextual information.
+
+### Publish to API
+
+This DPU can be used to distributed generated JSON documents through a REST API.
+
+Input:
+- dataset metadata
+- configuration
+
+### Publish to file
+
+This DPU copies file to a web server with given path and file name.
+
+Configuration:
+- ath
+- File name
+
+
+# Pipelines
+
+Every pipeline essentially represents one or more dataset
+
+## Ingestion pipelines
+
+
+**Simple download and replace**
+
+The simplest ingestion pipeline consists of three DPUs as depicted in figure X. In this example the downloaded data is already in RDF format and requires no tranformations. Replace dataset loader means that old version of the data are always completely replaces with the new version.
+
+![Download](../../images/Pipeline-DownloadRDF.png)
+
+This kind of pipeliens can be used to download ontologies or vocabularies to the platform.
+
+**Download and transform**
+
+It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where RMLTransformer is used to transform from example CSV file into RDF before adding in to the platform's data storage.
+
+![Download and transform](../../images/Pipeline-DownloadAndTransform.png)
+
+Both replace and update data set DPUs require RDF input, so tranformation step is required for all input data that is not available in RDF format.
+
+
+**Incremental harvesting**
+
+OAI-PMH harvesting interface allows one to harvest new records incrementally based on the timestamp they were last modified. Incremental harvesting requires UpdateDataSet DPU to be used, or otherwise the target dataset will only contain the latest changes.
+
+![Ingestion pipeline example](../../images/Pipeline-HarvestData.png)
+
+Example workflow has two Loader DPUs, because we want to store clustered ids in to a separate dataset so that we can update the clustering configuration more easily.
+
+
+## Processing pipelines
+
+**Link by ID**
+
+This example uses clustered ids and harvested datasets as the source data and generated new explicit links between resource. For example:
+
+Clustered ids:
+```
+:pub1
+  attx:id "urn:1"
+
+:org1
+  attx:id "orgID1"
+
+```
+
+working data 1
+```
+:pub1
+  a Publication
+  urn "urn:1"
+  org "orgID1"
+```
+
+linkByID data set
+```
+:pub1
+  orgLink :org1
+```
+
+![Processing pipeline example - Link by ID](../../images/Pipeline-LinkByID.png)
+
+**Simple reasoning**
+
+OWNReasoner can be configured to use either pipeline specific ontology or ontology data set as it's configuration. This example shows an example of the latter case. SelectExistingDataSets DPU connected to the Ontology URI port is the data set that contains ontology triples where as the other SelectExistingDataSets DPU refers to the data set that contain triples that will the target of the reasoning process.
+
+![Processing pipeline example - Reasoning](../../images/Pipeline-OWLReasoning.png)
+
+## Distribution pipelines
+
+Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using PublishToAPI DPU.
+
+![Publish to API](../../images/Pipeline-PublishToAPI.png)
+
+# Complete example
+
+This chapter describes a complete example that uses ATTX platform to harvest, link and distribute data maintained by three different sources.
+
+Data sources are:
+- Helda publication data  
+- Finto vocabularies
+- HY organization registry
+
+The example will first link publication metadata with finto vocabularies and organizational units using subject and contributor field respectively. Then it will use simple OWL reasoning on SKOS vocabulary to add links from linked subject's parent concepts to the publication. This allows users for example to search for "Beverage" and find things described as "Tea". Finally, the distribution pipeline will add multilingual labels for the linked subjects.
+
+Example of result document:
+```
+{
+  "title": "Testing",  
+  "org": {
+    "name": "Helsinki University Library",
+    "orgUnitCode": "Test"
+  },
+  "subjects": [
+    {
+      "id": "http://www.yso.fi/onto/yso/p5127",
+      "label": {
+        "fi": "juomat",
+        "en": "beverages",
+        "sv": "drycker"
+      }
+    }
+  ]
+  ...
+}
+```
+
+
+*To be continued...*
