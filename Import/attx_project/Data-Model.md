@@ -1,6 +1,7 @@
 # ATTX Ontology
 
 <!-- TOC START min:1 max:3 link:true update:true -->
+- [ATTX Ontology](#attx-ontology)
   - [Ontology/Data Model - ATTXOnto](#ontologydata-model---attxonto)
   - [Related Data models](#related-data-models)
     - [ATT Data Model](#att-data-model)
@@ -14,21 +15,7 @@ The ontology/data model has the purpose of describing how and when the data flow
 
 [Namespaces references](Namespaces.md)
 
-```{turtle}
-@base <http://data.hulib.helsinki.fi/attx/> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
-@prefix attxonto: <http://data.hulib.helsinki.fi/attx/onto#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix pwo: <http://purl.org/spar/pwo/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix schema: <http://schema.org/> .
-```
+**The full ontology description and examples are available at: https://attx-project.github.io/attx-onto/**
 
 A general use case is represented in Figure 1 where we can depict several parts:
 * ETL processes associated with the specific steps and workflows - see [ETL Workflow](ETL-Artifacts.md) for more details and [Workflow API](WF-API.md) which generates such specific information;

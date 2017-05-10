@@ -18,9 +18,17 @@ Issue/Bug reporting:
   * https://github.com/stain/jena-docker/issues/3
 * Docker Archiva container
   * https://github.com/xetus-oss/docker-archiva/issues/3
+* gradle-pullrequest-builder
+  * https://github.com/dpreussler/gradle-pullrequest-builder/issues/1
+
+Forks:
+* gradle-pullrequest-builder adapted as a ATTX project plugin:
+    * https://github.com/ATTX-project/gradle-pullrequest-builder
 
 Projects/Repositories:
 * PypiRepo for PyGradle (Python Gradle) builds https://github.com/blankdots/ivy-pypi-repo
+* PyGradle example of RDF to JSON-LD using JSON-LD frames CLI tool https://github.com/blankdots/pygradle-jsonld-cli
+* PyGradle example of Falcon API https://github.com/blankdots/pygradle-falcon-api
 
 Repositories:
 * https://hub.docker.com/u/attxproject/ - Docker images repository
