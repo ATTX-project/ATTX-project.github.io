@@ -3,6 +3,10 @@
 ## ATTX Project
 
 * [Introduction](README.md)
+* [Applications and Use Cases](Applications-and-Use-Cases.md)
+  * [UC1 - Infras and pubs](UC1---Infrastructures-and-publications.md)
+  * [UC2 - Parallel publication dashboard](Use-case-Jyvaskyla.md)
+  * [UC-proposal - Metax](Use-case-Metax.md)
 * [Architecture](Architecture.md)
 * [Platform Deployment](Platform-Deployment.md)
   * [CSC cPouta Cloud Services Report](CSC-cPouta-Cloud-Services-Report.md)
@@ -12,7 +16,6 @@
   * [Running the ATTX Stack on a PC or Mac](Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md)
   * [Using Consul for Service Discovery on Docker Swarm](Using-Consul-for-Service-Discovery-on-Docker-Swarm.md)
   * [Applying Rolling Updates to services in Docker Swarm](Applying-Rolling-Updates-to-services-in-Docker-Swarm.md)
-
 * [Workflow Component](Workflow-Component.md)
   * [ETL Artifacts](ETL-Artifacts.md)
   * [UnifiedViews plugins](Unified-Views-plugins.md)
@@ -26,10 +29,6 @@
 * [Distribution Component](Distribution-Component.md)
   * [ElasticSearch with Siren](ElasticSearch-with-Siren.md)
   * [ElasticSearch 5.x](ElasticSearch-5.md)
-* [Applications and Use Cases](Applications-and-Use-Cases.md)
-  * [UC1 - Infras and pubs](UC1---Infrastructures-and-publications.md)
-  * [UC2 - Parallel publication dashboard](Use-case-Jyvaskyla.md)
-  * [UC-proposal - Metax](Use-case-Metax.md)
 
 ## Project Guidelines
 
@@ -40,13 +39,20 @@
   * [Jenkins CI](Jenkins.md)
   * [Build Environment Setup](Build-Multiple-Environments.md)
   * [Containerized testing](Containerized-testing.md)
+
+## Project Contributions
+
 * Reports
-  * [Building with (Py)Gradle](Building-with-Gradle.md)
-  * [Messaging Brokers](Messaging-Brokers.md)
-  * [Service Discovery](Service-Discovery.md)
-  * [Workflow Management](Workflow-Management-Tools.md)
-* [Contributions](Contributions.md)
-  * [ELAG2017](ELAG-2017.md)
+    * [Building with (Py)Gradle](Building-with-Gradle.md)
+    * [Messaging Brokers](Messaging-Brokers.md)
+    * [Service Discovery](Service-Discovery.md)
+    * [Workflow Management](Workflow-Management-Tools.md)
+
+* Presentations
+    * [ELAG2017](ELAG-2017.md)
+    * [SWIB2017](SWIB-2017.md)
+
+* [Open Source Contributions](Open-Contributions.md)
 
 ---
 

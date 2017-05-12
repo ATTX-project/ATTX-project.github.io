@@ -1,6 +1,4 @@
-# ATTX Project Contributions
-
-## Open Source
+# Open Source Contributions
 
 Issue/Bug reporting:
 * dCompose Gradle plugin

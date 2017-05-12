@@ -1,21 +1,21 @@
 # ATTX Semantic Broker - Data Administrator's User guide
 
 
-## Introduction 
+## Introduction
 
-This user guide is for people who have an _ATTX Semantic Broker_ platform instance up and running and want to start working with data. ATTX uses [UnifiedViews ETL tool](https://unifiedviews.eu/) as the tool to define, execute, monitor, debug, schedule data related processes. In UnifiedViews these processes are defined as pipelines, which consists of steps that are implemented using DPUs (Data Processing Unit). 
+This user guide is for people who have an _ATTX Semantic Broker_ platform instance up and running and want to start working with data. ATTX uses [UnifiedViews ETL tool](https://unifiedviews.eu/) as the tool to define, execute, monitor, debug, schedule data related processes. In UnifiedViews these processes are defined as pipelines, which consists of steps that are implemented using DPUs (Data Processing Unit).
 
-The traditional way of using ETL tools is to create potentionally complex pipelines that Extract data from one or more data sources, run multiple Transformations and finally Load the data to another system. In these scenarios, ETL tool sits in the middle, handling data flows from A to B. In ATTX Semantic Broker, ETL is part of the system itself and the system can use itself as the data source. From the ETL point of view, it is a opinionated framework for building pipelines. 
+The traditional way of using ETL tools is to create potentionally complex pipelines that Extract data from one or more data sources, run multiple Transformations and finally Load the data to another system. In these scenarios, ETL tool sits in the middle, handling data flows from A to B. In ATTX Semantic Broker, ETL is part of the system itself and the system can use itself as the data source. From the ETL point of view, it is a opinionated framework for building pipelines.
 
 ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Distribution. Each type has its own characteristics, but the main ideas are as follows:
 
 * **Ingestion pipelines** are the only ones that work with external data;
-* **Processing pipelines** only work with internal data; 
+* **Processing pipelines** only work with internal data;
 * **Distribution pipelines** are the only ones that are used to expose/distribute/publish data to the public.
 
 ## Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
-- [Pipelines](#pipelines)
+- [Pipeline types](#pipeline-types)
   - [Ingestion pipelines](#ingestion-pipelines)
   - [Processing pipelines](#processing-pipelines)
   - [Distribution pipelines](#distribution-pipelines)
@@ -37,14 +37,16 @@ ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Dis
     - [Update data set](#update-data-set)
     - [Publish to API](#publish-to-api)
     - [Publish to file](#publish-to-file)
-- [Complete example](#complete-example)
+- [Semantic Broker End to End Usage Scenario](#semantic-broker-end-to-end-usage-scenario)
 
 <!-- TOC END -->
-# Pipeline types
+
+
+## Pipeline types
 
 Every pipeline essentially represents one or more datasets.
 
-## Ingestion pipelines
+### Ingestion pipelines
 
 
 **Simple download and replace**
@@ -73,7 +75,7 @@ OAI-PMH harvesting interface allows one to harvest new records incrementally bas
 Example workflow has two Loader DPUs, because we want to store clustered ids in to a separate dataset so that we can update the clustering configuration more easily.
 
 
-## Processing pipelines
+### Processing pipelines
 
 **Link by ID**
 
@@ -111,21 +113,21 @@ linkByID data set
 
 ![Processing pipeline example - Reasoning](../../images/Pipeline-OWLReasoning.png)
 
-## Distribution pipelines
+### Distribution pipelines
 
 Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using `PublishToAPI` DPU.
 
 ![Publish to API](../../images/Pipeline-PublishToAPI.png)
 
-# ATTX DPUs
+## ATTX DPUs
 
 ATTX platform ships with custom [UnifiedViews](https://github.com/UnifiedViews) DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and in most cases every pipeline contains at least one DPU from each category.
 
-## Extractors
+### Extractors
 
 ATTX extractor DPU are used to configure ingestion of external data source to the platform or selection of existing platform data source for processing or dissemination.
 
-### File download
+#### File download
 
 This DPU simply downloads and stores file from the given URL and passes it on to further processing. It can be used update dataset that are based on for example CSV exports.
 
@@ -141,7 +143,7 @@ Configuration:
 Output:
 - files
 
-### OAI-PMH harvester
+#### OAI-PMH harvester
 
 This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](http://www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are `YYYY-MM-DD` (date) formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by timestamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
 
@@ -161,20 +163,20 @@ Output:
   - OAI-PMH identifiers of deleted records.
 - modified records  
 
-### Select existing datasets
+#### Select existing datasets
 
 This DPU provides search interface to the existing dataset metadata and allows users to reuse their content as the data source for pipelines. This DPU must be used as a loader for both processing and distribution pipelines.
 
 Configuration/Output:
 - Selected dataset URIs
 
-## Transformers
+### Transformers
 
 ATTX transformers create new data. New data can be metadata about the datasets or data that is generated through some type of processing, such as linking, reasoning or any kind of transformation.  
 
-### Describe External Data source
+#### Describe External Data source
 
-This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter **must** contain some type of indication of license. Same licensing information is then attached to any derived dataset from this data source. In the case two external datasets are used in the Processing pipeline with distinct licenses, the license associated with the derived dataset will be the most restrictive. 
+This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter **must** contain some type of indication of license. Same licensing information is then attached to any derived dataset from this data source. In the case two external datasets are used in the Processing pipeline with distinct licenses, the license associated with the derived dataset will be the most restrictive.
 
 Configuration:
 - Name *
@@ -184,7 +186,7 @@ Configuration:
 Output:
 - Data source metadata
 
-### Describe data set
+#### Describe data set
 
 Provides simple metadata for the internal dataset, which is used for example by the "Selected existing datasets" DPU.
 
@@ -195,7 +197,7 @@ Configuration:
 Output:
 - Data set metadata
 
-### Cluster IDs
+#### Cluster IDs
 
 This DPU generates triples that cluster all the different resource identifier under one common property.
 
@@ -232,7 +234,7 @@ Output:
 
 ```
 
-### RML transformer
+#### RML transformer
 
 Uses RML processor to transform CSV, XML and JSON files to RDF.
 
@@ -243,7 +245,7 @@ Output:
 - RDF
 
 
-### Link by ID
+#### Link by ID
 
 Creates new explicit links from identifiers using the clustered IDs information.
 
@@ -290,7 +292,7 @@ New data
   orgLink :org1
 ```
 
-### Custom RDF to JSON mapper
+#### Custom RDF to JSON mapper
 
 Uses custom configuration file to traverse and transform RDF to nested JSON documents.
 
@@ -306,7 +308,7 @@ Output:
 - Custom mapping configuration
 
 
-### JSON-LD Framing based RDF to JSON Mapper
+#### JSON-LD Framing based RDF to JSON Mapper
 
 Uses [JSON-LD framing](http://json-ld.org/spec/latest/json-ld-framing/) to create deterministic serialization of a graph to JSON document.
 
@@ -319,11 +321,11 @@ Output:
 - Framing configuration
 
 
-## Loaders
+### Loaders
 
 ATTX Loaders are components handle generated data by either storing it internally or handing it over to a distribution component for public consumption. Loader DPUs only have inputs.
 
-### Replace data set
+#### Replace data set
 
 DPU that replaces all the old content with new data. This DPU should be used, when the source data is from a data dump.
 
@@ -334,7 +336,7 @@ Inputs:
 - New data
 - New data files
 
-### Update data set
+#### Update data set
 
 Update DPU uses input data to create a SPARQL update request, which will preserve any existing data that is not part of the update. It also handles situations where value of a certain property has changed without creating duplicate property values. For example:
 
@@ -363,7 +365,7 @@ Inputs
 
 Target graph is generated based on the contextual information.
 
-### Publish to API
+#### Publish to API
 
 This DPU can be used to distributed generated JSON documents through a REST API.
 
@@ -371,7 +373,7 @@ Input:
 - dataset metadata
 - configuration
 
-### Publish to file
+#### Publish to file
 
 This DPU copies file to a web server with given path and file name.
 
@@ -379,7 +381,7 @@ Configuration:
 - path
 - File name
 
-# Semantic Broker End to End Usage Scenario
+## Semantic Broker End to End Usage Scenario
 
 This section provides a end to end example that uses ATTX Semantic Broker platform from harvest, to linking and distributing the data maintained by three different sources.
 

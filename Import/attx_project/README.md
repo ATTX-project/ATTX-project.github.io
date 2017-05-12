@@ -25,7 +25,7 @@ Reports on technologies and related initiatives:
 
 Open Source contributions on various projects:
 
-* [Open Source Projects Contributions](Contributions.md)
+* [Open Source Projects Contributions](Open-Contributions.md)
 
 Conference Proposals, Presentation and Talks:
 
