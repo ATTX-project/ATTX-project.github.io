@@ -29,6 +29,7 @@
 * [Distribution Component](Distribution-Component.md)
   * [ElasticSearch with Siren](ElasticSearch-with-Siren.md)
   * [ElasticSearch 5.x](ElasticSearch-5.md)
+* [Service Discovery](ServiceDiscovery-Implementation.md)
 
 ## Project Guidelines
 
