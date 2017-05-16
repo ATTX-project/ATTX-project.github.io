@@ -3,6 +3,7 @@
 This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.
 
 <!-- TOC START min:1 max:3 link:true update:true -->
+- [Containerised Testing](#containerised-testing)
   - [Testing Workflow](#testing-workflow)
   - [Testing with Gradle](#testing-with-gradle)
   - [Structure of feature-test images](#structure-of-feature-test-images)
@@ -20,7 +21,7 @@ In ATTX github repositories, IT/BDD (tests from now on) should be located in sep
 ## Testing Workflow
 
 Overview of the steps performed during the test suite:
-* Start all required platform containers
+* Start all required Semantic Broker containers
 * Wait for the services to come up
 * Build test code
 * Build test container (only during the containerised testing task)

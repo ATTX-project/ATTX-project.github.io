@@ -55,11 +55,11 @@ The simplest ingestion pipeline consists of three DPUs as depicted in figure X. 
 
 ![Download](../../images/Pipeline-DownloadRDF.png)
 
-This kind of pipelines can be used to download ontologies or vocabularies to the platform.
+This kind of pipelines can be used to download ontologies or vocabularies to the Semantic Broker.
 
 **Download and transform**
 
-It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where `RMLTransformer` is used to transform from example CSV file into RDF before adding in to the platform's data storage.
+It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where `RMLTransformer` is used to transform from example CSV file into RDF before adding in to the Semantic Broker's data storage.
 
 ![Download and transform](../../images/Pipeline-DownloadAndTransform.png)
 
@@ -121,11 +121,11 @@ Basic distribution pipeline example that select all the required source data and
 
 ## ATTX DPUs
 
-ATTX platform ships with custom [UnifiedViews](https://github.com/UnifiedViews) DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and in most cases every pipeline contains at least one DPU from each category.
+ATTX Semantic Broker ships with custom [UnifiedViews](https://github.com/UnifiedViews) DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and in most cases every pipeline contains at least one DPU from each category.
 
 ### Extractors
 
-ATTX extractor DPU are used to configure ingestion of external data source to the platform or selection of existing platform data source for processing or dissemination.
+ATTX extractor DPU are used to configure ingestion of external data source to the Semantic Broker or selection of existing data source(s) for processing or dissemination.
 
 #### File download
 

@@ -4,13 +4,13 @@ The following components are part of the ATTX architecture.
 * [Workflow Component](#workflow-component)
 * [Graph Component](#graph-component)
 * [Distribution Component](#distribution-component)
-* [Platform Deployment](#platform-deployment)
+* [Semantic Broker Deployment](#platform-deployment)
 
 ![Figure 1. ATTX Platform Architecture](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/platform_architecture.svg)
 
-Figure 1. ATTX Platform Architecture
+Figure 1. ATTX Semantic Broker Architecture
 
-There are three main components: **Workflow Component**, **Graph Component**, **Distribution Component** and the **Platform Deployment** gathers all of them together in order to provide them as a individual services or as a platform.
+There are three main components: **Workflow Component**, **Graph Component**, **Distribution Component** and the **Semantic Broker Deployment** gathers all of them together in order to provide them as a individual services or as a platform.
 
 The communication and contracts between the components is specified in [Inter-component Communication](#inter-component-communication)
 
@@ -30,14 +30,14 @@ Acronyms:
 
 ## Workflow Component
 
-The ATTX Workflow Component provides a configurable framework with the main purpose of managing, scheduling and monitoring data ingestion, processing and distribution related workflows. WF provides the platform data related to provenance of the working data.
+The ATTX Workflow Component provides a configurable framework with the main purpose of managing, scheduling and monitoring data ingestion, processing and distribution related workflows. Workflow Component provides the Semantic Broker information related to provenance of the working data.
 
 * Github Repository: [workflow-component](https://github.com/ATTX-project/workflow-component)
 * Details about the [Workflow Component](Workflow-Component.md).
 
 ## Graph Component
 
-The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the platform, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.
+The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the Semantic Broker, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.
 
 * Github Repository: [graph-component](https://github.com/ATTX-project/graph-component)
 * Details about the [Graph Component](Graph-Component.md).
@@ -49,9 +49,9 @@ This ATTX Distribution Component provides the interface between the Workflow Com
 * Github Repository: [distribution-component](https://github.com/ATTX-project/distribution-component)
 * Details about the [Distribution Component](Distribution-Component.md).
 
-## Platform Deployment
+## Semantic Broker Deployment
 
-This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.
+This ATTX Semantic Broker Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.
 
 * Github Repository: [platform-deployment](https://github.com/ATTX-project/platform-deployment)
 * Details about the [ATTX Broker Deployment](ATTX-Broker-Deployment.md).

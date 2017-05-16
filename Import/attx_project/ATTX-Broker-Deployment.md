@@ -1,6 +1,6 @@
 # ATTX Broker Deployment
 
-This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.
+This ATTX Semantic Broker Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.
 
 **Github Repository: [platform-deployment](https://github.com/ATTX-project/platform-deployment)**
 

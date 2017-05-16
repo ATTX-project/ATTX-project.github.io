@@ -9,7 +9,7 @@ So instead of using Jenkins plugin to call Docker and create images, we should c
 
 Orchestration is handled using Jenkins pipelines that all should share some of the common stages listed below.
 
-![Figure 1. ATTX Platform Architecture](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/cicd_jenkins-gradle-tools.svg)
+![Figure 1. ATTX Semantic Broker Architecture](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/cicd_jenkins-gradle-tools.svg)
 
 Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)
 

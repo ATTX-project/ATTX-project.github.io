@@ -19,9 +19,9 @@ Figure 1. ETL Data Workflow
 
 Some of the uses of the ETL workflow include: inferencing, updating Public APIs, Transformation, updating ElasticSearch via the Graph \(GM - Graph Manager component\). Graph Manager component also can provide input to the ETL components further enriching the information contained in the platform.
 
-A draft overview on the platform components is provided in Figure 2.
+A draft overview on the Semantic Broker components is provided in Figure 2.
 
-![ETL Platform Component Workflow](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/etl_componentworkflow.svg)
+![ETL Semantic Broker Component Workflow](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/etl_componentworkflow.svg)
 
 Figure 2. ETL Platform Component Workflow
 
@@ -44,6 +44,3 @@ The table below shows a basic comparison of some of the ETL tools and required f
 
 * [https://www.opensemanticsearch.org/etl](https://www.opensemanticsearch.org/etl)
 * [https://github.com/pawl/awesome-etl\#python](https://github.com/pawl/awesome-etl#python)
-
-
-

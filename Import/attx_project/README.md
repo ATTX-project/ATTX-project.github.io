@@ -10,7 +10,7 @@
 ## Technical information
 
 * [ATTX Architecture Overview](ATTX-Architecture-Overview.md)
-* [ATTX Broker Deployment](Platform-Deployment.md)
+* [ATTX Broker Deployment](ATTX-Broker-Deployment.md)
 * ATTX Semantic Broker Components:
     * [Workflow Component](Workflow-Component.md)
     * [Graph Component](Graph-Component.md)
