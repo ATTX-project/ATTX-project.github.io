@@ -28,3 +28,5 @@ Overview based on:
 * NiFi vs Falcon vs Oozie https://www.linkedin.com/pulse/nifi-vs-falcon-oozie-birender-saini
 * http://funnifi.blogspot.fi/
 * Plugins and Examples https://github.com/jfrazee/awesome-nifi
+* https://blogs.apache.org/nifi/entry/basic_dataflow_design
+* https://community.hortonworks.com/articles/72727/extracting-nifi-provenance-data-using-sitetositepr.html

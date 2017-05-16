@@ -1,3 +1,8 @@
 {
-    "plugins": ["-highlight"]
+    "plugins": ["-highlight", "-fontsettings"],
+    "pluginsConfig": {
+        "fontSettings": {
+            "size": 1
+        }
+    }
 }

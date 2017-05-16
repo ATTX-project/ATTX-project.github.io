@@ -14,7 +14,7 @@ Each artifact (.tar.gz, .jar etc.) associated with the platform has a specific v
 
 These artifacts (with associated version) are used to build Docker Images in the https://github.com/ATTX-project/platform-deployment/ repository. If the Docker Image allows it one can set the version of the artifact as environment variables (e.g. `gmAPI` and `rdfINDEXER`):
 
-```{groovy}
+```groovy
 gmapi {
     baseDir = file('docker')
     repository = "${imageBase}/gm-api:${imageGM}"
