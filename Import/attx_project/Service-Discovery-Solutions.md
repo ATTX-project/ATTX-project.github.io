@@ -1,4 +1,4 @@
-## Service Discovery
+## Service Discovery Solutions Overview
 
 Overview based on:
 * **Ecosystem** - Documentation, Active Development, Open License, Ease of Use

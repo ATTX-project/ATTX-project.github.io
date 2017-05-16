@@ -1,4 +1,4 @@
-# UnifiedViews plugins
+# UnifiedViews Plugins
 
 Custom Unified Views plugins developed:
 * `uv-t-attx-template` plugin - basic template for creating a plugin

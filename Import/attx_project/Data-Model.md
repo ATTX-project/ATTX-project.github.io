@@ -11,14 +11,14 @@
 
 ## Ontology/Data Model - ATTXOnto
 
+**The full ontology description and examples are available at: https://attx-project.github.io/attx-onto/**
+
 The ontology/data model has the purpose of describing how and when the data flows within the platform, types of transformations (and associated workflows), the provenance information (agent and associated processes performed) and other meta data.
 
 [Namespaces references](Namespaces.md)
 
-**The full ontology description and examples are available at: https://attx-project.github.io/attx-onto/**
-
 A general use case is represented in Figure 1 where we can depict several parts:
-* ETL processes associated with the specific steps and workflows - see [ETL Workflow](ETL-Artifacts.md) for more details and [Workflow API](WF-API.md) which generates such specific information;
+* ETL processes associated with the specific steps and workflows - see [ETL Workflow](ETL-Artifacts.md) for more details and [Workflow API](Workflow-API.md) which generates such specific information;
 * Provenance Data Graph - which depicts provenance information specific to each workflow, data set etc.;
 * Working Data Graph - contains both inferred and explicit relationships between domain data;
 * Dissemination Data Graph - Data Graph distributed via the APIs.

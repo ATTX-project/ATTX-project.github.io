@@ -28,7 +28,7 @@ Current version: `0.1` (URL for the endpoint should take into consideration for 
 
 For building the WF-API see:
 * [WF-API source](https://github.com/ATTX-project/workflow-component/blob/dev/wf-API/README.md) - building both the project and the  Docker image and testing from the source code
-* short tutorial on [Gradle](Gradle.md)
+* short tutorial on [Gradle](Building-with-Gradle.md)
 
 ### Database Connection
 

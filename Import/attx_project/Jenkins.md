@@ -14,12 +14,14 @@ Orchestration is handled using Jenkins pipelines that all should share some of t
 Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)
 
 <!-- TOC START min:1 max:3 link:true update:true -->
+- [Jenkins CI](#jenkins-ci)
   - [Stages](#stages)
     - [Checkout](#checkout)
-    - [Build/Test/Package](#buildtestpackage)
+    - [Compile/Package/Test](#compilepackagetest)
     - [Deploy artifacts](#deploy-artifacts)
     - [Publish reports](#publish-reports)
     - [Build image](#build-image)
+    - [Failure](#failure)
 - [Plugins](#plugins)
 - [Additions to the Jenkins image](#additions-to-the-jenkins-image)
 
@@ -150,5 +152,3 @@ The following packages needs to added in order to make use of the libXML in any 
 
 In order to build Maven project it needs to be installed:
 * apt-get install -y maven
-
-Testing

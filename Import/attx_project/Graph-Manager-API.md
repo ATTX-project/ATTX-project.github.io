@@ -67,7 +67,7 @@ In order to process data in Elasticsearch 1.3.4 and Elasticsearch Siren plugin:
 
 ### Workflow API connection
 
-In order to process the provenance information and update the Graph Store with it, the Graph Manager API pulls the data from the [Workflow API](WF-API.md) upon calling the `/prov?start=true` endpoint.
+In order to process the provenance information and update the Graph Store with it, the Graph Manager API pulls the data from the [Workflow API](Workflow-API.md) upon calling the `/prov?start=true` endpoint.
 
 ## Consuming the GM-API
 

@@ -3,8 +3,7 @@
 This page describes the project management and software development related practices and tools for the ATTX2016 project. This is the place to go, when member of the project wants to learn or be reminded of how different project management methodologies and tools are used in ATTX, how we for example branch in using GIT, or what are the requirements for testing ones code.
 
 ## Table of Contents
-<!-- TOC START min:1 max:3 link:true update:true -->
-  - [Table of Contents](#table-of-contents)
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Meetings](#meetings)
     - [Sprint planning](#sprint-planning)
     - [Daily](#daily)

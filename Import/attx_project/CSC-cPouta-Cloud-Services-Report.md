@@ -107,4 +107,4 @@ The basic OpenStack API is available for orchestration of resources. It can be u
 
 ## ATTX links
 * [Provisioning for ATTX](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)
-* [Deployment of ATTX components](Deploying-ATTX-Components.md)
+* [Deployment of ATTX components](ATTX-Broker-Deployment.md)

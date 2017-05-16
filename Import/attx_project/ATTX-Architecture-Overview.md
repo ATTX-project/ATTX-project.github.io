@@ -54,7 +54,7 @@ This ATTX Distribution Component provides the interface between the Workflow Com
 This ATTX Platform Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.
 
 * Github Repository: [platform-deployment](https://github.com/ATTX-project/platform-deployment)
-* Details about the [Platform Deployment](Platform-Deployment.md).
+* Details about the [ATTX Broker Deployment](ATTX-Broker-Deployment.md).
 
 ## Inter-component Communication
 

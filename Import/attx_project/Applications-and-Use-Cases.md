@@ -1,7 +1,12 @@
 # Applications and Use Cases
 
-* Jyväskylä partnership
+* [UC1 - Infras and pubs](Use-case-Infrastructures-and-publications.md)
+* [UC2 - Parallel publication dashboard](Use-case-Jyvaskyla.md)
+* [UC3 - Metax](Use-case-Metax.md)
 * Hanken partnership
+* Mildred
+
+---
 
 ## Ideas
 

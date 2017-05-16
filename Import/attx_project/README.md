@@ -1,27 +1,35 @@
 ![ATTX Project logo](https://cdn.rawgit.com/ATTX-project/ATTX-project.github.io/2e533a00/images/attx_logo.svg)
 
+
+## Applications and Use Cases
+
+* [UC1 - Infrastructures and Publications](Use-case-Infrastructures-and-publications.md)
+* [UC2 - Parallel Publication Dashboard](Use-case-Jyvaskyla.md)
+* [UC3 - Metax](Use-case-Metax.md)
+
 ## Technical information
 
-Information about the components, the deployment and overall architecture of the ATTX project.
+* [ATTX Architecture Overview](ATTX-Architecture-Overview.md)
+* [ATTX Broker Deployment](Platform-Deployment.md)
+* ATTX Semantic Broker Components:
+    * [Workflow Component](Workflow-Component.md)
+    * [Graph Component](Graph-Component.md)
+    * [Distribution Component](Distribution-Component.md)
+    * [Service Discovery](ServiceDiscovery-Implementation.md)
 
-* [Architecture](Architecture.md)
-* [Platform Deployment](Platform-Deployment.md)
-* [Workflow Component](Workflow-Component.md)
-* [Graph Component](Graph-Component.md)
-* [Distribution Component](Distribution-Component.md)
-* [Applications and Use Cases](Applications-and-Use-Cases.md)
+### Development Guidelines
 
-Other information:
 * ATTX [Project Development Guidelines](Project-Development-Environment.md)
 * ATTX [CI/CD Enviroment](CI-CD-Enviroment.md)
 
 ## Contributions and Presentations
 
 Reports on technologies and related initiatives:
-  * [Building with Gradle](Building-with-Gradle.md)
-  * [Messaging Brokers](Messaging-Brokers.md)
-  * [Service Discovery](Service-Discovery.md)
-  * [Workflow Management](Workflow-Management-Tools.md)
+* [CSC cPouta Cloud Services Report](CSC-cPouta-Cloud-Services-Report.md)
+* [Building with Gradle](Building-with-Gradle.md)
+* [Messaging Brokers Solutions Overview](Messaging-Brokers-Solutions.md)
+* [Service Discovery Solutions Overview](Service-Discovery-Solutions.md)
+* [Workflow Management Tools Overview](Workflow-Management-Tools.md)
 
 Open Source contributions on various projects:
 
@@ -30,3 +38,4 @@ Open Source contributions on various projects:
 Conference Proposals, Presentation and Talks:
 
 * [ELAG2017](ELAG-2017.md)
+* [SWIB2017](SWIB-2017.md)

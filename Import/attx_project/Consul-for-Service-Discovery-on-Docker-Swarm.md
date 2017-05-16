@@ -1,6 +1,6 @@
-# Using Consul for Service Discovery in Docker Swarm
+# Consul for Service Discovery in Docker Swarm
 
-Hereby you can find a report of a test implementation of [Consul](https://www.consul.io/) as a [Service Discovery](Service-Discovery.md) solution in a [Docker Swarm](https://docs.docker.com/engine/swarm/) cluster.
+Hereby you can find a report of a test implementation of [Consul](https://www.consul.io/) as a [Service Discovery](Service-Discovery-Solutions.md) solution in a [Docker Swarm](https://docs.docker.com/engine/swarm/) cluster.
 
 <!-- TOC START min:1 max:3 link:true update:false -->
 1. Deployment on Docker Swarm

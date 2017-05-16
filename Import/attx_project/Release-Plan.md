@@ -1,3 +1,5 @@
+# Release Plan
+
 Adjacent to the - [Feature roadmap](https://github.com/ATTX-project/project-management/wiki/Feature-roadmap) the release plan is detailed below, alongside corresponding issues.
 
 **We should establish priority and complexity for the issues above in order to have a complete release plan.**
@@ -13,7 +15,7 @@ Adjacent to the - [Feature roadmap](https://github.com/ATTX-project/project-mana
 ## Realease Version 2.0
 Planned release date: **2nd of June 2017**
 1. Prepare for ELAG 2017
-2. Service Discovery 
+2. Service Discovery
 3. User friendly version
 
 ## Realease Version 1.0

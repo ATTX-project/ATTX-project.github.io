@@ -40,4 +40,4 @@ Example of curl requests:
 
 ## ATTX-SANDBOX SERVER
 
-The ATTX-SANDBOX server (attx-sandbox.hulib.helsinki.fi) runs the containerised services described in the [Platform Deployment](Platform-Deployment.md).
+The ATTX-SANDBOX server (`attx-sandbox.hulib.helsinki.fi`) runs the containerised services described in the [Platform Deployment](Platform-Deployment.md).
