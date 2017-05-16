@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Build Environment Setup · GitBook</title>
+        <title>Applying Rolling Updates to services in Docker Swarm · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -53,10 +53,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Containerized-testing.html" />
+    <link rel="next" href="Workflow-Component.html" />
     
     
-    <link rel="prev" href="Jenkins.html" />
+    <link rel="prev" href="Deploying-ATTX-Components-on-Docker-Swarm.html" />
     
 
     </head>
@@ -270,7 +270,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.2.3" data-path="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
+        <li class="chapter active" data-level="1.4.2.3" data-path="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
             
                 <a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
             
@@ -591,7 +591,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.4.2" data-path="Build-Multiple-Environments.html">
+        <li class="chapter " data-level="2.4.2" data-path="Build-Multiple-Environments.html">
             
                 <a href="Build-Multiple-Environments.html">
             
@@ -821,7 +821,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Build Environment Setup</a>
+        <a href="." >Applying Rolling Updates to services in Docker Swarm</a>
     </h1>
 </div>
 
@@ -836,111 +836,74 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="build-environment-setup">Build Environment Setup</h1>
-<!-- TOC START min:1 max:3 link:true update:false -->
-<ul>
-<li><a href="#working-with-build-environments">Working with build Environments</a><ul>
-<li><a href="#steps-for-generating-release-version">Steps for Generating Release Version</a></li>
-<li><a href="#example-creating-gmapi-test-image-for-development">Example: Creating gmAPI test image for development</a></li>
-</ul>
+                                <h1 id="applying-rolling-updates-to-services-in-docker-swarm">Applying Rolling Updates to services in Docker Swarm</h1>
+<p>Hereby you can find instructions on how to applying rolling updates to services running in Docker Swarm.</p>
+<p>The service being used used as an example is <a href="https://hub.docker.com/_/redis/" target="_blank">Redis</a>, but in practice it can be a <a href="https://hub.docker.com/u/attxproject/dashboard/" target="_blank">ATTX component</a>.</p>
+<p>Pre-requisite: available Docker Swarm up and running.</p>
+<ol>
+<li><p>Deploy service in Docker Swarm:
+<code>docker service create --replicas 3 --name redis --update-delay 10s elasticsearch:5.2.0</code></p>
 </li>
-<li><a href="#references">References</a></li>
-</ul>
-<!-- TOC END -->
-<h2 id="working-with-build-environments">Working with Build Environments</h2>
-<p>Each artifact (.tar.gz, .jar etc.) associated with the platform has a specific version associated (e.g. <code>0.1</code>, <code>1.0</code>, <code>1.0-SNAPSHOT</code> etc.), and these versions are set up from either the Gradle gradle.build script associated with each project or Maven specific <code>pom.xml</code> file. The only option at the moment to change the version of the built artifacts is to change them in their Gradle or Maven specific build files.</p>
-<p>These artifacts (with associated version) are used to build Docker Images in the <a href="https://github.com/ATTX-project/platform-deployment/" target="_blank">https://github.com/ATTX-project/platform-deployment/</a> repository. If the Docker Image allows it one can set the version of the artifact as environment variables (e.g. <code>gmAPI</code> and <code>rdfINDEXER</code>):</p>
-<pre><code class="lang-{groovy}">gmapi {
-    baseDir = file(&apos;docker&apos;)
-    repository = &quot;${imageBase}/gm-api:${imageGM}&quot;
-    portBindings = [&apos;4302:4302&apos;]
-    env = [&quot;GMAPI=$gmAPI&quot;, &quot;RDFINDEXER=$rdfINDEXER&quot;]
-  }
+<li><p>Check that the new service has been replicated:
+<code>docker service inspect --pretty redis</code></p>
+</li>
+</ol>
+<p>The &quot;Service Mode&quot; should be &quot;replicated&quot;, and the number of &quot;Replicas&quot; should be &quot;3&quot;:</p>
+<pre><code>ID:        ttjg5xkhg2fxtf1bmtdsp8q01
+Name:        redis
+Service Mode:    Replicated
+ Replicas:    3
+Placement:
+UpdateConfig:
+ Parallelism:    1
+ Delay:        10s
+ On failure:    pause
+ Max failure ratio: 0
+ContainerSpec:
+ Image:        redis:3.0.6@sha256:6a692a76c2081888b589e26e6ec835743119fe453d67ecf03df7de5b73d69842
+Resources:
+Endpoint Mode:    vip
+</code></pre><p><code>docker service ls</code></p>
+<pre><code>ttjg5xkhg2fx  redis       replicated  3/3       redis:3.0.6
+</code></pre><p>You can also use the <code>docker service ps redis</code> command to verify that the status of the new service:</p>
+<pre><code>ID            NAME     IMAGE        NODE     DESIRED STATE  CURRENT STATE          ERROR  PORTS
+1t638vum32s6  redis.1  redis:3.0.6  swarm-3  Running        Running 8 minutes ago         
+qgtvi12qczt3  redis.2  redis:3.0.6  swarm-2  Running        Running 8 minutes ago         
+q2sgd0ua12q2  redis.3  redis:3.0.6  swarm-1  Running        Running 8 minutes ago
+</code></pre><ol>
+<li>Issue the rolling update to a new version of the service (3.0.7 in this example):
+<code>docker service update --image redis:3.0.7 redis</code></li>
+</ol>
+<p>Check the &quot;UpdateStatus&quot; of the &quot;redis&quot; service update (should be &quot;completed&quot;):</p>
+<pre><code>ID:        ttjg5xkhg2fxtf1bmtdsp8q01
+Name:        redis
+Service Mode:    Replicated
+ Replicas:    3
+UpdateStatus:
+ State:        completed
+ Started:    41 seconds
+ Completed:    1 second
+ Message:    update completed
+Placement:
+UpdateConfig:
+ Parallelism:    1
+ Delay:        10s
+ On failure:    pause
+ Max failure ratio: 0
+ContainerSpec:
+ Image:        redis:3.0.7@sha256:b562e3febd22fe3b0db9df909c251910ae4f1a962339e52b3d69e72f3121bd64
+Resources:
+Endpoint Mode:    vip
+</code></pre><p>Finally, check that all instances of the 3.0.6 version of the &quot;redis&quot; service have been shutdown, and that all instances of new 3.0.7 version are running:</p>
+<pre><code>docker service ps redis
+ID            NAME         IMAGE        NODE     DESIRED STATE  CURRENT STATE           ERROR  PORTS
+iy10bjo2udtp  redis.1      redis:3.0.7  swarm-3  Running        Running 3 minutes ago          
+1t638vum32s6   \_ redis.1  redis:3.0.6  swarm-3  Shutdown       Shutdown 3 minutes ago         
+koo6pupp8pg8  redis.2      redis:3.0.7  swarm-2  Running        Running 3 minutes ago          
+qgtvi12qczt3   \_ redis.2  redis:3.0.6  swarm-2  Shutdown       Shutdown 3 minutes ago         
+0kg6bgr4zr85  redis.3      redis:3.0.7  swarm-1  Running        Running 3 minutes ago          
+q2sgd0ua12q2   \_ redis.3  redis:3.0.6  swarm-1  Shutdown       Shutdown 3 minutes ago
 </code></pre>
-<p>These are used in the generation of the Docker Images with specific tags depending on the environment as exemplified by the snippet below:</p>
-<pre><code class="lang-{groovy}">if (!project.hasProperty(&quot;env&quot;) || project.env == &quot;dev&quot;) {
-
-    ext.wfAPI               = &quot;0.1&quot;
-    ext.gmAPI               = &quot;0.1&quot;
-    ext.rdfINDEXER          = &quot;99&quot;
-    ext.attxMetadataPlugin  = &quot;1.0-SNAPSHOT&quot;
-    ext.attxInfras2IPlugin  = &quot;1.0-SNAPSHOT&quot;
-    ext.attxUploaderPlugin  = &quot;1.0-SNAPSHOT&quot;
-    ext.attxAPIPlugin       = &quot;1.0-SNAPSHOT&quot;
-    ext.imageES5            = &quot;test&quot;
-    ext.imageWF             = &quot;test&quot;
-    ext.imageGM             = &quot;test&quot;
-    ext.imageATTXAPIPlugin  = &quot;test&quot;
-    ext.imageATTXDPUs       = &quot;test&quot;
-    ext.imageATTXShared     = &quot;test&quot;
-    ext.imageFuseki         = &quot;test&quot;
-
-} else if (project.env == &quot;release&quot;){
-
-    ext.wfAPI               = &quot;1.0&quot;
-    ext.gmAPI               = &quot;1.0&quot;
-    ext.rdfINDEXER          = &quot;1.0-SNAPSHOT&quot;
-    ext.attxMetadataPlugin  = &quot;1.0-SNAPSHOT&quot;
-    ext.attxInfras2IPlugin  = &quot;1.0-SNAPSHOT&quot;
-    ext.attxUploaderPlugin  = &quot;1.0-SNAPSHOT&quot;
-    ext.attxAPIPlugin       = &quot;1.0-SNAPSHOT&quot;
-    ext.imageES5            = &quot;latest&quot;
-    ext.imageWF             = &quot;latest&quot;
-    ext.imageGM             = &quot;latest&quot;
-    ext.imageATTXAPIPlugin  = &quot;latest&quot;
-    ext.imageATTXDPUs       = &quot;latest&quot;
-    ext.imageATTXShared     = &quot;latest&quot;
-    ext.imageFuseki         = &quot;latest&quot;
-
-} else {
-    throw new GradleException(&quot;Build project environment option not recognised.&quot;)
-}
-</code></pre>
-<p>When running a Jenkins pipeline one can set the <code>env</code> property to <code>release</code> to build the realease version of the Docker Image e.g.:</p>
-<pre><code>gradle build -Penv=release -PjenkinsArtifactRepoURL=http://localhost:8080 -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080/repository/attx-releases clean :gm-API:buildGmapiImage
-</code></pre><h3 id="steps-for-generating-release-version">Steps for Generating Release Version</h3>
-<p>Thus the steps for generating a release version are as follows:</p>
-<ol>
-<li>Set up version of the artifact to build - this will trigger a Jenkins pipeline which will deploy the artifact to repository (e.g. Archiva, Jenkins, Github etc.)</li>
-<li>Configure the Jenkins pipeline for building a Docker image to be the release version of that Docker Image, by specifying artifacts versions and image tags in the <code>common.gradle</code> from <a href="https://github.com/ATTX-project/platform-deployment/" target="_blank">https://github.com/ATTX-project/platform-deployment/</a> repository</li>
-<li>Publish artifacts to docker hub - TO BE done manually until <a href="https://github.com/ATTX-project/platform-deployment/issues/25" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/25</a> is done.</li>
-<li>Create pull request for a repository from dev to master</li>
-<li>Follow <a href="https://help.github.com/articles/creating-releases/" target="_blank">https://help.github.com/articles/creating-releases/</a> for creating a Github release</li>
-</ol>
-<p>Alternative release generation:</p>
-<ol>
-<li>Set up version of the artifact to build - this will trigger a Jenkins pipeline which will deploy the artifact to repository (e.g. Archiva, Jenkins, Github etc.)</li>
-<li>Create pull request for a repository from a release-branch to master</li>
-<li>(optional) Follow <a href="https://help.github.com/articles/creating-releases/" target="_blank">https://help.github.com/articles/creating-releases/</a> for creating a Github release</li>
-<li>Configure the Jenkins pipeline for building a Docker image to be the release version of that Docker Image, by specifying artifacts versions and image tags in the <code>common.gradle</code> from <a href="https://github.com/ATTX-project/platform-deployment/" target="_blank">https://github.com/ATTX-project/platform-deployment/</a> repository</li>
-<li>Publish artifacts to docker hub - via Jenkins pipelines .</li>
-</ol>
-<h3 id="example-creating-gmapi-test-image-for-development">Example: Creating gmAPI test image for development</h3>
-<p>I wanted to test out a new version of the gm-API artifact. In order to do that I have to first create and push a new version of the artifact and them build and push a new gmAPI image.</p>
-<ol>
-<li>Commit and push new code to a branch <code>feature-X</code>. Create new version for the test artifact.</li>
-<li>Create a new Jenkins pipeline using gm-api as the template</li>
-<li>Configure new pipeline. Change brach to &quot;feature-X&quot; in the checkout stage.</li>
-<li>Checkout platform-development code</li>
-<li>Modify common.gradle and set ext.gmAPI to reference the test artifact and change the ext.imageGM tag to something else (e.g. test-featureX)</li>
-<li>Build new test image:<pre><code>gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev buildGmapiImage
-</code></pre></li>
-<li><p>Push new test image:</p>
-<pre><code>gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev pushGmapiImage
-</code></pre></li>
-<li><p>Push new release image:</p>
-<pre><code>gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=release -PdockerUser=account -PdockerPass=Test1234 pushGmapiImage
-</code></pre></li>
-</ol>
-<p>You might want to remove the test image when you are done with testing.</p>
-<h2 id="references">References</h2>
-<ul>
-<li><a href="https://bitbucket.org/AlexanderBartash/gradle-environments-plugin/wiki/Home" target="_blank">https://bitbucket.org/AlexanderBartash/gradle-environments-plugin/wiki/Home</a></li>
-<li><a href="http://mrhaki.blogspot.fi/2009/11/gradle-goodness-using-properties-for.html" target="_blank">http://mrhaki.blogspot.fi/2009/11/gradle-goodness-using-properties-for.html</a></li>
-<li><a href="https://github.com/marceloemanoel/gradle-environments-plugin" target="_blank">https://github.com/marceloemanoel/gradle-environments-plugin</a></li>
-<li><a href="https://github.com/nebula-plugins/nebula-release-plugin" target="_blank">https://github.com/nebula-plugins/nebula-release-plugin</a></li>
-</ul>
-
                                 
                                 </section>
                             
@@ -967,12 +930,12 @@
 
             
                 
-                <a href="Jenkins.html" class="navigation navigation-prev " aria-label="Previous page: Jenkins CI">
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html" class="navigation navigation-prev " aria-label="Previous page: Deploying ATTX Components on Docker Swarm">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Containerized-testing.html" class="navigation navigation-next " aria-label="Next page: Containerized testing">
+                <a href="Workflow-Component.html" class="navigation navigation-next " aria-label="Next page: Workflow Component">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -983,7 +946,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Build Environment Setup","level":"2.4.2","depth":2,"next":{"title":"Containerized testing","level":"2.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]},"previous":{"title":"Jenkins CI","level":"2.4.1","depth":2,"path":"Jenkins.md","ref":"Jenkins.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["-highlight"],"pluginsConfig":{"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Build-Multiple-Environments.md","mtime":"2017-05-05T09:32:44.842Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-15T14:00:27.746Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Applying Rolling Updates to services in Docker Swarm","level":"1.4.2.3","depth":3,"next":{"title":"Workflow Component","level":"1.5","depth":1,"path":"Workflow-Component.md","ref":"Workflow-Component.md","articles":[{"title":"ETL Artifacts","level":"1.5.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},{"title":"UnifiedViews plugins","level":"1.5.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},{"title":"Workflow API","level":"1.5.3","depth":2,"path":"WF-API.md","ref":"WF-API.md","articles":[]}]},"previous":{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["-highlight"],"pluginsConfig":{"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","mtime":"2017-05-08T14:00:04.567Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-15T14:00:27.746Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
