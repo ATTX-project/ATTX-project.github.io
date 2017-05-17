@@ -8,6 +8,7 @@
   * [UC2 - Parallel publication dashboard](Use-case-Jyvaskyla.md)
   * [UC3 - Metax](Use-case-Metax.md)
 * [ATTX Architecture Overview](ATTX-Architecture=Overview.md)
+<!-- * [ATTX Data Administrator's User guide](User-guide.md) -->
 * [ATTX Broker Deployment](ATTX-Broker-Deployment.md)
   * Run on Single Machine PC/Mac/VM
     * [Building Swarm Mode on a PC/Mac](Building-Docker-application-stacks-in-Swarm-Mode.md)

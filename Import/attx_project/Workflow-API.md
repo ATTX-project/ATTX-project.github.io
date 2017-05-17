@@ -1,7 +1,6 @@
 # Workflow API
 
-<!-- TOC START min:1 max:3 link:true update:true -->
-- [Workflow API](#workflow-api)
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Overview](#overview)
   - [Building the WF-API](#building-the-wf-api)
     - [Database Connection](#database-connection)
