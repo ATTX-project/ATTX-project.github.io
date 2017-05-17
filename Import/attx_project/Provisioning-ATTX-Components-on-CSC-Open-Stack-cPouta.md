@@ -24,7 +24,7 @@ On linux commands to add certificates could be added by runing:
 ## 1. Preparing Ansible's control node
 
 In order for your instance with the public IP address (e.g. "attx-instance-1") to be set up as Ansible's control node, you'll need to install PIP and Ansible's prerequisites:
-```
+```shell
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt-get install python-dev
@@ -32,7 +32,7 @@ $ sudo apt-get install python-pip
 ```
 
 Install Ansible:
-```
+```shell
 $ sudo apt-get install ansible
 ```
 
@@ -76,6 +76,6 @@ You can display extra verbose information for troubleshooting with the `-vvvv` o
   it means that you already had in the past some other host using one of the
   IP addresses we use here as example. To solve this, remove the old entry in your SSH
   `known_hosts` file with:
-```
+```shell
   $ ssh-keygen -f "~/.ssh/known_hosts" -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS>
 ```

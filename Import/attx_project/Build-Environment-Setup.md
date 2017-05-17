@@ -25,7 +25,7 @@ gmapi {
 
 These are used in the generation of the Docker Images with specific tags depending on the environment as exemplified by the snippet below:
 
-```{groovy}
+```groovy
 if (!project.hasProperty("env") || project.env == "dev") {
 
     ext.wfAPI               = "0.1"
@@ -66,6 +66,7 @@ if (!project.hasProperty("env") || project.env == "dev") {
 ```
 
 When running a Jenkins pipeline one can set the `env` property to `release` to build the realease version of the Docker Image e.g.:
+
 ```
 gradle build -Penv=release -PjenkinsArtifactRepoURL=http://localhost:8080 -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080/repository/attx-releases clean :gm-API:buildGmapiImage
 ```
@@ -99,16 +100,16 @@ I wanted to test out a new version of the gm-API artifact. In order to do that I
 1. Checkout platform-development code
 1. Modify common.gradle and set ext.gmAPI to reference the test artifact and change the ext.imageGM tag to something else (e.g. test-featureX)
 1. Build new test image:
-```
+```shell
 gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev buildGmapiImage
 ```
 1. Push new test image:
-```
+```shell
 gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev pushGmapiImage
 ```
 
 1. Push new release image:
-```
+```shell
 gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=release -PdockerUser=account -PdockerPass=Test1234 pushGmapiImage
 ```
 

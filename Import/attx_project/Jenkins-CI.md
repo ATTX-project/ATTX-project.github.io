@@ -13,7 +13,7 @@ Orchestration is handled using Jenkins pipelines that all should share some of t
 
 Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)
 
-<!-- TOC START min:1 max:3 link:true update:true -->
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Stages](#stages)
     - [Checkout](#checkout)
     - [Compile/Package/Test](#compilepackagetest)
@@ -30,7 +30,7 @@ Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)
 
 Example configuration:
 
-```
+```groovy
 pipeline {
     agent any
     stages {
@@ -103,15 +103,16 @@ Copies output of HTML reports to somewhere where Jenkins can access them. It is 
 
 Example: publishing test reports
 
-```
-publishHTML target: [
-    allowMissing: false,
-    alwaysLinkToLastBuild: false,
-    keepAll: false,
-    reportDir: 'pd-feature-tests/build/reports/tests/integTest',
-    reportFiles: 'index.html',
-    reportName: 'pd-feature-tests-reports'
-    ]                    
+```groovy
+{
+    publishHTML target: [
+        allowMissing: false,
+        alwaysLinkToLastBuild: false,
+        keepAll: false,
+        reportDir: 'pd-feature-tests/build/reports/tests/integTest',
+        reportFiles: 'index.html',
+        reportName: 'pd-feature-tests-reports'
+        ]                    
 }
 ```
 
@@ -139,7 +140,7 @@ Some of the pipelines required a failure step, more precisely the integration te
 
 Jenkins container must be linked to the pivy repository container:
 
-```
+```shell
 docker run -d --restart=always --link pivy_repo:pivyrepo  -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 49001:8080 -v /data/jenkins:/var/jenkins_home -t attxproject/attx-jenkins
 ```
 

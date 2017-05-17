@@ -26,18 +26,18 @@ This guide exemplifies 5 VMs created with Vagrant and configured with Ansible, h
 
 - Ansible:
   - install PIP and Ansible's prerequisites:
-    ```          
+    ```shell
       $ sudo easy_install pip
       $ sudo pip install paramiko PyYAML Jinja2 httplib2 six pycrypto
     ```
 
   - Install Ansible:
-    ```         
+    ```shell
     $ sudo pip install ansible
     ```
 
   - source the setup script to make Ansible available on this terminal session:
-    ```
+    ```shell
     $ source path/to/your-ansible-clone/hacking/env-setup
     ```
 
@@ -52,17 +52,17 @@ Download the Vagrant, Ansible, and SSH config files from
 https://github.com/ATTX-project/platform-deployment/tree/feature-swarm-mode/swarm-mode.
 
 Run the following commands:
-```
+```shell
 $ vagrant up
 $ chmod 600 private-key
 $ ansible-playbook provisioning.yml
 ```
 Now you should be able to ssh on `node1` using:
-```
+```shell
 $ ssh vagrant@10.10.10.10 -i private-key
 ```
 These are the default IP addresses for the nodes:
-```
+```shell
     10.10.10.10 node1
     10.10.10.20 node2
     10.10.10.30 node3
@@ -87,7 +87,7 @@ Run the docker info command:
 `docker info`
 
 The output should include:
-```
+```shell
 Swarm: active
 NodeID: 8jud7o8dax3zxbags3f8yox4b
 Is Manager: true
@@ -117,7 +117,7 @@ Switch back to node1 and display the cluster information (node1 is a manager):
 
 The output should be similar to the following:
 
-```
+```shell
 ID             HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 8jud...ox4b *  node1     Ready   Active        Leader
 ehb0...4fvx    node2     Ready   Active
@@ -150,13 +150,13 @@ Confirm that we get the same output with the following command:
 
 Create an ElasticSearch service and scale it up with the `replicas`
 
-```
+```shell
 docker service create --name ES --publish 9200:9200 --replicas 7 \
      elasticsearch:2
 ```
 
 Monitor your new ElasticSearch service:
 
-```
+```shell
 watch docker service ps search
 ```

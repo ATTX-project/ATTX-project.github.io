@@ -61,7 +61,7 @@ As specified above the workflow API has two endpoints:
   * all at once: http://localhost:4301/0.1/workflow?modifiedSince=2017-01-03T08%3A14%3A14Z&format=json-ld
   * Responses: if status codes are `304` No Modified or `405` Method Not Allowed the response body is empty. If the Response status is `200` it will return data specific to workflows:
 
-  ```{turtle}
+  ```turtle
   @base <http://data.hulib.helsinki.fi/attx/> .
   @prefix attxonto: <http://data.hulib.helsinki.fi/attx/onto#> .
   @prefix attx: <http://data.hulib.helsinki.fi/attx/> .
@@ -127,7 +127,7 @@ As specified above the workflow API has two endpoints:
   * all at once: http://localhost:4301/0.1/activity?modifiedSince=2017-01-03T08%3A14%3A14Z&format=json-ld
   * Responses: if status codes are `304` No Modified or `405` Method Not Allowed the response body is empty. If the Response status is `200` it will return data specific to activites:
 
-  ```{turtle}
+  ```turtle
   @base <http://data.hulib.helsinki.fi/attx/> .
   @prefix attxonto: <http://data.hulib.helsinki.fi/attx/onto#> .
   @prefix attx: <http://data.hulib.helsinki.fi/attx/> .
@@ -198,7 +198,7 @@ Extracting information associated to the provenance and workflow information can
 
 Information specific to workflows and activities is extracted directly from the MySQL database for example activities and associated information are extracted from pipeline executions, however for information related to input and output graphs the attxMetadataPlugin DPU is used as illustrated in Example 2.
 
-```{sql}
+```sql
 SELECT exec_pipeline.id AS 'activityId',
 ppl_model.id AS 'workflowId',
 exec_pipeline.t_start AS 'activityStart',
@@ -213,7 +213,7 @@ ORDER BY ppl_model.id
 As depicted in the examples below often html tags are encoded and even more so the tags within them are encoded a second time, thus making it difficult to extract the required information.
 
 Example 1: SPARQL endpoint configuration
-```{xml}
+```xml
 <object-stream>
   <MasterConfigObject>
     <configurations>
@@ -257,7 +257,7 @@ Limit 100  &lt;/query&gt;
 ```
 Using the ATTX metadata plugin (see information at: [UnifiedViews plugins](Unified-Views-plugins.md))
 Example 2: ATTX metadata configuration
-```{xml}
+```xml
 <object-stream>
     <MasterConfigObject>
         <configurations>

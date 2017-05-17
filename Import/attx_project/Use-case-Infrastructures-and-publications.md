@@ -66,7 +66,7 @@ See [Namespaces](Namespaces.md)
 **Example data**
 
 Infrastructure databank
-```{turtle}
+```turtle
 <http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra/{urn}>
   a <http://data.hulib.helsinki.fi/attx/types/Infrastructure> ;
   dct:title "{name}" ;
@@ -74,7 +74,7 @@ Infrastructure databank
 ```
 
 Tuhat
-```{turtle}
+```turtle
 <http://data.hulib.helsinki.fi/attx/work/{workflowID}/pub/{uuid}>
   a <http://data.hulib.helsinki.fi/attx/types/Publication> ;
   dct:title "{title}" .
@@ -90,7 +90,7 @@ Tuhat
 ```
 
 Link processor
-```{turtle}
+```turtle
 <http://data.hulib.helsinki.fi/attx/{workflowID}/work/infra/{urn}>
    skos:exactMatch <http://data.hulib.helsinki.fi/attx/{workflowID}/work/pub/{uuid}>
 ```

@@ -19,7 +19,7 @@ Such 3-node swarm was created with docker-machine (requires not only [Docker Mac
 
 Once the Swarm is created, we can deploy Consul in our Docker Machine Swarm hosts. Given that Consul doesn't yet support deployment in native Docker Swarm mode, it will have to be deployed in [host mode](https://docs.docker.com/compose/compose-file/#networkmode), as per the following `docker-compose.yml` example file:
 
-```
+```yml
 version: '2'
 
 services:
@@ -128,7 +128,7 @@ We can thus start by creating a new Swarm network and attach to it all services 
 `docker network create --driver overlay proxy`
 
 Hence, an example service (e.g. "Nginx") would use the "proxy" and "attx-backend" networks:
-```
+```shell
 docker service create --name my_web \
 --publish 49001:80 \
 --network attx-backend \
@@ -137,7 +137,7 @@ docker service create --name my_web \
 
 With the reverse proxy network in place, we can now deploy the Docker Flow Proxy across our Swarm, and configure it to communicate with the Consul services:
 
-```
+```shell
 docker service create --name proxy \
 -p 80:80 -p 443:443 -p 8080:8080 \
 --network proxy -e MODE=swarm --replicas 3 \
@@ -193,7 +193,7 @@ And we can test whether the service registration is stored in Consul:
 
 The output should include Service Discovery data in key value format, and be available in all Consul instances (replace "docker-machine ip swarm-1" with "docker-machine ip swarm-2" and "docker-machine ip swarm-3"):
 
-```
+```javascript
 {
 LockIndex: 0,
 Key: "docker-flow/my_web/path",
@@ -237,7 +237,7 @@ Query proxy.6 to check whether the service registration for the "my_web" service
 
 The service registration information should be as follows (like originally registered right after service creation):
 
-```
+```shell
 frontend services
     bind *:80
     bind *:443

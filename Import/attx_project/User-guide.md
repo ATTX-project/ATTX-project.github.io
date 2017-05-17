@@ -82,7 +82,7 @@ Example workflow has two Loader DPUs, because we want to store clustered ids in 
 This example uses clustered ids and harvested datasets as the source data and generated new explicit links between resource. For example:
 
 Clustered ids:
-```
+```turtle
 :pub1
   attx:id "urn:1"
 
@@ -92,7 +92,7 @@ Clustered ids:
 ```
 
 working data 1
-```
+```turtle
 :pub1
   a Publication
   urn "urn:1"
@@ -100,7 +100,7 @@ working data 1
 ```
 
 linkByID data set
-```
+```turtle
 :pub1
   orgLink :org1
 ```
@@ -219,7 +219,7 @@ Configuration:
 - dc:identifier, custom:urn
 
 Input
-```
+```turtle
 <attx:ds/1/work/infra/1>
   <dc:identifier> "infra/1" ;
   <custom:urn> <urn:2> .
@@ -227,7 +227,7 @@ Input
 ```
 
 Output:
-```
+```turtle
 <attx:ds/1/work/infra/1>
   <attx:id> "infra/1" ;
   <attx:id> <urn:2> .
@@ -260,7 +260,7 @@ Output:
 Example:
 
 working data 1
-```
+```turtle
 :pub1
   a Publication
   urn "urn:1"
@@ -271,7 +271,7 @@ working data 1
 ```
 
 ids graph
-```
+```turtle
 :pub1
   attx:id "urn:1"
 
@@ -287,7 +287,7 @@ Configuration
 
 New data
 
-```
+```turtle
 :pub1
   orgLink :org1
 ```
@@ -341,19 +341,19 @@ Inputs:
 Update DPU uses input data to create a SPARQL update request, which will preserve any existing data that is not part of the update. It also handles situations where value of a certain property has changed without creating duplicate property values. For example:
 
 Old data:
-```
+```turtle
 <subject> <dct:title> "Test"
 ```
 
 SPARQL update:
-```
+```sparql
 DELETE { <subject> <dct:title> "Test" }
 INSERT { <subject> <dct:title> "Testing" }
 ```
 
 New data:
 
-```
+```turtle
 <subject> <dct:title> "Testing"
 ```
 
@@ -393,7 +393,7 @@ Data sources are:
 A first step consists of linking publication metadata with Finto vocabularies and organizational units using subject and contributor field respectively. In the following step it will use simple OWL reasoning on SKOS vocabulary to add links from linked subject's parent concepts to the publication. This allows users for example to search for "Beverage" and find things described as "Tea". Finally, the distribution pipeline will add multilingual labels for the linked subjects.
 
 Example of result document:
-```
+```json
 {
   "title": "Testing",  
   "org": {
@@ -410,7 +410,6 @@ Example of result document:
       }
     }
   ]
-  ...
 }
 ```
 

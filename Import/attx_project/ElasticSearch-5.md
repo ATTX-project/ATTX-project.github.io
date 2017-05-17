@@ -13,7 +13,7 @@ Currently ATTX Semantic Broker offers functionality for indexing semantic data a
 Indexing data formatted via a JSON-LD frame, takes the complexity of formatting the data from the client, exposing only the necessary information for the client to use in a specific application.
 
 Given a JSON-LD frame (included in the POST `index` request):
-```{json}
+```json
 {
   "@context": {
     "@vocab": "http://data.hulib.helsinki.fi/attx/",
@@ -38,7 +38,7 @@ Given a JSON-LD frame (included in the POST `index` request):
 }
 ```
 The resulting JSON-LD would have the following structure:
-```{json}
+```json
 {
   "@context": {
     "@vocab": "http://data.hulib.helsinki.fi/attx/",

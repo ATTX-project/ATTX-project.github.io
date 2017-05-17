@@ -40,7 +40,7 @@ There are two ways to create a Gradle Wrapper (both require Gradle installed):
 * use command `gradle wrapper --gradle-version 3.5` (last value is the version of gradle set for the wrapper);
 * in the `build.gradle` file create a wrapper task (see below) and use command `gradle wrapper`
 
-```{groovy}
+```groovy
 task wrapper(type: Wrapper) {
    gradleVersion = '3.5'
 }
@@ -74,13 +74,13 @@ PyGradle comes with several plugins available (for specific details refer to PyG
 PyGradle depends on Ivy metadata to build a dependency graph, thus one cannot use pypi directly. For this reason it is recommended to build a local pypi repository using the [pivy-importer](https://github.com/linkedin/pygradle/tree/master/pivy-importer); for the latest pivy-importer jre see [pivy-importer jfrog bintray](https://bintray.com/linkedin/maven/pivy-importer).
 
 The plugins can be added from Gradle plugins repository:
-```{groovy}
+```groovy
 plugins {
   id "com.linkedin.python-cli" version "0.4.9"
 }
 ```
 or by jcenter
-```{groovy}
+```groovy
 buildscript {
     repositories {
         jcenter()
@@ -100,7 +100,7 @@ Requires the pivy repository locally check build.gradle
   * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.4.9
   * run as below
 
-    ```
+    ```shell
     java -jar ~/Software/pivy-importer-0.4.9-all.jar --repo /home/user/repository \
       virtualenv:15.0.1 \
       pip:7.1.2 \
@@ -145,7 +145,7 @@ Standard python project tree -  *Note the lack of a setup.py, more on this in a 
 
 Create a `build.gradle` file. An example of a such a file is bellow with some specific options.
 
-```{groovy}
+```groovy
 plugins {
   id "com.linkedin.python-cli" version "0.4.9"
 }
@@ -202,7 +202,7 @@ max-line-length = 160
 
 If there are issues with depenencies in your project e.g. : https://github.com/linkedin/pygradle/issues/96 one could exclude the dependency as follows:
 
-```{groovy}
+```groovy
 dependencies {
     python ('pypi:connexion:1.0.129') {
         exclude module: 'functools32'
@@ -226,7 +226,7 @@ Tasks:
 * see test coverage `gradle pytest coverage` it will generate a html report in `build/coverage/htmlcov`
 
 In order to generate a HTML test report one could use `pytest-html` dependency and creating a Gradle task for that:
-```{groovy}
+```groovy
 // generate Tests report via a script.
 task runTests(type:Exec) {
   workingDir '.'
@@ -240,7 +240,7 @@ task runTests(type:Exec) {
 ```
 where `runTests.sh` contains the command to activate the virtualenv created by PyGradle and run the tests.
 
-```{bash}
+```bash
 #! /bin/bash
 command -v source >/dev/null 2>&1 || {
   echo "I require source but it's not installed.  Aborting." >&2; exit 1;

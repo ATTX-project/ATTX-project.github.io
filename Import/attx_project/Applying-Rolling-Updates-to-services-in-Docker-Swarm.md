@@ -13,7 +13,7 @@ Pre-requisite: available Docker Swarm up and running.
 `docker service inspect --pretty redis`
 
 The "Service Mode" should be "replicated", and the number of "Replicas" should be "3":
-```
+```shell
 ID:		ttjg5xkhg2fxtf1bmtdsp8q01
 Name:		redis
 Service Mode:	Replicated
@@ -35,7 +35,7 @@ ttjg5xkhg2fx  redis       replicated  3/3       redis:3.0.6
 ```
 
 You can also use the `docker service ps redis` command to verify that the status of the new service:
-```
+```shell
 ID            NAME     IMAGE        NODE     DESIRED STATE  CURRENT STATE          ERROR  PORTS
 1t638vum32s6  redis.1  redis:3.0.6  swarm-3  Running        Running 8 minutes ago         
 qgtvi12qczt3  redis.2  redis:3.0.6  swarm-2  Running        Running 8 minutes ago         
@@ -47,7 +47,7 @@ q2sgd0ua12q2  redis.3  redis:3.0.6  swarm-1  Running        Running 8 minutes ag
 `docker service update --image redis:3.0.7 redis`
 
 Check the "UpdateStatus" of the "redis" service update (should be "completed"):
-```
+```shell
 ID:		ttjg5xkhg2fxtf1bmtdsp8q01
 Name:		redis
 Service Mode:	Replicated
@@ -70,7 +70,7 @@ Endpoint Mode:	vip
 ```
 
 Finally, check that all instances of the 3.0.6 version of the "redis" service have been shutdown, and that all instances of new 3.0.7 version are running:
-```
+```shell
 docker service ps redis
 ID            NAME         IMAGE        NODE     DESIRED STATE  CURRENT STATE           ERROR  PORTS
 iy10bjo2udtp  redis.1      redis:3.0.7  swarm-3  Running        Running 3 minutes ago          

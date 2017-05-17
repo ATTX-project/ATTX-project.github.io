@@ -117,7 +117,7 @@ Different calls specific to index endpoint:
 * `index` POST API:
   * simple: http://localhost:4302/0.1/index
   * POST request is validated against a schema and it has the following structure (in the indexing key everything except the `filter` key is optional"):
-  ```{json}
+  ```json
   {
     "plugin": "python",
     "targetEndpoint": {
@@ -141,7 +141,7 @@ Different calls specific to index endpoint:
   }
   ```
   Another variant to obtain the indexing is via the JAVA indexing processor. The body of the request should be unsing the following structure.
-  ```{json}
+  ```json
   {
     "plugin": "java",
     "targetEndpoint": {
@@ -163,21 +163,21 @@ Different calls specific to index endpoint:
 
   ```
   * Responses: `202` or `400`. When the request is successful the following response is issued:
-  ```{json}
+  ```json
   {
     "id": 123,
     "status": "WIP"
   }
   ```
   When the response status code is `400` or a bad request (bad request due to validation issues), a response under the following format is issued:
-  ```{json}
+  ```json
   {
     "title": "Invalid data",
     "description": "Could not properly parse the provided data as JSON"
   }
   ```
   or (a message where the description depends on the error message):
-  ```{json}
+  ```json
   {
     "title": "Failed data validation",
     "description": "THE DESCRIPTION CAN VARY"
@@ -186,7 +186,7 @@ Different calls specific to index endpoint:
 * `index/{id}` GET API:
   * simple:  http://localhost:4302/0.1/index/{id}
   * Responses: `200` or `410` (for the `410` the body of the response is empty). The following response the request is completed successfully (a.k.a. `200`):
-  ```{json}
+  ```json
   {
     "id": 123,
     "status": "Done"
@@ -195,7 +195,7 @@ Different calls specific to index endpoint:
 * `index/{id}` DELETE API:
   * simple:  http://localhost:4302/0.1/index/{id}
   * Responses: `200`
-  ```{json}
+  ```json
   {
     "deletedID": 123
   }
@@ -206,7 +206,7 @@ Different calls specific to index endpoint:
 The cluster endpoint:
 * `cluster` POST API:
   * simple: http://localhost:4302/0.1/cluster with the following body (if the body format is badly formatted the response will be `400`):
-  ```{json}
+  ```json
   {
     "graphStore": {
         "host": "localhost",
@@ -216,14 +216,14 @@ The cluster endpoint:
   }
   ```
   * Responses: `200`. In case of success the response should be a message containing:
-  ```{json}
+  ```json
   {
     "IDCount": 123,
     "status": "Processed"
   }
   ```
   In case the Clustering of IDs is not possible the response status code is `422` and the message is (title always the same the description can differ):
-  ```{json}
+  ```json
   {
     "title": "Unprocessable ID Clustering",
     "description": "Could not process the clustering of ids."
@@ -234,7 +234,7 @@ The cluster endpoint:
 
 * `link` POST API:
   * simple: http://localhost:4302/0.1/link with the following body:
-  ```{json}
+  ```json
   {
     "strategy": {
         "uri": "http://data.hulib.helsinki.fi/attx/idstrategy1",
@@ -255,7 +255,7 @@ The cluster endpoint:
   The `link` endpoint will also generated associated provenance for the link activity and update the provenance graph in the Graph Store.
 
   * Responses: `202` Accepted or `400` not allowed with the body:
-  ```{json}
+  ```json
   {
     "id": 123,
     "status": "WIP"
@@ -267,7 +267,7 @@ The strategy for linking graphs is detailed at: [Linking Graphs](Linking-graphs.
 * `link/{id}` GET API:
   * simple:  http://localhost:4302/0.1/link/{id}
   * Responses: `200` or `410` (for the `410` the body of the response is empty). The following response the request is completed successfully (a.k.a. `200`):
-  ```{json}
+  ```json
   {
     "id": 123,
     "status": "Done"
@@ -276,7 +276,7 @@ The strategy for linking graphs is detailed at: [Linking Graphs](Linking-graphs.
 * `link/{id}` DELETE API:
   * simple:  http://localhost:4302/0.1/link/{id}
   * Responses: `200`
-  ```{json}
+  ```json
   {
     "deletedID": 123
   }
@@ -287,7 +287,7 @@ The strategy for linking graphs is detailed at: [Linking Graphs](Linking-graphs.
 * `linkstrategy`GET API:
   * simple:  http://localhost:4302/0.1/linkstrategy the response will be `200` upon successful retrieving the strategies or `404` if no strategies exist and the body will contain an array of strategy URIs and titles:
 
-  ```{json}
+  ```json
   [
       {
         "title": "IDs based Linking Strategy",
@@ -332,7 +332,7 @@ The prov endpoint works as described below:
     * `?graphStore=http://fusekidockerimagename:port/dataset` - the value can be a docker image name alongside the port and dataset (e.g. `ds` for production and `test` for testing) - if not specified it defaults to `http://localhost:3030/ds`.
     * whole request: http://localhost:4302/0.1/prov?start=true&?wfapi=http://wfdockerimagename:port/apiversion&?graphStore=http://fusekidockerimagename:port/dataset
   * Responses: `200` or `404`. In the case of success the response should be a message containing:
-  ```{json}
+  ```json
   {
     "lastStart": "2017-02-15T08:14:14Z",
     "status": "Done"
@@ -341,13 +341,13 @@ The prov endpoint works as described below:
 The `lastStart` parameter has the format `%Y-%m-%dT%H:%M:%SZ`.
 In case no provenance update has been performed it will return `404` Not Found. In case there is nothing to update it will return the last provenance update run.
 Another response status code is `502` Bad Gateway in case the Graph Manager cannot connect to any of the required endpoints. And the response has the following body:
-```{json}
+```json
 {
   "title": "Failed to do Graph Store update."
 }
 ```
 or
-```{json}
+```json
 {
   "title": "Failed to do the get provenance from WF-API update."
 }
@@ -365,7 +365,7 @@ Proposed plugins:
 ### Elasticsearch 5.x and JSON derived from JSON-LD frame
 
 Given a JSON-LD frame (included in the POST `index` request):
-```{json}
+```json
 {
   "@context": {
     "@vocab": "http://data.hulib.helsinki.fi/attx/",
@@ -390,7 +390,7 @@ Given a JSON-LD frame (included in the POST `index` request):
 }
 ```
 The resulting JSON-LD would have the following structure:
-```{json}
+```json
 {
   "@context": {
     "@vocab": "http://data.hulib.helsinki.fi/attx/",

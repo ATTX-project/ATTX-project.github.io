@@ -56,7 +56,7 @@ This script is the starting point for a `testContainer`. It first checks and wai
 In the future, the goal is to use Service discovery component to query for up-and-running services.
 
 Example: Waiting for services to be available:
-```{shell}
+```shell
 dockerize -wait tcp://mysql:3306 -timeout 240s
 dockerize -wait http://fuseki:3030 -timeout 60s
 dockerize -wait http://gmapi:4302/health -timeout 60s
@@ -76,7 +76,7 @@ Test project contains two Gradle configurations, one for developing tests and ma
 
 Example of the most relevant parts:
 
-```{gradle}
+```groovy
 if (!project.hasProperty("testEnv") || project.testEnv == "dev") {
     ext.testSet = "localhost"
 } else if (project.testEnv == "CI"){
@@ -210,7 +210,7 @@ The system properties are required to be set in the container and these need to 
 
 Another reason is to allow for the tests to be run in local environment, meaning the ports are exposed and the tests need to take into consideration that the requests make inside the network between containers need to be done under the `hostName` of the specific containers (e.g. no http://localhost:4301/health but instead http://wfapi:4301/health).
 
-```{gradle}
+```groovy
 plugins {
     id "java"
 }
@@ -262,7 +262,7 @@ Dependencies are loaded from the überjar created by the `shadowJar` task in the
 
 ### Dockerfile
 
-```{Dockerfile}
+```Dockerfile
 FROM frekele/gradle:3.3-jdk8
 
 RUN apt-get update \
@@ -291,7 +291,7 @@ RUN chmod 700 /tmp/runTests.sh
 
 Example configuration for Jenkins using pipeline plugin and declarative configurations:
 
-```
+```groovy
 pipeline {
     agent any
     stages {

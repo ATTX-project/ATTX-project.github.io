@@ -43,7 +43,7 @@ The ATT Ontology also builds on the [PROV-O](https://www.w3.org/TR/prov-o/) with
 
 On another note the ATT Data Model intertwines Shape Constraints [SHACL](https://www.w3.org/ns/shacl#) with constructs such as:
 
-```{turtle}
+```turtle
 <http://iow.csc.fi/ns/att#DatasetChecksum>
         a                   sh:Shape ;
         rdfs:comment        "A value that allows the contents of a file to be authenticated. This class allows the results of a variety of checksum and cryptographic message digest algorithms to be represented."@en , "Arvo joka mahdollistaa jakelun sisällön tarkistamisen"@fi ;

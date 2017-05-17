@@ -11,7 +11,7 @@ https://grips.semantic-web.at/display/UDDOC/Tutorial%3A+Creating+new+DPU
 These instructions create a Maven project. We can integrate it with Gradle using a Maven plugin.
 
 build.gradle
-```{groovy}
+```groovy
 plugins {
     id "com.github.dkorotych.gradle-maven-exec" version "1.0"
 }

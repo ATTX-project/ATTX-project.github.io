@@ -16,7 +16,7 @@ This page describes the components and configuration needed to get the ATTX ES p
 
 In addition to the plugins listed below, the system requires that indexes are created with the following mapping.
 
-```{json}
+```json
 {"_default_":
   {"properties":
     {"_siren_source":
@@ -73,7 +73,7 @@ Configuration:
 
 Add the following to the elasticsearch.yml
 
-```{yml}
+```yml
 # Settings for the SIREn Plugin
 siren:
   analysis:
@@ -115,7 +115,7 @@ bin/plugin install elasticsearch/elasticsearch-analysis-icu/2.3.0
 
 Configuration:
 
-```{yml}
+```yml
 index:
     analysis:
         analyzer:
@@ -139,13 +139,13 @@ Our plugin can be installed in the same manner as the other ones. [https://www.e
 
 Releases can installed from github using the following command:
 
-```
+```shell
 bin/plugin --install <org>/<user/component>/<version>
 ```
 
 dev version can use the file based installation method:
 
-```
+```shell
 bin/plugin --url file:///path/to/plugin --install plugin-name
 ```
 

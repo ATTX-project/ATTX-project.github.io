@@ -20,7 +20,7 @@ Current store implementation: [Apache Fuseki](https://jena.apache.org/documentat
 
 ### Configuring Fuseki
 
-```{turtle}
+```turtle
 @prefix :        <#> .
 @prefix fuseki:  <http://jena.apache.org/fuseki#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -109,7 +109,7 @@ tdb:GraphTDB    rdfs:subClassOf  ja:Model .
 
 The Default Graph is the graph set to be the union of all other graphs and ca be queried as follows:
 
-```{turtle}
+```turtle
 SELECT ?subject ?predicate ?object
 WHERE { GRAPH <urn:x-arq:DefaultGraph> {
     ?subject ?predicate ?object
@@ -120,7 +120,7 @@ WHERE { GRAPH <urn:x-arq:DefaultGraph> {
 ### Adding Reasoning Capability
 
 The reasoning capabilities can be added by the following lines for a specific dataset:
-```{turtle}
+```turtle
 <#dataset>
     rdf:type    ja:RDFDataset ;
     ja:defaultGraph <#model> ;
