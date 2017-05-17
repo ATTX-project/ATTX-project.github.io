@@ -4,10 +4,10 @@
 
 * [Introduction](README.md)
 * [Applications and Use Cases](Applications-and-Use-Cases.md)
-  * [UC1 - Infras and pubs](Use-case-Infrastructures-and-publications.md)
+  * [UC1 - Infrastructure and Publications](Use-case-Infrastructures-and-publications.md)
   * [UC2 - Parallel publication dashboard](Use-case-Jyvaskyla.md)
   * [UC3 - Metax](Use-case-Metax.md)
-* [ATTX Architecture Overview](ATTX-Architecture=Overview.md)
+* [ATTX Architecture Overview](ATTX-Architecture-Overview.md)
 <!-- * [ATTX Data Administrator's User guide](User-guide.md) -->
 * [ATTX Broker Deployment](ATTX-Broker-Deployment.md)
   * Run on Single Machine PC/Mac/VM
