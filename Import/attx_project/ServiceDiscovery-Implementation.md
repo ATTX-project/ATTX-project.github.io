@@ -41,15 +41,37 @@ One of the main questions is when to de-register a service, however a more appro
 
 #### Using Consul Tags
 
+```json
+[{
+    "Node": "app-registry-discovery-node1",
+    "Address": "x.x.x.x",
+    "ServiceID": "api-server-8000",
+    "ServiceName": "api-server",
+    "ServiceTags": ["dev", "provider-abc"],
+    "ServiceAddress": "someserver.domain.com",
+    "ServicePort": 8000
+}, {
+    "Node": "app-registry-discovery-node1",
+    "Address": "x.x.x.x",
+    "ServiceID": "api-server-8001",
+    "ServiceName": "api-server",
+    "ServiceTags": ["dev", "provider-xyz"],
+    "ServiceAddress": "someserver.domain.com",
+    "ServicePort": 8001
+}]
+```
+If I fire a request to filter the service with filtering by just one tag it works fine ....
+`http://consul-server/v1/catalog/service/api-server?tag=dev` - works
+
 ### Storing Key/Value pairs in Consul
 
 Because the Consul provides something that resembles more of a dictionary than a document store, trying to register something like:
-```javascript
+```json
 {
-  'first_level' : {
-    'second_level' : {
-      'third_level' : {
-        'theKey' : 'theValue'
+  "first_level" : {
+    "second_level" : {
+      "third_level" : {
+        "theKey" : "theValue"
       }
     }
   }
