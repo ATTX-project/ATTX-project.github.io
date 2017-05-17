@@ -38,7 +38,7 @@
 * [Release Plan](Release-Plan.md)
 * [Project Development Environment](Project-Development-Environment.md)
 * [CI/CD Enviroment](CI-CD-Enviroment.md)
-  * [Jenkins CI](Jenkins.md)
+  * [Jenkins CI](Jenkins-CI.md)
   * [Build Environment Setup](Build-Environment-Setup.md)
   * [Containerized Testing](Containerized-testing.md)
 

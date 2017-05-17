@@ -1,7 +1,6 @@
 # ATTX Ontology
 
-<!-- TOC START min:1 max:3 link:true update:true -->
-- [ATTX Ontology](#attx-ontology)
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Ontology/Data Model - ATTXOnto](#ontologydata-model---attxonto)
   - [Related Data models](#related-data-models)
     - [ATT Data Model](#att-data-model)

@@ -50,7 +50,7 @@ We will be using three workflows:
 * `linking`
  * Creates identifier based links between infrastructure data coming from two different sources.
 
-Workflows use very basic and custom built DPUs for tranformations and processing.
+Workflows use very basic and custom built DPUs for transformations and processing.
 
 * uc1-infras2internal - transformer
 * uc1-linker - transformer

@@ -21,7 +21,7 @@ To ensure the availability of the CI/CD environment, the Jenkins and Docker Regi
 
 ## How to access the Jenkins server
 The Jenkins WebUI can be reached @ [http://attx-dev:49001/](http://attx-dev:49001/)
-More information about [Jenkins CI](Jenkins.md)
+More information about [Jenkins CI](Jenkins-CI.md)
 
 ## How to access the Archiva server
 The Archiva WebUI can be reached at: [http://attx-dev:8081/](http://attx-dev:8081/)
