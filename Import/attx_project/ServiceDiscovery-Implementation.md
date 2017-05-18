@@ -45,7 +45,7 @@ An overview how we might make use of such services is as described in the diagra
 1. accessing a service remote API such as HTTP/REST  at a particular location (host and port) via an client (e.g. browser, DPU);
 2. having different services talking to one another.
 
-While in both cases the Server-Side Service Discovery pattern could be used, it seems more feasible, to have the services talking to one another by querying the Service Registry/Discovery service directly.
+While in both cases the Server-Side Service Discovery pattern could be used, it seems more feasible, to have the services talking to one another by querying the Service Registry/Discovery service directly or using Docker Flow Proxy (just for registering, TBD if they can talk to one another via Docker Flow Proxy) - see [Consul for Service Discovery on Docker Swarm](Consul-for-Service-Discovery-on-Docker-Swarm.md) for more details.
 
 ```
 Client          Proxy/Router         Service Registry/Discovery      Service A
@@ -121,7 +121,6 @@ One would have several options (as pointed by: https://groups.google.com/forum/#
 * or storing each grand children per key e.g `/foo/bar/zar {json}`
 
 the appropriate structure in Consul KV would be:
-
 
 `/first_level/second_level/third_level/theKey` and the value for that last key would be `theValue` - solution inspired by https://github.com/Cimpress-MCP/git2consul
 
