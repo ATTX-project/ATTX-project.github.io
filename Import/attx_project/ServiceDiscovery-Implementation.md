@@ -135,3 +135,4 @@ Another option would be to encode a JSON object to Base64 - see [Base64 encoding
 * https://www.spirulasystems.com/blog/2015/07/02/automatic-environment-using-consul-and-docker-swarm-part-2/
 * https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/
 * http://www.dblooman.com/consul/2016/09/11/Consul-and-Service-discovery,-how-it-can-help/
+* https://technologyconversations.com/2016/03/21/docker-flow-proxy-on-demand-haproxy-service-discovery-and-reconfiguration/
