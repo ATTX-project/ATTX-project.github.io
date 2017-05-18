@@ -18,7 +18,9 @@ Service Discovery is part of the ATTX Semantic Broker main components as it addr
 In order to understand what components, when they communicate and what/how they communicate to each other using Service Discover component, we envision the following:
 * (micro)services offered by the Graph, Workflow and Distribution components require to register services such as Graph-Manager-API, Workflow-API, ElasticSearch or any other of processing components - see [User Guide](User-guide.md);
 * configurations specific to the Graph Store (e.g. Fuseki endpoint(s)) or the MariaDB configuration for Workflow-API or several (micro)services parameters will be stored in the Consul KV store;
-* Accessing the registered (micro)services can be achieved either directly from the Consul DNS/HTTP API or via the proxy for load balancing, meanwhile accessing the KV store should be done directly from Consul HTTP API - keep the values in KV store is an function for a component/service yet to be decided.
+* Accessing the registered (micro)services can be achieved either directly from the Consul DNS/HTTP API or via the proxy/router (for additional load balancing), meanwhile accessing the KV store should be done directly from Consul HTTP API - these solutions fit into the Service Discovery patterns:
+    * Client-Side Service Discovery: http://microservices.io/patterns/client-side-discovery.html
+    * Server-Side Service Discovery: http://microservices.io/patterns/server-side-discovery.html
 
 ### Registering a Service
 
@@ -35,11 +37,45 @@ c.agent.service.register('restapi',
                          tags=['graph-component'])
 ```
 
-One of the main questions is when to de-register a service, however a more appropriate issue would be to do a healthcheck (`/health` endpoint already available for GM and WF APIs)
+One of the main questions is when to de-register a service, however a more appropriate issue would be to do a healthcheck (`/health` endpoint already available for GM and WF APIs), also considering some of the services run under supervisor, and will try be restarted, the function of de-registering should be part of shutting down a service.
 
 ### Making Use of Registered Services
 
+An overview how we might make use of such services is as described in the diagram below, however two cases can bet identified:
+1. accessing a service remote API such as HTTP/REST  at a particular location (host and port) via an client (e.g. browser, DPU);
+2. having different services talking to one another.
+
+While in both cases the Server-Side Service Discovery pattern could be used, it seems more feasible, to have the services talking to one another by querying the Service Registry/Discovery service directly.
+
+```
+Client          Proxy/Router         Service Registry/Discovery      Service A
+
+                                                 1.register Service A
+
+                                              <--------------------------+
+  2. Client request
+
++-------------------->
+
+                    3. Proxy Asks for Service A
+
+                +-------------------------------->
+                ^--------------------------------+
+
+                          4. Proxy Forwards request to Service A
+
+                    +------------------------------------------------------->
+
+             5. Service A responds to the request to Client (via Proxy)
+
+    <----------------------------------------------------------------------+
+
+```
+
+
 #### Using Consul Tags
+
+Tags could be used to distinguish between either special instances of a service, e.g. "Reasoning with OWL-DL" and "Reasoning with RDFS+" - same service but with different reasoners configure behind.
 
 ```json
 [{
@@ -60,8 +96,8 @@ One of the main questions is when to de-register a service, however a more appro
     "ServicePort": 8001
 }]
 ```
-If I fire a request to filter the service with filtering by just one tag it works fine ....
-`http://consul-server/v1/catalog/service/api-server?tag=dev` - works
+Accessing services with specific tags would work such as:
+`http://consul-server/v1/catalog/service/api-server?tag=dev`
 
 ### Storing Key/Value pairs in Consul
 
