@@ -29,24 +29,32 @@ node {
     // If true, it will download node using above parameters.
     // If false, it will try to use globally installed node.
     download = true
-    workDir = file("${project.buildDir}/Import/attx_project")
+    workDir = file("${project.buildDir}/attx_project")
 }
 
 task buildDocs(type: Exec, dependsOn: 'npmInstall') {
 
-    inputs.dir('${project.projectDir}/Import/attx_project')
+    inputs.dir('${project.projectDir}/attx_project')
 
     executable = 'node_modules/.bin/gitbook'
-    args = ['build', './Import/attx_project', "${project.buildDir}", "--verbose"]
+    args = ['build', './attx_project', "${project.buildDir}", "--verbose"]
 }
 
 task serveDocs(type:Exec, dependsOn: 'npmInstall') {
 
-    inputs.dir('${project.projectDir}/Import/attx_project')
+    inputs.dir('${project.projectDir}/attx_project')
 
     executable = 'node_modules/.bin/gitbook'
-    args = ['serve', './Import/attx_project', "${project.buildDir}", '--verbose']
+    args = ['serve', './attx_project', "${project.buildDir}", '--verbose']
 }
+
+// task copyImages(dependsOn: mydir, type: Copy) {
+//     into 'build'
+//     from 'src/test/groovy/test.groovy'
+//     into('models') {
+//         from 'src/test/groovy/models'
+//     }
+// }
 
 task distributeDocs(type: Copy) {
     dependsOn buildDocs
