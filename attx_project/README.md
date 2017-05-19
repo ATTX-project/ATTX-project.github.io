@@ -26,7 +26,7 @@
 
 Reports on technologies and related initiatives:
 * [CSC cPouta Cloud Services Report](CSC-cPouta-Cloud-Services-Report.md)
-* [Building with Gradle](Building-with-Gradle.md)
+* [Building with (Py)Gradle](Building-with-Gradle.md)
 * [Messaging Brokers Solutions Overview](Messaging-Brokers-Solutions.md)
 * [Service Discovery Solutions Overview](Service-Discovery-Solutions.md)
 * [Workflow Management Tools Overview](Workflow-Management-Tools.md)
