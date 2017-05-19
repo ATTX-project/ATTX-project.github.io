@@ -48,14 +48,6 @@ task serveDocs(type:Exec, dependsOn: 'npmInstall') {
     args = ['serve', './attx_project', "${project.buildDir}", '--verbose']
 }
 
-// task copyImages(dependsOn: mydir, type: Copy) {
-//     into 'build'
-//     from 'src/test/groovy/test.groovy'
-//     into('models') {
-//         from 'src/test/groovy/models'
-//     }
-// }
-
 task distributeDocs(type: Copy) {
     dependsOn buildDocs
     from "${project.buildDir}"
