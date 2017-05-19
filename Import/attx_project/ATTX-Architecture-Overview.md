@@ -5,12 +5,13 @@ The following components are part of the ATTX architecture.
 * [Graph Component](#graph-component)
 * [Distribution Component](#distribution-component)
 * [Semantic Broker Deployment](#platform-deployment)
+* [Service Discovery](#service-discovery)
 
 ![Figure 1. ATTX Platform Architecture](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/platform_architecture.svg)
 
 Figure 1. ATTX Semantic Broker Architecture
 
-There are three main components: **Workflow Component**, **Graph Component**, **Distribution Component** and the **Semantic Broker Deployment** gathers all of them together in order to provide them as a individual services or as a platform.
+There are three main components: **Workflow Component**, **Graph Component**, **Distribution Component** while the **Service Discovery** and the **Semantic Broker Deployment** gather all of them together in order to provide them as a individual services or as a platform.
 
 The communication and contracts between the components is specified in [Inter-component Communication](#inter-component-communication)
 
@@ -20,7 +21,8 @@ Acronyms:
 * _WF_ - Workflow Component
 * _GC_ - Graph Component
 * _DC_ - Distribution Component
-* _PD_ - Platform Deployment
+* _PD_ - Platform Deployment/Semantic Broker Deployment
+* _PD_ - Service Discovery
 * _UV_ - UnifiedViews (WF component implementation)
 * _ES_ - ElasticSearch (DC component implementation)
 * _ETL Artifact_ - any kind of ETL software (e.g. UnifiedViews)
@@ -56,9 +58,9 @@ This ATTX Semantic Broker Deployment describes the necessary steps for setting u
 * Github Repository: [platform-deployment](https://github.com/ATTX-project/platform-deployment)
 * Details about the [ATTX Broker Deployment](ATTX-Broker-Deployment.md).
 
-## Inter-component Communication
+## Service Discovery
 
-There are three stages/versions to the inter-component communication:
+There are three stages/versions to the service discovery/inter-component communication:
 
 ![Figure 2. Stage 1 of Inter-component Communication](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/v1.1-intercomponent_communication.svg)
 
