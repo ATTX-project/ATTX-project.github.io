@@ -1,0 +1,1145 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Consul for Service Discovery on Docker Swarm · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="User-Guide-Administrator.html" />
+    
+    
+    <link rel="prev" href="ServiceDiscovery-Implementation.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">ATTX Project</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Applications and Use Cases
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="Use-case-Infrastructures-and-publications.html">
+            
+                <a href="Use-case-Infrastructures-and-publications.html">
+            
+                    
+                    UC1 - Infrastructure and Publications
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="Use-case-Jyvaskyla.html">
+            
+                <a href="Use-case-Jyvaskyla.html">
+            
+                    
+                    UC2 - Parallel publication dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="Use-case-Metax.html">
+            
+                <a href="Use-case-Metax.html">
+            
+                    
+                    UC3 - Metax
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="ATTX-Architecture-Overview.html">
+            
+                <a href="ATTX-Architecture-Overview.html">
+            
+                    
+                    ATTX Architecture Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="ATTX-Broker-Deployment.html">
+            
+                <a href="ATTX-Broker-Deployment.html">
+            
+                    
+                    ATTX Broker Deployment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" >
+            
+                <span>
+            
+                    
+                    Run on Single Machine PC/Mac/VM
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.1" data-path="Building-Docker-application-stacks-in-Swarm-Mode.html">
+            
+                <a href="Building-Docker-application-stacks-in-Swarm-Mode.html">
+            
+                    
+                    Building Swarm Mode on a PC/Mac
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+            
+                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+            
+                    
+                    Running the ATTX Stack on a PC/Mac
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" >
+            
+                <span>
+            
+                    
+                    Run on Distributed/Cloud
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.2.1" data-path="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                    
+                    Provisioning ATTX Components on CSC Open Stack (cPouta)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.2" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                    
+                    Deploying ATTX Components on Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.3" data-path="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
+            
+                <a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
+            
+                    
+                    Applying Rolling Updates to Services in Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Workflow-Component.html">
+            
+                <a href="Workflow-Component.html">
+            
+                    
+                    Workflow Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="ETL-Artifacts.html">
+            
+                <a href="ETL-Artifacts.html">
+            
+                    
+                    ETL Artifacts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="Unified-Views-plugins.html">
+            
+                <a href="Unified-Views-plugins.html">
+            
+                    
+                    UnifiedViews Plugins
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="Workflow-API.html">
+            
+                <a href="Workflow-API.html">
+            
+                    
+                    Workflow API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Graph-Component.html">
+            
+                <a href="Graph-Component.html">
+            
+                    
+                    Graph Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="Graph-Manager-API.html">
+            
+                <a href="Graph-Manager-API.html">
+            
+                    
+                    Graph Manager API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="Graph-Store.html">
+            
+                <a href="Graph-Store.html">
+            
+                    
+                    Graph Store
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.2.1" data-path="Data-Model.html">
+            
+                <a href="Data-Model.html">
+            
+                    
+                    Ontology/Data model
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.2" data-path="Namespaces.html">
+            
+                <a href="Namespaces.html">
+            
+                    
+                    Graph Namespaces
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2.3" data-path="Linking-Strategies.html">
+            
+                <a href="Linking-Strategies.html">
+            
+                    
+                    Linking Strategies
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Distribution-Component.html">
+            
+                <a href="Distribution-Component.html">
+            
+                    
+                    Distribution Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="ElasticSearch-with-Siren.html">
+            
+                <a href="ElasticSearch-with-Siren.html">
+            
+                    
+                    ElasticSearch with Siren
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="ElasticSearch-5.html">
+            
+                <a href="ElasticSearch-5.html">
+            
+                    
+                    ElasticSearch 5.x
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="ServiceDiscovery-Implementation.html">
+            
+                <a href="ServiceDiscovery-Implementation.html">
+            
+                    
+                    Service Discovery Implementation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.8.1" data-path="Consul-for-Service-Discovery-on-Docker-Swarm.html">
+            
+                <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html">
+            
+                    
+                    Consul for Service Discovery on Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">User Guide</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="User-Guide-Administrator.html">
+            
+                <a href="User-Guide-Administrator.html">
+            
+                    
+                    Data Administrator's User guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project Guidelines</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="Feature-roadmap.html">
+            
+                <a href="Feature-roadmap.html">
+            
+                    
+                    Feature Roadmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="Release-Plan.html">
+            
+                <a href="Release-Plan.html">
+            
+                    
+                    Release Plan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="Project-Development-Environment.html">
+            
+                <a href="Project-Development-Environment.html">
+            
+                    
+                    Project Development Environment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="CI-CD-Enviroment.html">
+            
+                <a href="CI-CD-Enviroment.html">
+            
+                    
+                    CI/CD Enviroment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.4.1" data-path="Jenkins-CI.html">
+            
+                <a href="Jenkins-CI.html">
+            
+                    
+                    Jenkins CI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.2" data-path="Build-Environment-Setup.html">
+            
+                <a href="Build-Environment-Setup.html">
+            
+                    
+                    Build Environment Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.3" data-path="Containerized-testing.html">
+            
+                <a href="Containerized-testing.html">
+            
+                    
+                    Containerized Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project Contributions</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" >
+            
+                <span>
+            
+                    
+                    Reports
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="CSC-cPouta-Cloud-Services-Report.html">
+            
+                <a href="CSC-cPouta-Cloud-Services-Report.html">
+            
+                    
+                    CSC cPouta Cloud Services Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="Building-with-Gradle.html">
+            
+                <a href="Building-with-Gradle.html">
+            
+                    
+                    Building with (Py)Gradle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="Messaging-Brokers-Solutions.html">
+            
+                <a href="Messaging-Brokers-Solutions.html">
+            
+                    
+                    Messaging Brokers Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.4" data-path="Service-Discovery-Solutions.html">
+            
+                <a href="Service-Discovery-Solutions.html">
+            
+                    
+                    Service Discovery Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.5" data-path="Workflow-Management-Tools.html">
+            
+                <a href="Workflow-Management-Tools.html">
+            
+                    
+                    Workflow Management Tools Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" >
+            
+                <span>
+            
+                    
+                    Presentations
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.2.1" data-path="ELAG-2017.html">
+            
+                <a href="ELAG-2017.html">
+            
+                    
+                    ELAG2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2.2" data-path="SWIB-2017.html">
+            
+                <a href="SWIB-2017.html">
+            
+                    
+                    SWIB2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="Open-Contributions.html">
+            
+                <a href="Open-Contributions.html">
+            
+                    
+                    Open Source Contributions
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" >
+            
+                <a target="_blank" href="https://www.helsinki.fi/en/projects/attx-2016">
+            
+                    
+                    ATTX website
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Consul for Service Discovery on Docker Swarm</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="consul-for-service-discovery-in-docker-swarm">Consul for Service Discovery in Docker Swarm</h1>
+<p>Hereby you can find a report of a test implementation of <a href="https://www.consul.io/" target="_blank">Consul</a> as a <a href="Service-Discovery-Solutions.html">Service Discovery</a> solution in a <a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a> cluster.</p>
+<!-- TOC START min:1 max:3 link:true update:false -->
+<ol>
+<li>Deployment on Docker Swarm</li>
+<li>Possibilities</li>
+<li>Limitations and a possible solution</li>
+<li>Conclusions<!-- TOC END -->
+</li>
+</ol>
+<h2 id="1-deployment-on-docker-swarm">1. Deployment on Docker Swarm</h2>
+<p>For this exercise, we deployed a 3-node Docker Swarm with one Master and two workers (identical to the one running in cPouta).</p>
+<p>Such 3-node swarm was created with docker-machine (requires not only <a href="https://docs.docker.com/machine/install-machine/" target="_blank">Docker Machine</a>, but also  <a href="https://www.virtualbox.org/wiki/VirtualBox" target="_blank">Virtualbox</a>), and can be automated by a <a href="https://github.com/ATTX-project/platform-deployment/blob/feature-docker-machine/swarm-mode-docker-machine/createSwarm.sh" target="_blank">BASH script</a>.</p>
+<p>Once the Swarm is created, we can deploy Consul in our Docker Machine Swarm hosts. Given that Consul doesn&apos;t yet support deployment in native Docker Swarm mode, it will have to be deployed in <a href="https://docs.docker.com/compose/compose-file/#networkmode" target="_blank">host mode</a>, as per the following <code>docker-compose.yml</code> example file:</p>
+<pre><code class="lang-yml"><span class="hljs-attr">version:</span> <span class="hljs-string">&apos;2&apos;</span>
+
+<span class="hljs-attr">services:</span>
+<span class="hljs-attr">  consul:</span>
+<span class="hljs-attr">    container_name:</span> consul
+<span class="hljs-attr">    image:</span> progrium/consul
+<span class="hljs-attr">    ports:</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-number">8500</span>:<span class="hljs-number">8500</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-number">8301</span>:<span class="hljs-number">8301</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-number">8300</span>:<span class="hljs-number">8300</span>
+<span class="hljs-attr">    command:</span> -server -bootstrap
+
+<span class="hljs-attr">  consul-server:</span>
+<span class="hljs-attr">    container_name:</span> consul
+<span class="hljs-attr">    image:</span> consul
+<span class="hljs-attr">    network_mode:</span> host
+<span class="hljs-attr">    environment:</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-string">&apos;CONSUL_LOCAL_CONFIG={&quot;skip_leave_on_interrupt&quot;: true}&apos;</span>
+<span class="hljs-attr">    command:</span> agent -server -bind=$DOCKER_IP -bootstrap-expect=<span class="hljs-number">1</span> -client=$DOCKER_IP
+
+<span class="hljs-attr">  consul-agent:</span>
+<span class="hljs-attr">    container_name:</span> consul
+<span class="hljs-attr">    image:</span> consul
+<span class="hljs-attr">    network_mode:</span> host
+<span class="hljs-attr">    environment:</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-string">&apos;CONSUL_LOCAL_CONFIG={&quot;leave_on_terminate&quot;: true}&apos;</span>
+<span class="hljs-attr">    command:</span> agent -bind=$DOCKER_IP -retry-join=$CONSUL_SERVER_IP -client=$DOCKER_IP
+</code></pre>
+<p>This example <code>docker-compose.yml</code> can be used to deploy the Consul Server in our running Swarm Master with the following commands:</p>
+<ol>
+<li><code>eval $(docker-machine env swarm-1)</code></li>
+<li><code>export DOCKER_IP=$(docker-machine ip swarm-1)</code></li>
+<li><code>docker-compose -f docker-compose-proxy.yml up -d consul-server</code></li>
+</ol>
+<p>With the Consul Server running, we can test Consul&apos;s Key-Value Store HTTP API:</p>
+<ol>
+<li>Check the status of Consul&apos;s Key-Value Store HTTP API (should be empty at this point):
+<code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/catalog/service/web&quot;</code></li>
+<li>Create a test entry in Consul&apos;s Key-Value Store: <code>curl -X PUT -d &apos;this is a test&apos; &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/msg1&quot;</code></li>
+<li>Retrieve your key value entry from Consul&apos;s HTTP API: <code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/msg1?raw&quot;</code></li>
+</ol>
+<p>We can now deploy the Consul agents to the other two nodes in the cluster:</p>
+<pre><code>export CONSUL_SERVER_IP=$(docker-machine ip swarm-1)
+for i in 2 3; do eval $(docker-machine env swarm-$i); \
+export DOCKER_IP=$(docker-machine ip swarm-$i); \
+docker-compose -f docker-compose-proxy.yml up -d consul-agent; \
+done
+</code></pre><p>And test the availability of the Consul agents in the worker nodes and that replication between the different instances is working:</p>
+<ol>
+<li>Create a Key-Value entry in the Consul Agent running in the second Swarm node: <code>curl -X PUT -d &apos;this is another test&apos; &quot;http://$(docker-machine ip swarm-2):8500/v1/kv/msg2&quot;</code></li>
+<li>Verify that our new Key-Value has been replicated to the Consul Server: <code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/msg2?raw&quot;</code></li>
+<li>Check that it has been replicated to the the Consul Agent running in the third Swarm Node: <code>curl &quot;http://$(docker-machine ip swarm-3):8500/v1/kv/msg2?raw&quot;</code></li>
+</ol>
+<p>At the end of this initial step of our exercise, our system will look like this:</p>
+<pre><code>+---------------------------------------------------------------------------------+
+|                                    DOCKER SWARM                                 |
+|                                                                                 |
++---------------------------------------------------------------------------------+
+
++------------------+             +------------------+          +------------------+
+|   +----------+   |             |   +----------+   |          |   +----------+   |
+|   |  Consul  |   |             |   |  Consul  |   |          |   |  Consul  |   |
+|   |  server  &lt;---------------------&gt;  agent   &lt;------------------&gt;  agent   |   |
+|   |          |   |             |   |          |   |          |   |          |   |
+|   +^---------+   |             |   +----------+   |          |   +----------+   |
+|    |             |             |                  |          |                  |
+|    |swarm-1      |             |     swarm-2      |          |      swarm-3     |
++------------------+             +------------------+          +------------------+
+     |
+     |
+     |
++----+---+
+|  User  |
+|requests|
++--------+
+</code></pre><h2 id="2-possibilities">2. Possibilities</h2>
+<p>With Consul is thus possible to run a Service Discovery service in Docker Swarm (albeit in &quot;host&quot; mode), that enables us to register the ATTX services via a HTTP API, and query the registered information as well.</p>
+<p>Consul also replicates the registered information across its instances across the Swarm, thus enabling true elasticity in case new containers need to be replicated to new nodes</p>
+<p>By registering and replicating service information, a Service Discovery solution such as Consul also brings in the possibility of scaling up stateful services that don&apos;t scale up so well with Docker Swarm (e.g. stateful services without a persistent storage volume, such as Consul).</p>
+<h2 id="3-limitations-and-a-possible-solution">3. Limitations and a possible solution</h2>
+<p>Given that Consul has to be run in host mode (it doesn&apos;t support running natively in Swarm mode yet), scaling up or adding more Consul Server instances in new nodes in our Swarm will pose challenges in terms of fault tolerance and elasticity.</p>
+<p>If the Consul Server node goes down, then so go the Consul cluster and hence we lose Service Discovery.</p>
+<p>Furthermore, if we need to scale up the Docker Swarm and deploy a new Consul Server instance in a new node, what will be the status of the Key-Value Store of that new Consul instance?</p>
+<p>One possible solution is to use Consul in conjunction with a distributed reverse proxy and load balancer. <a href="https://github.com/vfarcic/docker-flow-proxy" target="_blank">Docker Flow Proxy</a>, is one such solution. It is a Swarm-enabled implementation of <a href="http://www.haproxy.org/" target="_blank">HA Proxy</a> that integrates well with Consul that would bring true fault tolerance and elasticity to our ATTX Docker Swarm, and could be re-used as a reverse proxy as well.</p>
+<p>We can thus start by creating a new Swarm network and attach to it all services that should be accessible through a reverse proxy (all other services would use a &quot;attx-backend&quot; network):</p>
+<p><code>docker network create --driver overlay proxy</code></p>
+<p>Hence, an example service (e.g. &quot;Nginx&quot;) would use the &quot;proxy&quot; and &quot;attx-backend&quot; networks:</p>
+<pre><code class="lang-shell">docker service create --name my_web \
+--publish 49001:80 \
+--network attx-backend \
+--network proxy nginx
+</code></pre>
+<p>With the reverse proxy network in place, we can now deploy the Docker Flow Proxy across our Swarm, and configure it to communicate with the Consul services:</p>
+<pre><code class="lang-shell">docker service create --name proxy \
+-p 80:80 -p 443:443 -p 8080:8080 \
+--network proxy -e MODE=swarm --replicas 3 \
+-e CONSUL_ADDRESS=&quot;$(docker-machine ip swarm-1):8500,(docker-machine ip swarm-2):8500,$(docker-machine ip swarm-3):8500&quot; \
+vfarcic/docker-flow-proxy
+</code></pre>
+<p>Once the Proxy is up and running (check with <code>docker service ps proxy</code>), our system&apos;s status can be represented by the following diagram:</p>
+<pre><code>+--------+
+|  User  |
+|requests|
++-------^+
+        |
+        |
+        |
++---------------------------------------------------------------------------------+
+|       |                                                                         |
+|       |                             DOCKER SWARM                                |
+|       |                                                                         |
+|       |                                                                         |
+|       |                                                                         |
+|      +v-----+                        +------+                       +------+    |
+|      |Docker|                        |Docker|                       |Docker|    |
+|      |Flow  &lt;------------------------&gt;Flow  &lt;-----------------------&gt;Flow  |    |
+|      |Proxy |                        |Proxy |                       |Proxy |    |
+|      +--+---+                        +--+---+                       +--+---+    |
+|         |                               |                              |        |
++---------------------------------------------------------------------------------+
+          |                               |                              |
++------------------+             +------------------+            +----------------+
+|   +-----v----+   |             |   +----v-----+   |            |   +---v----+   |
+|   |  Consul  |   |             |   |  Consul  |   |            |   | Consul |   |
+|   |  server  &lt;---------------------&gt;  agent   &lt;--------------------&gt; agent  |   |
+|   |          |   |             |   |          |   |            |   |        |   |
+|   +----------+   |             |   +----------+   |            |   +--------+   |
+|                  |             |                  |            |                |
+|     swarm+1      |             |     swarm+2      |            |    swarm+3     |
++------------------+             +------------------+            +----------------+
+</code></pre><p>We can test Docker Flow Proxy by issuing it to distribute a Service Discovery registration/reconfiguration request across the Swarm&apos;s Consul instances for our Nginx test service:</p>
+<pre><code>curl &quot;$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=my_web&amp;servicePath=/var/www&amp;port=49001&amp;distribute=true&quot;
+</code></pre><p>And we can test whether the service registration is stored in Consul:</p>
+<p><code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/my_web?recurse&quot;</code></p>
+<p>The output should include Service Discovery data in key value format, and be available in all Consul instances (replace &quot;docker-machine ip swarm-1&quot; with &quot;docker-machine ip swarm-2&quot; and &quot;docker-machine ip swarm-3&quot;):</p>
+<pre><code class="lang-javascript">{
+LockIndex: <span class="hljs-number">0</span>,
+Key: <span class="hljs-string">&quot;docker-flow/my_web/path&quot;</span>,
+Flags: <span class="hljs-number">0</span>,
+Value: <span class="hljs-string">&quot;L3Zhci93d3c=&quot;</span>,
+CreateIndex: <span class="hljs-number">14224</span>,
+ModifyIndex: <span class="hljs-number">14384</span>
+},
+{
+LockIndex: <span class="hljs-number">0</span>,
+Key: <span class="hljs-string">&quot;docker-flow/my_web/pathtype&quot;</span>,
+Flags: <span class="hljs-number">0</span>,
+Value: <span class="hljs-string">&quot;cGF0aF9iZWc=&quot;</span>,
+CreateIndex: <span class="hljs-number">14221</span>,
+ModifyIndex: <span class="hljs-number">14381</span>
+},
+{
+LockIndex: <span class="hljs-number">0</span>,
+Key: <span class="hljs-string">&quot;docker-flow/my_web/port&quot;</span>,
+Flags: <span class="hljs-number">0</span>,
+Value: <span class="hljs-string">&quot;NDkwMDE=&quot;</span>,
+CreateIndex: <span class="hljs-number">14218</span>,
+ModifyIndex: <span class="hljs-number">14377</span>
+},
+</code></pre>
+<p>Let&apos;s scale up the instances of Docker Flow Proxy and check whether the status was replicated.</p>
+<p>Increase the number of instances from three to six:
+<code>docker service scale proxy=6</code></p>
+<p>Find in which node is running instance number 6 of the Docker Flow Proxy (&quot;proxy.6&quot;) and the respective ID:</p>
+<pre><code>NODE=$(docker service ps proxy | grep &quot;proxy.6&quot; | awk &apos;{print $4}&apos;)
+eval $(docker-machine env $NODE)
+ID=$(docker ps | grep &quot;proxy.6&quot; | awk &apos;{print $1}&apos;)
+</code></pre><p>Query proxy.6 to check whether the service registration for the &quot;my_web&quot; service has been replicated.
+<code>docker exec -it $ID cat /cfg/haproxy.cfg</code>.</p>
+<p>The service registration information should be as follows (like originally registered right after service creation):</p>
+<pre><code class="lang-shell">frontend services
+    bind *:80
+    bind *:443
+    mode http
+
+    acl url_my_web49001 path_beg /var/www
+    use_backend my_web-be49001 if url_my_web49001
+
+backend my_web-be49001
+    mode http
+    server my_web my_web:49001
+</code></pre>
+<h2 id="4-conclusions">4. Conclusions</h2>
+<ol>
+<li>Consul is a distributed Service Discovery solution with a well documented API (<a href="https://www.consul.io/api/index.html" target="_blank">https://www.consul.io/api/index.html</a>) and <a href="https://www.consul.io/api/kv.html" target="_blank">Key-Value Store</a>.</li>
+<li>Consul doesn&apos;t support running in &quot;swarm&quot; mode yet, but it can be run in &quot;host&quot; mode across a Docker Swarm. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.</li>
+<li>Consul&apos;s Docker Swarm limitations can be addressed by using Docker Flow Proxy capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project.</li>
+<li>It&apos;s possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through <a href="https://docs.docker.com/compose/compose-file/" target="_blank">Docker Compose files</a>, and its deployment via BASH scripts in <a href="https://www.ansible.com/" target="_blank">Ansible</a> playbook.</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ServiceDiscovery-Implementation.html" class="navigation navigation-prev " aria-label="Previous page: Service Discovery Implementation">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="User-Guide-Administrator.html" class="navigation navigation-next " aria-label="Next page: Data Administrator's User guide">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"next":{"title":"Data Administrator's User guide","level":"2.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"Service Discovery Implementation","level":"1.8","depth":1,"path":"ServiceDiscovery-Implementation.md","ref":"ServiceDiscovery-Implementation.md","articles":[{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-05-22T14:00:11.662Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-22T14:00:41.039Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+
