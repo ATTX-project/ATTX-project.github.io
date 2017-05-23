@@ -1,3 +1,0 @@
-# Service Discovery Implementation
-
-TBD

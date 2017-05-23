@@ -1,0 +1,8 @@
+{
+    "plugins": ["highlight", "fontsettings", "search"],
+    "pluginsConfig": {
+        "fontSettings": {
+            "size": 1
+        }
+    }
+}
