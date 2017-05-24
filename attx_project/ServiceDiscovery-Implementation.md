@@ -4,8 +4,11 @@
   - [Consul in Practice](#consul-in-practice)
     - [Registering a Service](#registering-a-service)
     - [Making Use of Registered Services](#making-use-of-registered-services)
-        - [Using Consul Tags](#using-consul-tags)
+      - [Using Consul Tags](#using-consul-tags)
     - [Storing Key/Value pairs in Consul](#storing-keyvalue-pairs-in-consul)
+    - [Consul and Docker SWARM](#consul-and-docker-swarm)
+      - [Using Consul Catalog for Service Discovery](#using-consul-catalog-for-service-discovery)
+      - [Using Consul K/V for Service Discovery](#using-consul-kv-for-service-discovery)
   - [References](#references)
 
 <!-- TOC END -->
@@ -121,10 +124,126 @@ One would have several options (as pointed by: https://groups.google.com/forum/#
 * or storing each grand children per key e.g `/foo/bar/zar {json}`
 
 the appropriate structure in Consul KV would be:
-
 `/first_level/second_level/third_level/theKey` and the value for that last key would be `theValue` - solution inspired by https://github.com/Cimpress-MCP/git2consul
 
 Another option would be to encode a JSON object to Base64 - see [Base64 encoding and decoding](https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding) or http://stackoverflow.com/questions/34341836/how-to-convert-a-json-object-to-a-base64-string
+
+
+### Consul and Docker SWARM
+
+As illustrated in [Consul for Service Discovery on Docker Swarm](Consul-for-Service-Discovery-on-Docker-Swarm.md) we are making use of [Docker Flow Proxy](http://proxy.dockerflow.com) and [Docker Swarm Listener](http://swarmlistener.dockerflow.com/) in order to implement a Server-Side Service Discovery pattern. However there are a few naming conventions that should be taken into consideration.
+
+#### Using Consul Catalog for Service Discovery
+
+In this solution there are two main components the Service Discovery (where service are registered in the Consul catalogue of service for being monitored, and possible for healthcheck) and the Service Registry (where the services are registered using the Docker Swarm listener and used by Docker Flow proxy in the Consul K/V store).
+
+* Docker SWARM
+    - serviceName = name of the docker container in the network
+* Docker Flow Proxy
+    - serviceName = name of the container in the network
+    - servicePath = /[service name from consul]/endpoint
+* Consul
+    - catalog
+      - serviceName = application type of service
+      - serviceID = service name from SWARM
+      - tag = v1
+    - kv
+      - serviceName/description = "Description of the the service"
+      - serviceName/dataset = '/ds'
+
+----
+
+* Docker SWARM
+    - serviceName = ES1
+    - serviceName = ES5
+* Docker Flow Proxy
+    - elasticsearch 1.3
+        - serviceName = ES1
+        - servicePath = /ES1/jsonRestAPI/
+        - reqPathSearch = /ES1/jsonRestAPI/
+        - reqPathReplace = /
+    - elasticsearch 5.x
+        - serviceName = ES5
+        - servicePath = /ES5/jsonRestAPI/
+        - reqPathSearch = /ES5/jsonRestAPI/
+        - reqPathReplace = /
+* Consul
+    - catalog
+    ```json
+    [
+        {
+            "serviceName": "jsonRestAPI",
+            "serviceID": "ES1",
+            "tags": ["v1"]
+        },
+        {
+            "serviceName": "jsonRestAPI",
+            "serviceID": "ES5",
+            "tags": ["v1"]
+        }
+    ]
+    ```
+    - kv
+      /ES1/description = "REST API that uses old version of the ES"
+      /ES5/description = "REST API implemented with the current version of the ES"
+* Querying for services of type "jsonRestAPI" and version "v1":
+`http://proxy/consul/catalog/service/jsonRestAPI?tag=v1`
+    - Returns: serviceIDs
+* Access the service (e.g. indexing): `proxy/[serviceID]/[serviceName]/[endpoint]`
+    ```
+    PUT http://proxy/ES1/jsonRestAPI/[indexName]/[document type]
+    ```
+
+#### Using Consul K/V for Service Discovery
+
+In this solution we would be using the services are registered using the Docker Swarm listener and used by Docker Flow proxy in the Consul K/V store in order to discover new services, and client side processing.
+
+In order to add new values to the Consul K/V store, we will have to pass some environment variables to the container and at the same time follow the structure of the docker flow proxy for registering service parameters.
+
+* Docker SWARM
+    - serviceName = name of the docker container in the network
+* Docker Flow Proxy
+    - serviceName = name of the container in the network
+    - servicePath = /[service name from consul]/endpoint
+* Consul
+    - kv
+      - /docker-flow/serviceName/description = "Description of the the service"
+      - /docker-flow/serviceName/dataset = '/ds'
+
+----
+
+* Docker SWARM
+    - serviceName = ES1
+    - serviceName = ES5
+* Docker Flow Proxy
+    - elasticsearch 1.3
+        - serviceName = ES1
+        - servicePath = /ES1/jsonRestAPI/
+        - reqPathSearch = /ES1/jsonRestAPI/
+        - reqPathReplace = /
+    - elasticsearch 5.x
+        - serviceName = ES5
+        - servicePath = /ES5/jsonRestAPI/
+        - reqPathSearch = /ES5/jsonRestAPI/
+        - reqPathReplace = /
+* Consul
+    - kv
+      /docker-flow/jsonRestAPI_ES1_v1/description = "REST API that uses old version of the ES"
+      /docker-flow/jsonRestAPI_ES5_v1/description = "REST API implemented with the current version of the ES"
+* Querying for services of type "jsonRestAPI" and version "v1":
+    - `http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?keys`
+    -  `http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?recurse`
+* Querying for services of type "jsonRestAPI":
+    - `http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_?keys`
+    -  `http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_?recurse`
+* Querying for services of type "jsonRestAPI" ES1 versions:
+    - `http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1?keys`
+* Querying for parameter keys of type "jsonRestAPI" ES1 version "v1":
+    - `http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?keys`
+* Access the service (e.g. indexing): `proxy/[serviceID]/[serviceName]/[endpoint]`
+    ```
+    PUT http://proxy/ES1/jsonRestAPI/[indexName]/[document type]
+    ```
 
 ## References
 

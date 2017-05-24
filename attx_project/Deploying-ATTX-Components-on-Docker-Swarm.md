@@ -78,7 +78,7 @@ sudo mkdir /attx-data/gmapi
 
 ## Deploying the ATTX components
 **1.**
-With the data volumes in place (as well as the Provisioning, cf. https://github.com/ATTX-project/project-management/wiki/Provisioning-ATTX-Components-on-CSC-Open-Stack-(cPouta)), it's now time deploy the ATTX application stack in Docker Swarm.
+With the data volumes in place (as well as the Provisioning, cf. [Provisioning ATTX Components on CSC Open Stack cPouta](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)), it's now time deploy the ATTX application stack in Docker Swarm.
 
 Download the latest ATTX Docker Swarm YML stack (e.g. https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml) to your Swarm Master node (e.g. attx-swarm-1), to `/home/cloud-user/swarm-mode-cpouta`, for example.
 
