@@ -298,8 +298,8 @@ Once the test "pygradle" service is up, (check with `docker service ps pygradle`
 {TO BE CONTINUED}
 
 ## 5. Conclusions
-1. Consul is a distributed Service Discovery solution with a well documented API (https://www.consul.io/api/index.html) and [Key-Value Store](https://www.consul.io/api/kv.html), whose features compare well to other solutions [INSERT LINK HERE}]
+1. Consul is a distributed Service Discovery solution with a well documented API (https://www.consul.io/api/index.html) and [Key-Value Store](https://www.consul.io/api/kv.html), whose features compare well to other solutions (cf. https://attx-project.github.io/Service-Discovery-Solutions.html).
 2. Consul doesn't support running in "swarm" mode yet, but it can be run in "host" mode across a Docker Swarm. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.
 3. Consul's Docker Swarm limitations can be addressed by using Docker Flow Proxy capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project.
-4.
+4. {INSERT CONTENT HERE}
 5. It's possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through [Docker Compose files](https://docs.docker.com/compose/compose-file/), and its deployment via BASH scripts in [Ansible](https://www.ansible.com/) playbook.
