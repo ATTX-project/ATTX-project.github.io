@@ -1,4 +1,4 @@
-# Consul for Service Discovery in Docker Swarm
+# Consul for Service Discovery in Docker Swarm {WORK IN PROGRESS}
 
 Hereby you can find a report of a test implementation of [Consul](https://www.consul.io/) as a [Service Discovery](Service-Discovery-Solutions.md) solution in a [Docker Swarm](https://docs.docker.com/engine/swarm/) cluster.
 
@@ -272,8 +272,28 @@ docker service create --name swarm-listener \
 
 This will configure the `swarm-listener` service to forward service registration requests to Flow Proxy's own service registration interface ("http://proxy:8080/v1/docker-flow-proxy/reconfigure", the same that we have used above for manual service registration), which will then will be distributed to Consul's KV Store.
 
-With our new `swarm-listener` up and running (check with `docker service ps swarm-listener`), we can then check the service registration for a test container:
+With our new `swarm-listener` up and running (check with `docker service ps swarm-listener`), we can then check the service registration for a test image ("pygradle"), that exposes two applications ("/p/0.1/index" and "/health"):
 
+```bash
+docker service create --name pygradle \
+-p 4300:4300 --network proxy \
+--label com.df.port=4300 \
+--label com.df.notify=true \
+--label com.df.distribute=true \
+--label com.df.servicePath=/p/health,/p/0.1/index \
+--label com.df.reqPathSearch='/p/' \
+--label com.df.reqPathReplace='/' \
+blankdots/test_restapi:plain
+```
+
+Once the test "pygradle" service is up, (check with `docker service ps pygradle`), we can query Consul's Key-Value Registry for the registered service parameters:
+
+`curl "http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/pygradle?recurse"`
+
+
+```json
+[{"LockIndex":0,"Key":"docker-flow/pygradle/color","Flags":0,"Value":null,"CreateIndex":1826,"ModifyIndex":1852},{"LockIndex":0,"Key":"docker-flow/pygradle/consultemplatebepath","Flags":0,"Value":null,"CreateIndex":1821,"ModifyIndex":1846},{"LockIndex":0,"Key":"docker-flow/pygradle/consultemplatefepath","Flags":0,"Value":null,"CreateIndex":1820,"ModifyIndex":1850},{"LockIndex":0,"Key":"docker-flow/pygradle/domain","Flags":0,"Value":null,"CreateIndex":1823,"ModifyIndex":1847},{"LockIndex":0,"Key":"docker-flow/pygradle/hostname","Flags":0,"Value":null,"CreateIndex":1824,"ModifyIndex":1848},{"LockIndex":0,"Key":"docker-flow/pygradle/path","Flags":0,"Value":"L3AvaGVhbHRoLC9wLzAuMS9pbmRleA==","CreateIndex":1822,"ModifyIndex":1853},{"LockIndex":0,"Key":"docker-flow/pygradle/pathtype","Flags":0,"Value":"cGF0aF9iZWc=","CreateIndex":1825,"ModifyIndex":1849},{"LockIndex":0,"Key":"docker-flow/pygradle/port","Flags":0,"Value":"NDMwMA==","CreateIndex":1819,"ModifyIndex":1854}]
+```
 
 {TO BE CONTINUED}
 
