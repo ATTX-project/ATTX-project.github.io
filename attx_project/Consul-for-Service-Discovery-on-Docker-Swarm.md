@@ -64,7 +64,7 @@ With the Consul Server running, we can test Consul's Key-Value Store HTTP API:
 
 We can now deploy the Consul agents to the other two nodes in the cluster:
 
-```
+```bash
 export CONSUL_SERVER_IP=$(docker-machine ip swarm-1)
 for i in 2 3; do eval $(docker-machine env swarm-$i); \
 export DOCKER_IP=$(docker-machine ip swarm-$i); \
@@ -183,7 +183,7 @@ Once the Proxy is up and running (check with `docker service ps proxy`), our sys
 
 We can test Docker Flow Proxy by issuing it to distribute a Service Discovery registration/reconfiguration request across the Swarm's Consul instances for our Nginx test service:
 
-```
+```json
 curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=my_web&servicePath=/var/www&port=49001&distribute=true"
 ```
 
@@ -237,7 +237,7 @@ Query proxy.6 to check whether the service registration for the "my_web" service
 
 The service registration information should be as follows (like originally registered right after service creation):
 
-```shell
+```bash
 frontend services
     bind *:80
     bind *:443
@@ -251,9 +251,35 @@ backend my_web-be49001
     server my_web my_web:49001
 ```
 
+## 4. Automatic service registration
+We used used manual service registration in the examples above. But what if we would need that our services deployed in Docker Swarm would register themselves and their own exposed application endpoints every time they would be started up in Swarm?
 
-## 4. Conclusions
-1. Consul is a distributed Service Discovery solution with a well documented API (https://www.consul.io/api/index.html) and [Key-Value Store](https://www.consul.io/api/kv.html).
+One possible solution is to deploy a Listener that can understand Service Registration parameters as part of the Swarm service (which we could specify as service startup options in our docker-compose.yml stack) and would pass them on to the distributed Flow Proxy, which would then distribute them to Consul's KV Store.
+
+An interesting implementation of such a solution is [Docker Flow Swarm Listener](http://swarmlistener.dockerflow.com/), which integrates well with Docker Flow Proxy, being able to forward it the same [HTTP configuration parameters](http://proxy.dockerflow.com/usage/).
+
+We can deploy Docker Flow Proxy as a service in our running swarm (where we already have deployed Consul and Docker) trough the following command:
+
+```bash
+docker service create --name swarm-listener \
+    --network proxy \
+    --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+    -e DF_NOTIFY_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure \
+    -e DF_NOTIFY_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove \
+    --constraint 'node.role==manager' \
+    vfarcic/docker-flow-swarm-listener
+```
+
+This will configure the `swarm-listener` service to forward service registration requests to Flow Proxy's own service registration interface ("http://proxy:8080/v1/docker-flow-proxy/reconfigure", the same that we have used above for manual service registration), which will then will be distributed to Consul's KV Store.
+
+With our new `swarm-listener` up and running (check with `docker service ps swarm-listener`), we can then check the service registration for a test container:
+
+
+{TO BE CONTINUED}
+
+## 5. Conclusions
+1. Consul is a distributed Service Discovery solution with a well documented API (https://www.consul.io/api/index.html) and [Key-Value Store](https://www.consul.io/api/kv.html), whose features compare well to other solutions [INSERT LINK HERE}]
 2. Consul doesn't support running in "swarm" mode yet, but it can be run in "host" mode across a Docker Swarm. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.
 3. Consul's Docker Swarm limitations can be addressed by using Docker Flow Proxy capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project.
-4. It's possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through [Docker Compose files](https://docs.docker.com/compose/compose-file/), and its deployment via BASH scripts in [Ansible](https://www.ansible.com/) playbook.
+4.
+5. It's possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through [Docker Compose files](https://docs.docker.com/compose/compose-file/), and its deployment via BASH scripts in [Ansible](https://www.ansible.com/) playbook.
