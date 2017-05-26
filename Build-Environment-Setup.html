@@ -863,7 +863,7 @@
                                 <h1 id="build-environment-setup">Build Environment Setup</h1>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
-<li><a href="#working-with-build-environments">Working with build Environments</a><ul>
+<li><a href="#working-with-build-environments">Working with Build Environments</a><ul>
 <li><a href="#steps-for-generating-release-version">Steps for Generating Release Version</a></li>
 <li><a href="#example-creating-gmapi-test-image-for-development">Example: Creating gmAPI test image for development</a></li>
 </ul>
@@ -921,8 +921,9 @@
 }
 </code></pre>
 <p>When running a Jenkins pipeline one can set the <code>env</code> property to <code>release</code> to build the realease version of the Docker Image e.g.:</p>
-<pre><code>gradle build -Penv=release -PjenkinsArtifactRepoURL=http://localhost:8080 -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080/repository/attx-releases clean :gm-API:buildGmapiImage
-</code></pre><h3 id="steps-for-generating-release-version">Steps for Generating Release Version</h3>
+<pre><code class="lang-shell">gradle build -Penv=release -PjenkinsArtifactRepoURL=http://localhost:8080 -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080/repository/attx-releases clean :gm-API:buildGmapiImage
+</code></pre>
+<h3 id="steps-for-generating-release-version">Steps for Generating Release Version</h3>
 <p>Thus the steps for generating a release version are as follows:</p>
 <ol>
 <li>Set up version of the artifact to build - this will trigger a Jenkins pipeline which will deploy the artifact to repository (e.g. Archiva, Jenkins, Github etc.)</li>
@@ -1010,7 +1011,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Build Environment Setup","level":"3.4.2","depth":2,"next":{"title":"Containerized Testing","level":"3.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]},"previous":{"title":"Jenkins CI","level":"3.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Build-Environment-Setup.md","mtime":"2017-05-22T14:00:11.661Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-22T14:00:41.039Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Build Environment Setup","level":"3.4.2","depth":2,"next":{"title":"Containerized Testing","level":"3.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]},"previous":{"title":"Jenkins CI","level":"3.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Build-Environment-Setup.md","mtime":"2017-05-26T11:36:11.083Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T11:36:34.134Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
