@@ -1,7 +1,6 @@
 # Graph Manager API
 
-<!-- TOC START min:1 max:3 link:true update:true -->
-- [Graph Manager API](#graph-manager-api)
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Overview](#overview)
   - [Building the GM-API](#building-the-gm-api)
     - [Graph Store Connection](#graph-store-connection)

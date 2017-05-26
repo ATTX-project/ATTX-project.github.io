@@ -3,6 +3,7 @@
 We hereby exemplify how to run the ATTX stack in your PC or Mac, so that you can try out our Linked Open Data solution. The applications and services in the ATTX stack are fully containerised with Docker (cf. https://www.docker.com/what-container) and thus require that you install Docker CE (https://www.docker.com/community-edition) and Docker Compose (https://docs.docker.com/compose/) in your PC or Mac beforehand.
 
 <!-- TOC START min:1 max:3 link:true update:true -->
+- [Running the ATTX Stack on a PC or Mac](#running-the-attx-stack-on-a-pc-or-mac)
   - [Pre-requisite: install Docker and Docker Compose on your PC or Mac](#pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac)
   - [Running the ATTX application stack with Docker](#running-the-attx-application-stack-with-docker)
   - [Test the availability of the ATTX containerised stack](#test-the-availability-of-the-attx-containerised-stack)
@@ -31,11 +32,11 @@ GNU/Linux users need to install Docker Compose, Windows and Mac users have Docke
 * [On all Operating Systems](https://docs.docker.com/compose/install/)
 
 ## Running the ATTX application stack with Docker
-With Docker CE and Docker Compose successfully installed, you can now download the docker-compose.yml file that defines the ATTX containerised applications and service to your PC or Mac.
+With Docker CE and Docker Compose successfully installed, you can now download the `docker-compose.yml` file that defines the ATTX containerised applications and service to your PC or Mac.
 
-1. Download the ATTX docker-compose.yml file from https://github.com/ATTX-project/platform-deployment/blob/dev/dcompose/docker-compose.yml to a directory in your host machine.
-2. Open a command line terminal in your host machine (or even the Docker Quickstart Terminal if you're using Windows or Mac) and change your working directory to the one where you downloaded the ATTX docker-compose.yml file.
-3. In the directory where you downloaded the ATTX docker-compose.yml run the command "docker-compose up". This will start up the containerised ATTX applications and services.
+1. Download the ATTX `docker-compose.yml` file from https://github.com/ATTX-project/platform-deployment/blob/dev/dcompose/docker-compose.yml to a directory in your host machine.
+2. Open a command line terminal in your host machine (or even the Docker Quickstart Terminal if you're using Windows or Mac) and change your working directory to the one where you downloaded the ATTX `docker-compose.yml` file.
+3. In the directory where you downloaded the ATTX `docker-compose.yml` run the command `docker-compose up`. This will start up the containerised ATTX applications and services.
 5. You can follow the startup messages of containerised ATTX stack on the terminal. Once the message `_attx_uv_dpus_1 exited with status 0` is displayed, you can assume that the stack is up and running (meaning that all containers have been started and that the ATTX DPUs have been deployed to UnifiedViews).
 
 
@@ -56,5 +57,5 @@ a3fd681bad00        attx-dev:5000/attx-fuseki:latest                      "/dock
 2. Please keep in mind that if you launched the ATTX Stack with a command line terminal, the ATTX services will be using the localhost IP address (127.0.0.1). In case you used the Docker QuickStart Terminal, the IP address in use will the one of the Docker Machine (typically "192.168.99.100", but please check in the startup messages of Docker QuickStart Terminal).
 3. Open the UnifiedViews login page at "http://127.0.0.1:8080/unifiedviews/" (or "http://<docker_machine_ip>/unifiedviews/")
 4. Check the availability of Apache Jena/Fuseki at "http://127.0.0.1:3030" (or "http://<docker_machine_ip>:3030")
-5. Verify ElasticSearch 2.2 (with SIREN plugin) at "http://127.0.0.1:9200/_cat" (or "http://<docker_machine_ip>:9200/_cat").
+5. Verify ElasticSearch 1.3.4 (with SIREN plugin) at "http://127.0.0.1:9200/_cat" (or "http://<docker_machine_ip>:9200/_cat").
 6. Check that ElasticSearch 5.2 is available at "http://127.0.0.1:9210/_cat" (or "http://<docker_machine_ip>:9210/_cat").

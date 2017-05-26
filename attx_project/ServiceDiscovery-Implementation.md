@@ -128,7 +128,6 @@ the appropriate structure in Consul KV would be:
 
 Another option would be to encode a JSON object to Base64 - see [Base64 encoding and decoding](https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding) or http://stackoverflow.com/questions/34341836/how-to-convert-a-json-object-to-a-base64-string
 
-
 ### Consul and Docker SWARM
 
 As illustrated in [Consul for Service Discovery on Docker Swarm](Consul-for-Service-Discovery-on-Docker-Swarm.md) we are making use of [Docker Flow Proxy](http://proxy.dockerflow.com) and [Docker Swarm Listener](http://swarmlistener.dockerflow.com/) in order to implement a Server-Side Service Discovery pattern. However there are a few naming conventions that should be taken into consideration.

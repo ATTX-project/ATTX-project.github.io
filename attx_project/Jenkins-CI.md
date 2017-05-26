@@ -3,7 +3,7 @@
 The role of Jenkins in the ATTX development infrastructure:
 
 * Jenkins triggers, orchestrates, executes and monitors running of Gradle tasks using pipelines;
-* Gradle tasks are used to implement all the required actions related to pipelines (e.g. :buildDockerImage, running integration tests, deploying artifacts).
+* Gradle tasks are used to implement all the required actions related to pipelines (e.g. `:buildDockerImage`, running integration tests, deploying artifacts).
 
 So instead of using Jenkins plugin to call Docker and create images, we should create a Gradle task that uses Docker and call that task from a Jenkins pipeline.
 
@@ -21,8 +21,8 @@ Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)
     - [Publish reports](#publish-reports)
     - [Build image](#build-image)
     - [Failure](#failure)
-- [Plugins](#plugins)
-- [Additions to the Jenkins image](#additions-to-the-jenkins-image)
+  - [Plugins](#plugins)
+  - [Additions to the Jenkins image](#additions-to-the-jenkins-image)
 
 <!-- TOC END -->
 
@@ -81,7 +81,7 @@ Example:
 
 Example:
 
-```
+```shell
 echo sh (script: "${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=dev -PtestEnv=CI :pd-feature-tests:clean :pd-feature-tests:runContainerTests", returnStdout: true)
 ```
 
@@ -118,7 +118,7 @@ Example: publishing test reports
 
 ### Build image
 
-Artifacts are accessed from Jenkins. Normally artifacts are restricted to authenticated clients, but this can be changed by first setting property hudson.security.ArtifactsPermission = true (https://issues.jenkins-ci.org/browse/JENKINS-1871 and https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties) and then giving everyone access to the artifacts in the Jenkins security matrix.
+Artifacts are accessed from Jenkins. Normally artifacts are restricted to authenticated clients, but this can be changed by first setting property `hudson.security.ArtifactsPermission = true` (https://issues.jenkins-ci.org/browse/JENKINS-1871 and https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties) and then giving everyone access to the artifacts in the Jenkins security matrix.
 
 Other option is to set "Allow anonymous read access" in the security settings.
 
@@ -127,16 +127,11 @@ Other option is to set "Allow anonymous read access" in the security settings.
 
 Some of the pipelines required a failure step, more precisely the integration test related tasks, as the tasks created and run containers. In case of failure of correctly executing the Compile/Package/Test task, the containers are not removed and the task is stopped mid execution, thus such a "post execution" task is required.
 
-# Plugins
+## Plugins
 
-* Join (https://wiki.jenkins-ci.org/display/JENKINS/Join+Plugin)
-* Copy artifact (https://wiki.jenkins-ci.org/display/JENKINS/Copy+Artifact+Plugin)
-* Artifact Deployer (https://wiki.jenkins-ci.org/display/JENKINS/ArtifactDeployer+Plugin)
-* Green Balls (https://wiki.jenkins-ci.org/display/JENKINS/Green+Balls)
-* JaCoCo (https://wiki.jenkins-ci.org/display/JENKINS/JaCoCo+Plugin)
-* what else?
+Listing existing plugins can be done via https://stackoverflow.com/a/35292719
 
-# Additions to the Jenkins image
+## Additions to the Jenkins image
 
 Jenkins container must be linked to the pivy repository container:
 
@@ -146,9 +141,12 @@ docker run -d --restart=always --link pivy_repo:pivyrepo  -v /var/run/docker.soc
 
 The following packages needs to added in order to make use of the libXML in any of the Python projects:
 
-* apt-get install libxml2-dev libxslt1-dev python-dev
-* apt-get install build-essential
-* apt-get install zlib1g-dev
+* `apt-get install libxml2-dev libxslt1-dev python-dev`
+* `apt-get install build-essential`
+* `apt-get install zlib1g-dev`
 
-In order to build Maven project it needs to be installed:
-* apt-get install -y maven
+In order to build Maven/Java projects, we need it to be installed:
+* `apt-get install -y maven`
+
+In order to build Node.js projects, we need it to be installed:
+* `apt-get install -y nodejs`

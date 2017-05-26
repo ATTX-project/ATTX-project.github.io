@@ -2,13 +2,15 @@
 
 This guide exemplifies how to provision 5 VMs in cPouta (CSC Open Stack) with Ansible, for forming a Docker Swarm and running the ATTX stack.
 
-<!-- TOC START min:1 max:3 link:true update:true -->
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [1. Preparing Ansible's control node](#1-preparing-ansibles-control-node)
   - [2. Upload and edit Ansible's configuration files](#2-upload-and-edit-ansibles-configuration-files)
   - [3. Provisioning the instances](#3-provisioning-the-instances)
   - [4. Possible problems and solutions](#4-possible-problems-and-solutions)
 
 <!-- TOC END -->
+
+**Used repository: https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta**
 
 Requirements :
 
@@ -23,7 +25,7 @@ On linux commands to add certificates could be added by runing:
 
 ## 1. Preparing Ansible's control node
 
-In order for your instance with the public IP address (e.g. "attx-instance-1") to be set up as Ansible's control node, you'll need to install PIP and Ansible's prerequisites:
+In order for your instance with the public IP address (e.g. `attx-instance-1`) to be set up as Ansible's control node, you'll need to install PIP and Ansible's prerequisites:
 ```shell
 $ sudo apt-get update
 $ sudo apt-get upgrade
@@ -36,10 +38,9 @@ Install Ansible:
 $ sudo apt-get install ansible
 ```
 
-
 ## 2. Upload and edit Ansible's configuration files
 
-Via SFTP or SCP, transfer the contents of  <github_repo_link> to your instance in cPouta with the floating public IP address (e.g. "attx-stack-1"), namely to the instance that you have set up as the Ansible control node for this exercise.
+Via SFTP or SCP, transfer the contents of `<github_repo_link>` to your instance in cPouta with the floating public IP address (e.g. `attx-stack-1`), namely to the instance that you have set up as the Ansible control node for this exercise.
 
 The list of the files is:
 
@@ -57,7 +58,7 @@ The recommended path for the Ansible files is `/home/cloud-user/provision-swarm`
 ## 3. Provisioning the instances
 
 From Ansible's control node, run as cloud-user:
-```
+```shell
 $ ansible-playbook provisioning.yml
 ```
 

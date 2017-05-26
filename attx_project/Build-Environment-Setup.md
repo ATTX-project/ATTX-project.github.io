@@ -1,7 +1,7 @@
 # Build Environment Setup
 
 <!-- TOC START min:1 max:3 link:true update:false -->
-  - [Working with build Environments](#working-with-build-environments)
+  - [Working with Build Environments](#working-with-build-environments)
     - [Steps for Generating Release Version](#steps-for-generating-release-version)
     - [Example: Creating gmAPI test image for development](#example-creating-gmapi-test-image-for-development)
   - [References](#references)
@@ -67,7 +67,7 @@ if (!project.hasProperty("env") || project.env == "dev") {
 
 When running a Jenkins pipeline one can set the `env` property to `release` to build the realease version of the Docker Image e.g.:
 
-```
+```shell
 gradle build -Penv=release -PjenkinsArtifactRepoURL=http://localhost:8080 -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080/repository/attx-releases clean :gm-API:buildGmapiImage
 ```
 

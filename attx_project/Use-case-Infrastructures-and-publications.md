@@ -37,7 +37,7 @@ We are using the test instance of the TUHAT system.
 
 Because API of the current PURE version does not support equipments (=infrastructure) we are forced to use other means to extract the information.
 
-The end result will a Turtle file that conforms to the data model described on this page. The file is downloadable from the data.hulib.helsinki.fi server.
+The end result will a Turtle file that conforms to the data model described on this page. The file is downloadable from the `data.hulib.helsinki.fi` server.
 
 ## Workflows
 
