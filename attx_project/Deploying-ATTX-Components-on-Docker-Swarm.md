@@ -27,7 +27,7 @@ In short, the procedure will consist in first setting up OpenStack volumes for d
 **2.** Create a persistent storage volume for ATTX components (e.g. 'attx-data') and attach it to the first Swarm worker, as per instructions in https://research.csc.fi/pouta-persistent-volumes.
 
 
-**3.** Next, you should partition the new volumes, label them, create new file systems on them, and mount them. If you wish, you can follow the above-mentioned CSC instructions as they are, but for consistency with  existing ATTX practices we do recommend you to tag the partitions as "uv-data" and "attx-data" and mount them in "/uv-data" and "/attx-data" respectively:
+**3.** Next, you should partition the new volumes, label them, create new file systems on them, and mount them. If you wish, you can follow the above-mentioned CSC instructions as they are, but for consistency with  existing ATTX practices we do recommend you to tag the partitions as `uv-data` and `attx-data` and mount them in `/uv-data` and `/attx-data` respectively:
 
 **3.1**
 Create a label ("uv-data") for the partition that will be use to store UnifiedViews data:
@@ -35,7 +35,7 @@ Create a label ("uv-data") for the partition that will be use to store UnifiedVi
 sudo e2label /dev/vdc1 uv-data
 ```
 
-Create a "/uv-data" mount point and mount the volume:
+Create a `/uv-data` mount point and mount the volume:
 ```shell
 sudo mkdir /uv-data
 sudo mount /dev/vdc1 /uv-data
@@ -52,23 +52,23 @@ sudo mkdir /uv-data/mariadb
 ```
 
 **3.2.**
-Create a label ("attx-data") for the partition that will be use to store ATTX data:
+Create a label (`attx-data`) for the partition that will be use to store ATTX data:
 ```shell
 sudo e2label /dev/vdc1 attx-data
 ```
 
-Create a "/attx-data" mount point and mount the volume:
+Create a ``/attx-data` mount point and mount the volume:
 ```shell
 sudo mkdir /attx-data
 sudo mount /dev/vdc1 /attx-data
 ```
 
-And taking the "attx-data" label and "/attx-data" change into account in /etc/fstab:
+And taking the `attx-data` label and `/attx-data` change into account in ``/etc/fstab`:
 ```shell
 sudo echo "LABEL=attx-data    /attx-data    ext4    defaults    0    0" >> /etc/fstab
 ```
 
-Now you can create the directories that will be used by the ATTX containers who need data persistence (UnifiedViews DB, Fuseki, ElasticSearch 2.2, ElasticSearch 5.2)
+Now you can create the directories that will be used by the ATTX containers that need data persistence (UnifiedViews DB, Fuseki, ElasticSearch 1.3.4, ElasticSearch 5.2)
 ```shell
 sudo mkdir /attx-data/essiren
 sudo mkdir /attx-data/elasticsearch5
@@ -78,7 +78,7 @@ sudo mkdir /attx-data/gmapi
 
 ## Deploying the ATTX components
 **1.**
-With the data volumes in place (as well as the Provisioning, cf. https://github.com/ATTX-project/project-management/wiki/Provisioning-ATTX-Components-on-CSC-Open-Stack-(cPouta)), it's now time deploy the ATTX application stack in Docker Swarm.
+With the data volumes in place (as well as the Provisioning, cf. [Provisioning ATTX Components on CSC Open Stack cPouta](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)), it's now time deploy the ATTX application stack in Docker Swarm.
 
 Download the latest ATTX Docker Swarm YML stack (e.g. https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml) to your Swarm Master node (e.g. attx-swarm-1), to `/home/cloud-user/swarm-mode-cpouta`, for example.
 

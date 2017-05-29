@@ -1,6 +1,5 @@
 # ATTX Semantic Broker - Data Administrator's User guide
 
-
 ## Introduction
 
 This user guide is for people who have an _ATTX Semantic Broker_ platform instance up and running and want to start working with data. ATTX uses [UnifiedViews ETL tool](https://unifiedviews.eu/) as the tool to define, execute, monitor, debug, schedule data related processes. In UnifiedViews these processes are defined as pipelines, which consists of steps that are implemented using DPUs (Data Processing Unit).

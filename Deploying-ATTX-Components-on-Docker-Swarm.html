@@ -882,12 +882,12 @@
 <h2 id="setting-up-openstack-volumes-for-data-persistence">Setting up OpenStack volumes for data persistence</h2>
 <p><strong>1.</strong> Create a persistent storage volume for UnifiedViews (e.g. &apos;uv-data&apos;) and attach it to the Swarm Master, as per instructions in <a href="https://research.csc.fi/pouta-persistent-volumes" target="_blank">https://research.csc.fi/pouta-persistent-volumes</a>.</p>
 <p><strong>2.</strong> Create a persistent storage volume for ATTX components (e.g. &apos;attx-data&apos;) and attach it to the first Swarm worker, as per instructions in <a href="https://research.csc.fi/pouta-persistent-volumes" target="_blank">https://research.csc.fi/pouta-persistent-volumes</a>.</p>
-<p><strong>3.</strong> Next, you should partition the new volumes, label them, create new file systems on them, and mount them. If you wish, you can follow the above-mentioned CSC instructions as they are, but for consistency with  existing ATTX practices we do recommend you to tag the partitions as &quot;uv-data&quot; and &quot;attx-data&quot; and mount them in &quot;/uv-data&quot; and &quot;/attx-data&quot; respectively:</p>
+<p><strong>3.</strong> Next, you should partition the new volumes, label them, create new file systems on them, and mount them. If you wish, you can follow the above-mentioned CSC instructions as they are, but for consistency with  existing ATTX practices we do recommend you to tag the partitions as <code>uv-data</code> and <code>attx-data</code> and mount them in <code>/uv-data</code> and <code>/attx-data</code> respectively:</p>
 <p><strong>3.1</strong>
 Create a label (&quot;uv-data&quot;) for the partition that will be use to store UnifiedViews data:</p>
 <pre><code class="lang-shell">sudo e2label /dev/vdc1 uv-data
 </code></pre>
-<p>Create a &quot;/uv-data&quot; mount point and mount the volume:</p>
+<p>Create a <code>/uv-data</code> mount point and mount the volume:</p>
 <pre><code class="lang-shell">sudo mkdir /uv-data
 sudo mount /dev/vdc1 /uv-data
 </code></pre>
@@ -898,17 +898,17 @@ sudo mount /dev/vdc1 /uv-data
 <pre><code class="lang-shell">sudo mkdir /uv-data/mariadb
 </code></pre>
 <p><strong>3.2.</strong>
-Create a label (&quot;attx-data&quot;) for the partition that will be use to store ATTX data:</p>
+Create a label (<code>attx-data</code>) for the partition that will be use to store ATTX data:</p>
 <pre><code class="lang-shell">sudo e2label /dev/vdc1 attx-data
 </code></pre>
-<p>Create a &quot;/attx-data&quot; mount point and mount the volume:</p>
+<p>Create a <code>`/attx-data</code> mount point and mount the volume:</p>
 <pre><code class="lang-shell">sudo mkdir /attx-data
 sudo mount /dev/vdc1 /attx-data
 </code></pre>
-<p>And taking the &quot;attx-data&quot; label and &quot;/attx-data&quot; change into account in /etc/fstab:</p>
+<p>And taking the <code>attx-data</code> label and <code>/attx-data</code> change into account in <code>`/etc/fstab</code>:</p>
 <pre><code class="lang-shell">sudo echo &quot;LABEL=attx-data    /attx-data    ext4    defaults    0    0&quot; &gt;&gt; /etc/fstab
 </code></pre>
-<p>Now you can create the directories that will be used by the ATTX containers who need data persistence (UnifiedViews DB, Fuseki, ElasticSearch 2.2, ElasticSearch 5.2)</p>
+<p>Now you can create the directories that will be used by the ATTX containers that need data persistence (UnifiedViews DB, Fuseki, ElasticSearch 1.3.4, ElasticSearch 5.2)</p>
 <pre><code class="lang-shell">sudo mkdir /attx-data/essiren
 sudo mkdir /attx-data/elasticsearch5
 sudo mkdir /attx-data/fuseki
@@ -916,7 +916,7 @@ sudo mkdir /attx-data/gmapi
 </code></pre>
 <h2 id="deploying-the-attx-components">Deploying the ATTX components</h2>
 <p><strong>1.</strong>
-With the data volumes in place (as well as the Provisioning, cf. <a href="https://github.com/ATTX-project/project-management/wiki/Provisioning-ATTX-Components-on-CSC-Open-Stack-(cPouta" target="_blank">https://github.com/ATTX-project/project-management/wiki/Provisioning-ATTX-Components-on-CSC-Open-Stack-(cPouta</a>)), it&apos;s now time deploy the ATTX application stack in Docker Swarm.</p>
+With the data volumes in place (as well as the Provisioning, cf. <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack cPouta</a>), it&apos;s now time deploy the ATTX application stack in Docker Swarm.</p>
 <p>Download the latest ATTX Docker Swarm YML stack (e.g. <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml" target="_blank">https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml</a>) to your Swarm Master node (e.g. attx-swarm-1), to <code>/home/cloud-user/swarm-mode-cpouta</code>, for example.</p>
 <p>To deploy the ATTX application stack in Docker Swarm from <code>/home/cloud-user/swarm-mode-cpouta</code>, run:</p>
 <pre><code class="lang-shell">$ docker stack deploy --compose-file attx-swarm.yml attx
@@ -984,7 +984,7 @@ Once the ATTX services are running, you can also check whether UnifiedViews is o
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"next":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"1.4.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"previous":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","mtime":"2017-05-22T14:00:11.662Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-22T14:00:41.039Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"next":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"1.4.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"previous":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","mtime":"2017-05-26T11:36:11.084Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T11:36:34.134Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

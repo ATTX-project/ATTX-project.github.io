@@ -29,14 +29,16 @@ The Archiva WebUI can be reached at: [http://attx-dev:8081/](http://attx-dev:808
 To access the REST API use:
 * the documentation: http://attx-dev:8081/#rest-docs-archiva-rest-api/index.html
 * to download an artifact (e.g. gmAPI artifact):
-``` ${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.gc&a=gm-API&v=${gmAPI}&p=tar.gz":"gm-API-${gmAPI}.tar.gz
+```config ${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.gc&a=gm-API&v=${gmAPI}&p=tar.gz":"gm-API-${gmAPI}.tar.gz
 ```
 
 ## How to access the PyPi Ivy repo server
 
 Example of curl requests:
-* curl -X GET -H http://attx-dev:5039/pypi/{dependencyName}/{version}/dependencyName-version.tar.gz to retrieve dependency with a specific version number
-* curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{ "dependencies": [ { "name" : "pytest", "version" : "3.0.5" }, { "name" : "elizabeth", "version" : "0.3.11" } ], "replace" : [ { "name": "alabaster", "oldVersion": "0.7", "newVersion": "0.7.1" } ] }' "http://attx-dev:5639/add" - for adding dependencies
+* ```shell
+curl -X GET -H http://attx-dev:5039/pypi/{dependencyName}/{version}/dependencyName-version.tar.gz``` - to retrieve dependency with a specific version number
+* ```shell
+curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{ "dependencies": [ { "name" : "pytest", "version" : "3.0.5" }, { "name" : "elizabeth", "version" : "0.3.11" } ], "replace" : [ { "name": "alabaster", "oldVersion": "0.7", "newVersion": "0.7.1" } ] }' "http://attx-dev:5639/add"``` - for adding dependencies
 
 ## ATTX-SANDBOX SERVER
 

@@ -17,7 +17,7 @@ Figure 1. ETL Data Workflow
 
 ---
 
-Some of the uses of the ETL workflow include: inferencing, updating Public APIs, Transformation, updating ElasticSearch via the Graph \(GM - Graph Manager component\). Graph Manager component also can provide input to the ETL components further enriching the information contained in the platform.
+Some of the uses of the ETL workflow include: inferencing, updating Public APIs, Transformation, updating ElasticSearch via the Graph (GM - Graph Manager component). Graph Manager component also can provide input to the ETL components further enriching the information contained in the platform.
 
 A draft overview on the Semantic Broker components is provided in Figure 2.
 

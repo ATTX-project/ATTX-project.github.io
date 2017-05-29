@@ -3,12 +3,14 @@
 Hereby you can find a report of a test implementation of [Consul](https://www.consul.io/) as a [Service Discovery](Service-Discovery-Solutions.md) solution in a [Docker Swarm](https://docs.docker.com/engine/swarm/) cluster.
 
 <!-- TOC START min:1 max:3 link:true update:false -->
-1. Deployment on Docker Swarm
-2. Possibilities
-3. Limitations and a possible solution
-4. Conclusions
-<!-- TOC END -->
+  - [1. Deployment on Docker Swarm](#1-deployment-on-docker-swarm)
+  - [2. Possibilities](#2-possibilities)
+  - [3. Limitations and a possible solution](#3-limitations-and-a-possible-solution)
+  - [4. Automatic service registration](#4-automatic-service-registration)
+  - [5. Conclusions](#5-conclusions)
+  - [6. References](#6-references)
 
+<!-- TOC END -->
 
 ## 1. Deployment on Docker Swarm
 
@@ -64,7 +66,7 @@ With the Consul Server running, we can test Consul's Key-Value Store HTTP API:
 
 We can now deploy the Consul agents to the other two nodes in the cluster:
 
-```
+```bash
 export CONSUL_SERVER_IP=$(docker-machine ip swarm-1)
 for i in 2 3; do eval $(docker-machine env swarm-$i); \
 export DOCKER_IP=$(docker-machine ip swarm-$i); \
@@ -110,7 +112,6 @@ With Consul is thus possible to run a Service Discovery service in Docker Swarm 
 Consul also replicates the registered information across its instances across the Swarm, thus enabling true elasticity in case new containers need to be replicated to new nodes
 
 By registering and replicating service information, a Service Discovery solution such as Consul also brings in the possibility of scaling up stateful services that don't scale up so well with Docker Swarm (e.g. stateful services without a persistent storage volume, such as Consul).
-
 
 
 ## 3. Limitations and a possible solution
@@ -176,14 +177,14 @@ Once the Proxy is up and running (check with `docker service ps proxy`), our sys
 |   |          |   |             |   |          |   |            |   |        |   |
 |   +----------+   |             |   +----------+   |            |   +--------+   |
 |                  |             |                  |            |                |
-|     swarm+1      |             |     swarm+2      |            |    swarm+3     |
+|     swarm-1      |             |     swarm-2      |            |    swarm-3     |
 +------------------+             +------------------+            +----------------+
 
 ```
 
 We can test Docker Flow Proxy by issuing it to distribute a Service Discovery registration/reconfiguration request across the Swarm's Consul instances for our Nginx test service:
 
-```
+```json
 curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=my_web&servicePath=/var/www&port=49001&distribute=true"
 ```
 
@@ -191,7 +192,7 @@ And we can test whether the service registration is stored in Consul:
 
 `curl "http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/my_web?recurse"`
 
-The output should include Service Discovery data in key value format, and be available in all Consul instances (replace "docker-machine ip swarm-1" with "docker-machine ip swarm-2" and "docker-machine ip swarm-3"):
+The output should include Service Discovery data in key value format, and be available in all Consul instances (replace `docker-machine ip swarm-1` with `docker-machine ip swarm-2` and `docker-machine ip swarm-3`):
 
 ```javascript
 {
@@ -226,7 +227,7 @@ Increase the number of instances from three to six:
 `docker service scale proxy=6`
 
 Find in which node is running instance number 6 of the Docker Flow Proxy ("proxy.6") and the respective ID:
-```
+```shell
 NODE=$(docker service ps proxy | grep "proxy.6" | awk '{print $4}')
 eval $(docker-machine env $NODE)
 ID=$(docker ps | grep "proxy.6" | awk '{print $1}')
@@ -237,7 +238,7 @@ Query proxy.6 to check whether the service registration for the "my_web" service
 
 The service registration information should be as follows (like originally registered right after service creation):
 
-```shell
+```config
 frontend services
     bind *:80
     bind *:443
@@ -251,9 +252,124 @@ backend my_web-be49001
     server my_web my_web:49001
 ```
 
+## 4. Automatic service registration
+We used used manual service registration in the examples above. But what if we would need that our services deployed in Docker Swarm would register themselves and their own exposed application endpoints every time they would be started up in Swarm?
 
-## 4. Conclusions
-1. Consul is a distributed Service Discovery solution with a well documented API (https://www.consul.io/api/index.html) and [Key-Value Store](https://www.consul.io/api/kv.html).
-2. Consul doesn't support running in "swarm" mode yet, but it can be run in "host" mode across a Docker Swarm. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.
-3. Consul's Docker Swarm limitations can be addressed by using Docker Flow Proxy capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project.
-4. It's possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through [Docker Compose files](https://docs.docker.com/compose/compose-file/), and its deployment via BASH scripts in [Ansible](https://www.ansible.com/) playbook.
+One possible solution is to deploy a Listener that can understand Service Registration parameters as part of the Swarm service (which we could specify as service startup options in our `docker-compose.yml` stack) and would pass them on to the distributed Flow Proxy, which would then distribute them to Consul's KV Store.
+
+An interesting implementation of such a solution is [Docker Flow Swarm Listener](http://swarmlistener.dockerflow.com/), which integrates well with Docker Flow Proxy, being able to forward it the same [HTTP configuration parameters](http://proxy.dockerflow.com/usage/).
+
+We can deploy Docker Flow Proxy as a service in our running swarm (where we already have deployed Consul and Docker) trough the following command:
+
+```bash
+docker service create --name swarm-listener \
+    --network proxy \
+    --mount "type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock" \
+    -e DF_NOTIFY_CREATE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/reconfigure \
+    -e DF_NOTIFY_REMOVE_SERVICE_URL=http://proxy:8080/v1/docker-flow-proxy/remove \
+    --constraint 'node.role==manager' \
+    vfarcic/docker-flow-swarm-listener
+```
+
+This will configure the `swarm-listener` service to forward service registration requests to Flow Proxy's own service registration interface ("http://proxy:8080/v1/docker-flow-proxy/reconfigure", the same that we have used above for manual service registration), which will then will be distributed to Consul's KV Store.
+
+With our new `swarm-listener` up and running (check with `docker service ps swarm-listener`), we can then check the service registration for a test image ("pygradle"), that exposes two applications ("/p/0.1/index" and "/health"):
+
+```bash
+docker service create --name pygradle \
+-p 4300:4300 --network proxy \
+--label com.df.port=4300 \
+--label com.df.notify=true \
+--label com.df.distribute=true \
+--label com.df.servicePath=/p/health,/p/0.1/index \
+--label com.df.reqPathSearch='/p/' \
+--label com.df.reqPathReplace='/' \
+blankdots/test_restapi:plain
+```
+
+Once the test "pygradle" service is up, (check with `docker service ps pygradle`), we can query Consul's Key-Value Registry for the registered service parameters:
+
+`curl "http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/pygradle?recurse"`
+
+
+```json
+[{"LockIndex":0,"Key":"docker-flow/pygradle/color","Flags":0,"Value":null,"CreateIndex":1826,"ModifyIndex":1852},{"LockIndex":0,"Key":"docker-flow/pygradle/consultemplatebepath","Flags":0,"Value":null,"CreateIndex":1821,"ModifyIndex":1846},{"LockIndex":0,"Key":"docker-flow/pygradle/consultemplatefepath","Flags":0,"Value":null,"CreateIndex":1820,"ModifyIndex":1850},{"LockIndex":0,"Key":"docker-flow/pygradle/domain","Flags":0,"Value":null,"CreateIndex":1823,"ModifyIndex":1847},{"LockIndex":0,"Key":"docker-flow/pygradle/hostname","Flags":0,"Value":null,"CreateIndex":1824,"ModifyIndex":1848},{"LockIndex":0,"Key":"docker-flow/pygradle/path","Flags":0,"Value":"L3AvaGVhbHRoLC9wLzAuMS9pbmRleA==","CreateIndex":1822,"ModifyIndex":1853},{"LockIndex":0,"Key":"docker-flow/pygradle/pathtype","Flags":0,"Value":"cGF0aF9iZWc=","CreateIndex":1825,"ModifyIndex":1849},{"LockIndex":0,"Key":"docker-flow/pygradle/port","Flags":0,"Value":"NDMwMA==","CreateIndex":1819,"ModifyIndex":1854}]
+```
+
+And we check the proxy functionality for our test container ("pygradle") published service paths ("/p/health" and "/p/0.1/index", simple HTTP GET and HTTP POST endpoints, respectively):
+
+```bash
+curl -i $(docker-machine ip swarm-1)/p/health
+HTTP/1.1 200 OK
+Server: gunicorn/19.6.0
+Date: Mon, 22 May 2017 14:19:53 GMT
+content-length: 0
+content-type: application/json; charset=UTF-8
+
+
+curl -i $(docker-machine ip swarm-1)/p/0.1/index
+HTTP/1.1 405 Method Not Allowed
+Server: gunicorn/19.6.0
+Date: Mon, 22 May 2017 14:20:06 GMT
+content-length: 0
+content-type: application/json; charset=UTF-8
+allow: POST, OPTIONS
+```
+
+At this point, we have reached the following architectural schema when setting up Consul as a Service Registration and Discovery in Docker Swarm, while trying to:
+1. Ensure consistency and distributability of Consul's stateful Key-Value Store, and fault tolerance plus elasticity of Consul instances.
+2. Automatic Service Registration / De-Registration of Docker Swarm services at startup/shutdown.
+
+
+```
++--------+
+|  USER  |
+|REQUESTS|
++-------++
+        |
+        |
++---------------------------------------------------------------------------------+
+|       |                                                                         |
+|     +-+------+                    DOCKER SWARM                                  |
+|     | Swarm  |                                                                  |
+|     |service |                                                                  |
+|     +-+------+                                                                  |
+|       |        +--->  SD registration/de-registration                           |
+|     +-+------+                                                                  |
+|     | Swarm  |                                                                  |
+|     |Listener|                                                                  |
+|     +-+------+                                                                  |
+|       |        +--->  TCP/HTTP requests                                         |
+|      +v-----+                        +------+                       +------+    |
+|      |Docker|                        |Docker|                       |Docker|    |
+|      |Flow  <------------------------>Flow  <----------------------->Flow  |    |
+|      |Proxy |                        |Proxy |                       |Proxy |    |
+|      +--+---+                        +--+---+                       +--+---+    |
+|         |                               |                              |        |
++---------------------------------------------------------------------------------+
+|                               |                              |
++------------------+             +------------------+            +----------------+
+|   +-----v----+   |             |   +----v-----+   |            |   +---v----+   |
+|   |  Consul  |   |             |   |  Consul  |   |            |   | Consul |   |
+|   |  server  <--------------------->  agent   <--------------------> agent  |   |
+|   |          |   |             |   |          |   |            |   |        |   |
+|   +----------+   |             |   +----------+   |            |   +--------+   |
+|                  |             |                  |            |                |
+|     swarm-1      |             |     swarm-2      |            |    swarm-3     |
++------------------+             +------------------+            +----------------+
+
+```
+
+## 5. Conclusions
+
+1. Consul is a distributed Service Discovery solution with a well documented API (https://www.consul.io/api/index.html) and [Key-Value Store](https://www.consul.io/api/kv.html), whose features compare well to other solutions (cf. https://attx-project.github.io/Service-Discovery-Solutions.html).
+2. Consul doesn't support running in "swarm" mode yet, but it can be run in "host" mode across a [Docker Swarm](https://docs.docker.com/engine/swarm/). The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.
+3. Consul's Docker Swarm limitations can be addressed by using [Docker Flow Proxy](http://proxy.dockerflow.com/) capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project. Nevertheless, service registration calls to Flow Proxy must be triggered either manually by the user or by programmatically by the container (at startup as part of its entrypoint script).
+4. Automatic service is registration/de-registration can be implement with [Docker Swarm Listener](http://swarmlistener.dockerflow.com/), which can be run as a Docker Swarm service. This evidently requires that the service registration KV parameters are known, in order to be parametrised at startup time, whether by command line or in a `docker-compose.yml` file.
+5. It's possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through [Docker Compose files](https://docs.docker.com/compose/compose-file/), and its deployment via BASH scripts in [Ansible](https://www.ansible.com/) playbook.
+
+## 6. References
+*. [Docker Swarm](https://docs.docker.com/engine/swarm/)
+*. [Consul](https://www.consul.io/)
+*. [Docker Proxy Flow](http://proxy.dockerflow.com/)
+*. [Docker Swarm Listener ](http://swarmlistener.dockerflow.com/)
