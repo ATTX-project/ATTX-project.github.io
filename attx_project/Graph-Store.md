@@ -107,7 +107,7 @@ tdb:GraphTDB    rdfs:subClassOf  ja:Model .
 
 ### Querying the Default Graph
 
-The Default Graph is the graph set to be the union of all other graphs and ca be queried as follows:
+The Default Graph is the graph set to be the union of all other graphs and can be queried as follows:
 
 ```turtle
 SELECT ?subject ?predicate ?object

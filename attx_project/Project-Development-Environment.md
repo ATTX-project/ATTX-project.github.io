@@ -5,20 +5,20 @@ This page describes the project management and software development related prac
 ## Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Meetings](#meetings)
-    - [Sprint planning](#sprint-planning)
+    - [Sprint Planning](#sprint-planning)
     - [Daily](#daily)
     - [Grooming](#grooming)
     - [Retro/Demo](#retrodemo)
   - [Github Workflow](#github-workflow)
     - [Practicalities](#practicalities)
-    - [Issue management](#issue-management)
-    - [Privacy considerations](#privacy-considerations)
-    - [Source code & other files](#source-code--other-files)
+    - [Issue Management](#issue-management)
+    - [Privacy Considerations](#privacy-considerations)
+    - [Source Code & Other Files](#source-code--other-files)
     - [Branching](#branching)
   - [Testing](#testing)
-    - [Unit testing](#unit-testing)
-    - [BDD testing](#bdd-testing)
-    - [Test coverage](#test-coverage)
+    - [Unit Testing](#unit-testing)
+    - [BDD Testing](#bdd-testing)
+    - [Test Coverage](#test-coverage)
   - [ZenHub](#zenhub)
 
 <!-- TOC END -->
@@ -27,7 +27,7 @@ This page describes the project management and software development related prac
 
 ## Meetings
 
-### Sprint planning
+### Sprint Planning
 
 Duration: 2 hours max
 Monday morning when the sprint starts.
@@ -62,7 +62,7 @@ Project uses ZenHub (https://www.zenhub.com/) to add project management related 
 * Add Milestone for every sprint and include the sprint issue in the corresponding milestone. This allows us to take (some) advantage of the timing capabilities related to milestones in Github/Zenhub combo.
 
 
-### Issue management
+### Issue Management
 
 _Every task/user story is an issue_
 
@@ -72,11 +72,11 @@ _Every task/user story is an issue_
 * Milestones are not used in PM repo. In other repositories milestones can be used to group issues for releases.
 * One should always reference the issues in the commit message. Use full name ATTX-project/[repo]/#[issue number] to distinguish between repositories.
 
-### Privacy considerations
+### Privacy Considerations
 
 **Do not include any personal information that is not part of the Github in the issues.**
 
-### Source code & other files
+### Source Code & Other Files
 
 Project's GitHub is divided into following repositories:
 
@@ -95,7 +95,7 @@ Unit tests can be written in any language.
 BDD tests should be run with [Cucumber JVM implementation](https://cucumber.io/docs/reference/jvm)
 
 Project structure:
-```
+```config
 gradle root project (e.g. wf component)
 │   README.md
 │   build.gradle    
@@ -111,7 +111,7 @@ gradle root project (e.g. wf component)
 └───etc...
 ```
 
-```
+```config
 platform-deployment
 │   README.md
 │   build.gradle  
@@ -136,7 +136,7 @@ platform-deployment
 
 ## Testing
 
-### Unit testing
+### Unit Testing
 
 Framework to use for unit testing depends on the programming language used.
 List of unit testing frameworks:
@@ -146,13 +146,13 @@ List of unit testing frameworks:
 
 For unit tests, use which ever framework one feel comfortable.
 
-### BDD testing
+### BDD Testing
 
 Feature files are written using Gherkin language (https://github.com/cucumber/cucumber/wiki/gherkin).
 
 Tests are executed using JVM version of the Cucumber, which allows for writing tests in any JVM supported language. Currently the aim is to support BDD testing in Java and Python.
 
-#### Setup Netbeans for BDD testing
+#### Setup Netbeans for BDD Testing
 
 Plugins
 * [Gradle](https://gradle.org/)
@@ -160,7 +160,7 @@ Plugins
 
 By default, Gradle plugin seems to be using 2.31 version of the the Gradle. One must upgrade this to 3.1. by going to the project properties and changing the Gradle home.
 
-### Test coverage
+### Test Coverage
 
 **Java**
 

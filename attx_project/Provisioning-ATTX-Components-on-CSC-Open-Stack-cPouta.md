@@ -3,14 +3,14 @@
 This guide exemplifies how to provision 5 VMs in cPouta (CSC Open Stack) with Ansible, for forming a Docker Swarm and running the ATTX stack.
 
 <!-- TOC START min:1 max:3 link:true update:false -->
-  - [1. Preparing Ansible's control node](#1-preparing-ansibles-control-node)
-  - [2. Upload and edit Ansible's configuration files](#2-upload-and-edit-ansibles-configuration-files)
-  - [3. Provisioning the instances](#3-provisioning-the-instances)
-  - [4. Possible problems and solutions](#4-possible-problems-and-solutions)
+  - [1. Preparing Ansible's Control Node](#1-preparing-ansibles-control-node)
+  - [2. Upload and Edit Ansible's Configuration files](#2-upload-and-edit-ansibles-configuration-files)
+  - [3. Provisioning the Instances](#3-provisioning-the-instances)
+  - [4. Possible Problems and Solutions](#4-possible-problems-and-solutions)
 
 <!-- TOC END -->
 
-**Used repository: https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta**
+**Repository: https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta**
 
 Requirements :
 
@@ -23,7 +23,7 @@ On linux commands to add certificates could be added by runing:
   * Start ssh agent (if not started) `eval "$(ssh-agent -s)"`
   * Add private key from a specific location: `ssh-add ~/user/cpouta.psk`
 
-## 1. Preparing Ansible's control node
+## 1. Preparing Ansible's Control Node
 
 In order for your instance with the public IP address (e.g. `attx-instance-1`) to be set up as Ansible's control node, you'll need to install PIP and Ansible's prerequisites:
 ```shell
@@ -38,7 +38,7 @@ Install Ansible:
 sudo apt-get install ansible
 ```
 
-## 2. Upload and edit Ansible's configuration files
+## 2. Upload and Edit Ansible's Configuration Files
 
 Via SFTP or SCP, transfer the contents of `<github_repo_link>` to your instance in cPouta with the floating public IP address (e.g. `attx-stack-1`), namely to the instance that you have set up as the Ansible control node for this exercise.
 
@@ -55,7 +55,7 @@ The list of the files is:
 The recommended path for the Ansible files is `/home/cloud-user/provision-swarm` (**must be created**).
 
 
-## 3. Provisioning the instances
+## 3. Provisioning the Instances
 
 From Ansible's control node, run as cloud-user:
 ```shell
@@ -64,7 +64,7 @@ ansible-playbook provisioning.yml
 
 You can display extra verbose information for troubleshooting with the `-vvvv` option, e.g. "`ansible-playbook -i hosts provisioning.yml -vvvv`"
 
-## 4. Possible problems and solutions
+## 4. Possible Problems and Solutions
 
 - If you get strange Ansible errors about dependencies, try to check your pip
   version with `pip --version`. The current version is 9.0.1. If your pip is

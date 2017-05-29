@@ -19,11 +19,11 @@ All services are implemented as Docker containers, and the goal is to have their
 
 To ensure the availability of the CI/CD environment, the Jenkins and Docker Registry containers have been put under the supervision of the "sysctl" daemon ("jenkins-docker.service" and "private-docker-registry.service", respectively). This will ensure their automatic start-up in case the attx-dev server needs to be rebooted for maintenance.
 
-## How to access the Jenkins server
+## How to Access the Jenkins Server
 The Jenkins WebUI can be reached @ [http://attx-dev:49001/](http://attx-dev:49001/)
 More information about [Jenkins CI](Jenkins-CI.md)
 
-## How to access the Archiva server
+## How to Access the Archiva Server
 The Archiva WebUI can be reached at: [http://attx-dev:8081/](http://attx-dev:8081/)
 
 To access the REST API use:
@@ -32,13 +32,15 @@ To access the REST API use:
 ```config ${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.gc&a=gm-API&v=${gmAPI}&p=tar.gz":"gm-API-${gmAPI}.tar.gz
 ```
 
-## How to access the PyPi Ivy repo server
+## How to Access the PyPi Ivy Repo Server
 
 Example of curl requests:
 * ```shell
-curl -X GET -H http://attx-dev:5039/pypi/{dependencyName}/{version}/dependencyName-version.tar.gz``` - to retrieve dependency with a specific version number
+curl -X GET -H http://attx-dev:5039/pypi/{dependencyName}/{version}/dependencyName-version.tar.gz
+``` - to retrieve dependency with a specific version number
 * ```shell
-curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{ "dependencies": [ { "name" : "pytest", "version" : "3.0.5" }, { "name" : "elizabeth", "version" : "0.3.11" } ], "replace" : [ { "name": "alabaster", "oldVersion": "0.7", "newVersion": "0.7.1" } ] }' "http://attx-dev:5639/add"``` - for adding dependencies
+curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{ "dependencies": [ { "name" : "pytest", "version" : "3.0.5" }, { "name" : "elizabeth", "version" : "0.3.11" } ], "replace" : [ { "name": "alabaster", "oldVersion": "0.7", "newVersion": "0.7.1" } ] }' "http://attx-dev:5639/add"
+``` - for adding dependencies
 
 ## ATTX-SANDBOX SERVER
 

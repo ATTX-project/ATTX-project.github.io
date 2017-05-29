@@ -14,38 +14,38 @@ ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Dis
 
 ## Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
-- [Pipeline types](#pipeline-types)
-  - [Ingestion pipelines](#ingestion-pipelines)
-  - [Processing pipelines](#processing-pipelines)
-  - [Distribution pipelines](#distribution-pipelines)
+- [Pipeline Types](#pipeline-types)
+  - [Ingestion Pipelines](#ingestion-pipelines)
+  - [Processing Pipelines](#processing-pipelines)
+  - [Distribution Pipelines](#distribution-pipelines)
 - [ATTX DPUs](#attx-dpus)
   - [Extractors](#extractors)
-    - [File download](#file-download)
-    - [OAI-PMH harvester](#oai-pmh-harvester)
-    - [Select existing datasets](#select-existing-datasets)
+    - [File Download](#file-download)
+    - [OAI-PMH Harvester](#oai-pmh-harvester)
+    - [Select Existing Datasets](#select-existing-datasets)
   - [Transformers](#transformers)
     - [Describe External Data source](#describe-external-data-source)
-    - [Describe data set](#describe-data-set)
+    - [Describe Data Set](#describe-data-set)
     - [Cluster IDs](#cluster-ids)
-    - [RML transformer](#rml-transformer)
+    - [RML Transformer](#rml-transformer)
     - [Link by ID](#link-by-id)
-    - [Custom RDF to JSON mapper](#custom-rdf-to-json-mapper)
+    - [Custom RDF to JSON Mapper](#custom-rdf-to-json-mapper)
     - [JSON-LD Framing based RDF to JSON Mapper](#json-ld-framing-based-rdf-to-json-mapper)
   - [Loaders](#loaders)
-    - [Replace data set](#replace-data-set)
-    - [Update data set](#update-data-set)
+    - [Replace Data Set](#replace-data-set)
+    - [Update Data Set](#update-data-set)
     - [Publish to API](#publish-to-api)
-    - [Publish to file](#publish-to-file)
+    - [Publish to File](#publish-to-file)
 - [Semantic Broker End to End Usage Scenario](#semantic-broker-end-to-end-usage-scenario)
 
 <!-- TOC END -->
 
 
-## Pipeline types
+## Pipeline Types
 
 Every pipeline essentially represents one or more datasets.
 
-### Ingestion pipelines
+### Ingestion Pipelines
 
 
 **Simple download and replace**
@@ -74,7 +74,7 @@ OAI-PMH harvesting interface allows one to harvest new records incrementally bas
 Example workflow has two Loader DPUs, because we want to store clustered ids in to a separate dataset so that we can update the clustering configuration more easily.
 
 
-### Processing pipelines
+### Processing Pipelines
 
 **Link by ID**
 
@@ -112,7 +112,7 @@ linkByID data set
 
 ![Processing pipeline example - Reasoning](images/Pipeline-OWLReasoning.png)
 
-### Distribution pipelines
+### Distribution Pipelines
 
 Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using `PublishToAPI` DPU.
 
@@ -126,7 +126,7 @@ ATTX Semantic Broker ships with custom [UnifiedViews](https://github.com/Unified
 
 ATTX extractor DPU are used to configure ingestion of external data source to the Semantic Broker or selection of existing data source(s) for processing or dissemination.
 
-#### File download
+#### File Download
 
 This DPU simply downloads and stores file from the given URL and passes it on to further processing. It can be used update dataset that are based on for example CSV exports.
 
@@ -142,7 +142,7 @@ Configuration:
 Output:
 - files
 
-#### OAI-PMH harvester
+#### OAI-PMH Harvester
 
 This is a more complicated downloader that works with data sources that comply with [OAI-PMH 2.0 metadata harvesting protocol](http://www.openarchives.org/OAI/openarchivesprotocol.html). This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. "Openly_available_theses" for harvesting. From and until are `YYYY-MM-DD` (date) formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by times-tamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.
 
@@ -162,7 +162,7 @@ Output:
   - OAI-PMH identifiers of deleted records.
 - modified records  
 
-#### Select existing datasets
+#### Select Existing Datasets
 
 This DPU provides search interface to the existing dataset metadata and allows users to reuse their content as the data source for pipelines. This DPU must be used as a loader for both processing and distribution pipelines.
 
@@ -173,7 +173,7 @@ Configuration/Output:
 
 ATTX transformers create new data. New data can be metadata about the datasets or data that is generated through some type of processing, such as linking, reasoning or any kind of transformation.  
 
-#### Describe External Data source
+#### Describe External Data Source
 
 This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter **must** contain some type of indication of license. Same licensing information is then attached to any derived dataset from this data source. In the case two external datasets are used in the Processing pipeline with distinct licenses, the license associated with the derived dataset will be the most restrictive.
 
@@ -185,7 +185,7 @@ Configuration:
 Output:
 - Data source metadata
 
-#### Describe data set
+#### Describe Data Set
 
 Provides simple metadata for the internal dataset, which is used for example by the "Selected existing datasets" DPU.
 
@@ -233,7 +233,7 @@ Output:
 
 ```
 
-#### RML transformer
+#### RML Transformer
 
 Uses RML processor to transform CSV, XML and JSON files to RDF.
 
@@ -291,7 +291,7 @@ New data
   orgLink :org1
 ```
 
-#### Custom RDF to JSON mapper
+#### Custom RDF to JSON Mapper
 
 Uses custom configuration file to traverse and transform RDF to nested JSON documents.
 
@@ -307,7 +307,7 @@ Output:
 - Custom mapping configuration
 
 
-#### JSON-LD Framing based RDF to JSON Mapper
+#### JSON-LD Framing Based RDF to JSON Mapper
 
 Uses [JSON-LD framing](http://json-ld.org/spec/latest/json-ld-framing/) to create deterministic serialization of a graph to JSON document.
 
@@ -324,7 +324,7 @@ Output:
 
 ATTX Loaders are components handle generated data by either storing it internally or handing it over to a distribution component for public consumption. Loader DPUs only have inputs.
 
-#### Replace data set
+#### Replace Data Set
 
 DPU that replaces all the old content with new data. This DPU should be used, when the source data is from a data dump.
 
@@ -335,7 +335,7 @@ Inputs:
 - New data
 - New data files
 
-#### Update data set
+#### Update Data Set
 
 Update DPU uses input data to create a SPARQL update request, which will preserve any existing data that is not part of the update. It also handles situations where value of a certain property has changed without creating duplicate property values. For example:
 
@@ -372,7 +372,7 @@ Input:
 - dataset metadata
 - configuration
 
-#### Publish to file
+#### Publish to File
 
 This DPU copies file to a web server with given path and file name.
 

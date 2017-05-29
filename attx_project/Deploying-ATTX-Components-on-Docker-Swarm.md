@@ -3,8 +3,8 @@
 This guide exemplifies how to deploy the ATTX components on Docker Swarm, by setting up OpenStack volumes for  data persistence and using a v3 Docker Composer YML definition file.
 
 <!-- TOC START min:1 max:3 link:true update:false -->
-  - [Setting up OpenStack volumes for data persistence](#setting-up-openstack-volumes-for-data-persistence)
-  - [Deploying the ATTX components](#deploying-the-attx-components)
+  - [Setting up OpenStack Volumes for Data Persistence](#setting-up-openstack-volumes-for-data-persistence)
+  - [Deploying the ATTX Components](#deploying-the-attx-components)
 <!-- TOC END -->
 
 Given that the ATTX components are containerised, we need to ensure data persistence between container restarts. In practice, ATTX components will need access to file systems in data volumes in order to write and read data.
@@ -20,7 +20,8 @@ In short, the procedure will consist in first setting up OpenStack volumes for d
 
 **Pre-requisite:** Docker Swarm formed on Cpouta and essential components provisioned (cf. [Provisioning ATTX Components on CSC Open Stack \(cPouta\)](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)).
 
-## Setting up OpenStack volumes for data persistence
+## Setting up OpenStack Volumes for Data Persistence
+
 **1.** Create a persistent storage volume for UnifiedViews (e.g. 'uv-data') and attach it to the Swarm Master, as per instructions in https://research.csc.fi/pouta-persistent-volumes.
 
 
@@ -76,7 +77,7 @@ sudo mkdir /attx-data/fuseki
 sudo mkdir /attx-data/gmapi
 ```
 
-## Deploying the ATTX components
+## Deploying the ATTX Components
 **1.**
 With the data volumes in place (as well as the Provisioning, cf. [Provisioning ATTX Components on CSC Open Stack cPouta](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)), it's now time deploy the ATTX application stack in Docker Swarm.
 
