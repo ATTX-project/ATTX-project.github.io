@@ -42,7 +42,7 @@ With Docker CE and Docker Compose successfully installed, you can now download t
 
 ## Test the availability of the ATTX containerised stack
 1. Verify that the ATTX Docker containers are running. Open a new terminal and enter the `docker ps` command. The output should be similar to the following:
-```
+```shell
 CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS              PORTS                                            NAMES
 6faf8fe639b1        attx-dev:5000/gm-api:latest                           "/entrypoint.sh"         3 minutes ago       Up 3 minutes        0.0.0.0:4302->4302/tcp                           build_gmapi_1
 f9f2a83adf38        tenforce/unified-views-frontend:latest                "catalina.sh run"        3 minutes ago       Up 3 minutes        0.0.0.0:8080->8080/tcp                           build_frontend_1

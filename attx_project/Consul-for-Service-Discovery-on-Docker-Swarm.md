@@ -369,7 +369,7 @@ At this point, we have reached the following architectural schema when setting u
 5. It's possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through [Docker Compose files](https://docs.docker.com/compose/compose-file/), and its deployment via BASH scripts in [Ansible](https://www.ansible.com/) playbook.
 
 ## 6. References
-*. [Docker Swarm](https://docs.docker.com/engine/swarm/)
-*. [Consul](https://www.consul.io/)
-*. [Docker Proxy Flow](http://proxy.dockerflow.com/)
-*. [Docker Swarm Listener ](http://swarmlistener.dockerflow.com/)
+* [Docker Swarm](https://docs.docker.com/engine/swarm/)
+* [Consul](https://www.consul.io/)
+* [Docker Proxy Flow](http://proxy.dockerflow.com/)
+* [Docker Swarm Listener ](http://swarmlistener.dockerflow.com/)

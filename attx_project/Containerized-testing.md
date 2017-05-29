@@ -56,7 +56,7 @@ This script is the starting point for a `testContainer`. It first checks and wai
 In the future, the goal is to use Service discovery component to query for up-and-running services.
 
 Example: Waiting for services to be available:
-```shell
+```bash
 dockerize -wait tcp://mysql:3306 -timeout 240s
 dockerize -wait http://fuseki:3030 -timeout 60s
 dockerize -wait http://gmapi:4302/health -timeout 60s
@@ -323,7 +323,7 @@ pipeline {
 }
 ```
 
-Jenkins sets testEnv=CI in order to run the tests in a container. Report publication is configured as a ```post``` block of the build stage, so that is always run even if the build/test step fails.
+Jenkins sets `testEnv=CI` in order to run the tests in a container. Report publication is configured as a `post` block of the build stage, so that is always run even if the build/test step fails.
 
 ## Running tests against custom images
 
@@ -332,7 +332,7 @@ If you want to run tests against other that 'latest' tag/versions of the images,
 * Push your custom images to the private Docker repo with some tags (e.g. `attx-dev:5000/gm-api:testtag`).
 * Modify `dcompose` configuration int he `build.gradle` of the project you are working with by changing the tag of the selected images. For example:
 
-```{groovy}
+```groovy
 dcompose {
 ...
   gmapi {

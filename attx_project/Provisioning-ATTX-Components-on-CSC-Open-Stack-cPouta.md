@@ -27,15 +27,15 @@ On linux commands to add certificates could be added by runing:
 
 In order for your instance with the public IP address (e.g. `attx-instance-1`) to be set up as Ansible's control node, you'll need to install PIP and Ansible's prerequisites:
 ```shell
-$ sudo apt-get update
-$ sudo apt-get upgrade
-$ sudo apt-get install python-dev
-$ sudo apt-get install python-pip
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python-dev
+sudo apt-get install python-pip
 ```
 
 Install Ansible:
 ```shell
-$ sudo apt-get install ansible
+sudo apt-get install ansible
 ```
 
 ## 2. Upload and edit Ansible's configuration files
@@ -59,7 +59,7 @@ The recommended path for the Ansible files is `/home/cloud-user/provision-swarm`
 
 From Ansible's control node, run as cloud-user:
 ```shell
-$ ansible-playbook provisioning.yml
+ansible-playbook provisioning.yml
 ```
 
 You can display extra verbose information for troubleshooting with the `-vvvv` option, e.g. "`ansible-playbook -i hosts provisioning.yml -vvvv`"
@@ -78,5 +78,5 @@ You can display extra verbose information for troubleshooting with the `-vvvv` o
   IP addresses we use here as example. To solve this, remove the old entry in your SSH
   `known_hosts` file with:
 ```shell
-  $ ssh-keygen -f "~/.ssh/known_hosts" -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS>
+  ssh-keygen -f "~/.ssh/known_hosts" -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS> -R <INSTANCE_IP_ADDRESS>
 ```

@@ -84,12 +84,12 @@ Download the latest ATTX Docker Swarm YML stack (e.g. https://github.com/ATTX-pr
 
 To deploy the ATTX application stack in Docker Swarm from `/home/cloud-user/swarm-mode-cpouta`, run:
 ```shell
-$ docker stack deploy --compose-file attx-swarm.yml attx
+docker stack deploy --compose-file attx-swarm.yml attx
 ```
 
 Verify that all services are starting up:
 ```shell
-$ docker service ls
+docker service ls
 ```
 
 The output should be similar as follows (mind that the `uv-dpus` and `attx-shared` should run once and then exit):
