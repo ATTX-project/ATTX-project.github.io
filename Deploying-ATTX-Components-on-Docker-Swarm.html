@@ -136,7 +136,7 @@
                 <a href="Use-case-Jyvaskyla.html">
             
                     
-                    UC2 - Parallel publication dashboard
+                    UC2 - Parallel Publication Dashboard
             
                 </a>
             
@@ -864,8 +864,8 @@
 <p>This guide exemplifies how to deploy the ATTX components on Docker Swarm, by setting up OpenStack volumes for  data persistence and using a v3 Docker Composer YML definition file.</p>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
-<li><a href="#setting-up-openstack-volumes-for-data-persistence">Setting up OpenStack volumes for data persistence</a></li>
-<li><a href="#deploying-the-attx-components">Deploying the ATTX components</a><!-- TOC END -->
+<li><a href="#setting-up-openstack-volumes-for-data-persistence">Setting up OpenStack Volumes for Data Persistence</a></li>
+<li><a href="#deploying-the-attx-components">Deploying the ATTX Components</a><!-- TOC END -->
 </li>
 </ul>
 <p>Given that the ATTX components are containerised, we need to ensure data persistence between container restarts. In practice, ATTX components will need access to file systems in data volumes in order to write and read data.</p>
@@ -879,7 +879,7 @@
 </ul>
 <p>In short, the procedure will consist in first setting up OpenStack volumes for data persistency, and secondly in deploying the ATTX components defined in v3 Docker Composer YML with Docker Swarm commands.</p>
 <p><strong>Pre-requisite:</strong> Docker Swarm formed on Cpouta and essential components provisioned (cf. <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack (cPouta)</a>).</p>
-<h2 id="setting-up-openstack-volumes-for-data-persistence">Setting up OpenStack volumes for data persistence</h2>
+<h2 id="setting-up-openstack-volumes-for-data-persistence">Setting up OpenStack Volumes for Data Persistence</h2>
 <p><strong>1.</strong> Create a persistent storage volume for UnifiedViews (e.g. &apos;uv-data&apos;) and attach it to the Swarm Master, as per instructions in <a href="https://research.csc.fi/pouta-persistent-volumes" target="_blank">https://research.csc.fi/pouta-persistent-volumes</a>.</p>
 <p><strong>2.</strong> Create a persistent storage volume for ATTX components (e.g. &apos;attx-data&apos;) and attach it to the first Swarm worker, as per instructions in <a href="https://research.csc.fi/pouta-persistent-volumes" target="_blank">https://research.csc.fi/pouta-persistent-volumes</a>.</p>
 <p><strong>3.</strong> Next, you should partition the new volumes, label them, create new file systems on them, and mount them. If you wish, you can follow the above-mentioned CSC instructions as they are, but for consistency with  existing ATTX practices we do recommend you to tag the partitions as <code>uv-data</code> and <code>attx-data</code> and mount them in <code>/uv-data</code> and <code>/attx-data</code> respectively:</p>
@@ -914,15 +914,15 @@ sudo mkdir /attx-data/elasticsearch5
 sudo mkdir /attx-data/fuseki
 sudo mkdir /attx-data/gmapi
 </code></pre>
-<h2 id="deploying-the-attx-components">Deploying the ATTX components</h2>
+<h2 id="deploying-the-attx-components">Deploying the ATTX Components</h2>
 <p><strong>1.</strong>
 With the data volumes in place (as well as the Provisioning, cf. <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack cPouta</a>), it&apos;s now time deploy the ATTX application stack in Docker Swarm.</p>
 <p>Download the latest ATTX Docker Swarm YML stack (e.g. <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml" target="_blank">https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml</a>) to your Swarm Master node (e.g. attx-swarm-1), to <code>/home/cloud-user/swarm-mode-cpouta</code>, for example.</p>
 <p>To deploy the ATTX application stack in Docker Swarm from <code>/home/cloud-user/swarm-mode-cpouta</code>, run:</p>
-<pre><code class="lang-shell">$ docker stack deploy --compose-file attx-swarm.yml attx
+<pre><code class="lang-shell">docker stack deploy --compose-file attx-swarm.yml attx
 </code></pre>
 <p>Verify that all services are starting up:</p>
-<pre><code class="lang-shell">$ docker service ls
+<pre><code class="lang-shell">docker service ls
 </code></pre>
 <p>The output should be similar as follows (mind that the <code>uv-dpus</code> and <code>attx-shared</code> should run once and then exit):</p>
 <pre><code class="lang-shell">cloud-user@attx-swarm-1:~/swarm-mode-cpouta$ docker service ls
@@ -984,7 +984,7 @@ Once the ATTX services are running, you can also check whether UnifiedViews is o
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"next":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"1.4.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"previous":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","mtime":"2017-05-26T11:36:11.084Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T11:36:34.134Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"next":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"1.4.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"previous":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","mtime":"2017-05-29T14:00:13.496Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-30T05:16:17.803Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -136,7 +136,7 @@
                 <a href="Use-case-Jyvaskyla.html">
             
                     
-                    UC2 - Parallel publication dashboard
+                    UC2 - Parallel Publication Dashboard
             
                 </a>
             
@@ -866,8 +866,8 @@
 <ul>
 <li><a href="#1-deployment-on-docker-swarm">1. Deployment on Docker Swarm</a></li>
 <li><a href="#2-possibilities">2. Possibilities</a></li>
-<li><a href="#3-limitations-and-a-possible-solution">3. Limitations and a possible solution</a></li>
-<li><a href="#4-automatic-service-registration">4. Automatic service registration</a></li>
+<li><a href="#3-limitations-and-a-possible-solution">3. Limitations and a Possible Solution</a></li>
+<li><a href="#4-automatic-service-registration">4. Automatic Service Registration</a></li>
 <li><a href="#5-conclusions">5. Conclusions</a></li>
 <li><a href="#6-references">6. References</a></li>
 </ul>
@@ -956,7 +956,7 @@ docker-compose <span class="hljs-_">-f</span> docker-compose-proxy.yml up <span 
 <p>With Consul is thus possible to run a Service Discovery service in Docker Swarm (albeit in &quot;host&quot; mode), that enables us to register the ATTX services via a HTTP API, and query the registered information as well.</p>
 <p>Consul also replicates the registered information across its instances across the Swarm, thus enabling true elasticity in case new containers need to be replicated to new nodes</p>
 <p>By registering and replicating service information, a Service Discovery solution such as Consul also brings in the possibility of scaling up stateful services that don&apos;t scale up so well with Docker Swarm (e.g. stateful services without a persistent storage volume, such as Consul).</p>
-<h2 id="3-limitations-and-a-possible-solution">3. Limitations and a possible solution</h2>
+<h2 id="3-limitations-and-a-possible-solution">3. Limitations and a Possible Solution</h2>
 <p>Given that Consul has to be run in host mode (it doesn&apos;t support running natively in Swarm mode yet), scaling up or adding more Consul Server instances in new nodes in our Swarm will pose challenges in terms of fault tolerance and elasticity.</p>
 <p>If the Consul Server node goes down, then so go the Consul cluster and hence we lose Service Discovery.</p>
 <p>Furthermore, if we need to scale up the Docker Swarm and deploy a new Consul Server instance in a new node, what will be the status of the Key-Value Store of that new Consul instance?</p>
@@ -1041,12 +1041,12 @@ ModifyIndex: <span class="hljs-number">14377</span>
 <p>Let&apos;s scale up the instances of Docker Flow Proxy and check whether the status was replicated.</p>
 <p>Increase the number of instances from three to six:
 <code>docker service scale proxy=6</code></p>
-<p>Find in which node is running instance number 6 of the Docker Flow Proxy (&quot;proxy.6&quot;) and the respective ID:</p>
+<p>Find in which node is running instance number 6 of the Docker Flow Proxy (<code>proxy.6</code>) and the respective ID:</p>
 <pre><code class="lang-shell">NODE=$(docker service ps proxy | grep &quot;proxy.6&quot; | awk &apos;{print $4}&apos;)
 eval $(docker-machine env $NODE)
 ID=$(docker ps | grep &quot;proxy.6&quot; | awk &apos;{print $1}&apos;)
 </code></pre>
-<p>Query proxy.6 to check whether the service registration for the &quot;my_web&quot; service has been replicated.
+<p>Query <code>proxy.6</code> to check whether the service registration for the &quot;my_web&quot; service has been replicated.
 <code>docker exec -it $ID cat /cfg/haproxy.cfg</code>.</p>
 <p>The service registration information should be as follows (like originally registered right after service creation):</p>
 <pre><code class="lang-config">frontend services
@@ -1061,7 +1061,7 @@ backend my_web-be49001
     mode http
     server my_web my_web:49001
 </code></pre>
-<h2 id="4-automatic-service-registration">4. Automatic service registration</h2>
+<h2 id="4-automatic-service-registration">4. Automatic Service Registration</h2>
 <p>We used used manual service registration in the examples above. But what if we would need that our services deployed in Docker Swarm would register themselves and their own exposed application endpoints every time they would be started up in Swarm?</p>
 <p>One possible solution is to deploy a Listener that can understand Service Registration parameters as part of the Swarm service (which we could specify as service startup options in our <code>docker-compose.yml</code> stack) and would pass them on to the distributed Flow Proxy, which would then distribute them to Consul&apos;s KV Store.</p>
 <p>An interesting implementation of such a solution is <a href="http://swarmlistener.dockerflow.com/" target="_blank">Docker Flow Swarm Listener</a>, which integrates well with Docker Flow Proxy, being able to forward it the same <a href="http://proxy.dockerflow.com/usage/" target="_blank">HTTP configuration parameters</a>.</p>
@@ -1090,16 +1090,17 @@ blankdots/<span class="hljs-built_in">test</span>_restapi:plain
 <p><code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/pygradle?recurse&quot;</code></p>
 <pre><code class="lang-json">[{<span class="hljs-string">&quot;LockIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Key&quot;</span>:<span class="hljs-string">&quot;docker-flow/pygradle/color&quot;</span>,<span class="hljs-string">&quot;Flags&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Value&quot;</span>:<span class="hljs-literal">null</span>,<span class="hljs-string">&quot;CreateIndex&quot;</span>:<span class="hljs-number">1826</span>,<span class="hljs-string">&quot;ModifyIndex&quot;</span>:<span class="hljs-number">1852</span>},{<span class="hljs-string">&quot;LockIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Key&quot;</span>:<span class="hljs-string">&quot;docker-flow/pygradle/consultemplatebepath&quot;</span>,<span class="hljs-string">&quot;Flags&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Value&quot;</span>:<span class="hljs-literal">null</span>,<span class="hljs-string">&quot;CreateIndex&quot;</span>:<span class="hljs-number">1821</span>,<span class="hljs-string">&quot;ModifyIndex&quot;</span>:<span class="hljs-number">1846</span>},{<span class="hljs-string">&quot;LockIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Key&quot;</span>:<span class="hljs-string">&quot;docker-flow/pygradle/consultemplatefepath&quot;</span>,<span class="hljs-string">&quot;Flags&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Value&quot;</span>:<span class="hljs-literal">null</span>,<span class="hljs-string">&quot;CreateIndex&quot;</span>:<span class="hljs-number">1820</span>,<span class="hljs-string">&quot;ModifyIndex&quot;</span>:<span class="hljs-number">1850</span>},{<span class="hljs-string">&quot;LockIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Key&quot;</span>:<span class="hljs-string">&quot;docker-flow/pygradle/domain&quot;</span>,<span class="hljs-string">&quot;Flags&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Value&quot;</span>:<span class="hljs-literal">null</span>,<span class="hljs-string">&quot;CreateIndex&quot;</span>:<span class="hljs-number">1823</span>,<span class="hljs-string">&quot;ModifyIndex&quot;</span>:<span class="hljs-number">1847</span>},{<span class="hljs-string">&quot;LockIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Key&quot;</span>:<span class="hljs-string">&quot;docker-flow/pygradle/hostname&quot;</span>,<span class="hljs-string">&quot;Flags&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Value&quot;</span>:<span class="hljs-literal">null</span>,<span class="hljs-string">&quot;CreateIndex&quot;</span>:<span class="hljs-number">1824</span>,<span class="hljs-string">&quot;ModifyIndex&quot;</span>:<span class="hljs-number">1848</span>},{<span class="hljs-string">&quot;LockIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Key&quot;</span>:<span class="hljs-string">&quot;docker-flow/pygradle/path&quot;</span>,<span class="hljs-string">&quot;Flags&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Value&quot;</span>:<span class="hljs-string">&quot;L3AvaGVhbHRoLC9wLzAuMS9pbmRleA==&quot;</span>,<span class="hljs-string">&quot;CreateIndex&quot;</span>:<span class="hljs-number">1822</span>,<span class="hljs-string">&quot;ModifyIndex&quot;</span>:<span class="hljs-number">1853</span>},{<span class="hljs-string">&quot;LockIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Key&quot;</span>:<span class="hljs-string">&quot;docker-flow/pygradle/pathtype&quot;</span>,<span class="hljs-string">&quot;Flags&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Value&quot;</span>:<span class="hljs-string">&quot;cGF0aF9iZWc=&quot;</span>,<span class="hljs-string">&quot;CreateIndex&quot;</span>:<span class="hljs-number">1825</span>,<span class="hljs-string">&quot;ModifyIndex&quot;</span>:<span class="hljs-number">1849</span>},{<span class="hljs-string">&quot;LockIndex&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Key&quot;</span>:<span class="hljs-string">&quot;docker-flow/pygradle/port&quot;</span>,<span class="hljs-string">&quot;Flags&quot;</span>:<span class="hljs-number">0</span>,<span class="hljs-string">&quot;Value&quot;</span>:<span class="hljs-string">&quot;NDMwMA==&quot;</span>,<span class="hljs-string">&quot;CreateIndex&quot;</span>:<span class="hljs-number">1819</span>,<span class="hljs-string">&quot;ModifyIndex&quot;</span>:<span class="hljs-number">1854</span>}]
 </code></pre>
-<p>And we check the proxy functionality for our test container (&quot;pygradle&quot;) published service paths (&quot;/p/health&quot; and &quot;/p/0.1/index&quot;, simple HTTP GET and HTTP POST endpoints, respectively):</p>
-<pre><code class="lang-bash">curl -i $(docker-machine ip swarm-1)/p/health
+<p>And we check the proxy functionality for our test container (<code>pygradle</code>) published service paths (<code>/p/health</code> and <code>/p/0.1/index</code>, simple HTTP GET and HTTP POST endpoints, respectively):</p>
+<pre><code class="lang-shell">curl -i $(docker-machine ip swarm-1)/p/health
+
 HTTP/1.1 200 OK
 Server: gunicorn/19.6.0
 Date: Mon, 22 May 2017 14:19:53 GMT
 content-length: 0
 content-type: application/json; charset=UTF-8
+</code></pre>
+<pre><code class="lang-shell">curl -i $(docker-machine ip swarm-1)/p/0.1/index
 
-
-curl -i $(docker-machine ip swarm-1)/p/0.1/index
 HTTP/1.1 405 Method Not Allowed
 Server: gunicorn/19.6.0
 Date: Mon, 22 May 2017 14:20:06 GMT
@@ -1149,17 +1150,24 @@ allow: POST, OPTIONS
 +------------------+             +------------------+            +----------------+
 </code></pre><h2 id="5-conclusions">5. Conclusions</h2>
 <ol>
-<li>Consul is a distributed Service Discovery solution with a well documented API (<a href="https://www.consul.io/api/index.html" target="_blank">https://www.consul.io/api/index.html</a>) and <a href="https://www.consul.io/api/kv.html" target="_blank">Key-Value Store</a>, whose features compare well to other solutions (cf. <a href="https://attx-project.github.io/Service-Discovery-Solutions.html" target="_blank">https://attx-project.github.io/Service-Discovery-Solutions.html</a>).</li>
-<li>Consul doesn&apos;t support running in &quot;swarm&quot; mode yet, but it can be run in &quot;host&quot; mode across a <a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a>. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.</li>
-<li>Consul&apos;s Docker Swarm limitations can be addressed by using <a href="http://proxy.dockerflow.com/" target="_blank">Docker Flow Proxy</a> capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Project. Nevertheless, service registration calls to Flow Proxy must be triggered either manually by the user or by programmatically by the container (at startup as part of its entrypoint script).</li>
-<li>Automatic service is registration/de-registration can be implement with <a href="http://swarmlistener.dockerflow.com/" target="_blank">Docker Swarm Listener</a>, which can be run as a Docker Swarm service. This evidently requires that the service registration KV parameters are known, in order to be parametrised at startup time, whether by command line or in a <code>docker-compose.yml</code> file.</li>
-<li>It&apos;s possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through <a href="https://docs.docker.com/compose/compose-file/" target="_blank">Docker Compose files</a>, and its deployment via BASH scripts in <a href="https://www.ansible.com/" target="_blank">Ansible</a> playbook.</li>
+<li><p>Consul is a distributed Service Discovery solution with a well documented API (<a href="https://www.consul.io/api/index.html" target="_blank">https://www.consul.io/api/index.html</a>) and <a href="https://www.consul.io/api/kv.html" target="_blank">Key-Value Store</a>, whose features compare well to other solutions (cf. <a href="https://attx-project.github.io/Service-Discovery-Solutions.html" target="_blank">https://attx-project.github.io/Service-Discovery-Solutions.html</a>).</p>
+</li>
+<li><p>Consul doesn&apos;t support running in &quot;swarm&quot; mode yet, but it can be run in &quot;host&quot; mode across a <a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a>. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.</p>
+</li>
+<li><p>Consul&apos;s Docker Swarm limitations can be addressed by using <a href="http://proxy.dockerflow.com/" target="_blank">Docker Flow Proxy</a> capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Semantic Broker. Nevertheless, service registration calls to Flow Proxy must be triggered either manually by the user or by programmatically by the container (at startup as part of its entrypoint script).</p>
+</li>
+<li><p>Automatic service is registration/de-registration can be implement with <a href="http://swarmlistener.dockerflow.com/" target="_blank">Docker Swarm Listener</a>, which can be run as a Docker Swarm service. This evidently requires that the service registration KV parameters are known, in order to be parametrised at startup time, whether by command line or in a <code>docker-compose.yml</code> file.</p>
+</li>
+<li><p>It&apos;s possible to automate the provisioning of Consul and Docker Flow Proxy in ATTX Docker Swarm through <a href="https://docs.docker.com/compose/compose-file/" target="_blank">Docker Compose files</a>, and its deployment via BASH scripts in <a href="https://www.ansible.com/" target="_blank">Ansible</a> playbook.</p>
+</li>
 </ol>
 <h2 id="6-references">6. References</h2>
-<p><em>. <a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a>
-</em>. <a href="https://www.consul.io/" target="_blank">Consul</a>
-<em>. <a href="http://proxy.dockerflow.com/" target="_blank">Docker Proxy Flow</a>
-</em>. <a href="http://swarmlistener.dockerflow.com/" target="_blank">Docker Swarm Listener </a></p>
+<ul>
+<li><a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a></li>
+<li><a href="https://www.consul.io/" target="_blank">Consul</a></li>
+<li><a href="http://proxy.dockerflow.com/" target="_blank">Docker Proxy Flow</a></li>
+<li><a href="http://swarmlistener.dockerflow.com/" target="_blank">Docker Swarm Listener </a></li>
+</ul>
 
                                 
                                 </section>
@@ -1203,7 +1211,7 @@ allow: POST, OPTIONS
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"next":{"title":"Data Administrator's User guide","level":"2.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"Service Discovery Implementation","level":"1.8","depth":1,"path":"ServiceDiscovery-Implementation.md","ref":"ServiceDiscovery-Implementation.md","articles":[{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-05-26T11:36:11.083Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T11:36:34.134Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"next":{"title":"Data Administrator's User guide","level":"2.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"Service Discovery Implementation","level":"1.8","depth":1,"path":"ServiceDiscovery-Implementation.md","ref":"ServiceDiscovery-Implementation.md","articles":[{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-05-29T14:00:13.495Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-30T05:16:17.803Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
