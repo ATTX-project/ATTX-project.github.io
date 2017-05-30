@@ -246,6 +246,8 @@ In order to add new values to the Consul K/V store, we will have to pass some en
 
 ## References
 
+* https://stackoverflow.com/questions/42054051/service-discovery-in-docker-without-using-consul
+* https://stackoverflow.com/questions/39132292/how-to-deploy-consul-using-docker-1-12-swarm-mode
 * Installing Hashicorp’s Consul and using Python 3 to communicate with it http://www.giantflyingsaucer.com/blog/?p=5579
 * http://proxy.dockerflow.com/
 * https://labs.magnet.me/nerds/2015/10/26/consultant-configuration-management-with-consul.html - for using the K/V Store

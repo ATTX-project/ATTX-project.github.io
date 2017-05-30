@@ -134,7 +134,7 @@
                 <a href="Use-case-Jyvaskyla.html">
             
                     
-                    UC2 - Parallel publication dashboard
+                    UC2 - Parallel Publication Dashboard
             
                 </a>
             
@@ -892,16 +892,16 @@
 <li><p>Ansible:</p>
 <ul>
 <li><p>install PIP and Ansible&apos;s prerequisites:</p>
-<pre><code class="lang-shell">  $ sudo easy_install pip
-  $ sudo pip install paramiko PyYAML Jinja2 httplib2 six pycrypto
+<pre><code class="lang-shell">  sudo easy_install pip
+  sudo pip install paramiko PyYAML Jinja2 httplib2 six pycrypto
 </code></pre>
 </li>
 <li><p>Install Ansible:</p>
-<pre><code class="lang-shell">$ sudo pip install ansible
+<pre><code class="lang-shell">sudo pip install ansible
 </code></pre>
 </li>
 <li><p>source the setup script to make Ansible available on this terminal session:</p>
-<pre><code class="lang-shell">$ source path/to/your-ansible-clone/hacking/env-setup
+<pre><code class="lang-shell">source path/to/your-ansible-clone/hacking/env-setup
 </code></pre>
 </li>
 <li><p>the last step needs to be repeated every time new terminal session is open
@@ -915,12 +915,12 @@ it once).</p>
 <p>Download the Vagrant, Ansible, and SSH config files from
 <a href="https://github.com/ATTX-project/platform-deployment/tree/feature-swarm-mode/swarm-mode" target="_blank">https://github.com/ATTX-project/platform-deployment/tree/feature-swarm-mode/swarm-mode</a>.</p>
 <p>Run the following commands:</p>
-<pre><code class="lang-shell">$ vagrant up
-$ chmod 600 private-key
-$ ansible-playbook provisioning.yml
+<pre><code class="lang-shell">vagrant up
+chmod 600 private-key
+ansible-playbook provisioning.yml
 </code></pre>
 <p>Now you should be able to ssh on <code>node1</code> using:</p>
-<pre><code class="lang-shell">$ ssh vagrant@10.10.10.10 -i private-key
+<pre><code class="lang-shell">ssh vagrant@10.10.10.10 -i private-key
 </code></pre>
 <p>These are the default IP addresses for the nodes:</p>
 <pre><code class="lang-shell">    10.10.10.10 node1
@@ -934,7 +934,7 @@ $ ansible-playbook provisioning.yml
 <p>The cluster is initialised with docker <code>swarm init</code>,  executed on a first, seed node.</p>
 <p>DO NOT execute docker swarm init on multiple nodes (possibility of multiple disjoint clusters).</p>
 <h3 id="create-the-cluster-from-node1">Create the cluster from node1:</h3>
-<p><code>$ docker swarm init</code></p>
+<p><code>docker swarm init</code></p>
 <p>Checking that Swarm mode is enabled</p>
 <p>Run the docker info command:
 <code>docker info</code></p>
@@ -1022,7 +1022,7 @@ ehb0...4fvx    node2     Ready   Active
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Building Swarm Mode on a PC/Mac","level":"1.4.1.1","depth":3,"next":{"title":"Running the ATTX Stack on a PC/Mac","level":"1.4.1.2","depth":3,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]},"previous":{"title":"Run on Single Machine PC/Mac/VM","level":"1.4.1","depth":2,"ref":"","articles":[{"title":"Building Swarm Mode on a PC/Mac","level":"1.4.1.1","depth":3,"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","ref":"Building-Docker-application-stacks-in-Swarm-Mode.md","articles":[]},{"title":"Running the ATTX Stack on a PC/Mac","level":"1.4.1.2","depth":3,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","mtime":"2017-05-22T14:00:11.661Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T11:36:34.134Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Building Swarm Mode on a PC/Mac","level":"1.4.1.1","depth":3,"next":{"title":"Running the ATTX Stack on a PC/Mac","level":"1.4.1.2","depth":3,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]},"previous":{"title":"Run on Single Machine PC/Mac/VM","level":"1.4.1","depth":2,"ref":"","articles":[{"title":"Building Swarm Mode on a PC/Mac","level":"1.4.1.1","depth":3,"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","ref":"Building-Docker-application-stacks-in-Swarm-Mode.md","articles":[]},{"title":"Running the ATTX Stack on a PC/Mac","level":"1.4.1.2","depth":3,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","mtime":"2017-05-29T14:00:13.495Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-30T05:16:17.803Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

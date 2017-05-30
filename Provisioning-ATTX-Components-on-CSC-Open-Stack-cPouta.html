@@ -134,7 +134,7 @@
                 <a href="Use-case-Jyvaskyla.html">
             
                     
-                    UC2 - Parallel publication dashboard
+                    UC2 - Parallel Publication Dashboard
             
                 </a>
             
@@ -862,13 +862,13 @@
 <p>This guide exemplifies how to provision 5 VMs in cPouta (CSC Open Stack) with Ansible, for forming a Docker Swarm and running the ATTX stack.</p>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
-<li><a href="#1-preparing-ansibles-control-node">1. Preparing Ansible&apos;s control node</a></li>
-<li><a href="#2-upload-and-edit-ansibles-configuration-files">2. Upload and edit Ansible&apos;s configuration files</a></li>
-<li><a href="#3-provisioning-the-instances">3. Provisioning the instances</a></li>
-<li><a href="#4-possible-problems-and-solutions">4. Possible problems and solutions</a></li>
+<li><a href="#1-preparing-ansibles-control-node">1. Preparing Ansible&apos;s Control Node</a></li>
+<li><a href="#2-upload-and-edit-ansibles-configuration-files">2. Upload and Edit Ansible&apos;s Configuration files</a></li>
+<li><a href="#3-provisioning-the-instances">3. Provisioning the Instances</a></li>
+<li><a href="#4-possible-problems-and-solutions">4. Possible Problems and Solutions</a></li>
 </ul>
 <!-- TOC END -->
-<p><strong>Used repository: <a href="https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta" target="_blank">https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta</a></strong></p>
+<p><strong>Repository: <a href="https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta" target="_blank">https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta</a></strong></p>
 <p>Requirements :</p>
 <ol>
 <li><p>Minimum of 3 instances created on cPouta (Ubuntu-16.04 recommended) (cf. <a href="https://research.csc.fi/pouta-flavours" target="_blank">https://research.csc.fi/pouta-flavours</a>).</p>
@@ -883,17 +883,17 @@ On linux commands to add certificates could be added by runing:</p>
 </ul>
 </li>
 </ol>
-<h2 id="1-preparing-ansibles-control-node">1. Preparing Ansible&apos;s control node</h2>
+<h2 id="1-preparing-ansibles-control-node">1. Preparing Ansible&apos;s Control Node</h2>
 <p>In order for your instance with the public IP address (e.g. <code>attx-instance-1</code>) to be set up as Ansible&apos;s control node, you&apos;ll need to install PIP and Ansible&apos;s prerequisites:</p>
-<pre><code class="lang-shell">$ sudo apt-get update
-$ sudo apt-get upgrade
-$ sudo apt-get install python-dev
-$ sudo apt-get install python-pip
+<pre><code class="lang-shell">sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python-dev
+sudo apt-get install python-pip
 </code></pre>
 <p>Install Ansible:</p>
-<pre><code class="lang-shell">$ sudo apt-get install ansible
+<pre><code class="lang-shell">sudo apt-get install ansible
 </code></pre>
-<h2 id="2-upload-and-edit-ansibles-configuration-files">2. Upload and edit Ansible&apos;s configuration files</h2>
+<h2 id="2-upload-and-edit-ansibles-configuration-files">2. Upload and Edit Ansible&apos;s Configuration Files</h2>
 <p>Via SFTP or SCP, transfer the contents of <code>&lt;github_repo_link&gt;</code> to your instance in cPouta with the floating public IP address (e.g. <code>attx-stack-1</code>), namely to the instance that you have set up as the Ansible control node for this exercise.</p>
 <p>The list of the files is:</p>
 <ul>
@@ -907,12 +907,12 @@ $ sudo apt-get install python-pip
 </li>
 </ul>
 <p>The recommended path for the Ansible files is <code>/home/cloud-user/provision-swarm</code> (<strong>must be created</strong>).</p>
-<h2 id="3-provisioning-the-instances">3. Provisioning the instances</h2>
+<h2 id="3-provisioning-the-instances">3. Provisioning the Instances</h2>
 <p>From Ansible&apos;s control node, run as cloud-user:</p>
-<pre><code class="lang-shell">$ ansible-playbook provisioning.yml
+<pre><code class="lang-shell">ansible-playbook provisioning.yml
 </code></pre>
 <p>You can display extra verbose information for troubleshooting with the <code>-vvvv</code> option, e.g. &quot;<code>ansible-playbook -i hosts provisioning.yml -vvvv</code>&quot;</p>
-<h2 id="4-possible-problems-and-solutions">4. Possible problems and solutions</h2>
+<h2 id="4-possible-problems-and-solutions">4. Possible Problems and Solutions</h2>
 <ul>
 <li><p>If you get strange Ansible errors about dependencies, try to check your pip
 version with <code>pip --version</code>. The current version is 9.0.1. If your pip is
@@ -925,7 +925,7 @@ your terminal session and install the Ansible prerequisites again.</p>
 it means that you already had in the past some other host using one of the
 IP addresses we use here as example. To solve this, remove the old entry in your SSH
 <code>known_hosts</code> file with:</p>
-<pre><code class="lang-shell">$ ssh-keygen -f &quot;~/.ssh/known_hosts&quot; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt;
+<pre><code class="lang-shell">ssh-keygen -f &quot;~/.ssh/known_hosts&quot; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt;
 </code></pre>
 </li>
 </ul>
@@ -968,7 +968,7 @@ IP addresses we use here as example. To solve this, remove the old entry in your
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"next":{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},"previous":{"title":"Run on Distributed/Cloud","level":"1.4.2","depth":2,"ref":"","articles":[{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"1.4.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","mtime":"2017-05-26T11:36:11.086Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T11:36:34.134Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"next":{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},"previous":{"title":"Run on Distributed/Cloud","level":"1.4.2","depth":2,"ref":"","articles":[{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"1.4.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","mtime":"2017-05-29T14:00:13.497Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-30T05:16:17.803Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

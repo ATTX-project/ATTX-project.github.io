@@ -4,7 +4,7 @@ Custom Unified Views plugins developed:
 * `uv-t-attx-template` plugin - basic template for creating a plugin
 * `uv-t-attx-metadata` plugin - collecting metadata specific to the input and output graphs
 
-## Creating new plugins
+## Creating New Plugins
 
 https://grips.semantic-web.at/display/UDDOC/Tutorial%3A+Creating+new+DPU
 

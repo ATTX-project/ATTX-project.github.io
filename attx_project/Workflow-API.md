@@ -189,7 +189,7 @@ As specified above the workflow API has two endpoints:
   ```
 * `activity` and `workflow` POST APIs will return `405` as this operation current is not allowed.
 
-## How the Information is extracted
+## How the Information is Extracted
 
 Extracting information associated to the provenance and workflow information can be classified in three types:
 * Database information related to pipelines and pipeline execution;

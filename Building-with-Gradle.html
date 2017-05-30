@@ -136,7 +136,7 @@
                 <a href="Use-case-Jyvaskyla.html">
             
                     
-                    UC2 - Parallel publication dashboard
+                    UC2 - Parallel Publication Dashboard
             
                 </a>
             
@@ -1011,7 +1011,8 @@ Requires the pivy repository locally check build.gradle</p>
 <h4 id="python-project-setup">Python project setup</h4>
 <p>For a full example and detailed description visit: <a href="https://github.com/linkedin/pygradle/tree/master/examples/example-project" target="_blank">https://github.com/linkedin/pygradle/tree/master/examples/example-project</a> .</p>
 <p>Standard python project tree -  <em>Note the lack of a setup.py, more on this in a moment</em>:</p>
-<pre><code class="lang-.">&#x251C;&#x2500;&#x2500; README.md
+<pre><code class="lang-config">.
+&#x251C;&#x2500;&#x2500; README.md
 &#x251C;&#x2500;&#x2500; setup.cfg
 &#x251C;&#x2500;&#x2500; src
 &#x2502;   &#x2514;&#x2500;&#x2500; project
@@ -1064,10 +1065,11 @@ repositories {
 </code></pre>
 <p>Create the <code>setup.py</code> using <code>gradle generateSetupPy</code></p>
 <p>The <code>setup.py</code> in this example was created using the above task, by default the &quot;setup&quot; section at the bottom is commented out, <strong>so please look it over before continuing. One would want to un-comment the whole section at the bottom of the <code>setup.py</code>.</strong> One would also like to add a <code>setup.cfg</code> e.g.:</p>
-<pre><code>[flake8]
+<pre><code class="lang-config">[flake8]
 ignore = E121,E123,E226,W292
 max-line-length = 160
-</code></pre><h4 id="excluding-depenencies">Excluding depenencies</h4>
+</code></pre>
+<h4 id="excluding-depenencies">Excluding depenencies</h4>
 <p>If there are issues with depenencies in your project e.g. : <a href="https://github.com/linkedin/pygradle/issues/96" target="_blank">https://github.com/linkedin/pygradle/issues/96</a> one could exclude the dependency as follows:</p>
 <pre><code class="lang-groovy">dependencies {
     python (<span class="hljs-string">&apos;pypi:connexion:1.0.129&apos;</span>) {
@@ -1183,7 +1185,7 @@ py.test tests --html=build/<span class="hljs-built_in">test</span>-report/index.
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Building with (Py)Gradle","level":"4.1.2","depth":2,"next":{"title":"Messaging Brokers Solutions Overview","level":"4.1.3","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},"previous":{"title":"CSC cPouta Cloud Services Report","level":"4.1.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Building-with-Gradle.md","mtime":"2017-05-22T14:00:11.661Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T11:36:34.134Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Building with (Py)Gradle","level":"4.1.2","depth":2,"next":{"title":"Messaging Brokers Solutions Overview","level":"4.1.3","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},"previous":{"title":"CSC cPouta Cloud Services Report","level":"4.1.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Building-with-Gradle.md","mtime":"2017-05-29T14:00:13.495Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-30T05:16:17.803Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

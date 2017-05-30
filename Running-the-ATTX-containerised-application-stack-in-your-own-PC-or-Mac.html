@@ -134,7 +134,7 @@
                 <a href="Use-case-Jyvaskyla.html">
             
                     
-                    UC2 - Parallel publication dashboard
+                    UC2 - Parallel Publication Dashboard
             
                 </a>
             
@@ -863,14 +863,14 @@
 <!-- TOC START min:1 max:3 link:true update:true -->
 <ul>
 <li><a href="#running-the-attx-stack-on-a-pc-or-mac">Running the ATTX Stack on a PC or Mac</a><ul>
-<li><a href="#pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac">Pre-requisite: install Docker and Docker Compose on your PC or Mac</a></li>
-<li><a href="#running-the-attx-application-stack-with-docker">Running the ATTX application stack with Docker</a></li>
-<li><a href="#test-the-availability-of-the-attx-containerised-stack">Test the availability of the ATTX containerised stack</a></li>
+<li><a href="#pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac">Pre-requisite: Install Docker and Docker Compose on your PC or Mac</a></li>
+<li><a href="#running-the-attx-application-stack-with-docker">Running the ATTX Application Stack with Docker</a></li>
+<li><a href="#test-the-availability-of-the-attx-containerised-stack">Test the Availability of the ATTX Containerised Stack</a></li>
 </ul>
 </li>
 </ul>
 <!-- TOC END -->
-<h2 id="pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac">Pre-requisite: install Docker and Docker Compose on your PC or Mac</h2>
+<h2 id="pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac">Pre-requisite: Install Docker and Docker Compose on your PC or Mac</h2>
 <p>The installation instructions for Docker are quite clear and straightforward. For your convenience, please find below the links to the most common Operating Systems in use on Academic environments PCs.</p>
 <p>Installing Docker Community Edition on PC (Windows):
 Please note that Docker for Windows comes either with Docker CE (windows 10) or with Docker Toolbox (older Windows versions).</p>
@@ -892,7 +892,7 @@ GNU/Linux users need to install Docker Compose, Windows and Mac users have Docke
 <ul>
 <li><a href="https://docs.docker.com/compose/install/" target="_blank">On all Operating Systems</a></li>
 </ul>
-<h2 id="running-the-attx-application-stack-with-docker">Running the ATTX application stack with Docker</h2>
+<h2 id="running-the-attx-application-stack-with-docker">Running the ATTX Application Stack with Docker</h2>
 <p>With Docker CE and Docker Compose successfully installed, you can now download the <code>docker-compose.yml</code> file that defines the ATTX containerised applications and service to your PC or Mac.</p>
 <ol>
 <li>Download the ATTX <code>docker-compose.yml</code> file from <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/dcompose/docker-compose.yml" target="_blank">https://github.com/ATTX-project/platform-deployment/blob/dev/dcompose/docker-compose.yml</a> to a directory in your host machine.</li>
@@ -900,10 +900,10 @@ GNU/Linux users need to install Docker Compose, Windows and Mac users have Docke
 <li>In the directory where you downloaded the ATTX <code>docker-compose.yml</code> run the command <code>docker-compose up</code>. This will start up the containerised ATTX applications and services.</li>
 <li>You can follow the startup messages of containerised ATTX stack on the terminal. Once the message <code>_attx_uv_dpus_1 exited with status 0</code> is displayed, you can assume that the stack is up and running (meaning that all containers have been started and that the ATTX DPUs have been deployed to UnifiedViews).</li>
 </ol>
-<h2 id="test-the-availability-of-the-attx-containerised-stack">Test the availability of the ATTX containerised stack</h2>
+<h2 id="test-the-availability-of-the-attx-containerised-stack">Test the Availability of the ATTX Containerised Stack</h2>
 <ol>
 <li><p>Verify that the ATTX Docker containers are running. Open a new terminal and enter the <code>docker ps</code> command. The output should be similar to the following:</p>
-<pre><code>CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS              PORTS                                            NAMES
+<pre><code class="lang-shell">CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS              PORTS                                            NAMES
 6faf8fe639b1        attx-dev:5000/gm-api:latest                           &quot;/entrypoint.sh&quot;         3 minutes ago       Up 3 minutes        0.0.0.0:4302-&gt;4302/tcp                           build_gmapi_1
 f9f2a83adf38        tenforce/unified-views-frontend:latest                &quot;catalina.sh run&quot;        3 minutes ago       Up 3 minutes        0.0.0.0:8080-&gt;8080/tcp                           build_frontend_1
 b88cb73c9710        tenforce/unified-views-backend:latest                 &quot;/bin/bash /bin/st...&quot;   3 minutes ago       Up 3 minutes        5001/tcp                                         build_backend_1
@@ -912,13 +912,14 @@ a3fd681bad00        attx-dev:5000/attx-fuseki:latest                      &quot;
 8f909dae60ea        attx-dev:5000/attx-es5:latest                         &quot;/docker-entrypoin...&quot;   3 minutes ago       Up 3 minutes        0.0.0.0:9210-&gt;9210/tcp, 0.0.0.0:9310-&gt;9310/tcp   build_elasticsearch5_1
 547f6c10aea6        tenforce/unified-views-mariadb:feat-compact-modular   &quot;docker-entrypoint...&quot;   3 minutes ago       Up 3 minutes        3306/tcp                                         build_mysql_1
 3a5c2751a642        attx-dev:5000/essiren:latest                          &quot;/docker-entrypoin...&quot;   3 minutes ago       Up 3 minutes        0.0.0.0:9200-&gt;9200/tcp, 0.0.0.0:9300-&gt;9300/tcp   build_essiren_1
-</code></pre></li>
-<li><p>Please keep in mind that if you launched the ATTX Stack with a command line terminal, the ATTX services will be using the localhost IP address (127.0.0.1). In case you used the Docker QuickStart Terminal, the IP address in use will the one of the Docker Machine (typically &quot;192.168.99.100&quot;, but please check in the startup messages of Docker QuickStart Terminal).</p>
+</code></pre>
 </li>
-<li>Open the UnifiedViews login page at &quot;<a href="http://127.0.0.1:8080/unifiedviews/" target="_blank">http://127.0.0.1:8080/unifiedviews/</a>&quot; (or &quot;http://<docker_machine_ip>/unifiedviews/&quot;)</docker_machine_ip></li>
-<li>Check the availability of Apache Jena/Fuseki at &quot;<a href="http://127.0.0.1:3030" target="_blank">http://127.0.0.1:3030</a>&quot; (or &quot;http://<docker_machine_ip>:3030&quot;)</docker_machine_ip></li>
-<li>Verify ElasticSearch 1.3.4 (with SIREN plugin) at &quot;<a href="http://127.0.0.1:9200/_cat" target="_blank">http://127.0.0.1:9200/_cat</a>&quot; (or &quot;http://<docker_machine_ip>:9200/_cat&quot;).</docker_machine_ip></li>
-<li>Check that ElasticSearch 5.2 is available at &quot;<a href="http://127.0.0.1:9210/_cat" target="_blank">http://127.0.0.1:9210/_cat</a>&quot; (or &quot;http://<docker_machine_ip>:9210/_cat&quot;).</docker_machine_ip></li>
+<li><p>Please keep in mind that if you launched the ATTX Stack with a command line terminal, the ATTX services will be using the localhost IP address (127.0.0.1). In case you used the Docker QuickStart Terminal, the IP address in use will the one of the Docker Machine (typically <code>192.168.99.100</code>, but please check in the startup messages of Docker QuickStart Terminal).</p>
+</li>
+<li>Open the UnifiedViews login page at <code>http://127.0.0.1:8080/unifiedviews/</code> (or <code>http://&lt;docker_machine_ip&gt;/unifiedviews/</code>)</li>
+<li>Check the availability of Apache Jena/Fuseki at <code>http://127.0.0.1:3030</code> (or <code>http://&lt;docker_machine_ip&gt;:3030</code>)</li>
+<li>Verify ElasticSearch 1.3.4 (with SIREN plugin) at &quot;<a href="http://127.0.0.1:9200/_cat" target="_blank">http://127.0.0.1:9200/_cat</a>&quot; (or <code>http://&lt;docker_machine_ip&gt;:9200/_cat</code>).</li>
+<li>Check that ElasticSearch 5.x is available at <code>http://127.0.0.1:9210/_cat</code> (or <code>http://&lt;docker_machine_ip&gt;:9210/_cat</code>).</li>
 </ol>
 
                                 
@@ -959,7 +960,7 @@ a3fd681bad00        attx-dev:5000/attx-fuseki:latest                      &quot;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Running the ATTX Stack on a PC/Mac","level":"1.4.1.2","depth":3,"next":{"title":"Run on Distributed/Cloud","level":"1.4.2","depth":2,"ref":"","articles":[{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"1.4.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]}]},"previous":{"title":"Building Swarm Mode on a PC/Mac","level":"1.4.1.1","depth":3,"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","ref":"Building-Docker-application-stacks-in-Swarm-Mode.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","mtime":"2017-05-26T11:36:11.086Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-26T11:36:34.134Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Running the ATTX Stack on a PC/Mac","level":"1.4.1.2","depth":3,"next":{"title":"Run on Distributed/Cloud","level":"1.4.2","depth":2,"ref":"","articles":[{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"1.4.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},{"title":"Deploying ATTX Components on Docker Swarm","level":"1.4.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"1.4.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]}]},"previous":{"title":"Building Swarm Mode on a PC/Mac","level":"1.4.1.1","depth":3,"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","ref":"Building-Docker-application-stacks-in-Swarm-Mode.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","mtime":"2017-05-29T14:00:13.497Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-30T05:16:17.803Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

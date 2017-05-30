@@ -26,7 +26,7 @@ A general use case is represented in Figure 1 where we can depict several parts:
 
 Figure 1. Ontology Use Cases Flow
 
-## Related Data models
+## Related Data Models
 
 ### ATT Data Model
 

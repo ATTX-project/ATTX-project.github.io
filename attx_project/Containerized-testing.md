@@ -47,16 +47,16 @@ Run the test locally without containers and exposing the ports:
 
 Test reports are exported to the folder configured in `copyReportFiles` task (default `$buildDir/reports/`).
 
-## Structure of feature-test images
+## Structure of Feature-test Images
 
-### runTests.sh script
+### runTests.sh Script
 
 This script is the starting point for a `testContainer`. It first checks and waits (for a limited time) for certain ports in the network to become available and then runs the test suite.
 **TO DO**
 In the future, the goal is to use Service discovery component to query for up-and-running services.
 
 Example: Waiting for services to be available:
-```shell
+```bash
 dockerize -wait tcp://mysql:3306 -timeout 240s
 dockerize -wait http://fuseki:3030 -timeout 60s
 dockerize -wait http://gmapi:4302/health -timeout 60s
@@ -68,7 +68,7 @@ These checks and waits are complementary to the ones done in the Gradle script a
 
 If the time-out is reached and the service is still not available, the process exits with status code 1.
 
-### Gradle build files
+### Gradle Build Files
 
 Test project contains two Gradle configurations, one for developing tests and managing containers and the other one for running tests inside the container; these are `build.gradle` and `build.test.gradle` respectively.
 
@@ -260,7 +260,7 @@ task integTest(type: Test){
 
 Dependencies are loaded from the überjar created by the `shadowJar` task in the `build.gradle`. This jar and classes directory includes everything that is needed to run the tests, so we can actually run Gradle in the offline mode (`--offline`). Building step is faster, since we don't have to download all the dependencies every time the tests are run.
 
-### Dockerfile
+### Dockerfile Description
 
 ```Dockerfile
 FROM frekele/gradle:3.3-jdk8
@@ -323,16 +323,16 @@ pipeline {
 }
 ```
 
-Jenkins sets testEnv=CI in order to run the tests in a container. Report publication is configured as a ```post``` block of the build stage, so that is always run even if the build/test step fails.
+Jenkins sets `testEnv=CI` in order to run the tests in a container. Report publication is configured as a `post` block of the build stage, so that is always run even if the build/test step fails.
 
-## Running tests against custom images
+## Running Tests Against Custom Images
 
 If you want to run tests against other that 'latest' tag/versions of the images, do the following, where `testtag` is the tag/version needed for tests:
 
 * Push your custom images to the private Docker repo with some tags (e.g. `attx-dev:5000/gm-api:testtag`).
 * Modify `dcompose` configuration int he `build.gradle` of the project you are working with by changing the tag of the selected images. For example:
 
-```{groovy}
+```groovy
 dcompose {
 ...
   gmapi {
@@ -342,6 +342,6 @@ dcompose {
 }
 ```
 
-## Developing tests
+## Developing Tests
 
-When developing tests, it is easier to just run them inside the IDE and work on services on the localhost or use the `runIntegTests` tasks for running the integration tests with the containers exposing ports.
+When developing tests, it is easier to just run them inside the IDE and work on services on the `localhost` or use the `runIntegTests` tasks for running the integration tests with the containers exposing ports.

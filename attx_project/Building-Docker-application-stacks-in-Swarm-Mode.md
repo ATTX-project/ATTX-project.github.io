@@ -27,18 +27,18 @@ This guide exemplifies 5 VMs created with Vagrant and configured with Ansible, h
 - Ansible:
   - install PIP and Ansible's prerequisites:
     ```shell
-      $ sudo easy_install pip
-      $ sudo pip install paramiko PyYAML Jinja2 httplib2 six pycrypto
+      sudo easy_install pip
+      sudo pip install paramiko PyYAML Jinja2 httplib2 six pycrypto
     ```
 
   - Install Ansible:
     ```shell
-    $ sudo pip install ansible
+    sudo pip install ansible
     ```
 
   - source the setup script to make Ansible available on this terminal session:
     ```shell
-    $ source path/to/your-ansible-clone/hacking/env-setup
+    source path/to/your-ansible-clone/hacking/env-setup
     ```
 
   - the last step needs to be repeated every time new terminal session is open
@@ -53,13 +53,13 @@ https://github.com/ATTX-project/platform-deployment/tree/feature-swarm-mode/swar
 
 Run the following commands:
 ```shell
-$ vagrant up
-$ chmod 600 private-key
-$ ansible-playbook provisioning.yml
+vagrant up
+chmod 600 private-key
+ansible-playbook provisioning.yml
 ```
 Now you should be able to ssh on `node1` using:
 ```shell
-$ ssh vagrant@10.10.10.10 -i private-key
+ssh vagrant@10.10.10.10 -i private-key
 ```
 These are the default IP addresses for the nodes:
 ```shell
@@ -79,7 +79,7 @@ DO NOT execute docker swarm init on multiple nodes (possibility of multiple disj
 
 ### Create the cluster from node1:
 
-`$ docker swarm init`
+`docker swarm init`
 
 Checking that Swarm mode is enabled
 
