@@ -131,7 +131,8 @@ For a full example and detailed description visit: https://github.com/linkedin/p
 
 Standard python project tree -  *Note the lack of a setup.py, more on this in a moment*:
 
-```.
+```config
+.
 ├── README.md
 ├── setup.cfg
 ├── src
@@ -192,7 +193,7 @@ Create the `setup.py` using `gradle generateSetupPy`
 
 The `setup.py` in this example was created using the above task, by default the "setup" section at the bottom is commented out, **so please look it over before continuing. One would want to un-comment the whole section at the bottom of the `setup.py`.** One would also like to add a `setup.cfg` e.g.:
 
-```
+```config
 [flake8]
 ignore = E121,E123,E226,W292
 max-line-length = 160

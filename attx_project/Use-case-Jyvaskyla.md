@@ -1,4 +1,4 @@
-# Use case Jyväskylä - Parallel publishing dashboard
+# Use case Jyväskylä - Parallel Publishing Dashboard
 
 Parallel publication (rinnakkaistallennus in Finnish) is a version of the published research article that is freely available from the organizations digital repository or similar service. For more detailed description about parallel publishing and how it relates to OA in general see https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing (Jyväskylä university).
 
@@ -57,7 +57,6 @@ National publication metadata registry with excellent coverage and regularly upd
 Universities' [CRIS systems](https://en.wikipedia.org/wiki/Current_research_information_system) are usually the master sources for publication related data. If there is a need for data that is not part of the VIRTA harvested data, it should be possible to get from the CRIS system. CRIS harvesting might also be beneficial for organizations that still submitting their data to VIRTA only once(?) a year, but are still able to make more recent data available for access.
 
 ### Repositories
-
 
 
 ## Required features

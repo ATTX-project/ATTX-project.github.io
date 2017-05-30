@@ -5,7 +5,7 @@
 * [Introduction](README.md)
 * Applications and Use Cases
   * [UC1 - Infrastructure and Publications](Use-case-Infrastructures-and-publications.md)
-  * [UC2 - Parallel publication dashboard](Use-case-Jyvaskyla.md)
+  * [UC2 - Parallel Publication Dashboard](Use-case-Jyvaskyla.md)
   * [UC3 - Metax](Use-case-Metax.md)
 * [ATTX Architecture Overview](ATTX-Architecture-Overview.md)
 * [ATTX Broker Deployment](ATTX-Broker-Deployment.md)

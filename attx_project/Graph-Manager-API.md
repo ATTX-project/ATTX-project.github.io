@@ -64,7 +64,7 @@ In order to process data in Elasticsearch 1.3.4 and Elasticsearch Siren plugin:
 * endpoint for the Elasticsearch should be 9300 for the bulk import;
 * in the docker image there shoul be the `gc-rdf2json-indexer.jar`.
 
-### Workflow API connection
+### Workflow API Connection
 
 In order to process the provenance information and update the Graph Store with it, the Graph Manager API pulls the data from the [Workflow API](Workflow-API.md) upon calling the `/prov?start=true` endpoint.
 

@@ -9,8 +9,8 @@ Steps:
 
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Data sources](#data-sources)
-    - [Research infrastructures databank](#research-infrastructures-databank)
-    - [TUHAT - University of Helsinki's CRIS system](#tuhat---university-of-helsinkis-cris-system)
+    - [Research Infrastructures Databank](#research-infrastructures-databank)
+    - [TUHAT - University of Helsinki's CRIS System](#tuhat---university-of-helsinkis-cris-system)
   - [Workflows](#workflows)
   - [Working Data](#working-data)
 
@@ -20,14 +20,14 @@ Steps:
 
 This section describes the the way different external datasets are accessed what the data looks like.
 
-### Research infrastructures databank
+### Research Infrastructures Databank
 
 * UI: http://infras.openscience.fi/
 * API: http://avaa.tdata.fi/api/jsonws?contextPath=/tupa-portlet
 * API documentation:http://avaa.tdata.fi/adata/tupa/
 * Datamodel: http://iow.csc.fi/model/tipa/
 
-### TUHAT - University of Helsinki's CRIS system
+### TUHAT - University of Helsinki's CRIS System
 
 We are using the test instance of the TUHAT system.
 

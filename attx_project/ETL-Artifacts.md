@@ -25,7 +25,7 @@ A draft overview on the Semantic Broker components is provided in Figure 2.
 
 Figure 2. ETL Platform Component Workflow
 
-## Comparison of ETL artifacts
+## Comparison of ETL Artifacts
 
 The table below shows a basic comparison of some of the ETL tools and required functionalities with relation to the ATTX project.
 

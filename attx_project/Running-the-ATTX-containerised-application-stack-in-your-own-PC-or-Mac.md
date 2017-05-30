@@ -4,14 +4,14 @@ We hereby exemplify how to run the ATTX stack in your PC or Mac, so that you can
 
 <!-- TOC START min:1 max:3 link:true update:true -->
 - [Running the ATTX Stack on a PC or Mac](#running-the-attx-stack-on-a-pc-or-mac)
-  - [Pre-requisite: install Docker and Docker Compose on your PC or Mac](#pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac)
-  - [Running the ATTX application stack with Docker](#running-the-attx-application-stack-with-docker)
-  - [Test the availability of the ATTX containerised stack](#test-the-availability-of-the-attx-containerised-stack)
+  - [Pre-requisite: Install Docker and Docker Compose on your PC or Mac](#pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac)
+  - [Running the ATTX Application Stack with Docker](#running-the-attx-application-stack-with-docker)
+  - [Test the Availability of the ATTX Containerised Stack](#test-the-availability-of-the-attx-containerised-stack)
 
 <!-- TOC END -->
 
 
-## Pre-requisite: install Docker and Docker Compose on your PC or Mac
+## Pre-requisite: Install Docker and Docker Compose on your PC or Mac
 The installation instructions for Docker are quite clear and straightforward. For your convenience, please find below the links to the most common Operating Systems in use on Academic environments PCs.
 
 Installing Docker Community Edition on PC (Windows):
@@ -31,7 +31,7 @@ Installing Docker Community Edition on Mac
 GNU/Linux users need to install Docker Compose, Windows and Mac users have Docker Compose already bundled in their Docker installation (but please check your Docker environment as per the instructions below).
 * [On all Operating Systems](https://docs.docker.com/compose/install/)
 
-## Running the ATTX application stack with Docker
+## Running the ATTX Application Stack with Docker
 With Docker CE and Docker Compose successfully installed, you can now download the `docker-compose.yml` file that defines the ATTX containerised applications and service to your PC or Mac.
 
 1. Download the ATTX `docker-compose.yml` file from https://github.com/ATTX-project/platform-deployment/blob/dev/dcompose/docker-compose.yml to a directory in your host machine.
@@ -40,9 +40,9 @@ With Docker CE and Docker Compose successfully installed, you can now download t
 5. You can follow the startup messages of containerised ATTX stack on the terminal. Once the message `_attx_uv_dpus_1 exited with status 0` is displayed, you can assume that the stack is up and running (meaning that all containers have been started and that the ATTX DPUs have been deployed to UnifiedViews).
 
 
-## Test the availability of the ATTX containerised stack
+## Test the Availability of the ATTX Containerised Stack
 1. Verify that the ATTX Docker containers are running. Open a new terminal and enter the `docker ps` command. The output should be similar to the following:
-```
+```shell
 CONTAINER ID        IMAGE                                                 COMMAND                  CREATED             STATUS              PORTS                                            NAMES
 6faf8fe639b1        attx-dev:5000/gm-api:latest                           "/entrypoint.sh"         3 minutes ago       Up 3 minutes        0.0.0.0:4302->4302/tcp                           build_gmapi_1
 f9f2a83adf38        tenforce/unified-views-frontend:latest                "catalina.sh run"        3 minutes ago       Up 3 minutes        0.0.0.0:8080->8080/tcp                           build_frontend_1
@@ -54,8 +54,8 @@ a3fd681bad00        attx-dev:5000/attx-fuseki:latest                      "/dock
 3a5c2751a642        attx-dev:5000/essiren:latest                          "/docker-entrypoin..."   3 minutes ago       Up 3 minutes        0.0.0.0:9200->9200/tcp, 0.0.0.0:9300->9300/tcp   build_essiren_1
 ```
 
-2. Please keep in mind that if you launched the ATTX Stack with a command line terminal, the ATTX services will be using the localhost IP address (127.0.0.1). In case you used the Docker QuickStart Terminal, the IP address in use will the one of the Docker Machine (typically "192.168.99.100", but please check in the startup messages of Docker QuickStart Terminal).
-3. Open the UnifiedViews login page at "http://127.0.0.1:8080/unifiedviews/" (or "http://<docker_machine_ip>/unifiedviews/")
-4. Check the availability of Apache Jena/Fuseki at "http://127.0.0.1:3030" (or "http://<docker_machine_ip>:3030")
-5. Verify ElasticSearch 1.3.4 (with SIREN plugin) at "http://127.0.0.1:9200/_cat" (or "http://<docker_machine_ip>:9200/_cat").
-6. Check that ElasticSearch 5.2 is available at "http://127.0.0.1:9210/_cat" (or "http://<docker_machine_ip>:9210/_cat").
+2. Please keep in mind that if you launched the ATTX Stack with a command line terminal, the ATTX services will be using the localhost IP address (127.0.0.1). In case you used the Docker QuickStart Terminal, the IP address in use will the one of the Docker Machine (typically `192.168.99.100`, but please check in the startup messages of Docker QuickStart Terminal).
+3. Open the UnifiedViews login page at `http://127.0.0.1:8080/unifiedviews/` (or `http://<docker_machine_ip>/unifiedviews/`)
+4. Check the availability of Apache Jena/Fuseki at `http://127.0.0.1:3030` (or `http://<docker_machine_ip>:3030`)
+5. Verify ElasticSearch 1.3.4 (with SIREN plugin) at "http://127.0.0.1:9200/_cat" (or `http://<docker_machine_ip>:9200/_cat`).
+6. Check that ElasticSearch 5.x is available at `http://127.0.0.1:9210/_cat` (or `http://<docker_machine_ip>:9210/_cat`).

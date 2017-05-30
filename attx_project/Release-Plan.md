@@ -13,7 +13,7 @@ Adjacent to the - [Feature roadmap](https://github.com/ATTX-project/project-mana
 <!-- TOC END -->
 
 ## Realease Version 2.0
-Planned release date: **2nd of June 2017**
+Planned release date: **30th of June 2017**
 1. Prepare for ELAG 2017
 2. Service Discovery
 3. User friendly version

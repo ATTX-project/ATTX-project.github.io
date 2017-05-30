@@ -1,6 +1,6 @@
 # ATTX Graph Namespaces
 
-Base namespaces and named graphs:
+Base namespaces and/or named graphs convention:
 
 * `http://data.hulib.helsinki.fi/attx/onto#` - ontology and associated classes
 * `http://data.hulib.helsinki.fi/attx` - to be used as a base for data
