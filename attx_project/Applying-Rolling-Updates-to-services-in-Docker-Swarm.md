@@ -1,4 +1,4 @@
-# Applying Rolling Updates to services in Docker Swarm
+# Applying Rolling Updates to Services in Docker Swarm
 
 Hereby you can find instructions on how to applying rolling updates to services running in Docker Swarm.
 
