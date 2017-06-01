@@ -1,3 +1,5 @@
+# <span style="color:red">DRAFT - work in progress</span>
+
 # Use case Jyväskylä - Parallel Publishing Dashboard
 
 Parallel publication (rinnakkaistallennus in Finnish) is a version of the published research article that is freely available from the organizations digital repository or similar service. For more detailed description about parallel publishing and how it relates to OA in general see https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing (Jyväskylä university).
@@ -14,7 +16,7 @@ Also, VIRTA is the official publication data set with strict requirements for co
 
 ## Approach
 
-In order to able to works with percentages, we need metadata data for every publication and well as the parallel published subset of publications. The the approach is to use combination of harvested (VIRTA) and master (CRIS) data sources in order to create the data set for all publications. Then to use repositories, institutional, national and subject based, to get metadata data about the parallel published versions and associated files. Simple linking between these two data sets is done using the existing identifiers, such as DOIs and URNs.
+In order to able to work with percentages, we need metadata data for every publication and well as the parallel published subset of publications. The the approach is to use combination of harvested (VIRTA) and master (CRIS) data sources in order to create the data set for all publications. We will then to use different kind of repositories, institutional, national and subject based, to get metadata data about the parallel published versions and associated files. Simple linking between these two data sets is done using the existing identifiers, such as DOIs and URNs.
 
 
 ## User stories
@@ -50,7 +52,7 @@ National publication metadata registry with excellent coverage and regularly upd
 
 [Documentation](https://confluence.csc.fi/pages/viewpage.action?pageId=65922061) about the data harvested by VIRTA.
 
-2017 harvested data includes link to the parallel published version, but this information is missing from 2015 model and less strict in 2016, so there is room for ATTX type of broker to fill in the blanks.
+2017 harvested data includes link to the parallel published version, but this information is missing from 2015 model and less strict in 2016, so there is room for ATTX type of broker to fill in the blanks. Also, VIRTA data model does not include any information about the version (preprint, post-print...) of parallel published version, which is something that could be included in our use case.
 
 ### CRIS systems
 
@@ -58,14 +60,137 @@ Universities' [CRIS systems](https://en.wikipedia.org/wiki/Current_research_info
 
 ### Repositories
 
+Institutional repositories are our main source of parallel publication data.
 
-## Required features
+## Required broker features
 
-History data available
-Incremental harvesting
-configurable CSV to RDF transformation
-configurable XML to RDF tranformation
-publishing data set as a CSV file
-publishing data set as queryable REST API
-identifier based linking
-generating new data based on ontologies
+**History data available**
+
+One should be able to query
+
+**Incremental harvesting**
+
+**Configurable CSV to RDF transformation**
+
+**Configurable XML to RDF tranformation**
+
+**Publishing data set as a CSV file**
+
+**Publishing data set as queryable REST API**
+
+**Identifier based linking**
+
+**Generating new data based on ontologies/rules**
+
+Use must be able to add their custom hierarcical classification schemes to the system by linking them either directly to publications or any related harvested metadata, such as existing classifications. Transitive properties can be used to generated direct link between publications and the data. For example:
+
+Before (asserted data):
+
+```
+pub1 -- field of science --> field1
+
+field1 -- related --> customThing1
+```
+After applying ontology/rule based inferencing:
+
+```
+pub1 -- customClassification --> customThing1
+```
+
+
+## Implementation
+
+**Our definition of parallel published publication**
+
+Add definition here
+
+
+### Target data model
+
+What are the main concepts?
+For example:
+* Publication metadata from CRIS
+* File metadata from repo
+
+
+
+
+How are the resource (Publication/File) URIs generated?
+
+How to handle history information?
+
+How to handle publications that have writers from multiple (Finnish) universities?
+
+
+
+
+**Catching cases where publication was first parallel published and then later removed**
+
+This basically means that harvested dataset at t1 contains publication P1 and the same publication is missing from dataset at t2. It also possible that P1 reappears again at t3. Given that t1 < t2 < t3.
+
+Are these records deleted or hidden in repo? What is the deletion policy (no,persistent,transient) related to the OAI-PMH AND how are these cases actually handled by the organization unit that maintains the repository?
+
+Different implementations based on the deletion policy detected from OAI-PMH interface?
+
+
+### University of Jyväskylä
+
+**All publications**
+
+?
+
+**Parallel published**  
+
+Data source: JYX (https://jyx.jyu.fi)
+
+Harvesting interface: OAI-PMH
+
+Fields:
+
+* dc.identifier.other
+ * contains internal TUTKA ids (eg. TUTKAID_xxxx)
+* dc.description.version
+ * Eg. 'Publisher's PDF'
+* dc.identifier.urn
+ * identifier of the parallel published version. Eg. 'URN:NBN:fi:jyu-xxxxxxx'
+
+
+### University of Helsinki
+
+**All publications**
+
+?
+
+**Parallel published**  
+
+Data source: Helda (https://helda.helsinki.fi/)
+
+Harvesting interface: OAI-PMH
+
+Fields:
+* dc.identifier.other
+ * Contains both internal and external identifiers from TUHAT. Eg 'PURE: xxxxx' and 'PURE UUID: xxxx'.
+* dc.identifier.uri
+ * identifier of the parallel published version. Eg. 'http://hdl.handle.net/10138/xxxxx'
+* dc.type.uri
+ * describes the version of the published file eg. 'info:eu-repo/semantics/publishedVersion'.
+
+### University of Eastern Finland
+
+**All publications**
+
+?
+
+**Parallel published**  
+
+Data source: UEF ERepository (https://erepo.uef.fi/)
+
+Harvesting interface: OAI-PMH
+
+Fields:
+* dc.identifier.uri
+ * identifier of the parallel published version
+* uef.solecris.id
+ * Publication's ID in the CRIS system
+* dc.description.version
+ * Eg. 'Post-print'
