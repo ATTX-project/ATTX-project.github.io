@@ -57,5 +57,5 @@ a3fd681bad00        attx-dev:5000/attx-fuseki:latest                      "/dock
 2. Please keep in mind that if you launched the ATTX Stack with a command line terminal, the ATTX services will be using the localhost IP address (127.0.0.1). In case you used the Docker QuickStart Terminal, the IP address in use will the one of the Docker Machine (typically `192.168.99.100`, but please check in the startup messages of Docker QuickStart Terminal).
 3. Open the UnifiedViews login page at `http://127.0.0.1:8080/unifiedviews/` (or `http://<docker_machine_ip>/unifiedviews/`)
 4. Check the availability of Apache Jena/Fuseki at `http://127.0.0.1:3030` (or `http://<docker_machine_ip>:3030`)
-5. Verify ElasticSearch 1.3.4 (with SIREN plugin) at "http://127.0.0.1:9200/_cat" (or `http://<docker_machine_ip>:9200/_cat`).
+5. Verify ElasticSearch 1.3.4 (with SIREN plugin) at `http://127.0.0.1:9200/_cat` (or `http://<docker_machine_ip>:9200/_cat`).
 6. Check that ElasticSearch 5.x is available at `http://127.0.0.1:9210/_cat` (or `http://<docker_machine_ip>:9210/_cat`).
