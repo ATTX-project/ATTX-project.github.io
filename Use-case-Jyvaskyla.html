@@ -860,7 +860,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="use-case-jyv&#xE4;skyl&#xE4;---parallel-publishing-dashboard">Use case Jyv&#xE4;skyl&#xE4; - Parallel Publishing Dashboard</h1>
+                                <h1 id="draft---work-in-progress"><span style="color:red">DRAFT - work in progress</span></h1>
+<h1 id="use-case-jyv&#xE4;skyl&#xE4;---parallel-publishing-dashboard">Use case Jyv&#xE4;skyl&#xE4; - Parallel Publishing Dashboard</h1>
 <p>Parallel publication (rinnakkaistallennus in Finnish) is a version of the published research article that is freely available from the organizations digital repository or similar service. For more detailed description about parallel publishing and how it relates to OA in general see <a href="https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing" target="_blank">https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing</a> (Jyv&#xE4;skyl&#xE4; university).</p>
 <p>The idea behind parallel publishing dashboard is to create a up-to-date data set and accompanying web application, which together allow users to browse and visualize current state of parallel publishing in Finland along different attributes, such as organization, field of science or any other custom classification scheme. Data set and application should be flexible and support multiple &quot;views&quot; against the same data.</p>
 <p>University of Jyv&#xE4;skyl&#xE4; library has been doing similar work and results were presented by Pekka Olsbo as part of closing seminar for the Surima-project. His presentation slides can be downloaded from <a href="http://urn.fi/URN:NBN:fi-fe201701251319" target="_blank">http://urn.fi/URN:NBN:fi-fe201701251319</a>.</p>
@@ -868,7 +869,7 @@
 <p>One could argue that <a href="https://confluence.csc.fi/display/VIR/VIRTA-julkaisutietopalvelu" target="_blank">VIRTA</a> service already contains the same information and works on a national level with excellent coverage. However, ATTX use case can be seen as complementary to the VIRTA data set, because it provides a platform for new data aggregation and generation methods (e.g. data mining from parallel published versions, licensing permitting) and allows for alternative &quot;views&quot; on parallel publishing (e.g. grouping based on custom classification).  </p>
 <p>Also, VIRTA is the official publication data set with strict requirements for completeness and quality, where as the data set created in this use case has less stringent expectations for incoming data and is therefore not designed to work as a basis for any official reporting.</p>
 <h2 id="approach">Approach</h2>
-<p>In order to able to works with percentages, we need metadata data for every publication and well as the parallel published subset of publications. The the approach is to use combination of harvested (VIRTA) and master (CRIS) data sources in order to create the data set for all publications. Then to use repositories, institutional, national and subject based, to get metadata data about the parallel published versions and associated files. Simple linking between these two data sets is done using the existing identifiers, such as DOIs and URNs.</p>
+<p>In order to able to work with percentages, we need metadata data for every publication and well as the parallel published subset of publications. The the approach is to use combination of harvested (VIRTA) and master (CRIS) data sources in order to create the data set for all publications. We will then to use different kind of repositories, institutional, national and subject based, to get metadata data about the parallel published versions and associated files. Simple linking between these two data sets is done using the existing identifiers, such as DOIs and URNs.</p>
 <h2 id="user-stories">User stories</h2>
 <ul>
 <li><p>As an admin, I want to create the initial data data from one of the publication metadata sources.</p>
@@ -900,19 +901,108 @@ For example, percentage of parallel published articles between 2015-2017 in the 
 <h3 id="virta">VIRTA</h3>
 <p>National publication metadata registry with excellent coverage and regularly updated content would be a very good data source for base line publication metadata.</p>
 <p><a href="https://confluence.csc.fi/pages/viewpage.action?pageId=65922061" target="_blank">Documentation</a> about the data harvested by VIRTA.</p>
-<p>2017 harvested data includes link to the parallel published version, but this information is missing from 2015 model and less strict in 2016, so there is room for ATTX type of broker to fill in the blanks.</p>
+<p>2017 harvested data includes link to the parallel published version, but this information is missing from 2015 model and less strict in 2016, so there is room for ATTX type of broker to fill in the blanks. Also, VIRTA data model does not include any information about the version (preprint, post-print...) of parallel published version, which is something that could be included in our use case.</p>
 <h3 id="cris-systems">CRIS systems</h3>
 <p>Universities&apos; <a href="https://en.wikipedia.org/wiki/Current_research_information_system" target="_blank">CRIS systems</a> are usually the master sources for publication related data. If there is a need for data that is not part of the VIRTA harvested data, it should be possible to get from the CRIS system. CRIS harvesting might also be beneficial for organizations that still submitting their data to VIRTA only once(?) a year, but are still able to make more recent data available for access.</p>
 <h3 id="repositories">Repositories</h3>
-<h2 id="required-features">Required features</h2>
-<p>History data available
-Incremental harvesting
-configurable CSV to RDF transformation
-configurable XML to RDF tranformation
-publishing data set as a CSV file
-publishing data set as queryable REST API
-identifier based linking
-generating new data based on ontologies</p>
+<p>Institutional repositories are our main source of parallel publication data.</p>
+<h2 id="required-broker-features">Required broker features</h2>
+<p><strong>History data available</strong></p>
+<p>One should be able to query</p>
+<p><strong>Incremental harvesting</strong></p>
+<p><strong>Configurable CSV to RDF transformation</strong></p>
+<p><strong>Configurable XML to RDF tranformation</strong></p>
+<p><strong>Publishing data set as a CSV file</strong></p>
+<p><strong>Publishing data set as queryable REST API</strong></p>
+<p><strong>Identifier based linking</strong></p>
+<p><strong>Generating new data based on ontologies/rules</strong></p>
+<p>Use must be able to add their custom hierarcical classification schemes to the system by linking them either directly to publications or any related harvested metadata, such as existing classifications. Transitive properties can be used to generated direct link between publications and the data. For example:</p>
+<p>Before (asserted data):</p>
+<pre><code>pub1 -- field of science --&gt; field1
+
+field1 -- related --&gt; customThing1
+</code></pre><p>After applying ontology/rule based inferencing:</p>
+<pre><code>pub1 -- customClassification --&gt; customThing1
+</code></pre><h2 id="implementation">Implementation</h2>
+<p><strong>Our definition of parallel published publication</strong></p>
+<p>Add definition here</p>
+<h3 id="target-data-model">Target data model</h3>
+<p>What are the main concepts?
+For example:</p>
+<ul>
+<li>Publication metadata from CRIS</li>
+<li>File metadata from repo</li>
+</ul>
+<p>How are the resource (Publication/File) URIs generated?</p>
+<p>How to handle history information?</p>
+<p>How to handle publications that have writers from multiple (Finnish) universities?</p>
+<p><strong>Catching cases where publication was first parallel published and then later removed</strong></p>
+<p>This basically means that harvested dataset at t1 contains publication P1 and the same publication is missing from dataset at t2. It also possible that P1 reappears again at t3. Given that t1 &lt; t2 &lt; t3.</p>
+<p>Are these records deleted or hidden in repo? What is the deletion policy (no,persistent,transient) related to the OAI-PMH AND how are these cases actually handled by the organization unit that maintains the repository?</p>
+<p>Different implementations based on the deletion policy detected from OAI-PMH interface?</p>
+<h3 id="university-of-jyv&#xE4;skyl&#xE4;">University of Jyv&#xE4;skyl&#xE4;</h3>
+<p><strong>All publications</strong></p>
+<p>?</p>
+<p><strong>Parallel published</strong>  </p>
+<p>Data source: JYX (<a href="https://jyx.jyu.fi" target="_blank">https://jyx.jyu.fi</a>)</p>
+<p>Harvesting interface: OAI-PMH</p>
+<p>Fields:</p>
+<ul>
+<li>dc.identifier.other<ul>
+<li>contains internal TUTKA ids (eg. TUTKAID_xxxx)</li>
+</ul>
+</li>
+<li>dc.description.version<ul>
+<li>Eg. &apos;Publisher&apos;s PDF&apos;</li>
+</ul>
+</li>
+<li>dc.identifier.urn<ul>
+<li>identifier of the parallel published version. Eg. &apos;URN:NBN:fi:jyu-xxxxxxx&apos;</li>
+</ul>
+</li>
+</ul>
+<h3 id="university-of-helsinki">University of Helsinki</h3>
+<p><strong>All publications</strong></p>
+<p>?</p>
+<p><strong>Parallel published</strong>  </p>
+<p>Data source: Helda (<a href="https://helda.helsinki.fi/" target="_blank">https://helda.helsinki.fi/</a>)</p>
+<p>Harvesting interface: OAI-PMH</p>
+<p>Fields:</p>
+<ul>
+<li>dc.identifier.other<ul>
+<li>Contains both internal and external identifiers from TUHAT. Eg &apos;PURE: xxxxx&apos; and &apos;PURE UUID: xxxx&apos;.</li>
+</ul>
+</li>
+<li>dc.identifier.uri<ul>
+<li>identifier of the parallel published version. Eg. &apos;<a href="http://hdl.handle.net/10138/xxxxx" target="_blank">http://hdl.handle.net/10138/xxxxx</a>&apos;</li>
+</ul>
+</li>
+<li>dc.type.uri<ul>
+<li>describes the version of the published file eg. &apos;info:eu-repo/semantics/publishedVersion&apos;.</li>
+</ul>
+</li>
+</ul>
+<h3 id="university-of-eastern-finland">University of Eastern Finland</h3>
+<p><strong>All publications</strong></p>
+<p>?</p>
+<p><strong>Parallel published</strong>  </p>
+<p>Data source: UEF ERepository (<a href="https://erepo.uef.fi/" target="_blank">https://erepo.uef.fi/</a>)</p>
+<p>Harvesting interface: OAI-PMH</p>
+<p>Fields:</p>
+<ul>
+<li>dc.identifier.uri<ul>
+<li>identifier of the parallel published version</li>
+</ul>
+</li>
+<li>uef.solecris.id<ul>
+<li>Publication&apos;s ID in the CRIS system</li>
+</ul>
+</li>
+<li>dc.description.version<ul>
+<li>Eg. &apos;Post-print&apos;</li>
+</ul>
+</li>
+</ul>
 
                                 
                                 </section>
@@ -956,7 +1046,7 @@ generating new data based on ontologies</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC2 - Parallel Publication Dashboard","level":"1.2.2","depth":2,"next":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"previous":{"title":"UC1 - Infrastructure and Publications","level":"1.2.1","depth":2,"path":"Use-case-Infrastructures-and-publications.md","ref":"Use-case-Infrastructures-and-publications.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Jyvaskyla.md","mtime":"2017-05-29T14:00:13.498Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-05-30T05:16:17.803Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UC2 - Parallel Publication Dashboard","level":"1.2.2","depth":2,"next":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"previous":{"title":"UC1 - Infrastructure and Publications","level":"1.2.1","depth":2,"path":"Use-case-Infrastructures-and-publications.md","ref":"Use-case-Infrastructures-and-publications.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Jyvaskyla.md","mtime":"2017-06-05T06:46:26.269Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-05T06:47:01.668Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
