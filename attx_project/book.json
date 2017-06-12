@@ -1,8 +1,14 @@
 {
-    "plugins": ["highlight", "fontsettings", "search"],
+    "plugins": ["highlight", "fontsettings", "search", "git-author", "gitversion"],
     "pluginsConfig": {
         "fontSettings": {
             "size": 1
+        },
+        "git-author":{
+            "position": "top",
+            "modifyTpl": "Current page last modified at: {timeStamp}",
+            "createTpl": false,
+            "timeStampFormat": "DD-MMM-YYYY HH:mm:ss"
         }
     }
 }

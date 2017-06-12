@@ -1,5 +1,6 @@
-![ATTX Project logo](images/attx_logo.svg)
+{{ "ATTX Docs version v. | gitShort }}
 
+![ATTX Project logo](images/attx_logo.svg)
 
 ## Applications and Use Cases
 

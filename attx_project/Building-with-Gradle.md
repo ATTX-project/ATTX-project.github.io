@@ -3,6 +3,7 @@
 Brief report on interacting and working with Gradle within the project.
 
 <!-- TOC START min:1 max:4 link:true update:true -->
+- [Building with (Py)Gradle](#building-with-pygradle)
   - [Gradle](#gradle)
     - [Installation](#installation)
     - [Setting up](#setting-up)
@@ -23,7 +24,7 @@ Brief report on interacting and working with Gradle within the project.
 
 Installing on Ubuntu:
 * `curl -s https://get.sdkman.io | bash` - install sdk
-* `sdk install gradle 3.5` - install gradle 3.3 (or latest version)
+* `sdk install gradle 3.5` - install gradle 3.5 (or latest version)
 * check the installed version `gradle -v`
 
 Installing on MacOS (assuming [homebrew](http://brew.sh/) is installed):
