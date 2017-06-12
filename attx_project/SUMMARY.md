@@ -1,7 +1,6 @@
 # Summary
 
 ## ATTX Project
-{{ "ATTX Docs version v." | gitShort  }}
 
 * [Introduction](README.md)
 * Applications and Use Cases
