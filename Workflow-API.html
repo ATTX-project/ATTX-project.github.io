@@ -28,6 +28,10 @@
                 <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
                 
             
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-git-author/style.css">
+                
+            
         
 
     
@@ -860,7 +864,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="workflow-api">Workflow API</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 29-May-2017 06:33:08</div></div><h1 id="workflow-api">Workflow API</h1>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
 <li><a href="#overview">Overview</a></li>
@@ -1062,15 +1066,15 @@ attx:UnifiedViews
 <li>Other DPU specific information - see Example 1 - such as SPARQL query or SPARQL endpoint.</li>
 </ul>
 <p>Information specific to workflows and activities is extracted directly from the MySQL database for example activities and associated information are extracted from pipeline executions, however for information related to input and output graphs the attxMetadataPlugin DPU is used as illustrated in Example 2.</p>
-<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> exec_pipeline.<span class="hljs-keyword">id</span> <span class="hljs-keyword">AS</span> <span class="hljs-string">&apos;activityId&apos;</span>,
-ppl_model.<span class="hljs-keyword">id</span> <span class="hljs-keyword">AS</span> <span class="hljs-string">&apos;workflowId&apos;</span>,
+<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> exec_pipeline.id <span class="hljs-keyword">AS</span> <span class="hljs-string">&apos;activityId&apos;</span>,
+ppl_model.id <span class="hljs-keyword">AS</span> <span class="hljs-string">&apos;workflowId&apos;</span>,
 exec_pipeline.t_start <span class="hljs-keyword">AS</span> <span class="hljs-string">&apos;activityStart&apos;</span>,
 exec_pipeline.t_end <span class="hljs-keyword">AS</span> <span class="hljs-string">&apos;activityEnd&apos;</span>,
 exec_pipeline.t_end <span class="hljs-keyword">AS</span> <span class="hljs-string">&apos;lastChange&apos;</span>
 <span class="hljs-keyword">FROM</span> exec_pipeline, ppl_model
-<span class="hljs-keyword">WHERE</span> exec_pipeline.pipeline_id = ppl_model.<span class="hljs-keyword">id</span> <span class="hljs-keyword">AND</span>\
-exec_pipeline.<span class="hljs-keyword">status</span> = <span class="hljs-number">5</span>
-<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> ppl_model.<span class="hljs-keyword">id</span>
+<span class="hljs-keyword">WHERE</span> exec_pipeline.pipeline_id = ppl_model.id <span class="hljs-keyword">AND</span>\
+exec_pipeline.status = <span class="hljs-number">5</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> ppl_model.id
 </code></pre>
 <p>As depicted in the examples below often html tags are encoded and even more so the tags within them are encoded a second time, thus making it difficult to extract the required information.</p>
 <p>Example 1: SPARQL endpoint configuration</p>
@@ -1106,7 +1110,7 @@ Limit 100  &amp;lt;/query&amp;gt;
         <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">object-stream</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">eu.unifiedviews.helpers.dpu.extension.faulttolerance.FaultTolerance_-Configuration__V1</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">enabled</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">enabled</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">exceptionNames</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&amp;quot;linked-list&amp;quot;</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">exceptionNames</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&amp;quot;linked-list&amp;quot;/</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">maxRetryCount</span>&gt;</span>-1<span class="hljs-tag">&lt;/<span class="hljs-name">maxRetryCount</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">eu.unifiedviews.helpers.dpu.extension.faulttolerance.FaultTolerance_-Configuration__V1</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">object-stream</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
@@ -1176,7 +1180,7 @@ Example 2: ATTX metadata configuration</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Workflow API","level":"1.5.3","depth":2,"next":{"title":"Graph Component","level":"1.6","depth":1,"path":"Graph-Component.md","ref":"Graph-Component.md","articles":[{"title":"Graph Manager API","level":"1.6.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},{"title":"Graph Store","level":"1.6.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.6.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Graph Namespaces","level":"1.6.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking Strategies","level":"1.6.2.3","depth":3,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]}]}]},"previous":{"title":"UnifiedViews Plugins","level":"1.5.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Workflow-API.md","mtime":"2017-05-29T14:00:13.498Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-05T14:00:28.598Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Workflow API","level":"1.5.3","depth":2,"next":{"title":"Graph Component","level":"1.6","depth":1,"path":"Graph-Component.md","ref":"Graph-Component.md","articles":[{"title":"Graph Manager API","level":"1.6.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},{"title":"Graph Store","level":"1.6.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"1.6.2.1","depth":3,"path":"Data-Model.md","ref":"Data-Model.md","articles":[]},{"title":"Graph Namespaces","level":"1.6.2.2","depth":3,"path":"Namespaces.md","ref":"Namespaces.md","articles":[]},{"title":"Linking Strategies","level":"1.6.2.3","depth":3,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]}]}]},"previous":{"title":"UnifiedViews Plugins","level":"1.5.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Workflow-API.md","mtime":"2017-05-29T14:00:13.498Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-13T05:19:39.502Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

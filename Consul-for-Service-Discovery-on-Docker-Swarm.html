@@ -28,6 +28,10 @@
                 <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
                 
             
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-git-author/style.css">
+                
+            
         
 
     
@@ -860,7 +864,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="consul-for-service-discovery-in-docker-swarm">Consul for Service Discovery in Docker Swarm</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 29-May-2017 06:49:29</div></div><h1 id="consul-for-service-discovery-in-docker-swarm">Consul for Service Discovery in Docker Swarm</h1>
 <p>Hereby you can find a report of a test implementation of <a href="https://www.consul.io/" target="_blank">Consul</a> as a <a href="Service-Discovery-Solutions.html">Service Discovery</a> solution in a <a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a> cluster.</p>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
@@ -1014,28 +1018,28 @@ vfarcic/docker-flow-proxy
 <p><code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/my_web?recurse&quot;</code></p>
 <p>The output should include Service Discovery data in key value format, and be available in all Consul instances (replace <code>docker-machine ip swarm-1</code> with <code>docker-machine ip swarm-2</code> and <code>docker-machine ip swarm-3</code>):</p>
 <pre><code class="lang-javascript">{
-LockIndex: <span class="hljs-number">0</span>,
-Key: <span class="hljs-string">&quot;docker-flow/my_web/path&quot;</span>,
-Flags: <span class="hljs-number">0</span>,
-Value: <span class="hljs-string">&quot;L3Zhci93d3c=&quot;</span>,
-CreateIndex: <span class="hljs-number">14224</span>,
-ModifyIndex: <span class="hljs-number">14384</span>
+<span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
+<span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/path&quot;</span>,
+<span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
+<span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;L3Zhci93d3c=&quot;</span>,
+<span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14224</span>,
+<span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14384</span>
 },
 {
-LockIndex: <span class="hljs-number">0</span>,
-Key: <span class="hljs-string">&quot;docker-flow/my_web/pathtype&quot;</span>,
-Flags: <span class="hljs-number">0</span>,
-Value: <span class="hljs-string">&quot;cGF0aF9iZWc=&quot;</span>,
-CreateIndex: <span class="hljs-number">14221</span>,
-ModifyIndex: <span class="hljs-number">14381</span>
+<span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
+<span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/pathtype&quot;</span>,
+<span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
+<span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;cGF0aF9iZWc=&quot;</span>,
+<span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14221</span>,
+<span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14381</span>
 },
 {
-LockIndex: <span class="hljs-number">0</span>,
-Key: <span class="hljs-string">&quot;docker-flow/my_web/port&quot;</span>,
-Flags: <span class="hljs-number">0</span>,
-Value: <span class="hljs-string">&quot;NDkwMDE=&quot;</span>,
-CreateIndex: <span class="hljs-number">14218</span>,
-ModifyIndex: <span class="hljs-number">14377</span>
+<span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
+<span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/port&quot;</span>,
+<span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
+<span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;NDkwMDE=&quot;</span>,
+<span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14218</span>,
+<span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14377</span>
 },
 </code></pre>
 <p>Let&apos;s scale up the instances of Docker Flow Proxy and check whether the status was replicated.</p>
@@ -1084,7 +1088,7 @@ backend my_web-be49001
 --label com.df.servicePath=/p/health,/p/0.1/index \
 --label com.df.reqPathSearch=<span class="hljs-string">&apos;/p/&apos;</span> \
 --label com.df.reqPathReplace=<span class="hljs-string">&apos;/&apos;</span> \
-blankdots/<span class="hljs-built_in">test</span>_restapi:plain
+blankdots/test_restapi:plain
 </code></pre>
 <p>Once the test &quot;pygradle&quot; service is up, (check with <code>docker service ps pygradle</code>), we can query Consul&apos;s Key-Value Registry for the registered service parameters:</p>
 <p><code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/pygradle?recurse&quot;</code></p>
@@ -1211,7 +1215,7 @@ allow: POST, OPTIONS
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"next":{"title":"Data Administrator's User guide","level":"2.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"Service Discovery Implementation","level":"1.8","depth":1,"path":"ServiceDiscovery-Implementation.md","ref":"ServiceDiscovery-Implementation.md","articles":[{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-05-29T14:00:13.495Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-05T14:00:28.598Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"next":{"title":"Data Administrator's User guide","level":"2.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"Service Discovery Implementation","level":"1.8","depth":1,"path":"ServiceDiscovery-Implementation.md","ref":"ServiceDiscovery-Implementation.md","articles":[{"title":"Consul for Service Discovery on Docker Swarm","level":"1.8.1","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-05-29T14:00:13.495Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-13T05:19:39.502Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
