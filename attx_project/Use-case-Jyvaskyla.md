@@ -18,6 +18,7 @@ Also, VIRTA is the official publication data set with strict requirements for co
 
 In order to able to work with percentages, we need metadata data for every publication and well as the parallel published subset of publications. The the approach is to use combination of harvested (VIRTA) and master (CRIS) data sources in order to create the data set for all publications. We will then to use different kind of repositories, institutional, national and subject based, to get metadata data about the parallel published versions and associated files. Simple linking between these two data sets is done using the existing identifiers, such as DOIs and URNs.
 
+Use can be later be expanded to include other more complicated properties related to open access in general.
 
 ## User stories
 
@@ -28,8 +29,10 @@ In order to able to work with percentages, we need metadata data for every publi
 * As an admin, I want to add new properties to the existing data publication metadata data set.
 
 * As an admin, I want add new vocabulary for classifying resources in the existing data set. Classification is based on the existing publication metadata i.e. it is created by linking set existing metadata values e.g. field of science to new concept.
- * I want to make sure that the vocabulary data is updated every month
- * I want to create a link from publication to the new vocabulary
+
+* As an admin, I want to make sure that the vocabulary data is updated every month
+
+* As an admin, I want to create a link from publication to the new vocabulary
 
 * As an admin, I want to publish publication metadata so that is can be queried using the new vocabulary
 
@@ -39,6 +42,8 @@ In order to able to work with percentages, we need metadata data for every publi
 
 * As a user, I want to see how the parallel publishing situation has evolved between years X and Y given group Z.
 For example, percentage of parallel published articles between 2015-2017 in the field of physics.
+
+* As a user, I want to compare the parallel publishing status of publications published in 2015 using data from 2015, 2016 and 2017.
 
 * As a user, I want to download the full data dump of the broker in CSV format.
 
@@ -54,31 +59,47 @@ National publication metadata registry with excellent coverage and regularly upd
 
 2017 harvested data includes link to the parallel published version, but this information is missing from 2015 model and less strict in 2016, so there is room for ATTX type of broker to fill in the blanks. Also, VIRTA data model does not include any information about the version (preprint, post-print...) of parallel published version, which is something that could be included in our use case.
 
+Using VIRTA data might not be possible due to the restrictions related to the re-use.
+
 ### CRIS systems
 
 Universities' [CRIS systems](https://en.wikipedia.org/wiki/Current_research_information_system) are usually the master sources for publication related data. If there is a need for data that is not part of the VIRTA harvested data, it should be possible to get from the CRIS system. CRIS harvesting might also be beneficial for organizations that still submitting their data to VIRTA only once(?) a year, but are still able to make more recent data available for access.
 
 ### Repositories
 
-Institutional repositories are our main source of parallel publication data.
+Institutional repositories are our main source of parallel publication data. Repositories provide direct links to the parallel published versions as well as metadata about the available versions (pre-preprint/postprint...). Therefore, on this use case, repositories are considered as data sources for files and file related metadata.
 
 ## Required broker features
 
 **History data available**
 
-One should be able to query
+One should be able to use time related restrictions when querying OA related information. For example, for publications published in 2015, the number of parallel published versions can be different when queried against OA data from 2016 and 2017.
 
 **Incremental harvesting**
 
+Incremental harvested through OAI-PMH protocol makes the data gathering operations more flexible and less time consuming, as the broker only needs to operate on the data modified during certain time period.
+
+*TODO: How is incremental harvesting related to the history data?*
+
 **Configurable CSV to RDF transformation**
+
+Some of the data will be available as CSV files, which must be converted to internal RDF data.
 
 **Configurable XML to RDF tranformation**
 
+Some of the data will be available as XML, which must be converted to internal RDF data.
+
 **Publishing data set as a CSV file**
+
+Internal datasets must be published as CSV file for custom analytics and backup purposes.
 
 **Publishing data set as queryable REST API**
 
+Proof-of-concept javascript based UI uses REST API to access the required data.
+
 **Identifier based linking**
+
+In the first phase, all the linking is done via existing identifiers in the source data.
 
 **Generating new data based on ontologies/rules**
 
@@ -102,36 +123,21 @@ pub1 -- customClassification --> customThing1
 
 **Our definition of parallel published publication**
 
-Add definition here
+*Add definition here!*
+
+Differentiate between publications in OA journals and parallel published versions of publications.  
 
 
 ### Target data model
 
-What are the main concepts?
-For example:
-* Publication metadata from CRIS
-* File metadata from repo
+First draft:
 
+![Main concepts](images/ATTX-JY-datamodel.png)
 
+Basic idea: Publication dataset is connected through harvesting evetns with other versioned datasets that contain OA related information.
 
-
-How are the resource (Publication/File) URIs generated?
-
-How to handle history information?
-
-How to handle publications that have writers from multiple (Finnish) universities?
-
-
-
-
-**Catching cases where publication was first parallel published and then later removed**
-
-This basically means that harvested dataset at t1 contains publication P1 and the same publication is missing from dataset at t2. It also possible that P1 reappears again at t3. Given that t1 < t2 < t3.
-
-Are these records deleted or hidden in repo? What is the deletion policy (no,persistent,transient) related to the OAI-PMH AND how are these cases actually handled by the organization unit that maintains the repository?
-
-Different implementations based on the deletion policy detected from OAI-PMH interface?
-
+**TODO**
+* How are the resource (Publication/File) URIs generated?
 
 ### University of Jyväskylä
 
@@ -159,7 +165,9 @@ Fields:
 
 **All publications**
 
-?
+Data source: PURE
+
+Harvesting can be implemented using OAI-PMH, PURE's REST api, CSV exports or custom data extraction methods.  
 
 **Parallel published**  
 
