@@ -285,7 +285,7 @@ COPY runTests.sh /tmp/
 RUN chmod 700 /tmp/runTests.sh
 ```
 
-`frekele/gradle` image contains all the components to run Gradle 3.3. `dockerize` is used by the `runTests.sh` script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only `build.test.gradle` file is copied to the image. Image also doesn't run any script by default, instead the dcompose gradle plugin is used to attach a command  `runTests.sh` to the test container, which runs dockerized checks and runs the tests.
+`frekele/gradle` image contains all the components to run Gradle 3.3. `dockerize` is used by the `runTests.sh` script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only `build.test.gradle` file is copied to the image. Image also doesn't run any script by default, instead the dcompose Gradle plugin is used to attach a command  `runTests.sh` to the test container, which runs dockerized checks and runs the tests.
 
 ### Configuring Jenkins
 

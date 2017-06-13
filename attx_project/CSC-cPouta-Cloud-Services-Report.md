@@ -55,11 +55,11 @@ For the provisioning procedure that we used, cf. [Provisioning-ATTX-Components-o
 
 
 ### 5-node Configuration
-Five VMs running Ubuntu-14.04 from cPouta's image catalog (cf. https://research.csc.fi/pouta-flavours), three allocated as Docker Swarm Master (cPouta's "standard.small") and two as Workers ("standard.tiny"). Two vCPUs for the Manager nodes, and one for the workers (only eight vCPUs available in the Basic package). Result: not enough vRAM for the ElasticSearch Docker containers. Scaling up the VM's assigned vRAM proved unfeasible, as that would actually require resizing the VM's image from "standard.tiny" to "standard.small" and we were already at the limit of eight vCPus.
+Five VMs running Ubuntu-14.04 from cPouta's image catalog (cf. https://research.csc.fi/pouta-flavours), three allocated as Docker Swarm Master (cPouta's "standard.small") and two as Workers ("standard.tiny"). Two vCPUs for the Manager nodes, and one for the workers (only eight vCPUs available in the Basic package). Result: not enough vRAM for the ElasticSearch Docker containers. Scaling up the VM's assigned vRAM proved infeasible, as that would actually require resizing the VM's image from "standard.tiny" to "standard.small" and we were already at the limit of eight vCPus.
 
 
 ### 3-node Configuration
-Three VMs running Ubuntu-14.04 from cPouta's image catalog (cf. https://research.csc.fi/pouta-flavours), one allocated as Docker Swarm Masters ("standard.large", four vCPUs), and two as Workers ("standard.small", two vCPUs each). This combination was proved to deliver setup that allocated sufficient about of vRAM for running the ATTX stack, but no HA as there will be no Swarm Master failover-
+Three VMs running Ubuntu-14.04 from cPouta's image catalog (cf. https://research.csc.fi/pouta-flavours), one allocated as Docker Swarm Masters ("standard.large", four vCPUs), and two as Workers ("standard.small", two vCPUs each). This combination was proved to deliver setup that allocated sufficient about of vRAM for running the ATTX stack, but no HA as there will be no Swarm Master fail-over.
 
 The summary of this combo is as follows:
 * Master Node:
@@ -76,7 +76,7 @@ The summary of this combo is as follows:
     * Disk 80GB
 
 ## Customer Services
-CSC's customer support services have been found to be highly professional, technically useful, and cordial. Queries to email requests (servicedesk@csc.fi) were typically answered on the same day, addressed queries directly, clarified technical issues, and referred to correct documentation.
+CSC's customer support services have been found to be highly professional, technically useful, and cordial. Queries to email requests (`servicedesk@csc.fi`) were typically answered on the same day, addressed queries directly, clarified technical issues, and referred to correct documentation.
 
 
 ## Documentation

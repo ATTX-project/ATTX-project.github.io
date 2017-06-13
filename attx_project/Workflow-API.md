@@ -33,7 +33,7 @@ For building the WF-API see:
 
 In order to run the tests successfully but also the WF-API successfully one would require an existing MYSQL database connection. Such a connection can be configured in `database.conf` file.
 
-At the same time it can be troubleshooted using the docker container:
+At the same time it can be troubleshoot using the docker container:
 * connect to the running WF-API Docker container `docker exec -it container-id /bin/sh` (replace `container-id` with the ID of the docker container)
 * run python
 * in the python shell:
@@ -196,7 +196,7 @@ Extracting information associated to the provenance and workflow information can
 * ATTX medata DPU plugin - see Example 2;
 * Other DPU specific information - see Example 1 - such as SPARQL query or SPARQL endpoint.
 
-Information specific to workflows and activities is extracted directly from the MySQL database for example activities and associated information are extracted from pipeline executions, however for information related to input and output graphs the attxMetadataPlugin DPU is used as illustrated in Example 2.
+Information specific to workflows and activities is extracted directly from the MySQL database for example activities and associated information are extracted from pipeline executions, however for information related to input and output graphs the `attxMetadataPlugin` DPU is used as illustrated in Example 2.
 
 ```sql
 SELECT exec_pipeline.id AS 'activityId',

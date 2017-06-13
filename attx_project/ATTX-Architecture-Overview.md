@@ -74,7 +74,7 @@ Figure 3. Version 2 with Service discovery and processing services
 
 * **Version 2** - in this stage the components take shape such as Pipeline2 functionality is provided by the [Graph Manager Component](Graph-Component,md), and the Graph Manager also provides an API.
 
-We chose UnifiedViews as a default interface for the [Workflow Component](Workflow-Component.md) however other ETL tools cand be considered as long as they provide the necessary framework for extracting provenance(e.g. https://nifi.apache.org/ or https://github.com/spotify/luigi or http://www.dswarm.org/ etc. - see [Workflow Management Tools](Workflow-Management-Tools.md) ).
+We chose UnifiedViews as a default interface for the [Workflow Component](Workflow-Component.md) however other ETL tools can be considered as long as they provide the necessary framework for extracting provenance(e.g. https://nifi.apache.org/ or https://github.com/spotify/luigi or http://www.dswarm.org/ etc. - see [Workflow Management Tools](Workflow-Management-Tools.md) ).
 
 While the communication between components is implemented using messaging middleware component such as ActiveMQ or RabbitMQ -  see [Messaging Broker Solutions](Messaging-Brokers-Solutions.md) - the communication between components does not have to be real time.
 
@@ -82,11 +82,11 @@ While the communication between components is implemented using messaging middle
 
 We would like to illustrate how such an architecture would look in practice and some of the microservices that might be part of it.
 
-In Figure 4 we illustrate a pipeline that downloads a new version of a dataset and replaces the old one. We identified the following microservices to aid with this process:
+In Figure 4 we illustrate a pipeline that downloads a new version of a dataset and replaces the old one. We identified the following services to aid with this process:
 * _RMLService_ - converting the downloaded dataset from CSV format to RDF and storing it for access at a specified location;
 * _GM-API_ - used for orchestrating access to the Graph Store and generation of provenance information;
-* _ProvenanceAPI_ - based on the collected information and a trigger from _GM-API_ this service will generate provenance data and store it to its own Graph Store or send it to _GM-API_;
-* _UVProvenanceAPI_ - used for extracting provenance information from UnifiedViews, as not all provenance information can collected (start and end times of a pipeline/workflow, if a workflow is public or private or if a pipeline execution is successful) by the DPUs and transmitted to _GM-API_ and implicit to _ProvenanceAPI_.
+* _ProvenanceAPI_ - based on the collected information and a trigger from _GM-API_ this service will generate provenance data and store it to its own Graph Store or send it to _GM-API_ on a request basis;
+* _UVProvenanceAPI_ - used for extracting provenance information from UnifiedViews, as not all provenance information can be collected (start and end times of a pipeline/workflow, if a workflow is public or private, or if a pipeline execution is successful) by the DPUs and transmitted to _GM-API_ and implicitly to _ProvenanceAPI_.
 
 ![Figure 4. ATTX Platform Architecture](images/wf_services_overview.svg)
 

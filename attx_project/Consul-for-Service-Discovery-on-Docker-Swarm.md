@@ -121,7 +121,7 @@ Furthermore, if we need to scale up the Docker Swarm and deploy a new Consul Ser
 
 One possible solution is to use Consul in conjunction with a distributed reverse proxy and load balancer. [Docker Flow Proxy](https://github.com/vfarcic/docker-flow-proxy), is one such solution. It is a Swarm-enabled implementation of [HA Proxy](http://www.haproxy.org/) that integrates well with Consul that would bring true fault tolerance and elasticity to our ATTX Docker Swarm, and could be re-used as a reverse proxy as well.
 
-We can thus start by creating a new Swarm network and attach to it all services that should be accessible through a reverse proxy (all other services would use a "attx-backend" network):
+We can thus start by creating a new Swarm network and attach to it all services that should be accessible through a reverse proxy (all other services would use a `attx-backend` network):
 
 `docker network create --driver overlay proxy`
 

@@ -65,7 +65,7 @@ if (!project.hasProperty("env") || project.env == "dev") {
 }
 ```
 
-When running a Jenkins pipeline one can set the `env` property to `release` to build the realease version of the Docker Image e.g.:
+When running a Jenkins pipeline one can set the `env` property to `release` to build the release version of the Docker Image e.g.:
 
 ```shell
 gradle build -Penv=release -PjenkinsArtifactRepoURL=http://localhost:8080 -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080/repository/attx-releases clean :gm-API:buildGmapiImage
@@ -95,10 +95,10 @@ Alternative release generation:
 I wanted to test out a new version of the gm-API artifact. In order to do that I have to first create and push a new version of the artifact and them build and push a new gmAPI image.
 
 1. Commit and push new code to a branch `feature-X`. Create new version for the test artifact.
-1. Create a new Jenkins pipeline using gm-api as the template
-1. Configure new pipeline. Change brach to "feature-X" in the checkout stage.
+1. Create a new Jenkins pipeline using `gm-api` as the template
+1. Configure new pipeline. Change branch to `feature-X` in the checkout stage.
 1. Checkout platform-development code
-1. Modify common.gradle and set ext.gmAPI to reference the test artifact and change the ext.imageGM tag to something else (e.g. test-featureX)
+1. Modify `common.gradle` and set `ext.gmAPI` to reference the test artifact and change the `ext.imageGM` tag to something else (e.g. `test-featureX`)
 1. Build new test image:
 ```shell
 gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev buildGmapiImage

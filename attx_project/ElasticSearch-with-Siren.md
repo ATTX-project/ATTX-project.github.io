@@ -65,7 +65,7 @@ Unfortunately, it is not maintained any more and we should come up with a replac
 
 Installation:
 
-```
+```shell
 bin/plugin --install com.sindicetech.siren/siren-elasticsearch/1.4
 ```
 
@@ -109,7 +109,7 @@ Extended Unicode support for ES. Needed to get the sorting working. Version 2.3.
 
 Installation:
 
-```
+```shell
 bin/plugin install elasticsearch/elasticsearch-analysis-icu/2.3.0
 ```
 
@@ -131,13 +131,13 @@ index:
 
 ### attx-es-api
 
-Plugin that provides simple query interface and then transforms those queries into ones that can be executed by the siren plugin.
+Plugin that provides simple query interface and then transforms those queries into ones that can be executed by the Siren plugin.
 
 Installation:
 
 Our plugin can be installed in the same manner as the other ones. [https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html](https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html)
 
-Releases can installed from github using the following command:
+Releases can installed from Github using the following command:
 
 ```shell
 bin/plugin --install <org>/<user/component>/<version>
