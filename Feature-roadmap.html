@@ -28,6 +28,10 @@
                 <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
                 
             
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-git-author/style.css">
+                
+            
         
 
     
@@ -860,9 +864,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="feature-roadmap">Feature Roadmap</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 12-Jun-2017 08:04:31</div></div><h1 id="feature-roadmap">Feature Roadmap</h1>
 <p>See also: <a href="Release-Plan.html">Release Plan</a> for detailed planning of the issues.</p>
-<h3 id="q1---mid-april">Q1 - mid April</h3>
+<h3 id="q1---mid-april-2017">Q1 - mid April 2017</h3>
 <ul>
 <li>Distributed deployment</li>
 <li>GC: Identifier based linking</li>
@@ -870,13 +874,13 @@
 </ul>
 <p>Deliverables:</p>
 <ul>
-<li>[ ] Decision on how to implement or plan the service discovery (select technology)</li>
+<li>[X] Decision on how to implement or plan the service discovery (select technology)</li>
 <li>[X] Implement the distributed docker environment</li>
 <li>[X] <strong>Semantic Broker Release 1 for the public</strong></li>
 <li>[X] Use case 1 Infrastructures and Publications</li>
 <li>[X] Publish Wiki</li>
 </ul>
-<h3 id="q2---30th-of-june">Q2 - 30th of June</h3>
+<h3 id="q2---july-2017">Q2 - July 2017</h3>
 <ul>
 <li>All: Service discovery (finish)</li>
 <li>GC: Generating provenance data inside GC (i.e. moving WF-API functionality to GC)</li>
@@ -888,16 +892,17 @@
 <ul>
 <li>[ ] Every feature new release</li>
 <li>[ ] Use case 2</li>
-<li>[ ] ELAG 2017 presentation</li>
+<li>[X] ELAG 2017 presentation</li>
+<li>[ ] Semantic Broker Microservice architecture (start)</li>
 </ul>
-<h3 id="q3---29th-of-september">Q3 - 29th of September</h3>
+<h3 id="q3---september-2017">Q3 - September 2017</h3>
 <ul>
 <li>DP: Centralised logging</li>
 <li>DP: Easier Semantic Broker deployment (continue)</li>
 <li>GC: Data validation (e.g with SHACL)</li>
 <li>GC: RML based transformation of external data</li>
 </ul>
-<h3 id="q4---29th-of-december">Q4 - 29th of December</h3>
+<h3 id="q4---december-2017">Q4 - December 2017</h3>
 <ul>
 <li>GC + DC: Incremental updates to the DC datasets</li>
 <li>GC + DC: Provenance browser</li>
@@ -905,8 +910,8 @@
 </ul>
 <p>Deliverable:</p>
 <ul>
-<li>[ ] SWIB 2017 Workshop and/or presentation</li>
-<li>[ ] <a href="https://www.it2017.fi/" target="_blank">https://www.it2017.fi/</a></li>
+<li>[ ] SWIB 2017 presentation (maybe)</li>
+<li>[ ] <a href="https://www.it2017.fi/" target="_blank">https://www.it2017.fi/</a> (maybe)</li>
 </ul>
 
                                 
@@ -951,7 +956,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Feature Roadmap","level":"3.1","depth":1,"next":{"title":"Release Plan","level":"3.2","depth":1,"path":"Release-Plan.md","ref":"Release-Plan.md","articles":[]},"previous":{"title":"Data Administrator's User guide","level":"2.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search"],"pluginsConfig":{"fontSettings":{"size":1},"highlight":{},"fontsettings":{"theme":"white","family":"sans","size":2},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Feature-roadmap.md","mtime":"2017-05-22T14:00:11.663Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-05T06:47:01.668Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Feature Roadmap","level":"3.1","depth":1,"next":{"title":"Release Plan","level":"3.2","depth":1,"path":"Release-Plan.md","ref":"Release-Plan.md","articles":[]},"previous":{"title":"Data Administrator's User guide","level":"2.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Feature-roadmap.md","mtime":"2017-06-12T14:00:05.576Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-13T05:19:39.502Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
