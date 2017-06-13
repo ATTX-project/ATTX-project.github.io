@@ -1,4 +1,4 @@
-{{ "ATTX Docs version v." | gitShort  }}
+{{ "ATTX Docs version v0." | gitShort  }}
 
 ![ATTX Project logo](images/attx_logo.svg)
 

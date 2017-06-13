@@ -32,8 +32,16 @@ node {
     workDir = file("${project.buildDir}/attx_project")
 }
 
-task buildDocs(type: Exec, dependsOn: 'npmInstall') {
+task installDependencies(type: Exec, dependsOn: 'npmInstall') {
 
+    inputs.dir('${project.projectDir}/attx_project')
+
+    executable = 'node_modules/.bin/gitbook'
+    args = ['install', './attx_project', "${project.buildDir}", "--verbose"]
+}
+
+task buildDocs(type: Exec, dependsOn: 'npmInstall') {
+    dependsOn installDependencies
     inputs.dir('${project.projectDir}/attx_project')
 
     executable = 'node_modules/.bin/gitbook'
@@ -41,7 +49,7 @@ task buildDocs(type: Exec, dependsOn: 'npmInstall') {
 }
 
 task serveDocs(type:Exec, dependsOn: 'npmInstall') {
-
+    dependsOn installDependencies
     inputs.dir('${project.projectDir}/attx_project')
 
     executable = 'node_modules/.bin/gitbook'
