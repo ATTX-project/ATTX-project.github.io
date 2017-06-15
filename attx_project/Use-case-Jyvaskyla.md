@@ -27,7 +27,7 @@ The idea behind parallel publishing dashboard is to create a up-to-date data set
 
 Our goal, as part of the ATTX project, is to build and setup working prototype of a data broker that could be used to drive a national open data service, but putting one in production is out of the scope of the project.
 
-One could argue that [VIRTA](https://confluence.csc.fi/display/VIR/VIRTA-julkaisutietopalvelu) service already contains the same information and works on a national level with excellent coverage. However, ATTX use case can be seen as complementary to the VIRTA data set, because it provides a platform for new data aggregation and generation methods (e.g. data mining from parallel published versions, licensing permitting) and allows for alternative "views" on parallel publishing (e.g. grouping based on custom classification).  
+One could argue that [VIRTA](https://confluence.csc.fi/display/VIR/VIRTA-julkaisutietopalvelu) service already contains the same information and works on a national level with excellent coverage. However, ATTX use case can be seen as complementary to the VIRTA work, because it provides a platform for new data aggregation and generation methods (e.g. data mining from parallel published versions, licensing permitting) and allows for alternative "views" on parallel publishing (e.g. grouping based on custom classification).  
 
 Also, VIRTA is the official publication data set with strict requirements for completeness and quality, where as the data set created in this use case has less stringent expectations for incoming data and is therefore not designed to work as a basis for any official reporting.
 
@@ -38,6 +38,8 @@ In order to able to work with percentages, we need metadata data for every publi
 Use can be later be expanded to include other more complicated properties related to open access in general.
 
 ## User stories
+
+** Admins **
 
 * As an admin, I want to create the initial data data from one of the publication metadata sources.
 
@@ -52,6 +54,8 @@ Use can be later be expanded to include other more complicated properties relate
 * As an admin, I want to create a link from publication to the new vocabulary.
 
 * As an admin, I want to publish publication metadata so that is can be queried using the new vocabulary.
+
+** anonymous user **
 
 * As an interested anonymous user, I want to be able to see the current parallel publishing situation.
 
@@ -182,7 +186,7 @@ Fields:
 
 **All publications**
 
-Data source: PURE
+Data source: Tuhat (https://tuhat.helsinki.fi/portal/)
 
 Harvesting can be implemented using OAI-PMH, PURE's REST api, CSV exports or custom data extraction methods.  
 
