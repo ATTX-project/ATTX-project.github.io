@@ -37,13 +37,13 @@ There are two tasks for running the tests:
 * `runContainerTests` - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property `-PtestEnv=CI`. This task will run the tests inside a container on the same network as the other containers without the need of exposing all the ports.
 
 Running the tests inside the container:
-`gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases -PtestEnv=CI clean runContainerTests`
-`gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev -PtestEnv=CI clean runContainerTests` (for pd-feature-tests)
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases -PtestEnv=CI clean runContainerTests`
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev -PtestEnv=CI clean runContainerTests` (for pd-feature-tests)
 
 Run the test locally without containers and exposing the ports:
-`gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases clean runIntegTests`
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases clean runIntegTests`
 
-`gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests` (for pd-feature-tests)
+* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests` (for pd-feature-tests)
 
 Test reports are exported to the folder configured in `copyReportFiles` task (default `$buildDir/reports/`).
 
