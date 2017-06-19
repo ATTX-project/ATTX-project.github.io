@@ -864,7 +864,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 19-May-2017 13:47:43</div></div><h1 id="elasticsearch-with-siren">ElasticSearch with Siren</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 13-Jun-2017 10:51:52</div></div><h1 id="elasticsearch-with-siren">ElasticSearch with Siren</h1>
 <p>This page describes the components and configuration needed to get the ATTX ES plugin up and running. This information should be used as the basis for creating a containerized version of the API component</p>
 <p><strong>Siren plugin only supports ES up till version 1.3.4.</strong></p>
 <h3 id="table-of-contents">Table of Contents</h3>
@@ -920,8 +920,9 @@
 <p><a href="https://github.com/sirensolutions/siren" target="_blank">https://github.com/sirensolutions/siren</a></p>
 <p>Plugin that allows one to index and query nested documents easily and efficiently.<br>Unfortunately, it is not maintained any more and we should come up with a replacement.</p>
 <p>Installation:</p>
-<pre><code>bin/plugin --install com.sindicetech.siren/siren-elasticsearch/1.4
-</code></pre><p>Configuration:</p>
+<pre><code class="lang-shell">bin/plugin --install com.sindicetech.siren/siren-elasticsearch/1.4
+</code></pre>
+<p>Configuration:</p>
 <p>Add the following to the elasticsearch.yml</p>
 <pre><code class="lang-yml"><span class="hljs-comment"># Settings for the SIREn Plugin</span>
 <span class="hljs-attr">siren:</span>
@@ -953,8 +954,9 @@
 <p><a href="https://github.com/elastic/elasticsearch-analysis-icu" target="_blank">https://github.com/elastic/elasticsearch-analysis-icu</a></p>
 <p>Extended Unicode support for ES. Needed to get the sorting working. Version 2.3.0 works with ES 1.3.4.</p>
 <p>Installation:</p>
-<pre><code>bin/plugin install elasticsearch/elasticsearch-analysis-icu/2.3.0
-</code></pre><p>Configuration:</p>
+<pre><code class="lang-shell">bin/plugin install elasticsearch/elasticsearch-analysis-icu/2.3.0
+</code></pre>
+<p>Configuration:</p>
 <pre><code class="lang-yml"><span class="hljs-attr">index:</span>
 <span class="hljs-attr">    analysis:</span>
 <span class="hljs-attr">        analyzer:</span>
@@ -968,10 +970,10 @@
 <span class="hljs-attr">                filter:</span> [ <span class="hljs-string">&quot;icu_collation&quot;</span> ]
 </code></pre>
 <h3 id="attx-es-api">attx-es-api</h3>
-<p>Plugin that provides simple query interface and then transforms those queries into ones that can be executed by the siren plugin.</p>
+<p>Plugin that provides simple query interface and then transforms those queries into ones that can be executed by the Siren plugin.</p>
 <p>Installation:</p>
 <p>Our plugin can be installed in the same manner as the other ones. <a href="https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/1.4/modules-plugins.html</a></p>
-<p>Releases can installed from github using the following command:</p>
+<p>Releases can installed from Github using the following command:</p>
 <pre><code class="lang-shell">bin/plugin --install &lt;org&gt;/&lt;user/component&gt;/&lt;version&gt;
 </code></pre>
 <p>dev version can use the file based installation method:</p>
@@ -1023,7 +1025,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"ElasticSearch with Siren","level":"1.7.1","depth":2,"next":{"title":"ElasticSearch 5.x","level":"1.7.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]},"previous":{"title":"Distribution Component","level":"1.7","depth":1,"path":"Distribution-Component.md","ref":"Distribution-Component.md","articles":[{"title":"ElasticSearch with Siren","level":"1.7.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]},{"title":"ElasticSearch 5.x","level":"1.7.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-with-Siren.md","mtime":"2017-05-22T14:00:11.663Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-13T10:30:27.053Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ElasticSearch with Siren","level":"1.7.1","depth":2,"next":{"title":"ElasticSearch 5.x","level":"1.7.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]},"previous":{"title":"Distribution Component","level":"1.7","depth":1,"path":"Distribution-Component.md","ref":"Distribution-Component.md","articles":[{"title":"ElasticSearch with Siren","level":"1.7.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]},{"title":"ElasticSearch 5.x","level":"1.7.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-with-Siren.md","mtime":"2017-06-19T07:28:53.364Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-19T07:30:52.336Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

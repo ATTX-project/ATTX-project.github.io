@@ -864,7 +864,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 26-May-2017 11:25:05</div></div><h1 id="build-environment-setup">Build Environment Setup</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 13-Jun-2017 10:51:52</div></div><h1 id="build-environment-setup">Build Environment Setup</h1>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
 <li><a href="#working-with-build-environments">Working with Build Environments</a><ul>
@@ -924,7 +924,7 @@
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> GradleException(<span class="hljs-string">&quot;Build project environment option not recognised.&quot;</span>)
 }
 </code></pre>
-<p>When running a Jenkins pipeline one can set the <code>env</code> property to <code>release</code> to build the realease version of the Docker Image e.g.:</p>
+<p>When running a Jenkins pipeline one can set the <code>env</code> property to <code>release</code> to build the release version of the Docker Image e.g.:</p>
 <pre><code class="lang-shell">gradle build -Penv=release -PjenkinsArtifactRepoURL=http://localhost:8080 -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080/repository/attx-releases clean :gm-API:buildGmapiImage
 </code></pre>
 <h3 id="steps-for-generating-release-version">Steps for Generating Release Version</h3>
@@ -948,10 +948,10 @@
 <p>I wanted to test out a new version of the gm-API artifact. In order to do that I have to first create and push a new version of the artifact and them build and push a new gmAPI image.</p>
 <ol>
 <li>Commit and push new code to a branch <code>feature-X</code>. Create new version for the test artifact.</li>
-<li>Create a new Jenkins pipeline using gm-api as the template</li>
-<li>Configure new pipeline. Change brach to &quot;feature-X&quot; in the checkout stage.</li>
+<li>Create a new Jenkins pipeline using <code>gm-api</code> as the template</li>
+<li>Configure new pipeline. Change branch to <code>feature-X</code> in the checkout stage.</li>
 <li>Checkout platform-development code</li>
-<li>Modify common.gradle and set ext.gmAPI to reference the test artifact and change the ext.imageGM tag to something else (e.g. test-featureX)</li>
+<li>Modify <code>common.gradle</code> and set <code>ext.gmAPI</code> to reference the test artifact and change the <code>ext.imageGM</code> tag to something else (e.g. <code>test-featureX</code>)</li>
 <li>Build new test image:<pre><code class="lang-shell">gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev buildGmapiImage
 </code></pre>
 </li>
@@ -1015,7 +1015,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Build Environment Setup","level":"3.4.2","depth":2,"next":{"title":"Containerized Testing","level":"3.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]},"previous":{"title":"Jenkins CI","level":"3.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Build-Environment-Setup.md","mtime":"2017-05-26T11:36:11.083Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-13T10:30:27.053Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Build Environment Setup","level":"3.4.2","depth":2,"next":{"title":"Containerized Testing","level":"3.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]},"previous":{"title":"Jenkins CI","level":"3.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Build-Environment-Setup.md","mtime":"2017-06-19T07:28:53.359Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-06-19T07:30:52.336Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
