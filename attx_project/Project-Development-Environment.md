@@ -66,8 +66,8 @@ Project uses ZenHub (https://www.zenhub.com/) to add project management related 
 
 _Every task/user story is an issue_
 
-* project-management repository is used for issues that do not fit under component specific repositories. The visibility of PM repo is private, so that only project members are allowed to add new issues. The idea is that PM repo is used for project's internal, "Buy more coffee" kind of issues.
-* All the EPICs will be created in the project-management repo.
+* project-management repository is used for issues that do not fit under component specific repositories. The visibility of project-management repository is private, so that only project members are allowed to add new issues. The idea is that project-management repository is used for project's internal, "Buy more coffee" kind of issues.
+* All the EPICs will be created in the project-management repository.
 * Issues related to certain Sprint are collected to an EPIC called "Sprint X". Issues can be added to EPIC when they are created or when they are assigned.
 * Milestones are not used in PM repo. In other repositories milestones can be used to group issues for releases.
 * One should always reference the issues in the commit message. Use full name ATTX-project/[repo]/#[issue number] to distinguish between repositories.
@@ -85,7 +85,7 @@ Project's GitHub is divided into following repositories:
 * etl
  * Repository for projects that provide etl/workflow related functionality. Add new directories for every specific implementation.
 * public-apis
-* graphmanager
+* graph-component
  * Repository hosts a single project that manages the state of the internal graph.
 
 All projects are Gradle projects. Naming convention for the projects is [root-project]-[subproject] e.g. workflow-component-feature-tests or workflow-component-wfAPI.

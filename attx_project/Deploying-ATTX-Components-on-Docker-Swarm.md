@@ -47,7 +47,7 @@ And taking the "data" label and "/data" change into account in /etc/fstab:
 sudo echo "LABEL=uv-data    /uv-data    ext4    defaults    0    0" >> /etc/fstab
 ```
 
-Now you can create the directories that will be used by the UnifiedViews containers who need data persistence (unified-views-mariadb)
+Now you can create the directories that will be used by the UnifiedViews containers who need data persistence (`unified-views-mariadb`).
 ```shell
 sudo mkdir /uv-data/mariadb
 ```

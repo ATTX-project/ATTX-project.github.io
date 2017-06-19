@@ -1,16 +1,33 @@
-# <span style="color:red">DRAFT - work in progress</span>
+<h1 style="color:red">DRAFT - work in progress</h1>
 
 # Use case Jyväskylä - Parallel Publishing Dashboard
 
-Parallel publication (rinnakkaistallennus in Finnish) is a version of the published research article that is freely available from the organizations digital repository or similar service. For more detailed description about parallel publishing and how it relates to OA in general see https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing (Jyväskylä university).
+<!-- TOC START min:1 max:3 link:true update:true -->
+- [Use case Jyväskylä - Parallel Publishing Dashboard](#use-case-jyvskyl---parallel-publishing-dashboard)
+  - [Approach](#approach)
+  - [User stories](#user-stories)
+  - [Data sources](#data-sources)
+    - [VIRTA](#virta)
+    - [CRIS systems](#cris-systems)
+    - [Repositories](#repositories)
+  - [Required broker features](#required-broker-features)
+  - [Implementation](#implementation)
+    - [Target data model](#target-data-model)
+    - [University of Jyväskylä](#university-of-jyvskyl)
+    - [University of Helsinki](#university-of-helsinki)
+    - [University of Eastern Finland](#university-of-eastern-finland)
+
+<!-- TOC END -->
+
+Parallel publication (rinnakkaistallennus in Finnish) is a version of the published research article that is freely available from the organizations digital repository or similar service. For more detailed description about parallel publishing and how it relates to OA (Open Access) in general see https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing (Jyväskylä university).
 
 The idea behind parallel publishing dashboard is to create a up-to-date data set and accompanying web application, which together allow users to browse and visualize current state of parallel publishing in Finland along different attributes, such as organization, field of science or any other custom classification scheme. Data set and application should be flexible and support multiple "views" against the same data.
 
-University of Jyväskylä library has been doing similar work and results were presented by Pekka Olsbo as part of closing seminar for the Surima-project. His presentation slides can be downloaded from http://urn.fi/URN:NBN:fi-fe201701251319.
+[University of Jyväskylä library](https://kirjasto.jyu.fi/?set_language=en) has been doing similar work and results were presented by Pekka Olsbo as part of closing seminar for the Surima-project - the presentation slides can be downloaded from http://urn.fi/URN:NBN:fi-fe201701251319.
 
 Our goal, as part of the ATTX project, is to build and setup working prototype of a data broker that could be used to drive a national open data service, but putting one in production is out of the scope of the project.
 
-One could argue that [VIRTA](https://confluence.csc.fi/display/VIR/VIRTA-julkaisutietopalvelu) service already contains the same information and works on a national level with excellent coverage. However, ATTX use case can be seen as complementary to the VIRTA data set, because it provides a platform for new data aggregation and generation methods (e.g. data mining from parallel published versions, licensing permitting) and allows for alternative "views" on parallel publishing (e.g. grouping based on custom classification).  
+One could argue that [VIRTA](https://confluence.csc.fi/display/VIR/VIRTA-julkaisutietopalvelu) service already contains the same information and works on a national level with excellent coverage. However, ATTX use case can be seen as complementary to the VIRTA work, because it provides a platform for new data aggregation and generation methods (e.g. data mining from parallel published versions, licensing permitting) and allows for alternative "views" on parallel publishing (e.g. grouping based on custom classification).  
 
 Also, VIRTA is the official publication data set with strict requirements for completeness and quality, where as the data set created in this use case has less stringent expectations for incoming data and is therefore not designed to work as a basis for any official reporting.
 
@@ -22,6 +39,8 @@ Use can be later be expanded to include other more complicated properties relate
 
 ## User stories
 
+** Admins **
+
 * As an admin, I want to create the initial data data from one of the publication metadata sources.
 
 * As an admin, I want to setup incremental harvesting of updates to the already existing data set, which should contain only changes made after the latest successful harvesting.
@@ -30,13 +49,15 @@ Use can be later be expanded to include other more complicated properties relate
 
 * As an admin, I want add new vocabulary for classifying resources in the existing data set. Classification is based on the existing publication metadata i.e. it is created by linking set existing metadata values e.g. field of science to new concept.
 
-* As an admin, I want to make sure that the vocabulary data is updated every month
+* As an admin, I want to make sure that the vocabulary data is updated every month.
 
-* As an admin, I want to create a link from publication to the new vocabulary
+* As an admin, I want to create a link from publication to the new vocabulary.
 
-* As an admin, I want to publish publication metadata so that is can be queried using the new vocabulary
+* As an admin, I want to publish publication metadata so that is can be queried using the new vocabulary.
 
-* As an interested anonymous user, I want to be able to see the current parallel publishing situation
+** anonymous user **
+
+* As an interested anonymous user, I want to be able to see the current parallel publishing situation.
 
 * As a user, I want be able to group data set according different vocabulary, e.g. field of science, organization or year.
 
@@ -57,7 +78,7 @@ National publication metadata registry with excellent coverage and regularly upd
 
 [Documentation](https://confluence.csc.fi/pages/viewpage.action?pageId=65922061) about the data harvested by VIRTA.
 
-2017 harvested data includes link to the parallel published version, but this information is missing from 2015 model and less strict in 2016, so there is room for ATTX type of broker to fill in the blanks. Also, VIRTA data model does not include any information about the version (preprint, post-print...) of parallel published version, which is something that could be included in our use case.
+2017 harvested data includes link to the parallel published version, but this information is missing from 2015 model and less strict in 2016, so there is room for ATTX type of broker to fill in the blanks. Also, VIRTA data model does not include any information about the version (preprint, post-print, etc) of parallel published version, which is something that could be included in our use case.
 
 Using VIRTA data might not be possible due to the restrictions related to the re-use.
 
@@ -67,7 +88,7 @@ Universities' [CRIS systems](https://en.wikipedia.org/wiki/Current_research_info
 
 ### Repositories
 
-Institutional repositories are our main source of parallel publication data. Repositories provide direct links to the parallel published versions as well as metadata about the available versions (pre-preprint/postprint...). Therefore, on this use case, repositories are considered as data sources for files and file related metadata.
+Institutional repositories are our main source of parallel publication data. Repositories provide direct links to the parallel published versions as well as metadata about the available versions (pre-preprint/post-print, etc). Therefore, on this use case, repositories are considered as data sources for files and file related metadata.
 
 ## Required broker features
 
@@ -77,7 +98,7 @@ One should be able to use time related restrictions when querying OA related inf
 
 **Incremental harvesting**
 
-Incremental harvested through OAI-PMH protocol makes the data gathering operations more flexible and less time consuming, as the broker only needs to operate on the data modified during certain time period.
+Incremental harvested through [OAI-PMH protocol](http://www.openarchives.org/OAI/openarchivesprotocol.html) makes the data gathering operations more flexible and less time consuming, as the broker only needs to operate on the data modified during certain time period.
 
 *TODO: How is incremental harvesting related to the history data?*
 
@@ -85,7 +106,7 @@ Incremental harvested through OAI-PMH protocol makes the data gathering operatio
 
 Some of the data will be available as CSV files, which must be converted to internal RDF data.
 
-**Configurable XML to RDF tranformation**
+**Configurable XML to RDF transformation**
 
 Some of the data will be available as XML, which must be converted to internal RDF data.
 
@@ -95,7 +116,7 @@ Internal datasets must be published as CSV file for custom analytics and backup 
 
 **Publishing data set as queryable REST API**
 
-Proof-of-concept javascript based UI uses REST API to access the required data.
+Proof-of-concept Javascript based UI uses REST API to access the required data.
 
 **Identifier based linking**
 
@@ -103,7 +124,7 @@ In the first phase, all the linking is done via existing identifiers in the sour
 
 **Generating new data based on ontologies/rules**
 
-Use must be able to add their custom hierarcical classification schemes to the system by linking them either directly to publications or any related harvested metadata, such as existing classifications. Transitive properties can be used to generated direct link between publications and the data. For example:
+Use must be able to add their custom hierarchical classification schemes to the system by linking them either directly to publications or any related harvested metadata, such as existing classifications. Transitive properties can be used to generated direct link between publications and the data. For example:
 
 Before (asserted data):
 
@@ -134,7 +155,7 @@ First draft:
 
 ![Main concepts](images/ATTX-JY-datamodel.png)
 
-Basic idea: Publication dataset is connected through harvesting evetns with other versioned datasets that contain OA related information.
+Basic idea: Publication dataset is connected through harvesting events with other versions of the datasets that contain OA related information.
 
 **TODO**
 * How are the resource (Publication/File) URIs generated?
@@ -165,7 +186,7 @@ Fields:
 
 **All publications**
 
-Data source: PURE
+Data source: Tuhat (https://tuhat.helsinki.fi/portal/)
 
 Harvesting can be implemented using OAI-PMH, PURE's REST api, CSV exports or custom data extraction methods.  
 

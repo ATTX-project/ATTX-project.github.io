@@ -35,10 +35,10 @@ Installing on MacOS (assuming [homebrew](http://brew.sh/) is installed):
 
 There are two ways to work with Gradle:
 * install it on your machine - see [Installation](#installation)
-* provide a [wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) so that others can also work with the same version or we can distribute the project for others that do no have Gradle installed, or need to work with a specific version of Gradle.
+* provide a [wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) so that others can also work with the same version or we can distribute the project for others that do no have Gradle installed, or need to work with a specific version.
 
 There are two ways to create a Gradle Wrapper (both require Gradle installed):
-* use command `gradle wrapper --gradle-version 3.5` (last value is the version of gradle set for the wrapper);
+* use command `gradle wrapper --gradle-version 3.5` (last value is the version of Gradle set for the wrapper);
 * in the `build.gradle` file create a wrapper task (see below) and use command `gradle wrapper`
 
 ```groovy
@@ -59,7 +59,7 @@ Setting up steps overview - all these steps are detailed in this section:
 4. create `build.gradle` file with appropriate PyGradle plugin;
 5. generate project `setup.py`.
 
-One of the best way to work with gradle in Python is using [PyGradle](https://github.com/linkedin/pygradle). It is also recommended using Gradle version 3.+ .
+One of the best way to work with Gradle in Python is using [PyGradle](https://github.com/linkedin/pygradle). It is also recommended using Gradle version 3.+ .
 
 PyGradle comes with several plugins available (for specific details refer to PyGradle github repository).
 
@@ -74,7 +74,7 @@ PyGradle comes with several plugins available (for specific details refer to PyG
 
 PyGradle depends on Ivy metadata to build a dependency graph, thus one cannot use pypi directly. For this reason it is recommended to build a local pypi repository using the [pivy-importer](https://github.com/linkedin/pygradle/tree/master/pivy-importer); for the latest pivy-importer jre see [pivy-importer jfrog bintray](https://bintray.com/linkedin/maven/pivy-importer).
 
-The plugins can be added from Gradle plugins repository:
+The plugins can be added from Gradle plugins repository (https://plugins.gradle.org/):
 ```groovy
 plugins {
   id "com.linkedin.python-cli" version "0.4.9"
@@ -97,7 +97,7 @@ apply plugin: 'com.linkedin.python-cli'
 
 There are two methods to provide a PyPi repository:
 * local - that can be built following the instructions:
-Requires the pivy repository locally check build.gradle
+Requires the pivy repository locally check `build.gradle`
   * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.4.9
   * run as below
 
@@ -130,7 +130,7 @@ Requires the pivy repository locally check build.gradle
 
 For a full example and detailed description visit: https://github.com/linkedin/pygradle/tree/master/examples/example-project .
 
-Standard python project tree -  *Note the lack of a setup.py, more on this in a moment*:
+Standard python project tree -  *Note the lack of a `setup.py`, more on this in a moment*:
 
 ```config
 .
@@ -202,7 +202,7 @@ max-line-length = 160
 
 #### Excluding depenencies
 
-If there are issues with depenencies in your project e.g. : https://github.com/linkedin/pygradle/issues/96 one could exclude the dependency as follows:
+If there are issues with dependencies in your project e.g. : https://github.com/linkedin/pygradle/issues/96 one could exclude the dependency as follows:
 
 ```groovy
 dependencies {
@@ -224,7 +224,7 @@ Tasks:
 * other tasks: `gradle :runTests` (see below how to add this task) or `gradle pytest`
 * exclude tasks: `gradle build -x pytest`
 * do all: `gradle clean build -x pytest`
-* see tasks: `gradle tasks --all` and depenencies `gradle depenencies` (previous to Gradle 3.+ all the tasks could be seen simply with `gradle tasks` with 3.+ the `--all` parameter was added to limit the number of tasks shown)
+* see tasks: `gradle tasks --all` and dependencies `gradle dependencies` (previous to Gradle 3.+ all the tasks could be seen simply with `gradle tasks` with 3.+ the `--all` parameter was added to limit the number of tasks shown)
 * see test coverage `gradle pytest coverage` it will generate a html report in `build/coverage/htmlcov`
 
 In order to generate a HTML test report one could use `pytest-html` dependency and creating a Gradle task for that:

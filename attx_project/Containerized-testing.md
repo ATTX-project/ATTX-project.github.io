@@ -37,13 +37,13 @@ There are two tasks for running the tests:
 * `runContainerTests` - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property `-PtestEnv=CI`. This task will run the tests inside a container on the same network as the other containers without the need of exposing all the ports.
 
 Running the tests inside the container:
-`gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases -PtestEnv=CI clean runContainerTests`
-`gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev -PtestEnv=CI clean runContainerTests` (for pd-feature-tests)
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases -PtestEnv=CI clean runContainerTests`
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev -PtestEnv=CI clean runContainerTests` (for pd-feature-tests)
 
 Run the test locally without containers and exposing the ports:
-`gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases clean runIntegTests`
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases clean runIntegTests`
 
-`gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests` (for pd-feature-tests)
+* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests` (for pd-feature-tests)
 
 Test reports are exported to the folder configured in `copyReportFiles` task (default `$buildDir/reports/`).
 
@@ -285,7 +285,7 @@ COPY runTests.sh /tmp/
 RUN chmod 700 /tmp/runTests.sh
 ```
 
-`frekele/gradle` image contains all the components to run Gradle 3.3. `dockerize` is used by the `runTests.sh` script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only `build.test.gradle` file is copied to the image. Image also doesn't run any script by default, instead the dcompose gradle plugin is used to attach a command  `runTests.sh` to the test container, which runs dockerized checks and runs the tests.
+`frekele/gradle` image contains all the components to run Gradle 3.3. `dockerize` is used by the `runTests.sh` script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only `build.test.gradle` file is copied to the image. Image also doesn't run any script by default, instead the dcompose Gradle plugin is used to attach a command  `runTests.sh` to the test container, which runs dockerized checks and runs the tests.
 
 ### Configuring Jenkins
 
