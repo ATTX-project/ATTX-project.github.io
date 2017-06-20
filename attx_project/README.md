@@ -2,7 +2,7 @@
 
 ![ATTX Project logo](images/attx_logo.svg)
 
-ATTX 2016 is a research and development project run by the Helsinki University Library as part of the national Open Science and Research initiative. The goal of the project is to make use of research related data, available in different repositories and throughout institutions. The project will be developing software components for linking, enriching and distributing linked data and provide solution for turning published datasets into scalable and robust data services.
+ATTX 2016 is a research and development project run by the [Helsinki University Library](http://www.helsinki.fi/library) as part of the national Open Science and Research initiative. The goal of the project is to make use of research related data, available in different repositories and throughout institutions. The project will be developing software components for linking, enriching and distributing linked data and provide solution for turning published datasets into scalable and robust data services.
 
 ## Applications and Use Cases
 
