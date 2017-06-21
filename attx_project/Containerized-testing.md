@@ -114,7 +114,7 @@ dcompose {
     wfapi {
         forcePull = true
         forceRemoveImage = true
-        image = "${imageRepo}:${imageRepoPort}/wf-api:${testImageWF}"
+        image = "${imageRepo}:${imageRepoPort}/uvprov-API:${testImageWF}"
         dependsOn = [mysql]
         networks = [gcTest]
         hostName = 'wfapi'

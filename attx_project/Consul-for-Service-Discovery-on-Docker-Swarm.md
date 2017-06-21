@@ -14,7 +14,7 @@ Hereby you can find a report of a test implementation of [Consul](https://www.co
 
 ## 1. Deployment on Docker Swarm
 
-For this exercise, we deployed a 3-node Docker Swarm with one Master and two workers (identical to the one running in cPouta).
+For this exercise, we deployed a 3-node Docker Swarm with one Master and two workers (identical to the one running in [cPouta](CSC-cPouta-Cloud-Services-Report.md)).
 
 Such 3-node swarm was created with docker-machine (requires not only [Docker Machine](https://docs.docker.com/machine/install-machine/), but also  [Virtualbox](https://www.virtualbox.org/wiki/VirtualBox)), and can be automated by a [BASH script](https://github.com/ATTX-project/platform-deployment/blob/feature-docker-machine/swarm-mode-docker-machine/createSwarm.sh).
 

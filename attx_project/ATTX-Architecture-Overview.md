@@ -66,7 +66,7 @@ There are two versions to the service discovery/inter-component communication il
 
 Figure 2. Version 1 of Inter-component Communication
 
-* **Version 1** - represents the base structure for achieving the flow of data between the three main components. At this stage the distinction between the components is rudimentary. For example the Graph Manager consists of a single scheduled event that consumes the Workflow API. Components communication with direct HTTP requests using hard-coded component names.
+* **Version 1** - represents the base structure for achieving the flow of data between the three main components. At this stage the distinction between the components is rudimentary. For example the Graph Manager consists of a single scheduled event that consumes the UVProvovenance API. Components communication with direct HTTP requests using hard-coded component names.
 
 ![Figure 3. Version 3 of Inter-component Communication](images/v3-intercomponent_communication.svg)
 
