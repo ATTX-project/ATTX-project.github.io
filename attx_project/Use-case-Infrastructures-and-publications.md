@@ -61,7 +61,7 @@ Workflows use very basic and custom built DPUs for transformations and processin
 This model should evolve as the implementation of the use case becomes more complex.
 We assume that TUHAT infrastructure data contains identifiers that point to the infrastructure bank. The idea is to enrich the infrastructure information.
 
-See [Ontology/Data model](ATTX-Data-Model.md) for more information.
+See [Ontology/Data model](ATTX-Data-Model.md) for more information with regards to namespaces and Ontology.
 
 **Example data**
 

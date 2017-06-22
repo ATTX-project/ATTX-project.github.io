@@ -3,6 +3,7 @@
 This guide exemplifies 5 VMs created with Vagrant and configured with Ansible, however one can use Docker Swarm Mode with Docker-Machine (https://docs.docker.com/machine/) as well.
 
 <!-- TOC START min:1 max:3 link:true update:true -->
+- [Building Swarm Mode on a PC or Mac](#building-swarm-mode-on-a-pc-or-mac)
   - [1. Prerequisites](#1-prerequisites)
     - [Virtualbox, Vagrant and Ansible](#virtualbox-vagrant-and-ansible)
     - [Preparing the environment](#preparing-the-environment)
@@ -79,12 +80,16 @@ DO NOT execute docker swarm init on multiple nodes (possibility of multiple disj
 
 ### Create the cluster from node1:
 
-`docker swarm init`
+```shell
+docker swarm init
+```
 
 Checking that Swarm mode is enabled
 
 Run the docker info command:
-`docker info`
+```shell
+docker info
+```
 
 The output should include:
 ```shell
@@ -101,19 +106,25 @@ When running in Swarm mode, each node advertises its address to the others (i.e.
 (otherwise, the default port 2377 will be used)
 
 Example:
-`docker swarm init --advertise-addr eth1`
+```shell
+docker swarm init --advertise-addr eth1
+```
 
 ### Adding nodes to the Swarm
 
 Show the worker token again:
 
-`docker swarm join-token worker`
+```shell
+docker swarm join-token worker
+```
 
 Switch to node2 and copy-paste the `docker swarm join ...` command with the token output that was displayed just before.
 
 Switch back to node1 and display the cluster information (node1 is a manager):
 
-`docker node ls`
+```shell
+docker node ls
+```
 
 The output should be similar to the following:
 
@@ -134,17 +145,23 @@ Docker Compose can be directly used by a Swarm cluster through `docker stack ...
 
 For example:
 
-`docker stack deploy my_stack --compose-file my_stack_file.yml`
+```shell
+docker stack deploy my_stack --compose-file my_stack_file.yml
+```
 
 ### Inspecting stacks
 
 `docker stack ps` shows the detailed state of all services of a stack, for example:
 
-`docker stack ps my_stack`
+```shell
+docker stack ps my_stack
+```
 
 Confirm that we get the same output with the following command:
 
-`docker service ps my_stack_mystack`
+```shell
+docker service ps my_stack_mystack
+```
 
 ### Scaling up services (e.g. ElasticSearch)
 

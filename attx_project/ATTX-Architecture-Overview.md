@@ -13,7 +13,7 @@ Figure 1. ATTX Semantic Broker Architecture
 
 ATTX Semantic Broker is composed of a collection of loosely coupled services, which implement several broker-like capabilities. Example of such services are illustrated in: **[Microservices Architecture](#microservices-example)**.
 
-Given that there are a collection of such services, we can still identify three main components under which we can cluster the services: **Workflow Component**, **Graph Component**, **Distribution Component** while the **Service Discovery** and the **Semantic Broker Deployment** gather all of them together in order to provide them as a individual services or as a platform. The communication and contracts between the components is specified in [Service Discovery](#service-discovery).
+Given that there are a collection of such services, we can still identify three core components under which we can cluster the services: **Workflow Component**, **Graph Component**, **Distribution Component** while the **Service Discovery** and the **Semantic Broker Deployment** gather all of them together in order to provide them as a individual services or as a platform. The communication and contracts between the components is specified in [Service Discovery](#service-discovery).
 
 ## Terminology and Acronyms
 
@@ -66,7 +66,7 @@ There are two versions to the service discovery/inter-component communication il
 
 Figure 2. Version 1 of Inter-component Communication
 
-* **Version 1** - represents the base structure for achieving the flow of data between the three main components. At this stage the distinction between the components is rudimentary. For example the Graph Manager consists of a single scheduled event that consumes the UVProvovenance API. Components communication with direct HTTP requests using hard-coded component names.
+* **Version 1** - represents the base structure for achieving the flow of data between the three core components. At this stage the distinction between the components is rudimentary. For example the Graph Manager consists of a single scheduled event that consumes the UVProvovenance API. Components communication with direct HTTP requests using hard-coded component names.
 
 ![Figure 3. Version 3 of Inter-component Communication](images/v3-intercomponent_communication.svg)
 

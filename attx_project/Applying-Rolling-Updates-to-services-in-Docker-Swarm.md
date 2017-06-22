@@ -29,7 +29,11 @@ ContainerSpec:
 Resources:
 Endpoint Mode:	vip
 ```
-`docker service ls`
+Upon running the command:
+```shell
+docker service ls
+```
+The result would be:
 ```
 ttjg5xkhg2fx  redis       replicated  3/3       redis:3.0.6
 ```
@@ -44,7 +48,9 @@ q2sgd0ua12q2  redis.3  redis:3.0.6  swarm-1  Running        Running 8 minutes ag
 ```
 
 3. Issue the rolling update to a new version of the service (3.0.7 in this example):
-`docker service update --image redis:3.0.7 redis`
+```shell
+docker service update --image redis:3.0.7 redis
+```
 
 Check the "UpdateStatus" of the "redis" service update (should be "completed"):
 ```shell
@@ -72,6 +78,9 @@ Endpoint Mode:	vip
 Finally, check that all instances of the 3.0.6 version of the "redis" service have been shutdown, and that all instances of new 3.0.7 version are running:
 ```shell
 docker service ps redis
+```
+The result would look like:
+```shell
 ID            NAME         IMAGE        NODE     DESIRED STATE  CURRENT STATE           ERROR  PORTS
 iy10bjo2udtp  redis.1      redis:3.0.7  swarm-3  Running        Running 3 minutes ago          
 1t638vum32s6   \_ redis.1  redis:3.0.6  swarm-3  Shutdown       Shutdown 3 minutes ago         

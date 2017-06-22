@@ -14,12 +14,12 @@ ATTX 2016 is a research and development project run by the [Helsinki University 
 
 * [ATTX Architecture Overview](ATTX-Architecture-Overview.md)
 * [ATTX Broker Deployment](ATTX-Broker-Deployment.md)
+
 * ATTX Core Components:
     * [Workflow Component](Workflow-Component.md)
     * [Graph Component](Graph-Component.md)
     * [Distribution Component](Distribution-Component.md)
     * [Service Discovery](ServiceDiscovery-Implementation.md)
-
 * ATTX Semantic Broker Services:
     * [Provenance Service](Provenance-Service.md)
 
