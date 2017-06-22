@@ -1,6 +1,6 @@
 ## ETL Artifacts
 
-The Workflow Component ETL artifact consists of three main components as depicted in Figure 1:
+The Workflow Component ETL artifact consists of three core components as depicted in Figure 1:
 
 * Ingestion and Mapping
 * Processing

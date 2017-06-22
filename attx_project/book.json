@@ -1,5 +1,5 @@
 {
-    "plugins": ["highlight", "fontsettings", "search", "git-author", "gitversion"],
+    "plugins": ["highlight", "fontsettings", "search", "git-author", "gitversion", "copy-code-button"],
     "pluginsConfig": {
         "fontSettings": {
             "size": 1

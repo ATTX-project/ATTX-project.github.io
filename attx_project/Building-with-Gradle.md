@@ -77,7 +77,7 @@ PyGradle depends on Ivy metadata to build a dependency graph, thus one cannot us
 The plugins can be added from Gradle plugins repository (https://plugins.gradle.org/):
 ```groovy
 plugins {
-  id "com.linkedin.python-cli" version "0.4.9"
+  id "com.linkedin.python-cli" version "0.6.1"
 }
 ```
 or by jcenter
@@ -87,7 +87,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath group: 'com.linkedin.pygradle', name: 'pygradle-plugin', version: '0.4.9'
+        classpath group: 'com.linkedin.pygradle', name: 'pygradle-plugin', version: '0.6.1'
     }
 }
 apply plugin: 'com.linkedin.python-cli'
@@ -98,11 +98,11 @@ apply plugin: 'com.linkedin.python-cli'
 There are two methods to provide a PyPi repository:
 * local - that can be built following the instructions:
 Requires the pivy repository locally check `build.gradle`
-  * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.4.9
+  * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.6.1
   * run as below
 
     ```shell
-    java -jar ~/Software/pivy-importer-0.4.9-all.jar --repo /home/user/repository \
+    java -jar ~/Software/pivy-importer-0.6.1-all.jar --repo /home/user/repository \
       virtualenv:15.0.1 \
       pip:7.1.2 \
       gunicorn:19.6.0 \
@@ -149,7 +149,7 @@ Create a `build.gradle` file. An example of a such a file is bellow with some sp
 
 ```groovy
 plugins {
-  id "com.linkedin.python-cli" version "0.4.9"
+  id "com.linkedin.python-cli" version "0.6.1"
 }
 
 python {
