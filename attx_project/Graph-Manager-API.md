@@ -1,5 +1,6 @@
 # Graph Manager API
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Overview](#overview)
   - [Building the GM-API](#building-the-gm-api)

@@ -12,31 +12,20 @@ ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Dis
 * **Processing pipelines** only work with internal data;
 * **Distribution pipelines** are the only ones that are used to expose/distribute/publish data to the public.
 
-## Table of Contents
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
-- [Pipeline Types](#pipeline-types)
-  - [Ingestion Pipelines](#ingestion-pipelines)
-  - [Processing Pipelines](#processing-pipelines)
-  - [Distribution Pipelines](#distribution-pipelines)
-- [ATTX DPUs](#attx-dpus)
-  - [Extractors](#extractors)
-    - [File Download](#file-download)
-    - [OAI-PMH Harvester](#oai-pmh-harvester)
-    - [Select Existing Datasets](#select-existing-datasets)
-  - [Transformers](#transformers)
-    - [Describe External Data source](#describe-external-data-source)
-    - [Describe Data Set](#describe-data-set)
-    - [Cluster IDs](#cluster-ids)
-    - [RML Transformer](#rml-transformer)
-    - [Link by ID](#link-by-id)
-    - [Custom RDF to JSON Mapper](#custom-rdf-to-json-mapper)
-    - [JSON-LD Framing based RDF to JSON Mapper](#json-ld-framing-based-rdf-to-json-mapper)
-  - [Loaders](#loaders)
-    - [Replace Data Set](#replace-data-set)
-    - [Update Data Set](#update-data-set)
-    - [Publish to API](#publish-to-api)
-    - [Publish to File](#publish-to-file)
-- [Semantic Broker End to End Usage Scenario](#semantic-broker-end-to-end-usage-scenario)
+- [ATTX Semantic Broker - Data Administrator's User guide](#attx-semantic-broker---data-administrators-user-guide)
+  - [Introduction](#introduction)
+    - [Table of Contents](#table-of-contents)
+  - [Pipeline Types](#pipeline-types)
+    - [Ingestion Pipelines](#ingestion-pipelines)
+    - [Processing Pipelines](#processing-pipelines)
+    - [Distribution Pipelines](#distribution-pipelines)
+  - [ATTX DPUs](#attx-dpus)
+    - [Extractors](#extractors)
+    - [Transformers](#transformers)
+    - [Loaders](#loaders)
+  - [Semantic Broker End to End Usage Scenario](#semantic-broker-end-to-end-usage-scenario)
 
 <!-- TOC END -->
 

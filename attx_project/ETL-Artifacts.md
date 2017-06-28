@@ -2,28 +2,22 @@
 
 The Workflow Component ETL artifact consists of three core components as depicted in Figure 1:
 
-* Ingestion and Mapping
+* Ingestion
 * Processing
-* Dissemination
+* Distribution
 
 Other ETL components could be added to the ETL stack with the purpose of enhancing the results. Examples include:
 
 * NER for extracting Places, Organization etc.
 * Data converters
 
-![Figure 1. ETL Data Workflow](images/etl_dataworkflow.svg)
+Some of the uses of the ETL workflow include: inferencing, calling and updating distribution endpoints, processing and transformation, updating ElasticSearch data and also calling functionalities from Graph Component, more precisely [Graph Manager API](Graph-Manager-API.md) which in return will make use of the services available.
 
-Figure 1. ETL Data Workflow
+A simplified version of the communication and data flow in the Semantic Broker is provided in Figure 1. For examples on specific services please refer to [ATTX Architecture Overview](ATTX-Architecture-Overview.md).
 
----
+![Figure 1. Semantic Broker Component and Data Flow](images/etl_componentworkflow.svg)
 
-Some of the uses of the ETL workflow include: inferencing, updating Public APIs, Transformation, updating ElasticSearch via the Graph (GM - Graph Manager component). Graph Manager component also can provide input to the ETL components further enriching the information contained in the platform.
-
-A draft overview on the Semantic Broker components is provided in Figure 2.
-
-![ETL Semantic Broker Component Workflow](images/etl_componentworkflow.svg)
-
-Figure 2. ETL Platform Component Workflow
+Figure 1.  Semantic Broker Component and Data Flow
 
 ## Comparison of ETL Artifacts
 

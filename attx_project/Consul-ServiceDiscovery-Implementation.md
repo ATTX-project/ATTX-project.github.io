@@ -1,5 +1,6 @@
 # Consul Service Discovery Implementation
 
+### Table of Contents
 <!-- TOC START min:1 max:4 link:true update:false -->
   - [Consul in Practice](#consul-in-practice)
     - [Registering a Service with Consul](#registering-a-service-with-consul)

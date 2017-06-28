@@ -6,7 +6,8 @@ Adjacent to the - [Feature roadmap](https://github.com/ATTX-project/project-mana
 
 **We should associate issues with the first release version.**
 
-<!-- TOC START min:1 max:3 link:true update:true -->
+### Table of Contents
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Realease Version 2.0](#realease-version-20)
   - [Realease Version 1.0](#realease-version-10)
 

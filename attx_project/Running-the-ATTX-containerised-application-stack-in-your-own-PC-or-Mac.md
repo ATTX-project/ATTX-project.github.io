@@ -2,8 +2,8 @@
 
 We hereby exemplify how to run the ATTX stack in your PC or Mac, so that you can try out our Linked Open Data solution. The applications and services in the ATTX stack are fully containerised with Docker (cf. https://www.docker.com/what-container) and thus require that you install Docker CE (https://www.docker.com/community-edition) and Docker Compose (https://docs.docker.com/compose/) in your PC or Mac beforehand.
 
-<!-- TOC START min:1 max:3 link:true update:true -->
-- [Running the ATTX Stack on a PC or Mac](#running-the-attx-stack-on-a-pc-or-mac)
+### Table of Contents
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Pre-requisite: Install Docker and Docker Compose on your PC or Mac](#pre-requisite-install-docker-and-docker-compose-on-your-pc-or-mac)
   - [Running the ATTX Application Stack with Docker](#running-the-attx-application-stack-with-docker)
   - [Test the Availability of the ATTX Containerised Stack](#test-the-availability-of-the-attx-containerised-stack)

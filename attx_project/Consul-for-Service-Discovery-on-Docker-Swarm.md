@@ -2,6 +2,7 @@
 
 Hereby you can find a report of a test implementation of [Consul](https://www.consul.io/) as a [Service Discovery](Service-Discovery-Solutions.md) solution in a [Docker Swarm](https://docs.docker.com/engine/swarm/) cluster.
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [1. Deployment on Docker Swarm](#1-deployment-on-docker-swarm)
   - [2. Possibilities](#2-possibilities)

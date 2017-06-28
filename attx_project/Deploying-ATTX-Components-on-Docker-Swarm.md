@@ -2,6 +2,7 @@
 
 This guide exemplifies how to deploy the ATTX components on Docker Swarm, by setting up OpenStack volumes for  data persistence and using a v3 Docker Composer YML definition file.
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Setting up OpenStack Volumes for Data Persistence](#setting-up-openstack-volumes-for-data-persistence)
   - [Deploying the ATTX Components](#deploying-the-attx-components)

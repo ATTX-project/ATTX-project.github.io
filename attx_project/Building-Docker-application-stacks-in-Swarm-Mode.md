@@ -2,8 +2,10 @@
 
 This guide exemplifies 5 VMs created with Vagrant and configured with Ansible, however one can use Docker Swarm Mode with Docker-Machine (https://docs.docker.com/machine/) as well.
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
 - [Building Swarm Mode on a PC or Mac](#building-swarm-mode-on-a-pc-or-mac)
+    - [Table of Contents](#table-of-contents)
   - [1. Prerequisites](#1-prerequisites)
     - [Virtualbox, Vagrant and Ansible](#virtualbox-vagrant-and-ansible)
     - [Preparing the environment](#preparing-the-environment)

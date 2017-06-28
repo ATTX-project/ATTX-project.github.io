@@ -2,8 +2,10 @@
 
 Brief report on interacting and working with Gradle within the project.
 
+### Table of Contents
 <!-- TOC START min:1 max:4 link:true update:true -->
 - [Building with (Py)Gradle](#building-with-pygradle)
+    - [Table of Contents](#table-of-contents)
   - [Gradle](#gradle)
     - [Installation](#installation)
     - [Setting up](#setting-up)

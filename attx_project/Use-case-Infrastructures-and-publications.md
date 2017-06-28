@@ -7,6 +7,7 @@ Steps:
 2. Enrich infrastructure metadata using the service descriptions coming from the national infrastructure databank.
 3. Profit?
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Data sources](#data-sources)
     - [Research Infrastructures Databank](#research-infrastructures-databank)

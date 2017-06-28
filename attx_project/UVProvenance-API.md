@@ -1,7 +1,7 @@
 # UVProvenance API
 
-<!-- TOC START min:1 max:3 link:true update:true -->
-- [UVProvenance API](#uvprovenance-api)
+### Table of Contents
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Overview](#overview)
   - [Building the UVProvenance-API](#building-the-uvprovenance-api)
     - [Database Connection](#database-connection)

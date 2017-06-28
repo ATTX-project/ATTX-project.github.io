@@ -32,7 +32,7 @@
     * [Ontology/Data model](ATTX-Data-Model.md)
     * [Linking Strategies](Linking-Strategies.md)
 * [Distribution Component](Distribution-Component.md)
-  * [ElasticSearch with Siren](ElasticSearch-with-Siren.md)
+  * [ElasticSearch 1.3 with Siren](ElasticSearch-with-Siren.md)
   * [ElasticSearch 5.x](ElasticSearch-5.md)
 * [Service Discovery Implementation](ServiceDiscovery-Implementation.md)
   * [Consul Service Discovery Implementation](Consul-ServiceDiscovery-Implementation.md)
@@ -68,6 +68,7 @@
 * Presentations
   * [ELAG2017](ELAG-2017.md)
   * [SWIB2017](SWIB-2017.md)
+  * [ISWC2017](ISWC-2017.md)
 
 * [Open Source Contributions](Open-Contributions.md)
 

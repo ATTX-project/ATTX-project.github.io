@@ -2,6 +2,7 @@
 
 This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Testing Workflow](#testing-workflow)
   - [Testing with Gradle](#testing-with-gradle)

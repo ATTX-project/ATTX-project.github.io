@@ -45,3 +45,4 @@ Conference Proposals, Presentation and Talks:
 
 * [ELAG2017](ELAG-2017.md)
 * [SWIB2017](SWIB-2017.md)
+* [ISWC2017](ISWC-2017.md)

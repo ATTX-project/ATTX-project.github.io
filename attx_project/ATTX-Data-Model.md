@@ -1,5 +1,6 @@
 # ATTX Ontology
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Ontology/Data Model - ATTXOnto](#ontologydata-model---attxonto)
     - [ATTX Graph Namespaces](#attx-graph-namespaces)
@@ -22,7 +23,7 @@ A general use case is represented in Figure 1 where we can depict several parts:
 * Working Data Graph - contains both inferred and explicit relationships between domain data;
 * Dissemination Data Graph - Data Graph distributed via the APIs.
 
-![Figure 1. Ontology Use Cases Flow](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/ontology_usecase.svg)
+![Figure 1. Ontology Use Cases Flow](images/ontology_usecase.svg)
 
 Figure 1. Ontology Use Cases Flow
 
