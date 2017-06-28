@@ -5,6 +5,7 @@ Issue/Bug reporting:
   * https://github.com/chrisgahlert/gradle-dcompose-plugin/issues/9
   * https://github.com/chrisgahlert/gradle-dcompose-plugin/issues/10
   * https://github.com/chrisgahlert/gradle-dcompose-plugin/issues/11
+  * https://github.com/chrisgahlert/gradle-dcompose-plugin/issues/12
 * pyGradle
   * https://github.com/linkedin/pygradle/issues/107
   * https://github.com/linkedin/pygradle/issues/96
@@ -18,6 +19,8 @@ Issue/Bug reporting:
   * https://github.com/xetus-oss/docker-archiva/issues/3
 * gradle-pullrequest-builder
   * https://github.com/dpreussler/gradle-pullrequest-builder/issues/1
+* unifiedViews Plugins
+  * https://github.com/UnifiedViews/Plugins/issues/417
 
 Forks:
 * gradle-pullrequest-builder adapted as a ATTX project plugin:
