@@ -41,7 +41,8 @@ Every pipeline essentially represents one or more datasets.
 
 The simplest ingestion pipeline consists of three DPUs as depicted in figure X. In this example the downloaded data is already in RDF format and requires no transformations. Replace dataset loader means that old version of the data are always completely replaces with the new version.
 
-![Download](images/Pipeline-DownloadRDF.png)
+<img src="images/Pipeline-DownloadRDF.png" alt="Download RDF" width="350">
+
 
 This kind of pipelines can be used to download ontologies or vocabularies to the Semantic Broker.
 
@@ -105,7 +106,7 @@ linkByID data set
 
 Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using `PublishToAPI` DPU.
 
-![Publish to API](images/Pipeline-PublishToAPI.png)
+<img src="images/Pipeline-PublishToAPI.png" alt="Publish to API" width="350">
 
 ## ATTX DPUs
 
