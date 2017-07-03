@@ -14,7 +14,6 @@ ATTX 2016 is a research and development project run by the [Helsinki University 
 
 * [ATTX Architecture Overview](ATTX-Architecture-Overview.md)
 * [ATTX Broker Deployment](ATTX-Broker-Deployment.md)
-
 * ATTX Core Components:
     * [Workflow Component](Workflow-Component.md)
     * [Graph Component](Graph-Component.md)
@@ -38,11 +37,9 @@ Reports on technologies and related initiatives:
 * [Workflow Management Tools Overview](Workflow-Management-Tools.md)
 
 Open Source contributions on various projects:
-
 * [Open Source Projects Contributions](Open-Contributions.md)
 
 Conference Proposals, Presentation and Talks:
-
 * [ELAG2017](ELAG-2017.md)
 * [SWIB2017](SWIB-2017.md)
 * [ISWC2017](ISWC-2017.md)

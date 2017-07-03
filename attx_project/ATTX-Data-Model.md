@@ -88,9 +88,10 @@ Reference ontologies:
 * http://purl.org/dc/terms/ - DC terms
 
 Other models:
-* https://www.usenix.org/conference/tapp13/technical-sessions/presentation/missier (D-PROV)
-* http://wf4ever.github.io/ro/
-* http://lov.okfn.org/dataset/lov/vocabs/kees
-* http://lov.okfn.org/dataset/lov/vocabs/prvt
-* http://www.sparontologies.net/ontologies/fabio/source.html
-* http://www.ontologydesignpatterns.org/ont/dul/DUL.owl
+* [D-PROV: Extending the PROV Provenance Model with Workﬂow Structure](https://www.usenix.org/conference/tapp13/technical-sessions/presentation/missier)
+* [Wf4Ever Research Object Model 1.0](http://wf4ever.github.io/ro/)
+* [KEES (Knowledge Exchange Engine Schema ) ontology](http://lov.okfn.org/dataset/lov/vocabs/kees)
+* [Provenance Vocabulary types](http://lov.okfn.org/dataset/lov/vocabs/prvt)
+* [FaBiO, the FRBR-aligned Bibliographic Ontology](http://www.sparontologies.net/ontologies/fabio/source.html)
+* [DOLCE+DnS Ultralite](http://www.ontologydesignpatterns.org/ont/dul/DUL.owl) - OWL file
+* [Open NEE Configuration Model](http://www.ics.forth.gr/isl/oncm/specification/index.html)
