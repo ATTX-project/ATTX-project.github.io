@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>ATTX Broker Deployment · GitBook</title>
+        <title>Deploying the ATTX Semantic Broker on Kontena · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,8 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
+    <link rel="next" href="CSC-cPouta-Cloud-Services-Report.html" />
     
-    <link rel="prev" href="ATTX-Architecture-Overview.html" />
     
 
     </head>
@@ -177,7 +177,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4" data-path="ATTX-Broker-Deployment.html">
+        <li class="chapter " data-level="1.4" data-path="ATTX-Broker-Deployment.html">
             
                 <a href="ATTX-Broker-Deployment.html">
             
@@ -669,7 +669,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="4.1.1" data-path="Deploying-ATTX-SB-on-Kontena.html">
+        <li class="chapter active" data-level="4.1.1" data-path="Deploying-ATTX-SB-on-Kontena.html">
             
                 <a href="Deploying-ATTX-SB-on-Kontena.html">
             
@@ -860,7 +860,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >ATTX Broker Deployment</a>
+        <a href="." >Deploying the ATTX Semantic Broker on Kontena</a>
     </h1>
 </div>
 
@@ -875,31 +875,47 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 19-May-2017 13:47:43</div></div><h1 id="attx-broker-deployment">ATTX Broker Deployment</h1>
-<p>This ATTX Semantic Broker Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.</p>
-<p><strong>Github Repository: <a href="https://github.com/ATTX-project/platform-deployment" target="_blank">platform-deployment</a></strong></p>
-<h2 id="prerequisites">Prerequisites</h2>
-<p>Preconditions for running the ATTX stack:</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 07-Jul-2017 13:27:36</div></div><h1 id="deploying-the-attx-semantic-broker-on-kontena">Deploying the ATTX Semantic Broker on Kontena</h1>
+<!-- TOC START min:1 max:4 link:true update:false -->
 <ul>
-<li>8 GB RAM (minimum)</li>
-<li>Docker Engine (<a href="https://docs.docker.com/engine/installation/" target="_blank">https://docs.docker.com/engine/installation/</a>)</li>
-<li>Docker Compose (<a href="https://docs.docker.com/compose/" target="_blank">https://docs.docker.com/compose/</a>)</li>
-</ul>
-<h2 id="instructions">Instructions</h2>
-<p>Instructions for running or deploying the solution on a cloud or local environment are available:</p>
-<ul>
-<li>Run on Single Machine PC/Mac/VM<ul>
-<li><a href="Building-Docker-application-stacks-in-Swarm-Mode.html">Building Swarm Mode on a PC/Mac</a></li>
-<li><a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">Running the ATTX Stack on a PC/Mac</a>  </li>
-</ul>
-</li>
-<li>Run on Distributed/Cloud<ul>
-<li><a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack (cPouta)</a></li>
-<li><a href="Deploying-ATTX-Components-on-Docker-Swarm.html">Deploying ATTX Components on Docker Swarm</a></li>
-<li><a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">Applying Rolling Updates to Services in Docker Swarm</a></li>
+<li><a href="#what-is-kontena">What is Kontena</a></li>
+<li><a href="#installing-kontena-cli">Installing Kontena CLI</a></li>
+<li><a href="#creating-a-kontena-stack">Creating a Kontena Stack</a></li>
+<li><a href="#registering-kontena-cli-to-kontena-master">Registering Kontena CLI to Kontena Master</a></li>
+<li><a href="#creating-a-kontena-grid">Creating a Kontena grid</a></li>
+<li><a href="#creating-nodes-on-the-grid">Creating nodes on the grid</a></li>
+<li><a href="#creating-kontena-volumes">Creating Kontena volumes</a></li>
+<li><a href="#wip">WIP</a><ul>
+<li>[Using Digital Ocean Block Storage]</li>
+<li>[Deploying Kontena on CSC Open Stack (cPouta)]<ul>
+<li>[Kontena Master]</li>
+<li>[Kontena grid and nodes]</li>
+<li>[Kontena volumes]</li>
 </ul>
 </li>
 </ul>
+</li>
+<li><a href="#conclusions">Conclusions</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- TOC END -->
+<h2 id="what-is-kontena-and-why-do-we-test-it">What is Kontena and why do we test it</h2>
+<p>Kontena is a microservices orchestration and management platform. As such, it treats containers as computational instances of managed services.</p>
+<p>As a platform, Kontena consists of:</p>
+<ul>
+<li>Several Kontena Nodes: the virtual machines that run the containerised Kontena services;</li>
+<li>A Kontena Master: Kontena&apos;s control and monitoring node.</li>
+</ul>
+<p>Kontena&apos;s services are configured trough an YML file, which describes:</p>
+<ul>
+<li>The container image for the service;</li>
+<li>Networking definitions;</li>
+<li>Scaling properties;</li>
+<li>Stateful/stateless attributes.</li>
+</ul>
+<p>With such YML file, it&apos;s also possible to link together the defined services, so as to create an application stack.</p>
+<p>Hence, it could be described more as a &quot;container as a service platform&quot;, instead of a &quot;Docker container management system&quot;.</p>
+<p>Given the growing complexity of the ATTX Semantic Broker application stack, we decided to try out Kontena by testing the deployment of our stack with it. Hereby you can find our report.</p>
 
                                 
                                 </section>
@@ -927,10 +943,10 @@
 
             
                 
-                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: ATTX Architecture Overview">
-                    <i class="fa fa-angle-left"></i>
-                </a>
                 
+                <a href="CSC-cPouta-Cloud-Services-Report.html" class="navigation navigation-next navigation-unique" aria-label="Next page: CSC cPouta Cloud Services Report">
+                    <i class="fa fa-angle-right"></i>
+                </a>
                 
             
         
@@ -939,7 +955,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"ATTX Broker Deployment","level":"1.4","depth":1,"next":{"title":"Run on Single Machine PC/Mac/VM","level":"1.4.1","depth":2,"ref":"","articles":[{"title":"Building Swarm Mode on a PC/Mac","level":"1.4.1.1","depth":3,"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","ref":"Building-Docker-application-stacks-in-Swarm-Mode.md","articles":[]},{"title":"Running the ATTX Stack on a PC/Mac","level":"1.4.1.2","depth":3,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]}]},"previous":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Broker-Deployment.md","mtime":"2017-05-22T14:00:11.661Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-10T14:01:04.490Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deploying the ATTX Semantic Broker on Kontena","level":"4.1.1","depth":2,"next":{"title":"CSC cPouta Cloud Services Report","level":"4.1.2","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},"previous":{"title":"Reports","level":"4.1","depth":1,"ref":"","articles":[{"title":"Deploying the ATTX Semantic Broker on Kontena","level":"4.1.1","depth":2,"path":"Deploying-ATTX-SB-on-Kontena.md","ref":"Deploying-ATTX-SB-on-Kontena.md","articles":[]},{"title":"CSC cPouta Cloud Services Report","level":"4.1.2","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},{"title":"Building with (Py)Gradle","level":"4.1.3","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers Solutions Overview","level":"4.1.4","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},{"title":"Service Discovery Solutions Overview","level":"4.1.5","depth":2,"path":"Service-Discovery-Solutions.md","ref":"Service-Discovery-Solutions.md","articles":[]},{"title":"Workflow Management Tools Overview","level":"4.1.6","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-SB-on-Kontena.md","mtime":"2017-07-10T14:00:22.146Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-10T14:01:04.490Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

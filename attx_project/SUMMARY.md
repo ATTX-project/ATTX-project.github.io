@@ -49,6 +49,7 @@
 ## Project Contributions
 
 * Reports
+  * [Deploying the ATTX Semantic Broker on Kontena](Deploying-ATTX-SB-on-Kontena.md)
   * [CSC cPouta Cloud Services Report](CSC-cPouta-Cloud-Services-Report.md)
   * [Building with (Py)Gradle](Building-with-Gradle.md)
   * [Messaging Brokers Solutions Overview](Messaging-Brokers-Solutions.md)
