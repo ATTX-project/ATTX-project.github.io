@@ -63,7 +63,7 @@ This command will open a Firefox browser window and ask for your Kontena Cloud a
 
 ## Creating a Kontena grid
 
-In Kontena, a grid is a cluster-type logical unit that groups a set of nodes plus connectivity, DNS-based service discovery and storage settings.
+In Kontena, a grid is a cluster-type logical unit that groups a set of nodes plus connectivity, DNS-based service discovery, storage settings, provision for VPN access and Load Balancing configuration.
 
 Now that we are logged in to a Kontena Master, we can create a provision such services by creating a grid:
 
@@ -214,5 +214,5 @@ Based in our trial, we can say that:
 - As microservices orchestration and management platform, Kontena is quite user-friendly, especially given its focus on service management instead if container management;
 - Kontena's grid infrastructure concept is quite convenient for the deployment,  management, and development of a microservices application stack, given not only it  includes Service Discovery and overlay networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;
 - Volume management in Kontena is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them);
-- Kontena's stacks aren't exactly the same as Docker Compose stacks, and there's no conversion tool available. Reference to [Kontena's stack documentation](https://www.kontena.io/docs/references/kontena-yml.html) is advised. Expect some trial and error when editing complex Docker Compose YML files to Kontena YML.
+- Kontena's stacks aren't exactly the same as Docker Compose stacks, and there's no conversion tool available. Reference to [Kontena's stack documentation](https://www.kontena.io/docs/references/kontena-yml.html) is advised. Expect some trial and error when editing complex Docker Compose YML files into Kontena YML.
 - We found that support from Kontena is quite good and friendly
