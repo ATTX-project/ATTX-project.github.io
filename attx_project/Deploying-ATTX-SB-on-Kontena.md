@@ -8,7 +8,7 @@
   - [Provisioning nodes on the grid](#creating-nodes-on-the-grid)
   - [Creating Kontena volumes](#creating-kontena-volumes)
   - [Creating and deploying a Kontena Stack](#creating-a-kontena-stack)
-  - [WIP](#wip)
+  - [Work in progress](#wip)
     - [Using Digital Ocean Block Storage]
     - [Deploying Kontena on CSC Open Stack (cPouta)]
       - [Kontena Master]
@@ -198,3 +198,21 @@ attx-demo/attx/frontend:
           public ip: 128.214.91.110
           status: running
 ```
+
+## Work in progress
+
+### Using Digital Ocean Block Storage
+
+### Deploying Kontena on CSC Open Stack (cPouta)
+#### Kontena Master
+#### Kontena grid and nodes
+#### Kontena volumes
+
+## Conclusions
+
+Based in our trial, we can say that:
+- As microservices orchestration and management platform, Kontena is quite user-friendly, especially given its focus on service management instead if container management;
+- Kontena's grid infrastructure concept is quite convenient for the deployment,  management, and development of a microservices application stack, given not only it  includes Service Discovery and overlay networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;
+- Volume management in Kontena is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them);
+- Kontena's stacks aren't exactly the same as Docker Compose stacks, and there's no conversion tool available. Reference to [Kontena's stack documentation](https://www.kontena.io/docs/references/kontena-yml.html) is advised. Expect some trial and error when editing complex Docker Compose YML files to Kontena YML.
+- We found that support from Kontena is quite good and friendly
