@@ -44,7 +44,7 @@ Given the growing complexity of the ATTX Semantic Broker application stack, we d
 
 ## Installing Kontena CLI
 
-Kontena's CLI (Command Line Interface) requires Ruby 2.1 or latest (cf. https://www.ruby-lang.org/en/documentation/installation/). With Ruby in place installing Kontena is straightforward:
+Kontena's CLI (Command Line Interface) [requires Ruby 2.1 or latest](https://www.ruby-lang.org/en/documentation/installation/). With Ruby in place installing Kontena is straightforward:
 
 `$ sudo gem install kontena-cli`
 
@@ -60,6 +60,7 @@ This command will open a Firefox browser window and ask for your Kontena Cloud a
 
 `Authenticated to Kontena Master <kontena_master> at https://<kontena_master>.kontena.cloud as <kontena_cloud_username>`
 
+N.B.: Kontena Cloud is Kontena's hosted master cloud. It make it easier to manage, audit, and follow up the performance of your Kontena infrastructure it will host your Kontena masters, but not the nodes or storage: it's up to the user to provide the computational resources (e.g. own hardware, cloud providers, etc.). Nevertheless, it must be also noted that Kontena makes it quite easy to deploy and manage nodes and storage almost anywhere.
 
 ## Creating a Kontena grid
 
@@ -118,7 +119,7 @@ In this trial, we have created two Kontena volumes in our attx grid, that will b
 
 With a Kontena infrastructure platform in place, it's time to deploy our ATTX Semenatic Broker service stack. In Kontena, these are configured in a [YAML file](https://www.kontena.io/docs/references/kontena-yml.html), which [supports most of of the Docker-Compose v2 variables](https://www.kontena.io/docs/references/docker-compose-support.html) but with a structure similar (e.g. in volume declaration) to [Docker Compose v3 YML](https://docs.docker.com/compose/compose-file/).
 
-In practice, starting with [the Docker Compose v3 YAML file that we use with Docker Swarm](https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml), we were able to create a Kontena stack file ([attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml)), which we could deploy as following:
+In practice (after some trial and error, but also with friendly help from Kontena staff) starting with [the Docker Compose v3 YAML file that we use with Docker Swarm](https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml), we were able to create a Kontena stack file ([attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml)), which we could deploy as following:
 
 `$ sudo kontena stack create -name attx attx-kontena.yml`
 
@@ -198,6 +199,7 @@ attx-demo/attx/frontend:
           public ip: 128.214.91.110
           status: running
 ```
+Practical result: successful deployment of our Semantic Broker stack, all applications and services operational as expected.
 
 ## Work in progress
 
@@ -211,8 +213,14 @@ attx-demo/attx/frontend:
 ## Conclusions
 
 Based in our trial, we can say that:
-- As microservices orchestration and management platform, Kontena is quite user-friendly, especially given its focus on service management instead if container management;
-- Kontena's grid infrastructure concept is quite convenient for the deployment,  management, and development of a microservices application stack, given not only it  includes Service Discovery and overlay networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;
-- Volume management in Kontena is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them);
+- As a microservices orchestration and management platform, Kontena is quite user-friendly, especially given its focus on service management instead of container management;
+- [Kontena's grid](https://www.kontena.io/docs/using-kontena/grids.html) infrastructure concept is quite convenient for the deployment,  management, and development of a microservices application stack, given not only it  includes Service Discovery, load balancing, overlay and VPN networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;
+- [Kontena Cloud](https://www.kontena.io/cloud) makes it easy to deploy, manage, audit, and follow the performance of the infrastructure and services;
+- [Volume management in Kontena](https://www.kontena.io/docs/using-kontena/volumes.html) is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them);
 - Kontena's stacks aren't exactly the same as Docker Compose stacks, and there's no conversion tool available. Reference to [Kontena's stack documentation](https://www.kontena.io/docs/references/kontena-yml.html) is advised. Expect some trial and error when editing complex Docker Compose YML files into Kontena YML.
-- We found that support from Kontena is quite good and friendly
+- Technical support from Kontena is to-the-point and quite friendly, and provided by Kontena's development team, giving it the feel of being "by developers for developers".
+
+## References
+[Kontena](https://www.kontena.io/)
+[Kontena Cloud](https://www.kontena.io/cloud)
+[Kontena Documentation](https://www.kontena.io/docs/)
