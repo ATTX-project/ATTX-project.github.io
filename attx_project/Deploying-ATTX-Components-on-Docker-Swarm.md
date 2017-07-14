@@ -12,7 +12,7 @@ Given that the ATTX components are containerised, we need to ensure data persist
 
 The ATTX Docker Compose v3 YML file defines the mappings between the internal containers and file systems, and the following list states the containers that need data persistence, as well as the mappings between internal and file system data storage:
 * UnifiedViews DB (MySQL): `/uv-data/mysql:/var/lib/mysql`;
-* ElasticSearch 2.2 (with Siren plugin): `/attx-data/essiren:/usr/share/elasticsearch/data`;
+* ElasticSearch 1.3.4 (with Siren plugin): `/attx-data/essiren:/usr/share/elasticsearch/data`;
 * Elasticsearch 5.2: `/attx-data/elasticsearch5:/usr/share/elasticsearch/data`;
 * Fuseki: `/attx-data/fuseki:/data/fuseki`;
 * GM-API: `/attx-data/gm-api:/app/data`.

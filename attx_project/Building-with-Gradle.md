@@ -26,8 +26,9 @@ Brief report on interacting and working with Gradle within the project.
 
 Installing on Ubuntu:
 * `curl -s https://get.sdkman.io | bash` - install sdk
-* `sdk install gradle 3.5` - install gradle 3.5 (or latest version)
+* `sdk install gradle 3.5` - install gradle 3.5 (or any version 3.0+)
 * check the installed version `gradle -v`
+* switching between versions `sdk use gradle 4.0`
 
 Installing on MacOS (assuming [homebrew](http://brew.sh/) is installed):
 * `brew install gradle`

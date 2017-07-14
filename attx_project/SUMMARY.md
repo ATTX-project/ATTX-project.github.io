@@ -25,7 +25,7 @@
 * [Workflow Component](Workflow-Component.md)
   * [ETL Artifacts](ETL-Artifacts.md)
   * [UnifiedViews Plugins](Unified-Views-plugins.md)
-  * [UVProvovenance API](UVProvovenance-API.md)
+  * [UVProvovenance API](UVProvenance-API.md)
 * [Graph Component](Graph-Component.md)
   * [Graph Manager API](Graph-Manager-API.md)
   * [Graph Store](Graph-Store.md)
