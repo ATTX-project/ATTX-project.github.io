@@ -97,7 +97,12 @@ NAME               VERSION   STATUS   INITIAL   LABELS
 ⊛ young-river-48   1.2.2     online   -         provider=vagrant
 ⊛ late-meadow-36   1.2.2     online   -         provider=vagrant
 ```
-
+```
+$ sudo kontena node ssh frosty-hill-15
+Last login: Fri Jun 30 09:56:32 UTC 2017 from 10.0.2.2 on pts/0
+Container Linux by CoreOS stable (1409.5.0)
+```
+Thus it's confirmed that Kontena uses [CoreOS](https://coreos.com/) as operating system for its nodes.
 
 
 ## Creating Kontena volumes
@@ -119,7 +124,7 @@ In this trial, we have created two Kontena volumes in our attx grid, that will b
 
 With a Kontena infrastructure platform in place, it's time to deploy our ATTX Semenatic Broker service stack. In Kontena, these are configured in a [YAML file](https://www.kontena.io/docs/references/kontena-yml.html), which [supports most of of the Docker-Compose v2 variables](https://www.kontena.io/docs/references/docker-compose-support.html) but with a structure similar (e.g. in volume declaration) to [Docker Compose v3 YML](https://docs.docker.com/compose/compose-file/).
 
-In practice (after some trial and error, but also with friendly help from Kontena staff) starting with [the Docker Compose v3 YAML file that we use with Docker Swarm](https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml), we were able to create a Kontena stack file ([attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml)), which we could deploy as following:
+In practice (after some trial and error, but also with friendly help from Kontena staff), starting with [the Docker Compose v3 YAML file that we use with Docker Swarm](https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml), we were able to create a Kontena stack file ([attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml)), which we could deploy as following:
 
 `$ sudo kontena stack create -name attx attx-kontena.yml`
 
