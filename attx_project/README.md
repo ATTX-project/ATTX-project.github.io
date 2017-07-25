@@ -9,6 +9,7 @@ ATTX 2016 is a research and development project run by the [Helsinki University 
 * [UC1 - Infrastructures and Publications](Use-case-Infrastructures-and-publications.md)
 * [UC2 - Parallel Publication Dashboard](Use-case-Jyvaskyla.md)
 * [UC3 - Metax](Use-case-Metax.md)
+* [UC4 - Mildred](Use-case-Mildred.md)  
 
 ## Technical information
 
