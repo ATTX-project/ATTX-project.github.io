@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Jenkins CI · GitBook</title>
+        <title>UC4 - Mildred · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Build-Environment-Setup.html" />
+    <link rel="next" href="ATTX-Architecture-Overview.html" />
     
     
-    <link rel="prev" href="CI-CD-Enviroment.html" />
+    <link rel="prev" href="Use-case-Metax.html" />
     
 
     </head>
@@ -161,7 +161,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
+        <li class="chapter active" data-level="1.2.4" data-path="Use-case-Mildred.html">
             
                 <a href="Use-case-Mildred.html">
             
@@ -619,7 +619,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="3.4.1" data-path="Jenkins-CI.html">
+        <li class="chapter " data-level="3.4.1" data-path="Jenkins-CI.html">
             
                 <a href="Jenkins-CI.html">
             
@@ -875,7 +875,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Jenkins CI</a>
+        <a href="." >UC4 - Mildred</a>
     </h1>
 </div>
 
@@ -890,119 +890,50 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 26-May-2017 11:25:05</div></div><h1 id="jenkins-ci">Jenkins CI</h1>
-<p>The role of Jenkins in the ATTX development infrastructure:</p>
-<ul>
-<li>Jenkins triggers, orchestrates, executes and monitors running of Gradle tasks using pipelines;</li>
-<li>Gradle tasks are used to implement all the required actions related to pipelines (e.g. <code>:buildDockerImage</code>, running integration tests, deploying artifacts).</li>
-</ul>
-<p>So instead of using Jenkins plugin to call Docker and create images, we should create a Gradle task that uses Docker and call that task from a Jenkins pipeline.</p>
-<p>Orchestration is handled using Jenkins pipelines that all should share some of the common stages listed below.</p>
-<p><img src="images/cicd_jenkins-gradle-tools.svg" alt="Figure 1. ATTX Semantic Broker Architecture"></p>
-<p>Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)</p>
-<!-- TOC START min:1 max:3 link:true update:false -->
-<ul>
-<li><a href="#stages">Stages</a><ul>
-<li><a href="#checkout">Checkout</a></li>
-<li><a href="#compilepackagetest">Compile/Package/Test</a></li>
-<li><a href="#deploy-artifacts">Deploy artifacts</a></li>
-<li><a href="#publish-reports">Publish reports</a></li>
-<li><a href="#build-image">Build image</a></li>
-<li><a href="#failure">Failure</a></li>
-</ul>
-</li>
-<li><a href="#plugins">Plugins</a></li>
-<li><a href="#additions-to-the-jenkins-image">Additions to the Jenkins image</a></li>
-</ul>
-<!-- TOC END -->
-<h2 id="stages">Stages</h2>
-<p>Example configuration:</p>
-<pre><code class="lang-groovy">pipeline {
-    agent any
-    stages {
-        stage(<span class="hljs-string">&apos;Checkout&apos;</span>) { <span class="hljs-comment">// for display purposes</span>
-            steps {
-                <span class="hljs-comment">// Get some code from a GitHub repository</span>
-                git <span class="hljs-string">branch:</span> <span class="hljs-string">&apos;dev&apos;</span>, <span class="hljs-string">url:</span> <span class="hljs-string">&apos;https://github.com/ATTX-project/platform-deployment.git&apos;</span>
-            }
-        }
-        stage(<span class="hljs-string">&apos;Compile/Package/Test&apos;</span>) {
-            steps {
-                echo sh (<span class="hljs-string">script:</span> <span class="hljs-string">&quot;${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=dev -PtestEnv=CI :pd-feature-tests:clean :pd-feature-tests:runContainerTests&quot;</span>, <span class="hljs-string">returnStdout:</span> <span class="hljs-literal">true</span>)
-            }
-            post {
-                always {
-                    echo <span class="hljs-string">&apos;publishing reports&apos;</span>
-                    publishHTML <span class="hljs-string">target:</span> [
-<span class="hljs-symbol">                        allowMissing:</span> <span class="hljs-literal">false</span>,
-<span class="hljs-symbol">                        alwaysLinkToLastBuild:</span> <span class="hljs-literal">false</span>,
-<span class="hljs-symbol">                        keepAll:</span> <span class="hljs-literal">false</span>,
-<span class="hljs-symbol">                        reportDir:</span> <span class="hljs-string">&apos;pd-feature-tests/build/reports/tests/integTest&apos;</span>,
-<span class="hljs-symbol">                        reportFiles:</span> <span class="hljs-string">&apos;index.html&apos;</span>,
-<span class="hljs-symbol">                        reportName:</span> <span class="hljs-string">&apos;pd-feature-tests-reports&apos;</span>
-                        ]                    
-                }
-                failure {
-                    echo sh (<span class="hljs-string">script:</span> <span class="hljs-string">&quot;${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=dev -PtestEnv=CI :pd-feature-tests:clean :pd-feature-tests:removeImages&quot;</span>, <span class="hljs-string">returnStdout:</span> <span class="hljs-literal">true</span>)
-                }
-            }
-        }
-    }
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 25-Jul-2017 06:59:22</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
 
-}
-</code></pre>
-<p>In the following we will be breaking down the configuration steps and expected output.</p>
-<h3 id="checkout">Checkout</h3>
-<p>Getting the code from Github, repository.</p>
-<p>Example:</p>
-<p><code>git branch: &apos;dev&apos;, url: &apos;https://github.com/ATTX-project/distribution-component.git&apos;</code></p>
-<h3 id="compilepackagetest">Compile/Package/Test</h3>
-<p>Example:</p>
-<pre><code class="lang-shell">echo sh (script: &quot;${GRADLE_HOME}/bin/gradle --console=plain -b ${workspace}/build.gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=dev -PtestEnv=CI :pd-feature-tests:clean :pd-feature-tests:runContainerTests&quot;, returnStdout: true)
-</code></pre>
-<p>We need both &quot;echo&quot; and <code>returnStdout: true</code> to get the output of the Gradle execution to Jenkins logs.</p>
-<h3 id="deploy-artifacts">Deploy artifacts</h3>
-<p>Copies output artifacts to somewhere where they can be used by other pipelines.</p>
-<p>Example:</p>
-<pre><code>archiveArtifacts artifacts: &apos;dc-elasticsearch-siren/attx-api-plugin/build/libs/*.jar&apos;, onlyIfSuccessful: true
-</code></pre><h3 id="publish-reports">Publish reports</h3>
-<p>Copies output of HTML reports to somewhere where Jenkins can access them. It is important for the results to be displayed even if there was a failure in the build process in order to achieve such functionality we use the syntax provided by Jenkins: <a href="https://jenkins.io/doc/book/pipeline/syntax/#post" target="_blank">https://jenkins.io/doc/book/pipeline/syntax/#post</a></p>
-<p>Example: publishing test reports</p>
-<pre><code class="lang-groovy">{
-    publishHTML <span class="hljs-string">target:</span> [
-<span class="hljs-symbol">        allowMissing:</span> <span class="hljs-literal">false</span>,
-<span class="hljs-symbol">        alwaysLinkToLastBuild:</span> <span class="hljs-literal">false</span>,
-<span class="hljs-symbol">        keepAll:</span> <span class="hljs-literal">false</span>,
-<span class="hljs-symbol">        reportDir:</span> <span class="hljs-string">&apos;pd-feature-tests/build/reports/tests/integTest&apos;</span>,
-<span class="hljs-symbol">        reportFiles:</span> <span class="hljs-string">&apos;index.html&apos;</span>,
-<span class="hljs-symbol">        reportName:</span> <span class="hljs-string">&apos;pd-feature-tests-reports&apos;</span>
-        ]                    
-}
-</code></pre>
-<h3 id="build-image">Build image</h3>
-<p>Artifacts are accessed from Jenkins. Normally artifacts are restricted to authenticated clients, but this can be changed by first setting property <code>hudson.security.ArtifactsPermission = true</code> (<a href="https://issues.jenkins-ci.org/browse/JENKINS-1871" target="_blank">https://issues.jenkins-ci.org/browse/JENKINS-1871</a> and <a href="https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties" target="_blank">https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties</a>) and then giving everyone access to the artifacts in the Jenkins security matrix.</p>
-<p>Other option is to set &quot;Allow anonymous read access&quot; in the security settings.</p>
-<h3 id="failure">Failure</h3>
-<p>Some of the pipelines required a failure step, more precisely the integration test related tasks, as the tasks created and run containers. In case of failure of correctly executing the Compile/Package/Test task, the containers are not removed and the task is stopped mid execution, thus such a &quot;post execution&quot; task is required.</p>
-<h2 id="plugins">Plugins</h2>
-<p>Listing existing plugins can be done via <a href="https://stackoverflow.com/a/35292719" target="_blank">https://stackoverflow.com/a/35292719</a></p>
-<h2 id="additions-to-the-jenkins-image">Additions to the Jenkins image</h2>
-<p>Jenkins container must be linked to the pivy repository container:</p>
-<pre><code class="lang-shell">docker run -d --restart=always --link pivy_repo:pivyrepo  -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -p 49001:8080 -v /data/jenkins:/var/jenkins_home -t attxproject/attx-jenkins
-</code></pre>
-<p>The following packages needs to added in order to make use of the libXML in any of the Python projects:</p>
+
+<h1 id="mildred-use-case">Mildred use case</h1>
+<p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
+<p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.</p>
+<h2 id="approach">Approach</h2>
+<p>Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred&apos;s steering group.</p>
+<p>One of the main ideas behind the use case, it the added value that ATTX broker deliver by running customizable validation and data quality processes over the harvested data. This additional data can also be published and used by the ThinkOpen site to deliver custom quality metrics alongside the dataset metadata.</p>
+<p>Etsin is already a service that aggregates dataset metadata from different sources, so why make another similar dataset? Mildred use case is interested specifically in UH&apos;s research outputs whereas Etsin is a national service. By creating an UH specific dataset, we have control over both the content and structure of the dataset, which makes it easier to integrate it with ThinkOpen work or any other UH specific use. It is also possible that some day the data might flow in an opposite direction between UH&apos;s dataset and Etsin.</p>
+<p>When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get <strong>some</strong> data. It is however possible to extend to those methods with more complex internal processing.</p>
+<p>TODO: Link to OpenScienceFair poster draft.</p>
+<h2 id="user-stories">User stories</h2>
+<h2 id="data-sources">Data sources</h2>
+<h3 id="etsin">Etsin</h3>
+<p>Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.</p>
+<p>Api documentation:
+<a href="http://openscience.fi/etsin-api" target="_blank">http://openscience.fi/etsin-api</a></p>
+<h3 id="b2share">B2Share</h3>
+<p><a href="https://b2share.eudat.eu/" target="_blank">B2Share</a> is part of the <a href="https://eudat.eu/" target="_blank">EUDAT</a> collaborative data infrastructure.</p>
+<p>In B2Share the data is organized around communities, which all maintain their own metadata schemas for community related records. This means that harvested data structures can vary depending on which community the record belongs to. There is also a common schema that is shared with all the communities.</p>
+<p>API documentation
+<a href="https://b2share.eudat.eu/help/api" target="_blank">https://b2share.eudat.eu/help/api</a></p>
+<h3 id="zenodo">Zenodo</h3>
+<p><a href="https://zenodo.org" target="_blank">Zenodo</a> is a general purpose repository for all kinds of research outputs ranging from presentations to datasets. Users can create communities to organize content into subrepositories.</p>
+<p>Api documentation:
+<a href="http://developers.zenodo.org/" target="_blank">http://developers.zenodo.org/</a></p>
+<p>Example output from Hulib community in DataCite format:
+<a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib" target="_blank">https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib</a></p>
+<h3 id="finto">Finto</h3>
+<p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.</p>
+<h3 id="iow">IOW</h3>
+<p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is service for creating and maintaining descriptions for interoperability. In the context of of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
+<h2 id="implementation">Implementation</h2>
+<p>Architectural overview:</p>
+<p><img src="images/ATTX-Mildred-architecture.png" alt="Architectural overview"></p>
+<p>Features:</p>
 <ul>
-<li><code>apt-get install libxml2-dev libxslt1-dev python-dev</code></li>
-<li><code>apt-get install build-essential</code></li>
-<li><code>apt-get install zlib1g-dev</code></li>
-</ul>
-<p>In order to build Maven/Java projects, we need it to be installed:</p>
-<ul>
-<li><code>apt-get install -y maven</code></li>
-</ul>
-<p>In order to build Node.js projects, we need it to be installed:</p>
-<ul>
-<li><code>apt-get install -y nodejs</code></li>
+<li>DataCite output format</li>
+<li>Custom output format if required</li>
+<li>Data validation based on JSON schemas</li>
+<li>simple data quality analysis</li>
+<li>Identifying dataset related to UH</li>
+<li>Deduplication of dataset metadata available from multiple sources</li>
 </ul>
 
                                 
@@ -1031,12 +962,12 @@
 
             
                 
-                <a href="CI-CD-Enviroment.html" class="navigation navigation-prev " aria-label="Previous page: CI/CD Enviroment">
+                <a href="Use-case-Metax.html" class="navigation navigation-prev " aria-label="Previous page: UC3 - Metax">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Build-Environment-Setup.html" class="navigation navigation-next " aria-label="Next page: Build Environment Setup">
+                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-next " aria-label="Next page: ATTX Architecture Overview">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1047,7 +978,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Jenkins CI","level":"3.4.1","depth":2,"next":{"title":"Build Environment Setup","level":"3.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"previous":{"title":"CI/CD Enviroment","level":"3.4","depth":1,"path":"CI-CD-Enviroment.md","ref":"CI-CD-Enviroment.md","articles":[{"title":"Jenkins CI","level":"3.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},{"title":"Build Environment Setup","level":"3.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},{"title":"Containerized Testing","level":"3.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Jenkins-CI.md","mtime":"2017-05-26T11:36:11.085Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-25T07:01:54.972Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2017-07-25T07:01:30.317Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-25T07:01:54.972Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
