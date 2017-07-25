@@ -48,6 +48,8 @@ Kontena's CLI (Command Line Interface) [requires Ruby 2.1 or latest](https://www
 
 `$ sudo gem install kontena-cli`
 
+Alternatively if running MacOS, [there is an installer available](https://github.com/kontena/kontena/releases/latest).
+
 Using kontena-cli is also intuitive, given its tree-like command structure and help function (e.g. `sudo kontena master --help`).
 
 ### Registering Kontena CLI to Kontena Master
@@ -56,7 +58,7 @@ All Kontena service management operations go trough a master node. Now that we h
 
 `$ sudo kontena master join https://<kontena_master>.kontena.cloud <token_id>`
 
-This command will open a Firefox browser window and ask for your Kontena Cloud account and password. Upon successful registration, Firefox will exit and the following command will be displayed on the CLI terminal:
+This command will open a default browser window -in our case Firefox- and ask for your Kontena Cloud account and password. Upon successful registration, the browser will exit and the following command will be displayed on the CLI terminal:
 
 `Authenticated to Kontena Master <kontena_master> at https://<kontena_master>.kontena.cloud as <kontena_cloud_username>`
 
@@ -66,7 +68,7 @@ N.B.: Kontena Cloud is Kontena's hosted master cloud. It make it easier to manag
 
 In Kontena, a grid is a cluster-type logical unit that groups a set of nodes plus connectivity, DNS-based service discovery, storage settings, provision for VPN access and Load Balancing configuration.
 
-Now that we are logged in to a Kontena Master, we can create a provision such services by creating a grid:
+Now that we are logged in to a Kontena Master, we can provision such services by creating a grid:
 
 `$ sudo kontena grid create attx`
 
@@ -102,7 +104,7 @@ $ sudo kontena node ssh frosty-hill-15
 Last login: Fri Jun 30 09:56:32 UTC 2017 from 10.0.2.2 on pts/0
 Container Linux by CoreOS stable (1409.5.0)
 ```
-Thus it's confirmed that Kontena uses [CoreOS](https://coreos.com/) as operating system for its nodes.
+Thus it's confirmed that Kontena plugins use [CoreOS](https://coreos.com/) as operating system for its nodes.
 
 
 ## Creating Kontena volumes
