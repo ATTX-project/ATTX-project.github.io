@@ -4,8 +4,9 @@ http://www.opensciencefair.eu/
 
 ## Poster proposal (accepted)
 
-### Mildred meets ATTX
-#### increasing findability and accessibility of the research data using semantic broker
+### Mildred meets ATTX - increasing findability and accessibility of the research data using semantic broker
+
+*Pauli Assinen, Joonas Kesäniemi*
 
 Main contributions of the poster are as follows:
 
