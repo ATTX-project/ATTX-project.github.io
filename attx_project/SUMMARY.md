@@ -7,6 +7,7 @@
   * [UC1 - Infrastructure and Publications](Use-case-Infrastructures-and-publications.md)
   * [UC2 - Parallel Publication Dashboard](Use-case-Jyvaskyla.md)
   * [UC3 - Metax](Use-case-Metax.md)
+  * [UC4 - Mildred](Use-case-Mildred.md)  
 * [ATTX Architecture Overview](ATTX-Architecture-Overview.md)
 * [ATTX Broker Deployment](ATTX-Broker-Deployment.md)
   * Run on Single Machine PC/Mac/VM
