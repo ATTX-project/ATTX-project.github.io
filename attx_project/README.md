@@ -42,4 +42,5 @@ Open Source contributions on various projects:
 Conference Proposals, Presentation and Talks:
 
 * [ELAG2017](ELAG-2017.md)
+* [OSFair2017](OSFair-2017.md)
 * [SWIB2017](SWIB-2017.md)

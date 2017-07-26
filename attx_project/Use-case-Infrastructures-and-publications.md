@@ -5,7 +5,6 @@ Steps:
 
 1. Get publication, infrastructure metadata from UH with links between them.
 2. Enrich infrastructure metadata using the service descriptions coming from the national infrastructure databank.
-3. Profit?
 
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Data sources](#data-sources)
