@@ -46,7 +46,7 @@ Given the growing complexity of the ATTX Semantic Broker application stack, we d
 
 Kontena's CLI (Command Line Interface) [requires Ruby 2.1 or latest](https://www.ruby-lang.org/en/documentation/installation/). With Ruby in place installing Kontena is straightforward:
 
-`$ sudo gem install kontena-cli`
+`$ gem install --user-install kontena-cli`
 
 Alternatively if running MacOS, [there is an installer available](https://github.com/kontena/kontena/releases/latest).
 
@@ -208,9 +208,11 @@ attx-demo/attx/frontend:
 ```
 Practical result: successful deployment of our Semantic Broker stack, all applications and services operational as expected.
 
-## Work in progress
 
 ### Using Digital Ocean Block Storage
+
+
+## Work in progress
 
 ### Deploying Kontena on CSC Open Stack (cPouta)
 #### Kontena Master
@@ -225,7 +227,7 @@ Based in our trial, we can say that:
 - [Kontena Cloud](https://www.kontena.io/cloud) makes it easy to deploy, manage, audit, and follow the performance of the infrastructure and services;
 - [Volume management in Kontena](https://www.kontena.io/docs/using-kontena/volumes.html) is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them);
 - Kontena's stacks aren't exactly the same as Docker Compose stacks, and there's no conversion tool available. Reference to [Kontena's stack documentation](https://www.kontena.io/docs/references/kontena-yml.html) is advised. Expect some trial and error when editing complex Docker Compose YML files into Kontena YML.
-- Technical support from Kontena is to-the-point and quite friendly, and provided by Kontena's development team, giving it the feel of being "by developers for developers".
+- Technical support from Kontena is to-the-point and quite friendly, and since it's provided by Kontena's development team, it gives it the feeling of being "by developers for developers".
 
 ## References
 [Kontena](https://www.kontena.io/)
