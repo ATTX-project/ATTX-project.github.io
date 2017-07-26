@@ -44,19 +44,22 @@ Given the growing complexity of the ATTX Semantic Broker application stack, we d
 
 ## Installing Kontena CLI
 
-Kontena's CLI (Command Line Interface) [requires Ruby 2.1 or latest](https://www.ruby-lang.org/en/documentation/installation/). With Ruby in place installing Kontena is straightforward:
+Kontena's CLI (Command Line Interface) [requires Ruby 2.1 or latest](https://www.ruby-lang.org/en/documentation/installation/). With Ruby in place, installing Kontena in Ubuntu 16.04 LTS is quite straightforward:
 
 `$ gem install --user-install kontena-cli`
+`$ export PATH=$PATH:/home/<username>/.gem/ruby/2.3.0/bin`
 
 Alternatively if running MacOS, [there is an installer available](https://github.com/kontena/kontena/releases/latest).
 
-Using kontena-cli is also intuitive, given its tree-like command structure and help function (e.g. `sudo kontena master --help`).
+Using kontena-cli is also intuitive, given its tree-like command structure and help function (e.g. `kontena master --help`). Auto-completing of Kontena's commands can be enabled by adding `which kontena > /dev/null && . "$( kontena whoami --bash-completion-path )"` in the users "~/.bashrc" file.
+
+
 
 ### Registering Kontena CLI to Kontena Master
 
 All Kontena service management operations go trough a master node. Now that we have kontena-cli, we can register our client to the Kontena Master. In the case of our trial, we used a previously provisioned master node on Kontena Cloud and the respective token ("`<token_id>`") (https://www.kontena.io/cloud):
 
-`$ sudo kontena master join https://<kontena_master>.kontena.cloud <token_id>`
+`$ kontena master join https://<kontena_master>.kontena.cloud <token_id>`
 
 This command will open a default browser window -in our case Firefox- and ask for your Kontena Cloud account and password. Upon successful registration, the browser will exit and the following command will be displayed on the CLI terminal:
 
@@ -70,7 +73,7 @@ In Kontena, a grid is a cluster-type logical unit that groups a set of nodes plu
 
 Now that we are logged in to a Kontena Master, we can provision such services by creating a grid:
 
-`$ sudo kontena grid create attx`
+`$ kontena grid create attx`
 
 
 Something interesting in Kontena's proposition is that its nodes can be located either in a data centre, or in your laptop, or even in different cloud providers. Furthermore, once a Kontena grid is created, an overlay network (based on [Weave](https://www.weave.works/)) for that is automatically created as well, enabling communication for all containerised services no matter where the host nodes are located.
@@ -79,9 +82,9 @@ A new grid will also bring an [etcd](https://coreos.com/etcd) DNS-based service 
 
 ## Provisioning nodes on the grid
 
-Now that we have our Kontena grid, we can create three nodes to provide us with computing infrastructure. In our case, we'll provision those nodes in our development environment with [Vagrant](https://www.vagrantup.com/docs/installation/index.html) (though we could have used AWS or Digital Ocean, for example):
+Now that we have our Kontena grid, we can create three nodes to provide us with computing infrastructure. In our case, we'll provision those nodes in our development environment with [Vagrant](https://www.vagrantup.com/docs/installation/index.html) (though we could have used AWS or Digital Ocean, for example).
 
-`sudo kontena vagrant node create`
+`$ kontena vagrant node create`
 
 We'll be asked for the number of nodes and RAM:
 
@@ -93,14 +96,14 @@ We'll be asked for the number of nodes and RAM:
 We can list the created nodes and ssh into them:
 
 ```
-$ sudo kontena node ls
+$ kontena node ls
 NAME               VERSION   STATUS   INITIAL   LABELS
 ⊛ frosty-hill-15   1.2.2     online   1 / 1     provider=vagrant
 ⊛ young-river-48   1.2.2     online   -         provider=vagrant
 ⊛ late-meadow-36   1.2.2     online   -         provider=vagrant
 ```
 ```
-$ sudo kontena node ssh frosty-hill-15
+$ kontena node ssh frosty-hill-15
 Last login: Fri Jun 30 09:56:32 UTC 2017 from 10.0.2.2 on pts/0
 Container Linux by CoreOS stable (1409.5.0)
 ```
@@ -113,11 +116,11 @@ At this point, we have a grid (TCP/IP connectivity, DNS service discovery, etc.)
 
 Given that the Docker version of [UnifiedViews](https://unifiedviews.eu/) requires a [shared volume container](https://hub.docker.com/r/tenforce/unified-views-shared/), let's proceed by creating an "attx-uv-shared" shared named volume in Kontena:
 
-`$ sudo kontena volume create --driver local --scope stack attx-uv-shared`
+`$ kontena volume create --driver local --scope stack attx-uv-shared`
 
 And since we also need to share files between our Semantic Broker components, let's create a "attx-db-shared" volume as well:
 
-`$ sudo kontena volume create --driver local --scope stack attx-sb-shared`
+`$ kontena volume create --driver local --scope stack attx-sb-shared`
 
 In this trial, we have created two Kontena volumes in our attx grid, that will be using the nodes' file systems (`--driver local `), and that can be shared between  services in our Kontena stack (`--scope stack`).
 
@@ -128,12 +131,12 @@ With a Kontena infrastructure platform in place, it's time to deploy our ATTX Se
 
 In practice (after some trial and error, but also with friendly help from Kontena staff), starting with [the Docker Compose v3 YAML file that we use with Docker Swarm](https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml), we were able to create a Kontena stack file ([attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml)), which we could deploy as following:
 
-`$ sudo kontena stack create -name attx attx-kontena.yml`
+`$ kontena stack create -name attx attx-kontena.yml`
 
 And verify its basic properties, as configured in [attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml):
 
 ```
-$ sudo kontena stack ls
+$ kontena stack ls
 
 NAME            ⊝ attx
 STACK           attxproject/attx:0.1.11
@@ -150,7 +153,7 @@ EXPOSED PORTS   *:1194->1194/udp
 And it was also straightforward to get more information about the newly-deployed stack services and their properties:
 
 ```
-$ sudo kontena service ls
+$ kontena service ls
 
 NAME              INSTANCES   STATEFUL   STATE     EXPOSED PORTS
 ⊝ attx/gmapi      1 / 1       yes        running   0.0.0.0:4302->4302/tcp
@@ -167,7 +170,7 @@ NAME              INSTANCES   STATEFUL   STATE     EXPOSED PORTS
 ```
 
 ```
-$ sudo kontena service show  attx/frontend
+$ kontena service show  attx/frontend
 
 attx-demo/attx/frontend:
   created: 2017-06-30T09:50:35.909Z
