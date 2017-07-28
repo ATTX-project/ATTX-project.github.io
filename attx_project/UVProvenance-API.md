@@ -1,4 +1,4 @@
-<h1 style="color:red">DRAFT - TO BE REFACTORED</h1>
+<h1 style="color:red">TO BE REFACTORED</h1>
 
 # UVProvenance API
 

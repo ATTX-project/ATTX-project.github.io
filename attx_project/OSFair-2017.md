@@ -2,7 +2,7 @@
 
 http://www.opensciencefair.eu/
 
-## Poster proposal (accepted)
+## (Accepted) Poster proposal 
 
 ### Mildred meets ATTX - increasing findability and accessibility of the research data using semantic broker
 
