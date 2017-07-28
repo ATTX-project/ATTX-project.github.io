@@ -2,8 +2,20 @@
 
 # Use case Jyväskylä - Parallel Publishing Dashboard
 
-<!-- TOC START min:1 max:3 link:true update:true -->
-- [Use case Jyväskylä - Parallel Publishing Dashboard](#use-case-jyvskyl---parallel-publishing-dashboard)
+Parallel publication (rinnakkaistallennus in Finnish) is a version of the published research article that is freely available from the organizations digital repository or similar service. For more detailed description about parallel publishing and how it relates to OA (Open Access) in general see https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing (Jyväskylä university).
+
+The idea behind parallel publishing dashboard is to create a up-to-date data set and accompanying web application, which together allow users to browse and visualize current state of parallel publishing in Finland along different attributes, such as organization, field of science or any other custom classification scheme. Data set and application should be flexible and support multiple "views" against the same data.
+
+[University of Jyväskylä library](https://kirjasto.jyu.fi/?set_language=en) has been doing similar work and results were presented by Pekka Olsbo as part of closing seminar for the Surima-project - the presentation slides can be downloaded from http://urn.fi/URN:NBN:fi-fe201701251319.
+
+Our goal, as part of the ATTX project, is to build and setup working prototype of a data broker that could be used to drive a national open data service, but putting one in production is out of the scope of the project.
+
+One could argue that [VIRTA](https://confluence.csc.fi/display/VIR/VIRTA-julkaisutietopalvelu) service already contains the same information and works on a national level with excellent coverage. However, ATTX use case can be seen as complementary to the VIRTA work, because it provides a platform for new data aggregation and generation methods (e.g. data mining from parallel published versions, licensing permitting) and allows for alternative "views" on parallel publishing (e.g. grouping based on custom classification).  
+
+Also, VIRTA is the official publication data set with strict requirements for completeness and quality, where as the data set created in this use case has less stringent expectations for incoming data and is therefore not designed to work as a basis for any official reporting.
+
+### Table of Contents
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Approach](#approach)
   - [User stories](#user-stories)
   - [Data sources](#data-sources)
@@ -18,18 +30,6 @@
     - [University of Eastern Finland](#university-of-eastern-finland)
 
 <!-- TOC END -->
-
-Parallel publication (rinnakkaistallennus in Finnish) is a version of the published research article that is freely available from the organizations digital repository or similar service. For more detailed description about parallel publishing and how it relates to OA (Open Access) in general see https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing (Jyväskylä university).
-
-The idea behind parallel publishing dashboard is to create a up-to-date data set and accompanying web application, which together allow users to browse and visualize current state of parallel publishing in Finland along different attributes, such as organization, field of science or any other custom classification scheme. Data set and application should be flexible and support multiple "views" against the same data.
-
-[University of Jyväskylä library](https://kirjasto.jyu.fi/?set_language=en) has been doing similar work and results were presented by Pekka Olsbo as part of closing seminar for the Surima-project - the presentation slides can be downloaded from http://urn.fi/URN:NBN:fi-fe201701251319.
-
-Our goal, as part of the ATTX project, is to build and setup working prototype of a data broker that could be used to drive a national open data service, but putting one in production is out of the scope of the project.
-
-One could argue that [VIRTA](https://confluence.csc.fi/display/VIR/VIRTA-julkaisutietopalvelu) service already contains the same information and works on a national level with excellent coverage. However, ATTX use case can be seen as complementary to the VIRTA work, because it provides a platform for new data aggregation and generation methods (e.g. data mining from parallel published versions, licensing permitting) and allows for alternative "views" on parallel publishing (e.g. grouping based on custom classification).  
-
-Also, VIRTA is the official publication data set with strict requirements for completeness and quality, where as the data set created in this use case has less stringent expectations for incoming data and is therefore not designed to work as a basis for any official reporting.
 
 ## Approach
 

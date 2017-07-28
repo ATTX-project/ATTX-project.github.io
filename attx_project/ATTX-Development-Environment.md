@@ -1,8 +1,8 @@
-# Project Development Guidelines
+# ATTX Development Environment and Guidelines
 
-This page describes the project management and software development related practices and tools for the ATTX2016 project. This is the place to go, when member of the project wants to learn or be reminded of how different project management methodologies and tools are used in ATTX, how we for example branch in using GIT, or what are the requirements for testing ones code.
+This page describes the project management and software development related practices and tools for the ATTX-2016 project. This is the place to go, when member of the project wants to learn or be reminded of how different project management methodologies and tools are used in ATTX, how we for example branch in using GIT, or what are the requirements for testing ones code.
 
-## Table of Contents
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Meetings](#meetings)
     - [Sprint Planning](#sprint-planning)

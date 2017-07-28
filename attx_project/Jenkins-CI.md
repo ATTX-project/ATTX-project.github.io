@@ -13,6 +13,7 @@ Orchestration is handled using Jenkins pipelines that all should share some of t
 
 Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Stages](#stages)
     - [Checkout](#checkout)

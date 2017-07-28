@@ -1,5 +1,6 @@
 # Build Environment Setup
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Working with Build Environments](#working-with-build-environments)
     - [Steps for Generating Release Version](#steps-for-generating-release-version)

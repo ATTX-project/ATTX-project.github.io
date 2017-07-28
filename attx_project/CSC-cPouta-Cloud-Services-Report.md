@@ -2,6 +2,7 @@
 
 Hereby you can find a report about our experience in the usage of CSC IaaS Cloud Services (cPouta) for deploying the ATTX stack on 3-node and 5-node Docker Swarm configurations, formed by three Ubuntu 14.04 VMs in the cPouta environment (https://research.csc.fi/cpouta).
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Obtaining a CSC Account](#obtaining-a-csc-account)
   - [Applying for a cPouta project](#applying-for-a-cpouta-project)

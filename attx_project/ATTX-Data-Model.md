@@ -1,12 +1,15 @@
 # ATTX Ontology
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Ontology/Data Model - ATTXOnto](#ontologydata-model---attxonto)
-  - [Related Data models](#related-data-models)
+    - [ATTX Graph Namespaces](#attx-graph-namespaces)
+  - [Related Data Models](#related-data-models)
     - [ATT Data Model](#att-data-model)
   - [References](#references)
 
 <!-- TOC END -->
+
 
 ## Ontology/Data Model - ATTXOnto
 
@@ -14,17 +17,31 @@
 
 The ontology/data model has the purpose of describing how and when the data flows within the platform, types of transformations (and associated workflows), the provenance information (agent and associated processes performed) and other meta data.
 
-[Namespaces references](Namespaces.md)
-
 A general use case is represented in Figure 1 where we can depict several parts:
-* ETL processes associated with the specific steps and workflows - see [ETL Workflow](ETL-Artifacts.md) for more details and [Workflow API](Workflow-API.md) which generates such specific information;
+* ETL processes associated with the specific steps and workflows - see [ETL Workflow](ETL-Artifacts.md) for more details and [UVProvovenance API](UVProvovenance-API.md) which generates such specific information;
 * Provenance Data Graph - which depicts provenance information specific to each workflow, data set etc.;
 * Working Data Graph - contains both inferred and explicit relationships between domain data;
 * Dissemination Data Graph - Data Graph distributed via the APIs.
 
-![Figure 1. Ontology Use Cases Flow](https://rawgit.com/ATTX-project/ATTX-project.github.io/master/images/ontology_usecase.svg)
+![Figure 1. Ontology Use Cases Flow](images/ontology_usecase.svg)
 
 Figure 1. Ontology Use Cases Flow
+
+### ATTX Graph Namespaces
+
+Base namespaces and/or named graphs convention:
+
+* `http://data.hulib.helsinki.fi/attx/onto#` - ontology and associated classes
+* `http://data.hulib.helsinki.fi/attx` - to be used as a base for data
+* `http://data.hulib.helsinki.fi/attx/prov` - for provenance data
+* `http://data.hulib.helsinki.fi/attx/ids` - for clusted data ids
+* `http://data.hulib.helsinki.fi/attx/{workflowID}/work` - for working data
+  * `http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra` - for infrastructure
+  * `http://data.hulib.helsinki.fi/attx/{workflowID}/{workflowID}/work/pub` - for  publication
+* `http://data.hulib.helsinki.fi/attx/id` - service whatever comes after the id should resolve the id
+
+The [Graph Manager API](Graph-Manager-API.md) generates working datasets by following the `http://data.hulib.helsinki.fi/attx/work{generatedID}` where the `generatedID` is a result of hash algorithm. To be pointed out that the `http://data.hulib.helsinki.fi/attx/work` is the recommended base for the working datasets.
+
 
 ## Related Data Models
 
@@ -71,9 +88,10 @@ Reference ontologies:
 * http://purl.org/dc/terms/ - DC terms
 
 Other models:
-* https://www.usenix.org/conference/tapp13/technical-sessions/presentation/missier (D-PROV)
-* http://wf4ever.github.io/ro/
-* http://lov.okfn.org/dataset/lov/vocabs/kees
-* http://lov.okfn.org/dataset/lov/vocabs/prvt
-* http://www.sparontologies.net/ontologies/fabio/source.html
-* http://www.ontologydesignpatterns.org/ont/dul/DUL.owl
+* [D-PROV: Extending the PROV Provenance Model with Workﬂow Structure](https://www.usenix.org/conference/tapp13/technical-sessions/presentation/missier)
+* [Wf4Ever Research Object Model 1.0](http://wf4ever.github.io/ro/)
+* [KEES (Knowledge Exchange Engine Schema ) ontology](http://lov.okfn.org/dataset/lov/vocabs/kees)
+* [Provenance Vocabulary types](http://lov.okfn.org/dataset/lov/vocabs/prvt)
+* [FaBiO, the FRBR-aligned Bibliographic Ontology](http://www.sparontologies.net/ontologies/fabio/source.html)
+* [DOLCE+DnS Ultralite](http://www.ontologydesignpatterns.org/ont/dul/DUL.owl) - OWL file
+* [Open NEE Configuration Model](http://www.ics.forth.gr/isl/oncm/specification/index.html)

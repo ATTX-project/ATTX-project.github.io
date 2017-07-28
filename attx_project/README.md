@@ -11,22 +11,24 @@ ATTX 2016 is a research and development project run by the [Helsinki University 
 * [UC3 - Metax](Use-case-Metax.md)
 * [UC4 - Mildred](Use-case-Mildred.md)
 
-## Technical information
+## Components
 
 * [ATTX Architecture Overview](ATTX-Architecture-Overview.md)
 * [ATTX Broker Deployment](ATTX-Broker-Deployment.md)
-* ATTX Semantic Broker Components:
+* ATTX Core Components:
     * [Workflow Component](Workflow-Component.md)
     * [Graph Component](Graph-Component.md)
     * [Distribution Component](Distribution-Component.md)
     * [Service Discovery](ServiceDiscovery-Implementation.md)
+* ATTX Semantic Broker Services:
+    * [Provenance Service](Provenance-Service.md)
 
 ## Development Guidelines
 
-* ATTX [Project Development Guidelines](Project-Development-Environment.md)
+* ATTX [ATTX Development Guidelines](ATTX-Development-Environment.md)
 * ATTX [CI/CD Enviroment](CI-CD-Enviroment.md)
 
-## Contributions and Presentations
+## Reports and Contributions
 
 Reports on technologies and related initiatives:
 * [CSC cPouta Cloud Services Report](CSC-cPouta-Cloud-Services-Report.md)
@@ -36,11 +38,10 @@ Reports on technologies and related initiatives:
 * [Workflow Management Tools Overview](Workflow-Management-Tools.md)
 
 Open Source contributions on various projects:
-
 * [Open Source Projects Contributions](Open-Contributions.md)
 
 Conference Proposals, Presentation and Talks:
-
 * [ELAG2017](ELAG-2017.md)
 * [OSFair2017](OSFair-2017.md)
 * [SWIB2017](SWIB-2017.md)
+* [ISWC2017](ISWC-2017.md)

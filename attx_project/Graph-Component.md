@@ -4,7 +4,7 @@ The ATTX Graph component associated to this project has the main goal of aggrega
 
 Graph Component is designed to:
 
-* retrieve information from the [Workflow API](Workflow-API.md) in order to update the **Provenance and Workflow Data** graphs;
+* retrieve information from the [UV Provovenance API](UVProvenance-API.md) in order to update the **Provenance and Workflow Data** graphs;
 * manage the mapping - RML mappings;
 * source data queries - select specific data from the [Graph Store](Graph-Store.md) and after applying the mapping deliver it to target output;
 * target output \(e.g. endpoint API\) - where to output the [Graph Store](Graph-Store.md) data.
@@ -17,6 +17,5 @@ The Workflow Component consists of following parts:
 
 * [Graph Manager API](Graph-Manager-API.md)
   * [Graph Store](Graph-Store.md)
-    * [Ontology/Data model](Data-Model.md)
-    * [Namespaces](Namespaces.md)
+    * [Ontology/Data model](ATTX-Data-Model.md)
     * [Linking](Linking-graphs.md)

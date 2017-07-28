@@ -5,8 +5,14 @@ This ATTX Semantic Broker Deployment describes the necessary steps for setting u
 **Github Repository: [platform-deployment](https://github.com/ATTX-project/platform-deployment)**
 
 ## Prerequisites
-Preconditions for running the ATTX stack:
+Preconditions for running the ATTX stack on PC/Mac/VM:
 * 8 GB RAM (minimum)
+* Docker Engine (https://docs.docker.com/engine/installation/)
+* Docker Compose (https://docs.docker.com/compose/)
+
+Preconditions for running the ATTX stack on Cloud:
+* minimum 2 VMs (3 or more recommended)
+* 4 GB RAM (minimum) per machine
 * Docker Engine (https://docs.docker.com/engine/installation/)
 * Docker Compose (https://docs.docker.com/compose/)
 

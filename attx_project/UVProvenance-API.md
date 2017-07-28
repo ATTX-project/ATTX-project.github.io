@@ -1,48 +1,51 @@
-# Workflow API
+<h1 style="color:red">DRAFT - TO BE REFACTORED</h1>
 
+# UVProvenance API
+
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Overview](#overview)
-  - [Building the WF-API](#building-the-wf-api)
+  - [Building the UVProvenance-API](#building-the-uvprovenance-api)
     - [Database Connection](#database-connection)
-  - [Consuming the WF-API](#consuming-the-wf-api)
+  - [Consuming the UVProvenance-API](#consuming-the-uvprovenance-api)
     - [health Endpoint](#health-endpoint)
     - [workflow Endpoint](#workflow-endpoint)
     - [activity Endpoint](#activity-endpoint)
-  - [How the Information is extracted](#how-the-information-is-extracted)
+  - [How the Information is Extracted](#how-the-information-is-extracted)
 
 <!-- TOC END -->
 
 ## Overview
 
-The workflow REST API has two endpoints along with a health check endpoint:
+The UV (UnifiedViews) Provenance REST API has two endpoints along with a health check endpoint:
 * `workflow` - retrieve all the workflows and associated steps from the ETL Artifact;
 * `activity` - retrieve all successfully completed activities and associated datasets from the ETL Artifact;
 * `health` - checks if the application is running.
 
-The general purpose of the workflow API is to provide metadata for workflows and activities such that it exposes information that is according with the [Ontology/Data model](Data-Model.md). Such information could not easily be obtained directly from the [UnifiedViews REST API](https://grips.semantic-web.at/display/UDDOC/UnifiedViews+REST+API). Moreover the configuration necessary to extract this information is encoded in the Pipeline DPU configuration, as depicted in examples below.
+The general purpose of the UV Provenance API is to provide metadata for workflows and activities such that it exposes information that is according with the [Ontology/Data model](ATTX-Data-Model.md). Such information could not easily be obtained directly from the [UnifiedViews REST API](https://grips.semantic-web.at/display/UDDOC/UnifiedViews+REST+API). Moreover the configuration necessary to extract this information is encoded in the Pipeline DPU configuration, as depicted in examples below.
 
 Current version: `0.1` (URL for the endpoint should take into consideration for the API `http://host:4301/version/endpoint`)
 
-## Building the WF-API
+## Building the UVProvenance-API
 
-For building the WF-API see:
-* [WF-API source](https://github.com/ATTX-project/workflow-component/blob/dev/wf-API/README.md) - building both the project and the  Docker image and testing from the source code
+For building the UVProvenance-API see:
+* [UVProvenance-API source](https://github.com/ATTX-project/workflow-component/blob/dev/UVProvenance-API/README.md) - building both the project and the  Docker image and testing from the source code
 * short tutorial on [Gradle](Building-with-Gradle.md)
 
 ### Database Connection
 
-In order to run the tests successfully but also the WF-API successfully one would require an existing MYSQL database connection. Such a connection can be configured in `database.conf` file.
+In order to run the tests successfully but also the UVProvenance-API successfully one would require an existing MYSQL database connection. Such a connection can be configured in `database.conf` file.
 
 At the same time it can be troubleshoot using the docker container:
-* connect to the running WF-API Docker container `docker exec -it container-id /bin/sh` (replace `container-id` with the ID of the docker container)
+* connect to the running UVProvenance-API Docker container `docker exec -it container-id /bin/sh` (replace `container-id` with the ID of the docker container)
 * run python
 * in the python shell:
   * `import pymysql as mysql`
   * `mysql.connect(host='addressOfDBServer', port=3306, user='username', passwd='password', db='database', charset='utf8')` - replace the variables in `''` with the correct information. Running this command with help with debugging mysql connection issues.
 
-## Consuming the WF-API
+## Consuming the UVProvenance-API
 
-As specified above the workflow API has two endpoints:
+As specified above the UV Provenance API has two endpoints:
 * `workflow` - retrieve all the workflows and associated steps from the ETL Artifact (only GET method possible);
 * `activity` - retrieve all successfully completed activities and associated datasets from the ETL Artifact (only GET method possible).
 * `health` - responds with `200` so that we know the service is alive.

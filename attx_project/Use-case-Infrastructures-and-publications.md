@@ -6,6 +6,7 @@ Steps:
 1. Get publication, infrastructure metadata from UH with links between them.
 2. Enrich infrastructure metadata using the service descriptions coming from the national infrastructure databank.
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Data sources](#data-sources)
     - [Research Infrastructures Databank](#research-infrastructures-databank)
@@ -60,7 +61,7 @@ Workflows use very basic and custom built DPUs for transformations and processin
 This model should evolve as the implementation of the use case becomes more complex.
 We assume that TUHAT infrastructure data contains identifiers that point to the infrastructure bank. The idea is to enrich the infrastructure information.
 
-See [Namespaces](Namespaces.md)
+See [Ontology/Data model](ATTX-Data-Model.md) for more information with regards to namespaces and Ontology.
 
 **Example data**
 
