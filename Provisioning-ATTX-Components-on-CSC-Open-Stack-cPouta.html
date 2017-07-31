@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>UC4 - Mildred · GitBook</title>
+        <title>Provisioning ATTX Components on CSC Open Stack (cPouta) · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ATTX-Architecture-Overview.html" />
+    <link rel="next" href="Deploying-ATTX-Components-on-Docker-Swarm.html" />
     
-    
-    <link rel="prev" href="Use-case-Metax.html" />
     
 
     </head>
@@ -161,7 +159,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.4" data-path="Use-case-Mildred.html">
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
             
                 <a href="Use-case-Mildred.html">
             
@@ -272,7 +270,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1.2.1" data-path="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+        <li class="chapter active" data-level="2.1.2.1" data-path="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
             
                 <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
             
@@ -948,7 +946,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >UC4 - Mildred</a>
+        <a href="." >Provisioning ATTX Components on CSC Open Stack (cPouta)</a>
     </h1>
 </div>
 
@@ -963,64 +961,77 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jul-2017 10:25:08</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
-
-<h1 id="mildred-use-case">Mildred use case</h1>
-<p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
-<p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="provisioning-attx-components-on-csc-open-stack-cpouta">Provisioning ATTX Components on CSC Open Stack (cPouta)</h1>
+<p>This guide exemplifies how to provision 5 VMs in cPouta (CSC Open Stack) with Ansible, for forming a Docker Swarm and running the ATTX stack.</p>
+<h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
-<li><a href="#approach">Approach</a></li>
-<li><a href="#user-stories">User stories</a></li>
-<li><a href="#data-sources">Data sources</a><ul>
-<li><a href="#etsin">Etsin</a></li>
-<li><a href="#b2share">B2Share</a></li>
-<li><a href="#zenodo">Zenodo</a></li>
-<li><a href="#finto">Finto</a></li>
-<li><a href="#iow">IOW</a></li>
-</ul>
-</li>
-<li><a href="#implementation">Implementation</a></li>
+<li><a href="#1-preparing-ansibles-control-node">1. Preparing Ansible&apos;s Control Node</a></li>
+<li><a href="#2-upload-and-edit-ansibles-configuration-files">2. Upload and Edit Ansible&apos;s Configuration files</a></li>
+<li><a href="#3-provisioning-the-instances">3. Provisioning the Instances</a></li>
+<li><a href="#4-possible-problems-and-solutions">4. Possible Problems and Solutions</a></li>
 </ul>
 <!-- TOC END -->
-<h2 id="approach">Approach</h2>
-<p>Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred&apos;s steering group.</p>
-<p>One of the main ideas behind the use case, it the added value that ATTX broker deliver by running customizable validation and data quality processes over the harvested data. This additional data can also be published and used by the ThinkOpen site to deliver custom quality metrics alongside the dataset metadata.</p>
-<p>Etsin is already a service that aggregates dataset metadata from different sources, so why make another similar dataset? Mildred use case is interested specifically in UH&apos;s research outputs whereas Etsin is a national service. By creating an UH specific dataset, we have control over both the content and structure of the dataset, which makes it easier to integrate it with ThinkOpen work or any other UH specific use. It is also possible that some day the data might flow in an opposite direction between UH&apos;s dataset and Etsin.</p>
-<p>When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get <strong>some</strong> data. It is however possible to extend to those methods with more complex internal processing.</p>
-<p>TODO: Link to OpenScienceFair poster draft.</p>
-<h2 id="user-stories">User stories</h2>
-<h2 id="data-sources">Data sources</h2>
-<h3 id="etsin">Etsin</h3>
-<p>Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.</p>
-<p>Api documentation:
-<a href="http://openscience.fi/etsin-api" target="_blank">http://openscience.fi/etsin-api</a></p>
-<h3 id="b2share">B2Share</h3>
-<p><a href="https://b2share.eudat.eu/" target="_blank">B2Share</a> is part of the <a href="https://eudat.eu/" target="_blank">EUDAT</a> collaborative data infrastructure.</p>
-<p>In B2Share the data is organized around communities, which all maintain their own metadata schemas for community related records. This means that harvested data structures can vary depending on which community the record belongs to. There is also a common schema that is shared with all the communities.</p>
-<p>API documentation
-<a href="https://b2share.eudat.eu/help/api" target="_blank">https://b2share.eudat.eu/help/api</a></p>
-<h3 id="zenodo">Zenodo</h3>
-<p><a href="https://zenodo.org" target="_blank">Zenodo</a> is a general purpose repository for all kinds of research outputs ranging from presentations to datasets. Users can create communities to organize content into subrepositories.</p>
-<p>Api documentation:
-<a href="http://developers.zenodo.org/" target="_blank">http://developers.zenodo.org/</a></p>
-<p>Example output from Hulib community in DataCite format:
-<a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib" target="_blank">https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib</a></p>
-<h3 id="finto">Finto</h3>
-<p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.</p>
-<h3 id="iow">IOW</h3>
-<p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is service for creating and maintaining descriptions for interoperability. In the context of of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
-<h2 id="implementation">Implementation</h2>
-<p>Architectural overview:</p>
-<p><img src="images/ATTX-Mildred-architecture.svg" alt="Architectural overview"></p>
-<p>Features:</p>
+<p><strong>Repository: <a href="https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta" target="_blank">https://github.com/ATTX-project/platform-deployment/tree/master/swarm-mode-cpouta</a></strong></p>
+<p>Requirements :</p>
+<ol>
+<li><p>Minimum of 3 instances created on cPouta (Ubuntu-16.04 recommended) (cf. <a href="https://research.csc.fi/pouta-flavours" target="_blank">https://research.csc.fi/pouta-flavours</a>).</p>
+</li>
+<li><p>A Key Pair certificate must be created and associated with all instances, to allow access as &quot;cloud-user&quot; (cPouta default). SSH access security group must be created and associated with all instances, so that SSH communication between them is possible. Public floating IP address must be associated with one instance, for external connections (SSH, SFTP) (cf. <a href="https://research.csc.fi/pouta-getting-started" target="_blank">https://research.csc.fi/pouta-getting-started</a>).</p>
+</li>
+<li><p>The Key Pair certificate must be imported to the host computer of ATTX developer/user, in order to allow SSH and SFTP authentication to the instance associated with the the public floating IP address (cf. <a href="https://research.csc.fi/pouta-connecting-a-virtual-machine" target="_blank">https://research.csc.fi/pouta-connecting-a-virtual-machine</a>).
+On linux commands to add certificates could be added by runing:</p>
 <ul>
-<li>DataCite output format</li>
-<li>Custom output format if required</li>
-<li>Data validation based on JSON schemas</li>
-<li>simple data quality analysis</li>
-<li>Identifying dataset related to UH</li>
-<li>Deduplication of dataset metadata available from multiple sources</li>
+<li>Start ssh agent (if not started) <code>eval &quot;$(ssh-agent -s)&quot;</code></li>
+<li>Add private key from a specific location: <code>ssh-add ~/user/cpouta.psk</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="1-preparing-ansibles-control-node">1. Preparing Ansible&apos;s Control Node</h2>
+<p>In order for your instance with the public IP address (e.g. <code>attx-instance-1</code>) to be set up as Ansible&apos;s control node, you&apos;ll need to install PIP and Ansible&apos;s prerequisites:</p>
+<pre><code class="lang-shell">sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python-dev
+sudo apt-get install python-pip
+</code></pre>
+<p>Install Ansible:</p>
+<pre><code class="lang-shell">sudo apt-get install ansible
+</code></pre>
+<h2 id="2-upload-and-edit-ansibles-configuration-files">2. Upload and Edit Ansible&apos;s Configuration Files</h2>
+<p>Via SFTP or SCP, transfer the contents of <code>&lt;github_repo_link&gt;</code> to your instance in cPouta with the floating public IP address (e.g. <code>attx-stack-1</code>), namely to the instance that you have set up as the Ansible control node for this exercise.</p>
+<p>The list of the files is:</p>
+<ul>
+<li><p><code>inventory</code> (hostname and IP address information used by Ansible for setting up the instances with Docker and Docker-Compose, <strong>must be edited</strong> as per your instances hostnames and IP addresses)</p>
+</li>
+<li><p><code>cpouta.yml</code> (hostname and IP address information used by Ansible for building up /etc/hosts in all instances, <strong>must be edited</strong> as per your instances hostnames and IP addresses)</p>
+</li>
+<li><p><code>provisioning.yml</code> and <code>ansible.cfg</code> (Ansible&apos;s provisioning and configuration files, <strong>don&apos;t edit</strong>)</p>
+</li>
+<li><p><code>ssh-config</code> and <code>private-key</code> (SSH configuration and private key for Ansible, <strong>don&apos;t edit</strong>)</p>
+</li>
+</ul>
+<p>The recommended path for the Ansible files is <code>/home/cloud-user/provision-swarm</code> (<strong>must be created</strong>).</p>
+<h2 id="3-provisioning-the-instances">3. Provisioning the Instances</h2>
+<p>From Ansible&apos;s control node, run as cloud-user:</p>
+<pre><code class="lang-shell">ansible-playbook provisioning.yml
+</code></pre>
+<p>You can display extra verbose information for troubleshooting with the <code>-vvvv</code> option, e.g. &quot;<code>ansible-playbook -i hosts provisioning.yml -vvvv</code>&quot;</p>
+<h2 id="4-possible-problems-and-solutions">4. Possible Problems and Solutions</h2>
+<ul>
+<li><p>If you get strange Ansible errors about dependencies, try to check your pip
+version with <code>pip --version</code>. The current version is 9.0.1. If your pip is
+older than this, upgrade it with <code>sudo pip install --upgrade pip</code>, restart
+your terminal session and install the Ansible prerequisites again.</p>
+</li>
+<li><p>If Ansible fails to pip-install docker-compose on a node complaining about a pip module&apos;s version, try to to    upgrade that module with <code>sudo pip install -upgrade &lt;module&gt;</code> (e.g. <code>sudo pip install --upgrade six</code>) , and run the Ansible provisioning again. You can find in Github repo <link_here> a list of pip modules known to work (&quot;pip.requirements.txt&quot;), which can be installed with <code>sudo pip install -r pip.requirements.txt</code>.</link_here></p>
+</li>
+<li><p>If you get a ssh error saying <code>WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED</code>
+it means that you already had in the past some other host using one of the
+IP addresses we use here as example. To solve this, remove the old entry in your SSH
+<code>known_hosts</code> file with:</p>
+<pre><code class="lang-shell">ssh-keygen -f &quot;~/.ssh/known_hosts&quot; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt; -R &lt;INSTANCE_IP_ADDRESS&gt;
+</code></pre>
+</li>
 </ul>
 
                                 
@@ -1049,12 +1060,8 @@
 
             
                 
-                <a href="Use-case-Metax.html" class="navigation navigation-prev " aria-label="Previous page: UC3 - Metax">
-                    <i class="fa fa-angle-left"></i>
-                </a>
                 
-                
-                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-next " aria-label="Next page: ATTX Architecture Overview">
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Deploying ATTX Components on Docker Swarm">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1065,7 +1072,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2017-07-31T14:00:13.773Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"2.1.2.1","depth":3,"next":{"title":"Deploying ATTX Components on Docker Swarm","level":"2.1.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},"previous":{"title":"Run on Distributed/Cloud","level":"2.1.2","depth":2,"ref":"","articles":[{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"2.1.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},{"title":"Deploying ATTX Components on Docker Swarm","level":"2.1.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","mtime":"2017-07-31T14:00:13.728Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

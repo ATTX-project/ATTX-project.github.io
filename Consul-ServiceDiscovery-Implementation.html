@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>UC4 - Mildred · GitBook</title>
+        <title>Consul Service Discovery Implementation · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ATTX-Architecture-Overview.html" />
+    <link rel="next" href="Consul-for-Service-Discovery-on-Docker-Swarm.html" />
     
     
-    <link rel="prev" href="Use-case-Metax.html" />
+    <link rel="prev" href="ServiceDiscovery-Implementation.html" />
     
 
     </head>
@@ -161,7 +161,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.4" data-path="Use-case-Mildred.html">
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
             
                 <a href="Use-case-Mildred.html">
             
@@ -535,7 +535,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="3.4.1" data-path="Consul-ServiceDiscovery-Implementation.html">
+        <li class="chapter active" data-level="3.4.1" data-path="Consul-ServiceDiscovery-Implementation.html">
             
                 <a href="Consul-ServiceDiscovery-Implementation.html">
             
@@ -948,7 +948,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >UC4 - Mildred</a>
+        <a href="." >Consul Service Discovery Implementation</a>
     </h1>
 </div>
 
@@ -963,64 +963,283 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jul-2017 10:25:08</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
-
-<h1 id="mildred-use-case">Mildred use case</h1>
-<p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
-<p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.</p>
-<!-- TOC START min:1 max:3 link:true update:false -->
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="consul-service-discovery-implementation">Consul Service Discovery Implementation</h1>
+<h3 id="table-of-contents">Table of Contents</h3>
+<!-- TOC START min:1 max:4 link:true update:false -->
 <ul>
-<li><a href="#approach">Approach</a></li>
-<li><a href="#user-stories">User stories</a></li>
-<li><a href="#data-sources">Data sources</a><ul>
-<li><a href="#etsin">Etsin</a></li>
-<li><a href="#b2share">B2Share</a></li>
-<li><a href="#zenodo">Zenodo</a></li>
-<li><a href="#finto">Finto</a></li>
-<li><a href="#iow">IOW</a></li>
+<li><a href="#consul-in-practice">Consul in Practice</a><ul>
+<li><a href="#registering-a-service-with-consul">Registering a Service with Consul</a></li>
+<li><a href="#making-use-of-registered-services">Making Use of Registered Services</a><ul>
+<li><a href="#using-consul-tags">Using Consul Tags</a></li>
 </ul>
 </li>
-<li><a href="#implementation">Implementation</a></li>
+<li><a href="#storing-keyvalue-pairs-in-consul">Storing Key/Value pairs in Consul</a></li>
+<li><a href="#consul-and-docker-swarm">Consul and Docker SWARM</a><ul>
+<li><a href="#using-consul-catalog-for-service-discovery">Using Consul Catalog for Service Discovery</a></li>
+<li><a href="#using-consul-kv-for-service-discovery">Using Consul K/V for Service Discovery</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
 </ul>
 <!-- TOC END -->
-<h2 id="approach">Approach</h2>
-<p>Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred&apos;s steering group.</p>
-<p>One of the main ideas behind the use case, it the added value that ATTX broker deliver by running customizable validation and data quality processes over the harvested data. This additional data can also be published and used by the ThinkOpen site to deliver custom quality metrics alongside the dataset metadata.</p>
-<p>Etsin is already a service that aggregates dataset metadata from different sources, so why make another similar dataset? Mildred use case is interested specifically in UH&apos;s research outputs whereas Etsin is a national service. By creating an UH specific dataset, we have control over both the content and structure of the dataset, which makes it easier to integrate it with ThinkOpen work or any other UH specific use. It is also possible that some day the data might flow in an opposite direction between UH&apos;s dataset and Etsin.</p>
-<p>When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get <strong>some</strong> data. It is however possible to extend to those methods with more complex internal processing.</p>
-<p>TODO: Link to OpenScienceFair poster draft.</p>
-<h2 id="user-stories">User stories</h2>
-<h2 id="data-sources">Data sources</h2>
-<h3 id="etsin">Etsin</h3>
-<p>Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.</p>
-<p>Api documentation:
-<a href="http://openscience.fi/etsin-api" target="_blank">http://openscience.fi/etsin-api</a></p>
-<h3 id="b2share">B2Share</h3>
-<p><a href="https://b2share.eudat.eu/" target="_blank">B2Share</a> is part of the <a href="https://eudat.eu/" target="_blank">EUDAT</a> collaborative data infrastructure.</p>
-<p>In B2Share the data is organized around communities, which all maintain their own metadata schemas for community related records. This means that harvested data structures can vary depending on which community the record belongs to. There is also a common schema that is shared with all the communities.</p>
-<p>API documentation
-<a href="https://b2share.eudat.eu/help/api" target="_blank">https://b2share.eudat.eu/help/api</a></p>
-<h3 id="zenodo">Zenodo</h3>
-<p><a href="https://zenodo.org" target="_blank">Zenodo</a> is a general purpose repository for all kinds of research outputs ranging from presentations to datasets. Users can create communities to organize content into subrepositories.</p>
-<p>Api documentation:
-<a href="http://developers.zenodo.org/" target="_blank">http://developers.zenodo.org/</a></p>
-<p>Example output from Hulib community in DataCite format:
-<a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib" target="_blank">https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib</a></p>
-<h3 id="finto">Finto</h3>
-<p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.</p>
-<h3 id="iow">IOW</h3>
-<p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is service for creating and maintaining descriptions for interoperability. In the context of of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
-<h2 id="implementation">Implementation</h2>
-<p>Architectural overview:</p>
-<p><img src="images/ATTX-Mildred-architecture.svg" alt="Architectural overview"></p>
-<p>Features:</p>
+<h2 id="consul-in-practice">Consul in Practice</h2>
+<p>In order to understand what components, when they communicate and what/how they communicate to each other using Service Discover component, we envision the following:</p>
 <ul>
-<li>DataCite output format</li>
-<li>Custom output format if required</li>
-<li>Data validation based on JSON schemas</li>
-<li>simple data quality analysis</li>
-<li>Identifying dataset related to UH</li>
-<li>Deduplication of dataset metadata available from multiple sources</li>
+<li>(micro)services offered by the Graph, Workflow and Distribution components require to register services such as Graph-Manager-API, UVProvovenance-API, ElasticSearch or any other of processing components - see <a href="User-Guide-Administrator.html">Administrator&apos;s User Guide</a>;</li>
+<li>configurations specific to the Graph Store (e.g. Fuseki endpoint(s)) or the MariaDB configuration for UVProvovenance-API or several (micro)services parameters will be stored in the Consul KV store;</li>
+<li>Accessing the registered (micro)services can be achieved either directly from the Consul DNS/HTTP API or via the proxy/router (for additional load balancing), meanwhile accessing the KV store should be done directly from Consul HTTP API - these solutions fit into the <a href="http://microservices.io/patterns/index.html#service-discovery" target="_blank">Service Discovery patterns</a>.</li>
+</ul>
+<h3 id="registering-a-service-with-consul">Registering a Service with Consul</h3>
+<p>Registering a service can be achieved using one of the recommended libraries <a href="https://www.consul.io/api/libraries-and-sdks.html" target="_blank">https://www.consul.io/api/libraries-and-sdks.html</a> e.g. using python-consul</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> consul
+
+c = consul.Consul(host=<span class="hljs-string">&apos;attx-sandbox&apos;</span>, port=<span class="hljs-number">8500</span>)
+<span class="hljs-comment"># Register Service</span>
+c.agent.service.register(<span class="hljs-string">&apos;restapi&apos;</span>,
+                         service_id=<span class="hljs-string">&apos;restapi_1&apos;</span>,
+                         port=<span class="hljs-number">4300</span>,
+                         tags=[<span class="hljs-string">&apos;graph-component&apos;</span>])
+</code></pre>
+<p>One of the main questions is when to de-register a service, however a more appropriate issue would be to do a healthcheck (<code>/health</code> endpoint already available for GM and WF APIs), also considering some of the services run under supervisor, and will try be restarted, the function of de-registering should be part of shutting down a service.</p>
+<h3 id="making-use-of-registered-services">Making Use of Registered Services</h3>
+<p>An overview how we might make use of such services is as described in the diagram below, however two cases can bet identified:</p>
+<ol>
+<li>accessing a service remote API such as HTTP/REST  at a particular location (host and port) via an client (e.g. browser, DPU);</li>
+<li>having different services talking to one another.</li>
+</ol>
+<p>While in both cases the Server-Side Service Discovery pattern could be used, it seems more feasible, to have the services talking to one another by querying the Service Registry/Discovery service directly or using Docker Flow Proxy (just for registering, TBD if they can talk to one another via Docker Flow Proxy) - see <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html">Consul for Service Discovery on Docker Swarm</a> for more details.</p>
+<pre><code>Client          Proxy/Router         Service Registry/Discovery      Service A
+
+                                                 1.register Service A
+
+                                              &lt;--------------------------+
+  2. Client request
+
++--------------------&gt;
+
+                    3. Proxy Asks for Service A
+
+                +--------------------------------&gt;
+                ^--------------------------------+
+
+                          4. Proxy Forwards request to Service A
+
+                    +-------------------------------------------------------&gt;
+
+             5. Service A responds to the request to Client (via Proxy)
+
+    &lt;----------------------------------------------------------------------+
+</code></pre><h4 id="using-consul-tags">Using Consul Tags</h4>
+<p>Tags could be used to distinguish between either special instances of a service, e.g. &quot;Reasoning with OWL-DL&quot; and &quot;Reasoning with RDFS+&quot; - same service but with different reasoners configure behind.</p>
+<pre><code class="lang-json">[{
+    <span class="hljs-string">&quot;Node&quot;</span>: <span class="hljs-string">&quot;app-registry-discovery-node1&quot;</span>,
+    <span class="hljs-string">&quot;Address&quot;</span>: <span class="hljs-string">&quot;x.x.x.x&quot;</span>,
+    <span class="hljs-string">&quot;ServiceID&quot;</span>: <span class="hljs-string">&quot;api-server-8000&quot;</span>,
+    <span class="hljs-string">&quot;ServiceName&quot;</span>: <span class="hljs-string">&quot;api-server&quot;</span>,
+    <span class="hljs-string">&quot;ServiceTags&quot;</span>: [<span class="hljs-string">&quot;dev&quot;</span>, <span class="hljs-string">&quot;provider-abc&quot;</span>],
+    <span class="hljs-string">&quot;ServiceAddress&quot;</span>: <span class="hljs-string">&quot;someserver.domain.com&quot;</span>,
+    <span class="hljs-string">&quot;ServicePort&quot;</span>: <span class="hljs-number">8000</span>
+}, {
+    <span class="hljs-string">&quot;Node&quot;</span>: <span class="hljs-string">&quot;app-registry-discovery-node1&quot;</span>,
+    <span class="hljs-string">&quot;Address&quot;</span>: <span class="hljs-string">&quot;x.x.x.x&quot;</span>,
+    <span class="hljs-string">&quot;ServiceID&quot;</span>: <span class="hljs-string">&quot;api-server-8001&quot;</span>,
+    <span class="hljs-string">&quot;ServiceName&quot;</span>: <span class="hljs-string">&quot;api-server&quot;</span>,
+    <span class="hljs-string">&quot;ServiceTags&quot;</span>: [<span class="hljs-string">&quot;dev&quot;</span>, <span class="hljs-string">&quot;provider-xyz&quot;</span>],
+    <span class="hljs-string">&quot;ServiceAddress&quot;</span>: <span class="hljs-string">&quot;someserver.domain.com&quot;</span>,
+    <span class="hljs-string">&quot;ServicePort&quot;</span>: <span class="hljs-number">8001</span>
+}]
+</code></pre>
+<p>Accessing services with specific tags would work such as:
+<code>http://consul-server/v1/catalog/service/api-server?tag=dev</code></p>
+<h3 id="storing-keyvalue-pairs-in-consul">Storing Key/Value pairs in Consul</h3>
+<p>Because the Consul provides something that resembles more of a dictionary than a document store, trying to register something like:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;first_level&quot;</span> : {
+    <span class="hljs-string">&quot;second_level&quot;</span> : {
+      <span class="hljs-string">&quot;third_level&quot;</span> : {
+        <span class="hljs-string">&quot;theKey&quot;</span> : <span class="hljs-string">&quot;theValue&quot;</span>
+      }
+    }
+  }
+}
+</code></pre>
+<p>One would have several options (as pointed by: <a href="https://groups.google.com/forum/#!topic/consul-tool/DgwWdpntaAY" target="_blank">https://groups.google.com/forum/#!topic/consul-tool/DgwWdpntaAY</a>):</p>
+<ul>
+<li>Using one key per root and storing all the root tree as JSON object e.g.<code>/foo {json}</code>;</li>
+<li>Using key per 1-level children - and storing all grandchildren as JSON e.g. <code>/foo/bar {json}</code></li>
+<li>or storing each grand children per key e.g <code>/foo/bar/zar {json}</code></li>
+</ul>
+<p>the appropriate structure in Consul KV would be:
+<code>/first_level/second_level/third_level/theKey</code> and the value for that last key would be <code>theValue</code> - solution inspired by <a href="https://github.com/Cimpress-MCP/git2consul" target="_blank">https://github.com/Cimpress-MCP/git2consul</a></p>
+<p>Another option would be to encode a JSON object to Base64 - see <a href="https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding" target="_blank">Base64 encoding and decoding</a> or <a href="http://stackoverflow.com/questions/34341836/how-to-convert-a-json-object-to-a-base64-string" target="_blank">http://stackoverflow.com/questions/34341836/how-to-convert-a-json-object-to-a-base64-string</a></p>
+<h3 id="consul-and-docker-swarm">Consul and Docker SWARM</h3>
+<p>As illustrated in <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html">Consul for Service Discovery on Docker Swarm</a> we are making use of <a href="http://proxy.dockerflow.com" target="_blank">Docker Flow Proxy</a> and <a href="http://swarmlistener.dockerflow.com/" target="_blank">Docker Swarm Listener</a> in order to implement a Server-Side Service Discovery pattern. However there are a few naming conventions that should be taken into consideration.</p>
+<h4 id="using-consul-catalog-for-service-discovery">Using Consul Catalog for Service Discovery</h4>
+<p>In this solution there are two main components the Service Discovery (where service are registered in the Consul catalogue of service for being monitored, and possible for healthcheck) and the Service Registry (where the services are registered using the Docker Swarm listener and used by Docker Flow proxy in the Consul K/V store).</p>
+<ul>
+<li>Docker SWARM<ul>
+<li>serviceName = name of the docker container in the network</li>
+</ul>
+</li>
+<li>Docker Flow Proxy<ul>
+<li>serviceName = name of the container in the network</li>
+<li>servicePath = /[service name from consul]/endpoint</li>
+</ul>
+</li>
+<li>Consul<ul>
+<li>catalog<ul>
+<li>serviceName = application type of service</li>
+<li>serviceID = service name from SWARM</li>
+<li>tag = v1</li>
+</ul>
+</li>
+<li>kv<ul>
+<li>serviceName/description = &quot;Description of the the service&quot;</li>
+<li>serviceName/dataset = &apos;/ds&apos;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>Docker SWARM<ul>
+<li>serviceName = ES1</li>
+<li>serviceName = ES5</li>
+</ul>
+</li>
+<li>Docker Flow Proxy<ul>
+<li>elasticsearch 1.3<ul>
+<li>serviceName = ES1</li>
+<li>servicePath = /ES1/jsonRestAPI/</li>
+<li>reqPathSearch = /ES1/jsonRestAPI/</li>
+<li>reqPathReplace = /</li>
+</ul>
+</li>
+<li>elasticsearch 5.x<ul>
+<li>serviceName = ES5</li>
+<li>servicePath = /ES5/jsonRestAPI/</li>
+<li>reqPathSearch = /ES5/jsonRestAPI/</li>
+<li>reqPathReplace = /</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Consul<ul>
+<li>catalog<pre><code class="lang-json">[
+  {
+      <span class="hljs-string">&quot;serviceName&quot;</span>: <span class="hljs-string">&quot;jsonRestAPI&quot;</span>,
+      <span class="hljs-string">&quot;serviceID&quot;</span>: <span class="hljs-string">&quot;ES1&quot;</span>,
+      <span class="hljs-string">&quot;tags&quot;</span>: [<span class="hljs-string">&quot;v1&quot;</span>]
+  },
+  {
+      <span class="hljs-string">&quot;serviceName&quot;</span>: <span class="hljs-string">&quot;jsonRestAPI&quot;</span>,
+      <span class="hljs-string">&quot;serviceID&quot;</span>: <span class="hljs-string">&quot;ES5&quot;</span>,
+      <span class="hljs-string">&quot;tags&quot;</span>: [<span class="hljs-string">&quot;v1&quot;</span>]
+  }
+]
+</code></pre>
+</li>
+<li>kv
+/ES1/description = &quot;REST API that uses old version of the ES&quot;
+/ES5/description = &quot;REST API implemented with the current version of the ES&quot;</li>
+</ul>
+</li>
+<li>Querying for services of type &quot;jsonRestAPI&quot; and version &quot;v1&quot;:
+<code>http://proxy/consul/catalog/service/jsonRestAPI?tag=v1</code><ul>
+<li>Returns: serviceIDs</li>
+</ul>
+</li>
+<li>Access the service (e.g. indexing): <code>proxy/[serviceID]/[serviceName]/[endpoint]</code><pre><code>  PUT http://proxy/ES1/jsonRestAPI/[indexName]/[document type]
+</code></pre></li>
+</ul>
+<h4 id="using-consul-kv-for-service-discovery">Using Consul K/V for Service Discovery</h4>
+<p>In this solution we would be using the services are registered using the Docker Swarm listener and used by Docker Flow proxy in the Consul K/V store in order to discover new services, and client side processing.</p>
+<p>In order to add new values to the Consul K/V store, we will have to pass some environment variables to the container and at the same time follow the structure of the docker flow proxy for registering service parameters.</p>
+<ul>
+<li>Docker SWARM<ul>
+<li>serviceName = name of the docker container in the network</li>
+</ul>
+</li>
+<li>Docker Flow Proxy<ul>
+<li>serviceName = name of the container in the network</li>
+<li>servicePath = /[service name from consul]/endpoint</li>
+</ul>
+</li>
+<li>Consul<ul>
+<li>kv<ul>
+<li>/docker-flow/serviceName/description = &quot;Description of the the service&quot;</li>
+<li>/docker-flow/serviceName/dataset = &apos;/ds&apos;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>Docker SWARM<ul>
+<li>serviceName = ES1</li>
+<li>serviceName = ES5</li>
+</ul>
+</li>
+<li>Docker Flow Proxy<ul>
+<li>elasticsearch 1.3<ul>
+<li>serviceName = ES1</li>
+<li>servicePath = /ES1/jsonRestAPI/</li>
+<li>reqPathSearch = /ES1/jsonRestAPI/</li>
+<li>reqPathReplace = /</li>
+</ul>
+</li>
+<li>elasticsearch 5.x<ul>
+<li>serviceName = ES5</li>
+<li>servicePath = /ES5/jsonRestAPI/</li>
+<li>reqPathSearch = /ES5/jsonRestAPI/</li>
+<li>reqPathReplace = /</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Consul<ul>
+<li>kv
+/docker-flow/jsonRestAPI_ES1_v1/description = &quot;REST API that uses old version of the ES&quot;
+/docker-flow/jsonRestAPI_ES5_v1/description = &quot;REST API implemented with the current version of the ES&quot;</li>
+</ul>
+</li>
+<li>Querying for services of type &quot;jsonRestAPI&quot; and version &quot;v1&quot;:<ul>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?keys</code></li>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?recurse</code></li>
+</ul>
+</li>
+<li>Querying for services of type &quot;jsonRestAPI&quot;:<ul>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_?keys</code></li>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_?recurse</code></li>
+</ul>
+</li>
+<li>Querying for services of type &quot;jsonRestAPI&quot; ES1 versions:<ul>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1?keys</code></li>
+</ul>
+</li>
+<li>Querying for parameter keys of type &quot;jsonRestAPI&quot; ES1 version &quot;v1&quot;:<ul>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?keys</code></li>
+</ul>
+</li>
+<li>Access the service (e.g. indexing): <code>proxy/[serviceID]/[serviceName]/[endpoint]</code><pre><code>  PUT http://proxy/ES1/jsonRestAPI/[indexName]/[document type]
+</code></pre></li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/42054051/service-discovery-in-docker-without-using-consul" target="_blank">https://stackoverflow.com/questions/42054051/service-discovery-in-docker-without-using-consul</a></li>
+<li><a href="https://stackoverflow.com/questions/39132292/how-to-deploy-consul-using-docker-1-12-swarm-mode" target="_blank">https://stackoverflow.com/questions/39132292/how-to-deploy-consul-using-docker-1-12-swarm-mode</a></li>
+<li>Installing Hashicorp&#x2019;s Consul and using Python 3 to communicate with it <a href="http://www.giantflyingsaucer.com/blog/?p=5579" target="_blank">http://www.giantflyingsaucer.com/blog/?p=5579</a></li>
+<li><a href="http://proxy.dockerflow.com/" target="_blank">http://proxy.dockerflow.com/</a></li>
+<li><a href="https://labs.magnet.me/nerds/2015/10/26/consultant-configuration-management-with-consul.html" target="_blank">https://labs.magnet.me/nerds/2015/10/26/consultant-configuration-management-with-consul.html</a> - for using the K/V Store</li>
+<li><a href="https://www.spirulasystems.com/blog/2015/06/25/building-an-automatic-environment-using-consul-and-docker-part-1/" target="_blank">https://www.spirulasystems.com/blog/2015/06/25/building-an-automatic-environment-using-consul-and-docker-part-1/</a></li>
+<li><a href="https://www.spirulasystems.com/blog/2015/07/02/automatic-environment-using-consul-and-docker-swarm-part-2/" target="_blank">https://www.spirulasystems.com/blog/2015/07/02/automatic-environment-using-consul-and-docker-swarm-part-2/</a></li>
+<li><a href="https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/" target="_blank">https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/</a></li>
+<li><a href="http://www.dblooman.com/consul/2016/09/11/Consul-and-Service-discovery,-how-it-can-help/" target="_blank">http://www.dblooman.com/consul/2016/09/11/Consul-and-Service-discovery,-how-it-can-help/</a></li>
+<li><a href="https://technologyconversations.com/2016/03/21/docker-flow-proxy-on-demand-haproxy-service-discovery-and-reconfiguration/" target="_blank">https://technologyconversations.com/2016/03/21/docker-flow-proxy-on-demand-haproxy-service-discovery-and-reconfiguration/</a></li>
 </ul>
 
                                 
@@ -1049,12 +1268,12 @@
 
             
                 
-                <a href="Use-case-Metax.html" class="navigation navigation-prev " aria-label="Previous page: UC3 - Metax">
+                <a href="ServiceDiscovery-Implementation.html" class="navigation navigation-prev " aria-label="Previous page: Service Discovery Implementation">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-next " aria-label="Next page: ATTX Architecture Overview">
+                <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html" class="navigation navigation-next " aria-label="Next page: Consul for Service Discovery on Docker Swarm">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1065,7 +1284,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2017-07-31T14:00:13.773Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"next":{"title":"Consul for Service Discovery on Docker Swarm","level":"3.4.2","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]},"previous":{"title":"Service Discovery Implementation","level":"3.4","depth":1,"path":"ServiceDiscovery-Implementation.md","ref":"ServiceDiscovery-Implementation.md","articles":[{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"path":"Consul-ServiceDiscovery-Implementation.md","ref":"Consul-ServiceDiscovery-Implementation.md","articles":[]},{"title":"Consul for Service Discovery on Docker Swarm","level":"3.4.2","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-ServiceDiscovery-Implementation.md","mtime":"2017-07-31T14:00:13.657Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

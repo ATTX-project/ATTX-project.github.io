@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>UC4 - Mildred · GitBook</title>
+        <title>Ontology/Data model · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ATTX-Architecture-Overview.html" />
+    <link rel="next" href="Linking-Strategies.html" />
     
     
-    <link rel="prev" href="Use-case-Metax.html" />
+    <link rel="prev" href="Graph-Store.html" />
     
 
     </head>
@@ -161,7 +161,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.4" data-path="Use-case-Mildred.html">
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
             
                 <a href="Use-case-Mildred.html">
             
@@ -440,7 +440,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="3.2.2.1" data-path="ATTX-Data-Model.html">
+        <li class="chapter active" data-level="3.2.2.1" data-path="ATTX-Data-Model.html">
             
                 <a href="ATTX-Data-Model.html">
             
@@ -948,7 +948,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >UC4 - Mildred</a>
+        <a href="." >Ontology/Data model</a>
     </h1>
 </div>
 
@@ -963,64 +963,97 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jul-2017 10:25:08</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
-
-<h1 id="mildred-use-case">Mildred use case</h1>
-<p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
-<p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 03-Jul-2017 12:41:56</div></div><h1 id="attx-ontology">ATTX Ontology</h1>
+<h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
-<li><a href="#approach">Approach</a></li>
-<li><a href="#user-stories">User stories</a></li>
-<li><a href="#data-sources">Data sources</a><ul>
-<li><a href="#etsin">Etsin</a></li>
-<li><a href="#b2share">B2Share</a></li>
-<li><a href="#zenodo">Zenodo</a></li>
-<li><a href="#finto">Finto</a></li>
-<li><a href="#iow">IOW</a></li>
+<li><a href="#ontologydata-model---attxonto">Ontology/Data Model - ATTXOnto</a><ul>
+<li><a href="#attx-graph-namespaces">ATTX Graph Namespaces</a></li>
 </ul>
 </li>
-<li><a href="#implementation">Implementation</a></li>
+<li><a href="#related-data-models">Related Data Models</a><ul>
+<li><a href="#att-data-model">ATT Data Model</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
 </ul>
 <!-- TOC END -->
-<h2 id="approach">Approach</h2>
-<p>Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred&apos;s steering group.</p>
-<p>One of the main ideas behind the use case, it the added value that ATTX broker deliver by running customizable validation and data quality processes over the harvested data. This additional data can also be published and used by the ThinkOpen site to deliver custom quality metrics alongside the dataset metadata.</p>
-<p>Etsin is already a service that aggregates dataset metadata from different sources, so why make another similar dataset? Mildred use case is interested specifically in UH&apos;s research outputs whereas Etsin is a national service. By creating an UH specific dataset, we have control over both the content and structure of the dataset, which makes it easier to integrate it with ThinkOpen work or any other UH specific use. It is also possible that some day the data might flow in an opposite direction between UH&apos;s dataset and Etsin.</p>
-<p>When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get <strong>some</strong> data. It is however possible to extend to those methods with more complex internal processing.</p>
-<p>TODO: Link to OpenScienceFair poster draft.</p>
-<h2 id="user-stories">User stories</h2>
-<h2 id="data-sources">Data sources</h2>
-<h3 id="etsin">Etsin</h3>
-<p>Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.</p>
-<p>Api documentation:
-<a href="http://openscience.fi/etsin-api" target="_blank">http://openscience.fi/etsin-api</a></p>
-<h3 id="b2share">B2Share</h3>
-<p><a href="https://b2share.eudat.eu/" target="_blank">B2Share</a> is part of the <a href="https://eudat.eu/" target="_blank">EUDAT</a> collaborative data infrastructure.</p>
-<p>In B2Share the data is organized around communities, which all maintain their own metadata schemas for community related records. This means that harvested data structures can vary depending on which community the record belongs to. There is also a common schema that is shared with all the communities.</p>
-<p>API documentation
-<a href="https://b2share.eudat.eu/help/api" target="_blank">https://b2share.eudat.eu/help/api</a></p>
-<h3 id="zenodo">Zenodo</h3>
-<p><a href="https://zenodo.org" target="_blank">Zenodo</a> is a general purpose repository for all kinds of research outputs ranging from presentations to datasets. Users can create communities to organize content into subrepositories.</p>
-<p>Api documentation:
-<a href="http://developers.zenodo.org/" target="_blank">http://developers.zenodo.org/</a></p>
-<p>Example output from Hulib community in DataCite format:
-<a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib" target="_blank">https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib</a></p>
-<h3 id="finto">Finto</h3>
-<p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.</p>
-<h3 id="iow">IOW</h3>
-<p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is service for creating and maintaining descriptions for interoperability. In the context of of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
-<h2 id="implementation">Implementation</h2>
-<p>Architectural overview:</p>
-<p><img src="images/ATTX-Mildred-architecture.svg" alt="Architectural overview"></p>
-<p>Features:</p>
+<h2 id="ontologydata-model---attxonto">Ontology/Data Model - ATTXOnto</h2>
+<p><strong>The full ontology description and examples are available at: <a href="https://attx-project.github.io/attx-onto/" target="_blank">https://attx-project.github.io/attx-onto/</a></strong></p>
+<p>The ontology/data model has the purpose of describing how and when the data flows within the platform, types of transformations (and associated workflows), the provenance information (agent and associated processes performed) and other meta data.</p>
+<p>A general use case is represented in Figure 1 where we can depict several parts:</p>
 <ul>
-<li>DataCite output format</li>
-<li>Custom output format if required</li>
-<li>Data validation based on JSON schemas</li>
-<li>simple data quality analysis</li>
-<li>Identifying dataset related to UH</li>
-<li>Deduplication of dataset metadata available from multiple sources</li>
+<li>ETL processes associated with the specific steps and workflows - see <a href="ETL-Artifacts.html">ETL Workflow</a> for more details and <a href="UVProvovenance-API.md">UVProvovenance API</a> which generates such specific information;</li>
+<li>Provenance Data Graph - which depicts provenance information specific to each workflow, data set etc.;</li>
+<li>Working Data Graph - contains both inferred and explicit relationships between domain data;</li>
+<li>Dissemination Data Graph - Data Graph distributed via the APIs.</li>
+</ul>
+<p><img src="images/ontology_usecase.svg" alt="Figure 1. Ontology Use Cases Flow"></p>
+<p>Figure 1. Ontology Use Cases Flow</p>
+<h3 id="attx-graph-namespaces">ATTX Graph Namespaces</h3>
+<p>Base namespaces and/or named graphs convention:</p>
+<ul>
+<li><code>http://data.hulib.helsinki.fi/attx/onto#</code> - ontology and associated classes</li>
+<li><code>http://data.hulib.helsinki.fi/attx</code> - to be used as a base for data</li>
+<li><code>http://data.hulib.helsinki.fi/attx/prov</code> - for provenance data</li>
+<li><code>http://data.hulib.helsinki.fi/attx/ids</code> - for clusted data ids</li>
+<li><code>http://data.hulib.helsinki.fi/attx/{workflowID}/work</code> - for working data<ul>
+<li><code>http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra</code> - for infrastructure</li>
+<li><code>http://data.hulib.helsinki.fi/attx/{workflowID}/{workflowID}/work/pub</code> - for  publication</li>
+</ul>
+</li>
+<li><code>http://data.hulib.helsinki.fi/attx/id</code> - service whatever comes after the id should resolve the id</li>
+</ul>
+<p>The <a href="Graph-Manager-API.html">Graph Manager API</a> generates working datasets by following the <code>http://data.hulib.helsinki.fi/attx/work{generatedID}</code> where the <code>generatedID</code> is a result of hash algorithm. To be pointed out that the <code>http://data.hulib.helsinki.fi/attx/work</code> is the recommended base for the working datasets.</p>
+<h2 id="related-data-models">Related Data Models</h2>
+<h3 id="att-data-model">ATT Data Model</h3>
+<ul>
+<li><a href="http://iow.csc.fi/model/att" target="_blank">http://iow.csc.fi/model/att</a> &quot;Application Profile for Research Data Catalogues&quot;</li>
+</ul>
+<p>The Data Model is focused on data interoperability of catalogues and research materials find-ability (e.g. research papers and other types of documents). And as its label states it is a &quot;Application Profile for Research Data Catalogues&quot; or has the purpose to aid in building such an application profile.
+The main focus seems to be however on the <a href="http://dublincore.org/documents/dcmi-terms/#H2" target="_blank">DCTerms</a> vocabulary with concepts such as: <code>FileFormat</code>, <code>LinguisticSystem</code>, <code>LicenseDocument</code>, <code>Location</code>, <code>MediaType</code>, <code>PeriodOfTime</code>, <code>RightsStatement</code>.</p>
+<p>The ATT Ontology also builds on the <a href="https://www.w3.org/TR/prov-o/" target="_blank">PROV-O</a> with concepts such as Activity, Entity and <a href="http://xmlns.com/foaf/spec/" target="_blank">FOAF</a> (Agent, Project, Document - interesting there is no use of PROV-O Agent - given that between them is the property <code>prov:wasAssociatedWith</code>, however considering the precise definition of a <code>foaf:Agent</code> rather than the broader <code>prov:Agent</code> it justifies the choice. At the same time the use of <code>schema:SoftwareApplication</code> could be introduced <a href="https://schema.org/SoftwareApplication" target="_blank">https://schema.org/SoftwareApplication</a>) and SKOS: <code>Concept</code>, <code>ConceptScheme</code> and <a href="https://www.w3.org/TR/vocab-dcat/" target="_blank">DCAT</a>: <code>CatalogRecord</code>, <code>Catalog</code>, <code>Dataset</code>, <code>Distribution</code>. At the same time other utilised concepts are:</p>
+<ul>
+<li>Checksum from <a href="https://spdx.org/rdf/terms/" target="_blank">SPDX specification</a>;</li>
+<li>Object Characteristics from <a href="http://id.loc.gov/ontologies/premis.html#ObjectCharasteristics" target="_blank">PREMIS</a>;</li>
+<li>Identifier in <a href="https://www.w3.org/TR/vocab-adms/" target="_blank">W3 ADMS</a>;</li>
+<li>Variable in <a href="http://rdf-vocabulary.ddialliance.org/discovery.html#RepresentedVariable" target="_blank">DISCO</a>.</li>
+</ul>
+<p>On another note the ATT Data Model intertwines Shape Constraints <a href="https://www.w3.org/ns/shacl#" target="_blank">SHACL</a> with constructs such as:</p>
+<pre><code class="lang-turtle">&lt;http://iow.csc.fi/ns/att#DatasetChecksum&gt;
+        a                   sh:Shape ;
+        rdfs:comment        &quot;A value that allows the contents of a file to be authenticated. This class allows the results of a variety of checksum and cryptographic message digest algorithms to be represented.&quot;@en , &quot;Arvo joka mahdollistaa jakelun sis&#xE4;ll&#xF6;n tarkistamisen&quot;@fi ;
+        rdfs:isDefinedBy    &lt;http://iow.csc.fi/ns/att&gt; ;
+        rdfs:label          &quot;Checksum&quot;@en , &quot;Tarkistussumma&quot;@fi ;
+        dcterms:created     &quot;2016-05-17T13:26:21&quot;^^xsd:dateTime ;
+        dcterms:identifier  &quot;urn:uuid:7950884d-3a5e-4498-be71-1e82cbf6e1dc&quot; ;
+        dcterms:modified    &quot;2016-10-24T12:02:53.317+03:00&quot;^^xsd:dateTime ;
+        owl:versionInfo     &quot;Unstable&quot; ;
+        sh:property         &lt;urn:uuid:9baa0ec8-f994-443d-9793-595ebe498e18&gt; , &lt;urn:uuid:0d4bcc55-523f-4d08-a37c-0fdb8923d630&gt; ;
+        sh:scopeClass       &lt;http://spdx.org/rdf/terms#Checksum&gt; .
+</code></pre>
+<h2 id="references">References</h2>
+<p>Reference ontologies:</p>
+<ul>
+<li><a href="http://iow.csc.fi/model/att" target="_blank">http://iow.csc.fi/model/att</a></li>
+<li><a href="https://www.w3.org/TR/prov-o/" target="_blank">https://www.w3.org/TR/prov-o/</a></li>
+<li><a href="https://www.w3.org/TR/vocab-org/" target="_blank">https://www.w3.org/TR/vocab-org/</a></li>
+<li><a href="https://www.w3.org/TR/void/" target="_blank">https://www.w3.org/TR/void/</a></li>
+<li><a href="http://www.opmw.org/model/OPMW/#" target="_blank">http://www.opmw.org/model/OPMW/#</a></li>
+<li><a href="http://www.sparontologies.net/ontologies/pwo/source.html" target="_blank">http://www.sparontologies.net/ontologies/pwo/source.html</a></li>
+<li><a href="http://vcvcomputing.com/provone/provone.html" target="_blank">http://vcvcomputing.com/provone/provone.html</a></li>
+<li><a href="https://www.w3.org/ns/formats/" target="_blank">https://www.w3.org/ns/formats/</a> - Class URI for specific file formats</li>
+<li><a href="http://purl.org/dc/terms/" target="_blank">http://purl.org/dc/terms/</a> - DC terms</li>
+</ul>
+<p>Other models:</p>
+<ul>
+<li><a href="https://www.usenix.org/conference/tapp13/technical-sessions/presentation/missier" target="_blank">D-PROV: Extending the PROV Provenance Model with Work&#xFB02;ow Structure</a></li>
+<li><a href="http://wf4ever.github.io/ro/" target="_blank">Wf4Ever Research Object Model 1.0</a></li>
+<li><a href="http://lov.okfn.org/dataset/lov/vocabs/kees" target="_blank">KEES (Knowledge Exchange Engine Schema ) ontology</a></li>
+<li><a href="http://lov.okfn.org/dataset/lov/vocabs/prvt" target="_blank">Provenance Vocabulary types</a></li>
+<li><a href="http://www.sparontologies.net/ontologies/fabio/source.html" target="_blank">FaBiO, the FRBR-aligned Bibliographic Ontology</a></li>
+<li><a href="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl" target="_blank">DOLCE+DnS Ultralite</a> - OWL file</li>
+<li><a href="http://www.ics.forth.gr/isl/oncm/specification/index.html" target="_blank">Open NEE Configuration Model</a></li>
 </ul>
 
                                 
@@ -1049,12 +1082,12 @@
 
             
                 
-                <a href="Use-case-Metax.html" class="navigation navigation-prev " aria-label="Previous page: UC3 - Metax">
+                <a href="Graph-Store.html" class="navigation navigation-prev " aria-label="Previous page: Graph Store">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-next " aria-label="Next page: ATTX Architecture Overview">
+                <a href="Linking-Strategies.html" class="navigation navigation-next " aria-label="Next page: Linking Strategies">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1065,7 +1098,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2017-07-31T14:00:13.773Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Ontology/Data model","level":"3.2.2.1","depth":3,"next":{"title":"Linking Strategies","level":"3.2.2.2","depth":3,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]},"previous":{"title":"Graph Store","level":"3.2.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"3.2.2.1","depth":3,"path":"ATTX-Data-Model.md","ref":"ATTX-Data-Model.md","articles":[]},{"title":"Linking Strategies","level":"3.2.2.2","depth":3,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Data-Model.md","mtime":"2017-07-31T14:00:13.619Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

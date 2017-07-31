@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>UC4 - Mildred · GitBook</title>
+        <title>ATTX Development Environment · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ATTX-Architecture-Overview.html" />
+    <link rel="next" href="Feature-roadmap.html" />
     
     
-    <link rel="prev" href="Use-case-Metax.html" />
+    <link rel="prev" href="User-Guide-Administrator.html" />
     
 
     </head>
@@ -161,7 +161,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.4" data-path="Use-case-Mildred.html">
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
             
                 <a href="Use-case-Mildred.html">
             
@@ -613,7 +613,7 @@
         
         
     
-        <li class="chapter " data-level="6.1" data-path="ATTX-Development-Environment.html">
+        <li class="chapter active" data-level="6.1" data-path="ATTX-Development-Environment.html">
             
                 <a href="ATTX-Development-Environment.html">
             
@@ -948,7 +948,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >UC4 - Mildred</a>
+        <a href="." >ATTX Development Environment</a>
     </h1>
 </div>
 
@@ -963,65 +963,154 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jul-2017 10:25:08</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
-
-<h1 id="mildred-use-case">Mildred use case</h1>
-<p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
-<p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="attx-development-environment-and-guidelines">ATTX Development Environment and Guidelines</h1>
+<p>This page describes the project management and software development related practices and tools for the ATTX-2016 project. This is the place to go, when member of the project wants to learn or be reminded of how different project management methodologies and tools are used in ATTX, how we for example branch in using GIT, or what are the requirements for testing ones code.</p>
+<h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
-<li><a href="#approach">Approach</a></li>
-<li><a href="#user-stories">User stories</a></li>
-<li><a href="#data-sources">Data sources</a><ul>
-<li><a href="#etsin">Etsin</a></li>
-<li><a href="#b2share">B2Share</a></li>
-<li><a href="#zenodo">Zenodo</a></li>
-<li><a href="#finto">Finto</a></li>
-<li><a href="#iow">IOW</a></li>
+<li><a href="#meetings">Meetings</a><ul>
+<li><a href="#sprint-planning">Sprint Planning</a></li>
+<li><a href="#daily">Daily</a></li>
+<li><a href="#grooming">Grooming</a></li>
+<li><a href="#retrodemo">Retro/Demo</a></li>
 </ul>
 </li>
-<li><a href="#implementation">Implementation</a></li>
+<li><a href="#github-workflow">Github Workflow</a><ul>
+<li><a href="#practicalities">Practicalities</a></li>
+<li><a href="#issue-management">Issue Management</a></li>
+<li><a href="#privacy-considerations">Privacy Considerations</a></li>
+<li><a href="#source-code--other-files">Source Code &amp; Other Files</a></li>
+<li><a href="#branching">Branching</a></li>
+</ul>
+</li>
+<li><a href="#testing">Testing</a><ul>
+<li><a href="#unit-testing">Unit Testing</a></li>
+<li><a href="#bdd-testing">BDD Testing</a></li>
+<li><a href="#test-coverage">Test Coverage</a></li>
+</ul>
+</li>
+<li><a href="#zenhub">ZenHub</a></li>
 </ul>
 <!-- TOC END -->
-<h2 id="approach">Approach</h2>
-<p>Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred&apos;s steering group.</p>
-<p>One of the main ideas behind the use case, it the added value that ATTX broker deliver by running customizable validation and data quality processes over the harvested data. This additional data can also be published and used by the ThinkOpen site to deliver custom quality metrics alongside the dataset metadata.</p>
-<p>Etsin is already a service that aggregates dataset metadata from different sources, so why make another similar dataset? Mildred use case is interested specifically in UH&apos;s research outputs whereas Etsin is a national service. By creating an UH specific dataset, we have control over both the content and structure of the dataset, which makes it easier to integrate it with ThinkOpen work or any other UH specific use. It is also possible that some day the data might flow in an opposite direction between UH&apos;s dataset and Etsin.</p>
-<p>When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get <strong>some</strong> data. It is however possible to extend to those methods with more complex internal processing.</p>
-<p>TODO: Link to OpenScienceFair poster draft.</p>
-<h2 id="user-stories">User stories</h2>
-<h2 id="data-sources">Data sources</h2>
-<h3 id="etsin">Etsin</h3>
-<p>Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.</p>
-<p>Api documentation:
-<a href="http://openscience.fi/etsin-api" target="_blank">http://openscience.fi/etsin-api</a></p>
-<h3 id="b2share">B2Share</h3>
-<p><a href="https://b2share.eudat.eu/" target="_blank">B2Share</a> is part of the <a href="https://eudat.eu/" target="_blank">EUDAT</a> collaborative data infrastructure.</p>
-<p>In B2Share the data is organized around communities, which all maintain their own metadata schemas for community related records. This means that harvested data structures can vary depending on which community the record belongs to. There is also a common schema that is shared with all the communities.</p>
-<p>API documentation
-<a href="https://b2share.eudat.eu/help/api" target="_blank">https://b2share.eudat.eu/help/api</a></p>
-<h3 id="zenodo">Zenodo</h3>
-<p><a href="https://zenodo.org" target="_blank">Zenodo</a> is a general purpose repository for all kinds of research outputs ranging from presentations to datasets. Users can create communities to organize content into subrepositories.</p>
-<p>Api documentation:
-<a href="http://developers.zenodo.org/" target="_blank">http://developers.zenodo.org/</a></p>
-<p>Example output from Hulib community in DataCite format:
-<a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib" target="_blank">https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib</a></p>
-<h3 id="finto">Finto</h3>
-<p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.</p>
-<h3 id="iow">IOW</h3>
-<p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is service for creating and maintaining descriptions for interoperability. In the context of of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
-<h2 id="implementation">Implementation</h2>
-<p>Architectural overview:</p>
-<p><img src="images/ATTX-Mildred-architecture.svg" alt="Architectural overview"></p>
-<p>Features:</p>
+<hr>
+<h2 id="meetings">Meetings</h2>
+<h3 id="sprint-planning">Sprint Planning</h3>
+<p>Duration: 2 hours max
+Monday morning when the sprint starts.</p>
+<p>PO should be present at least at the end of the meeting.</p>
+<h3 id="daily">Daily</h3>
+<p>Duration: 15 min
+Every day at 9:30.</p>
+<p>Issues that are ready should be closed after the meeting and the burn-down chart should be updated to reflect the current situation.</p>
+<h3 id="grooming">Grooming</h3>
+<p>Duration: 30-60 min
+Middle of the sprint on Friday.</p>
+<h3 id="retrodemo">Retro/Demo</h3>
+<p>Duration: 30 min
+At the end of the project on Friday, right before lunch.
+PO must be present. Scrumm master presents the sprint and demo.</p>
+<h2 id="github-workflow">Github Workflow</h2>
+<p>Project uses Github for all of its issue management purposes from general todos (e.g. prepare materials for the next meeting)  to sprint related development task management. ATTX has been registered as organization in Github (<a href="https://github.com/ATTX-project" target="_blank">https://github.com/ATTX-project</a>) under which all the project related repositories will be created. Project is also subscribed to the Github&apos;s commercial plan, which allows the creation unlimited private repositories.
+Project uses ZenHub (<a href="https://www.zenhub.com/" target="_blank">https://www.zenhub.com/</a>) to add project management related functionality, such as Epics, todo-list and Broads to Github. One needs to have ZenHub installed in orde to participate in Sprint activities.</p>
+<h3 id="practicalities">Practicalities</h3>
 <ul>
-<li>DataCite output format</li>
-<li>Custom output format if required</li>
-<li>Data validation based on JSON schemas</li>
-<li>simple data quality analysis</li>
-<li>Identifying dataset related to UH</li>
-<li>Deduplication of dataset metadata available from multiple sources</li>
+<li>Add Milestone for every sprint and include the sprint issue in the corresponding milestone. This allows us to take (some) advantage of the timing capabilities related to milestones in Github/Zenhub combo.</li>
 </ul>
+<h3 id="issue-management">Issue Management</h3>
+<p><em>Every task/user story is an issue</em></p>
+<ul>
+<li>project-management repository is used for issues that do not fit under component specific repositories. The visibility of project-management repository is private, so that only project members are allowed to add new issues. The idea is that project-management repository is used for project&apos;s internal, &quot;Buy more coffee&quot; kind of issues.</li>
+<li>All the EPICs will be created in the project-management repository.</li>
+<li>Issues related to certain Sprint are collected to an EPIC called &quot;Sprint X&quot;. Issues can be added to EPIC when they are created or when they are assigned.</li>
+<li>Milestones are not used in PM repo. In other repositories milestones can be used to group issues for releases.</li>
+<li>One should always reference the issues in the commit message. Use full name ATTX-project/[repo]/#[issue number] to distinguish between repositories.</li>
+</ul>
+<h3 id="privacy-considerations">Privacy Considerations</h3>
+<p><strong>Do not include any personal information that is not part of the Github in the issues.</strong></p>
+<h3 id="source-code--other-files">Source Code &amp; Other Files</h3>
+<p>Project&apos;s GitHub is divided into following repositories:</p>
+<ul>
+<li>project-management<ul>
+<li>Special private repository main for providing overall view to the issues in different repositories.</li>
+</ul>
+</li>
+<li>etl<ul>
+<li>Repository for projects that provide etl/workflow related functionality. Add new directories for every specific implementation.</li>
+</ul>
+</li>
+<li>public-apis</li>
+<li>graph-component<ul>
+<li>Repository hosts a single project that manages the state of the internal graph.</li>
+</ul>
+</li>
+</ul>
+<p>All projects are Gradle projects. Naming convention for the projects is [root-project]-[subproject] e.g. workflow-component-feature-tests or workflow-component-wfAPI.</p>
+<p>Unit tests can be written in any language.</p>
+<p>BDD tests should be run with <a href="https://cucumber.io/docs/reference/jvm" target="_blank">Cucumber JVM implementation</a></p>
+<p>Project structure:</p>
+<pre><code class="lang-config">gradle root project (e.g. wf component)
+&#x2502;   README.md
+&#x2502;   build.gradle    
+&#x2502;   docker-compose.yml
+&#x2514;&#x2500;&#x2500;&#x2500;subprojectX (e.g. Unified Views implementation of WF component)
+&#x2502;   &#x2514;&#x2500;&#x2500;&#x2500;unit tests
+&#x2502;   &#x2502;   &#x2502;   unit tests (including the ones for the libraries)
+&#x2502;   &#x2514;&#x2500;&#x2500;&#x2500;library
+&#x2514;&#x2500;&#x2500;&#x2500;subprojectY (e.g. WFAPI implementation of Wf Component)
+&#x2502;    &#x2502;   unit tests
+&#x2514;&#x2500;&#x2500;&#x2500;componentX-feature-tests
+&#x2502;    &#x2502;   cucumber feature files and implementation for each subproject
+&#x2514;&#x2500;&#x2500;&#x2500;etc...
+</code></pre>
+<pre><code class="lang-config">platform-deployment
+&#x2502;   README.md
+&#x2502;   build.gradle  
+&#x2502;   all-docker-compose.yml
+&#x2514;&#x2500;&#x2500;&#x2500;workflow-component
+&#x2502;   &#x2502;   wfc-docker-compose.yml
+&#x2502;   &#x2502;
+&#x2502;   &#x2514;&#x2500;&#x2500;&#x2500;WFAPI
+&#x2502;   &#x2502;   &#x2502;   Dockerfile
+&#x2502;   &#x2514;&#x2500;&#x2500;&#x2500;UnifiedViews
+&#x2502;       &#x2502;   Dockerfile
+&#x2514;&#x2500;&#x2500;&#x2500;distribution-component
+&#x2502;    &#x2502;   dc-docker-compose.yml
+&#x2502;    &#x2514;&#x2500;&#x2500;&#x2500;ElasticSearch-Siren
+&#x2502;    &#x2502;   &#x2502;   Dockerfile
+&#x2514;&#x2500;&#x2500;&#x2500;etc...
+</code></pre>
+<h3 id="branching">Branching</h3>
+<p><strong>A must read</strong>: Project uses the branching model described by Vincent Driessen (<a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_blank">http://nvie.com/posts/a-successful-git-branching-model/</a>). One can print it out (<a href="http://nvie.com/files/Git-branching-model.pdf" target="_blank">http://nvie.com/files/Git-branching-model.pdf</a>) for reference.</p>
+<h2 id="testing">Testing</h2>
+<h3 id="unit-testing">Unit Testing</h3>
+<p>Framework to use for unit testing depends on the programming language used.
+List of unit testing frameworks:</p>
+<ul>
+<li>Java - <a href="http://junit.org/" target="_blank">JUnit</a></li>
+<li>Python - <a href="https://docs.python.org/3/library/unittest.html" target="_blank">Unittest</a> &amp; <a href="http://nose.readthedocs.io/en/latest/index.html" target="_blank">nose</a></li>
+<li>Javascript - <a href="https://mochajs.org/" target="_blank">Mocha</a> &amp; <a href="http://chaijs.com/" target="_blank">Chai</a></li>
+</ul>
+<p>For unit tests, use which ever framework one feel comfortable.</p>
+<h3 id="bdd-testing">BDD Testing</h3>
+<p>Feature files are written using Gherkin language (<a href="https://github.com/cucumber/cucumber/wiki/gherkin" target="_blank">https://github.com/cucumber/cucumber/wiki/gherkin</a>).</p>
+<p>Tests are executed using JVM version of the Cucumber, which allows for writing tests in any JVM supported language. Currently the aim is to support BDD testing in Java and Python.</p>
+<h4 id="setup-netbeans-for-bdd-testing">Setup Netbeans for BDD Testing</h4>
+<p>Plugins</p>
+<ul>
+<li><a href="https://gradle.org/" target="_blank">Gradle</a></li>
+<li><a href="https://github.com/cucumber/cucumber/wiki/Gherkin" target="_blank">Gherkin</a></li>
+</ul>
+<p>By default, Gradle plugin seems to be using 2.31 version of the the Gradle. One must upgrade this to 3.1. by going to the project properties and changing the Gradle home.</p>
+<h3 id="test-coverage">Test Coverage</h3>
+<p><strong>Java</strong></p>
+<p>Use <a href="http://www.eclemma.org/jacoco/" target="_blank">JaCoCo</a> (still in incubation)
+Documentation for the JaCoCo Gradle plugin: <a href="https://docs.gradle.org/current/userguide/jacoco_plugin.html" target="_blank">https://docs.gradle.org/current/userguide/jacoco_plugin.html</a></p>
+<h2 id="zenhub">ZenHub</h2>
+<p><a href="https://www.zenhub.com/" target="_blank">ZenHub</a></p>
+<p>When moving an Epic issue from one repository to another, the EPIC status is not preserved.</p>
+<p>ZenHub supports (since 6.1.2017) multi-repo milestones, which allows us to use both burndown and velocity charts.</p>
+<p><strong>NOTE</strong>
+Closing a milestone must be done separately for every repository.</p>
 
                                 
                                 </section>
@@ -1049,12 +1138,12 @@
 
             
                 
-                <a href="Use-case-Metax.html" class="navigation navigation-prev " aria-label="Previous page: UC3 - Metax">
+                <a href="User-Guide-Administrator.html" class="navigation navigation-prev " aria-label="Previous page: Data Administrator's User guide">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-next " aria-label="Next page: ATTX Architecture Overview">
+                <a href="Feature-roadmap.html" class="navigation navigation-next " aria-label="Next page: Feature Roadmap">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1065,7 +1154,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2017-07-31T14:00:13.773Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ATTX Development Environment","level":"6.1","depth":1,"next":{"title":"Feature Roadmap","level":"6.2","depth":1,"path":"Feature-roadmap.md","ref":"Feature-roadmap.md","articles":[]},"previous":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Development-Environment.md","mtime":"2017-07-31T14:00:13.621Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

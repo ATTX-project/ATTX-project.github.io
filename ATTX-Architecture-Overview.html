@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>UC4 - Mildred · GitBook</title>
+        <title>ATTX Architecture Overview · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ATTX-Architecture-Overview.html" />
+    <link rel="next" href="ATTX-Broker-Deployment.html" />
     
     
-    <link rel="prev" href="Use-case-Metax.html" />
+    <link rel="prev" href="Use-case-Mildred.html" />
     
 
     </head>
@@ -161,7 +161,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.4" data-path="Use-case-Mildred.html">
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
             
                 <a href="Use-case-Mildred.html">
             
@@ -179,7 +179,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="ATTX-Architecture-Overview.html">
+        <li class="chapter active" data-level="1.3" data-path="ATTX-Architecture-Overview.html">
             
                 <a href="ATTX-Architecture-Overview.html">
             
@@ -948,7 +948,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >UC4 - Mildred</a>
+        <a href="." >ATTX Architecture Overview</a>
     </h1>
 </div>
 
@@ -963,65 +963,95 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jul-2017 10:25:08</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
-
-<h1 id="mildred-use-case">Mildred use case</h1>
-<p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
-<p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.</p>
-<!-- TOC START min:1 max:3 link:true update:false -->
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 22-Jun-2017 11:10:03</div></div><h1 id="attx-architecture-overview">ATTX Architecture Overview</h1>
+<p>The following components are part of the ATTX architecture.</p>
 <ul>
-<li><a href="#approach">Approach</a></li>
-<li><a href="#user-stories">User stories</a></li>
-<li><a href="#data-sources">Data sources</a><ul>
-<li><a href="#etsin">Etsin</a></li>
-<li><a href="#b2share">B2Share</a></li>
-<li><a href="#zenodo">Zenodo</a></li>
-<li><a href="#finto">Finto</a></li>
-<li><a href="#iow">IOW</a></li>
+<li><a href="#workflow-component">Workflow Component</a></li>
+<li><a href="#graph-component">Graph Component</a></li>
+<li><a href="#distribution-component">Distribution Component</a></li>
+<li><a href="#platform-deployment">Semantic Broker Deployment</a></li>
+<li><a href="#service-discovery">Service Discovery</a></li>
+</ul>
+<p><img src="images/platform_architecture.png" alt="Figure 1. ATTX Platform Architecture"></p>
+<p>Figure 1. ATTX Semantic Broker Architecture</p>
+<p>ATTX Semantic Broker is composed of a collection of loosely coupled services, which implement several broker-like capabilities. Example of such services are illustrated in: <strong><a href="#microservices-example">Microservices Architecture</a></strong>.</p>
+<p>Given that there are a collection of such services, we can still identify three core components under which we can cluster the services: <strong>Workflow Component</strong>, <strong>Graph Component</strong>, <strong>Distribution Component</strong> while the <strong>Service Discovery</strong> and the <strong>Semantic Broker Deployment</strong> gather all of them together in order to provide them as a individual services or as a platform. The communication and contracts between the components is specified in <a href="#service-discovery">Service Discovery</a>.</p>
+<h2 id="terminology-and-acronyms">Terminology and Acronyms</h2>
+<p>Acronyms:</p>
+<ul>
+<li><em>WF</em> - Workflow Component</li>
+<li><em>GC</em> - Graph Component</li>
+<li><em>DC</em> - Distribution Component</li>
+<li><em>PD</em> - Platform Deployment/Semantic Broker Deployment</li>
+<li><em>PD</em> - Service Discovery</li>
+<li><em>UV</em> - UnifiedViews (WF component implementation)</li>
+<li><em>ES</em> - ElasticSearch (DC component implementation)</li>
+<li><em>ETL Artifact</em> - any kind of ETL software (e.g. UnifiedViews)</li>
+<li>sometimes a <em>workflow</em> can also be referred to as <em>pipeline</em></li>
+<li>sometimes a <em>activity</em> can also be referred to as <em>executed job</em> or <em>pipeline execution</em></li>
+<li><em>artifact</em> - any software or application/programming language specific library</li>
+</ul>
+<h2 id="workflow-component">Workflow Component</h2>
+<p>The ATTX Workflow Component provides a configurable framework with the main purpose of managing, scheduling and monitoring data ingestion, processing and distribution related workflows. Workflow Component provides the Semantic Broker information related to provenance of the working data.</p>
+<ul>
+<li>Github Repository: <a href="https://github.com/ATTX-project/workflow-component" target="_blank">workflow-component</a></li>
+<li>Details about the <a href="Workflow-Component.html">Workflow Component</a>.</li>
+</ul>
+<h2 id="graph-component">Graph Component</h2>
+<p>The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the Semantic Broker, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.</p>
+<ul>
+<li>Github Repository: <a href="https://github.com/ATTX-project/graph-component" target="_blank">graph-component</a></li>
+<li>Details about the <a href="Graph-Component.html">Graph Component</a>.</li>
+</ul>
+<h2 id="distribution-component">Distribution Component</h2>
+<p>This ATTX Distribution Component provides the interface between the Workflow Component and/or Graph Component for public consumption of disseminated data.</p>
+<ul>
+<li>Github Repository: <a href="https://github.com/ATTX-project/distribution-component" target="_blank">distribution-component</a></li>
+<li>Details about the <a href="Distribution-Component.html">Distribution Component</a>.</li>
+</ul>
+<h3 id="semantic-broker-deployment">Semantic Broker Deployment</h3>
+<p>This ATTX Semantic Broker Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.</p>
+<ul>
+<li>Github Repository: <a href="https://github.com/ATTX-project/platform-deployment" target="_blank">platform-deployment</a></li>
+<li>Details about the <a href="ATTX-Broker-Deployment.html">ATTX Broker Deployment</a>.</li>
+</ul>
+<h2 id="service-discovery">Service Discovery</h2>
+<p>There are two versions to the service discovery/inter-component communication illustrated below:</p>
+<p><img src="images/v1.1-intercomponent_communication.svg" alt="Figure 2. Version 1 of Inter-component Communication"></p>
+<p>Figure 2. Version 1 of Inter-component Communication</p>
+<ul>
+<li><strong>Version 1</strong> - represents the base structure for achieving the flow of data between the three core components. At this stage the distinction between the components is rudimentary. For example the Graph Manager consists of a single scheduled event that consumes the UVProvovenance API. Components communication with direct HTTP requests using hard-coded component names.</li>
+</ul>
+<p><img src="images/v3-intercomponent_communication.svg" alt="Figure 3. Version 3 of Inter-component Communication"></p>
+<p>Figure 3. Version 2 with Service discovery and processing services</p>
+<ul>
+<li><strong>Version 2</strong> - in this stage the components take shape such as Pipeline2 functionality is provided by the <a href="Graph-Component,md">Graph Manager Component</a>, and the Graph Manager also provides an API.</li>
+</ul>
+<p>We chose UnifiedViews as a default interface for the <a href="Workflow-Component.html">Workflow Component</a> however other ETL tools can be considered as long as they provide the necessary framework for extracting provenance(e.g. <a href="https://nifi.apache.org/" target="_blank">https://nifi.apache.org/</a> or <a href="https://github.com/spotify/luigi" target="_blank">https://github.com/spotify/luigi</a> or <a href="http://www.dswarm.org/" target="_blank">http://www.dswarm.org/</a> etc. - see <a href="Workflow-Management-Tools.html">Workflow Management Tools</a> ).</p>
+<p>While the communication between components is implemented using messaging middleware component such as ActiveMQ or RabbitMQ -  see <a href="Messaging-Brokers-Solutions.html">Messaging Broker Solutions</a> - the communication between components does not have to be real time.</p>
+<h2 id="microservices-example">Microservices Example</h2>
+<p>We would like to illustrate how such an architecture would look in practice and some of the microservices that might be part of it.</p>
+<p>In Figure 4 we illustrate a pipeline that downloads a new version of a dataset and replaces the old one. We identified the following services to aid with this process:</p>
+<ul>
+<li><em>RMLService</em> - converting the downloaded dataset from CSV format to RDF and storing it for access at a specified location;</li>
+<li><em>GM-API</em> - used for orchestrating access to the Graph Store and generation of provenance information;</li>
+<li><em>ProvenanceAPI</em> - based on the collected information and a trigger from <em>GM-API</em> this service will generate provenance data and store it to its own Graph Store or send it to <em>GM-API</em> on a request basis;</li>
+<li><em>UVProvenanceAPI</em> - used for extracting provenance information from UnifiedViews, as not all provenance information can be collected (start and end times of a pipeline/workflow, if a workflow is public or private, or if a pipeline execution is successful) by the DPUs and transmitted to <em>GM-API</em> and implicitly to <em>ProvenanceAPI</em>.</li>
+</ul>
+<p><img src="images/wf_services_overview.svg" alt="Figure 4. ATTX Platform Architecture"></p>
+<p>Figure 4. Pipeline for downloading and replacing dataset</p>
+<p>As a continuation of the result of the pipeline depicted in Figure 4, the pipeline from Figure 5 exhibits the steps necessary for publishing the resulting data. In order to achieve this we identified the following services:</p>
+<ul>
+<li><em>ESDistributionService</em> - microservice for constructing, based on the graph retrieved from Graph Store, JSON/JSON-LD formatted bulk data, that is stored on a volume. This microservice can be further divided into two other microservices:<ul>
+<li><em>RDFFramerService</em> - converting the data from RDF to JSON/JSON-LD;</li>
+<li><em>indexService</em> - (bulk) indexing at a specific endpoint;</li>
 </ul>
 </li>
-<li><a href="#implementation">Implementation</a></li>
+<li><em>ElasticSearch</em> - several versions might be available each providing different indexing mechanisms.</li>
 </ul>
-<!-- TOC END -->
-<h2 id="approach">Approach</h2>
-<p>Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred&apos;s steering group.</p>
-<p>One of the main ideas behind the use case, it the added value that ATTX broker deliver by running customizable validation and data quality processes over the harvested data. This additional data can also be published and used by the ThinkOpen site to deliver custom quality metrics alongside the dataset metadata.</p>
-<p>Etsin is already a service that aggregates dataset metadata from different sources, so why make another similar dataset? Mildred use case is interested specifically in UH&apos;s research outputs whereas Etsin is a national service. By creating an UH specific dataset, we have control over both the content and structure of the dataset, which makes it easier to integrate it with ThinkOpen work or any other UH specific use. It is also possible that some day the data might flow in an opposite direction between UH&apos;s dataset and Etsin.</p>
-<p>When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get <strong>some</strong> data. It is however possible to extend to those methods with more complex internal processing.</p>
-<p>TODO: Link to OpenScienceFair poster draft.</p>
-<h2 id="user-stories">User stories</h2>
-<h2 id="data-sources">Data sources</h2>
-<h3 id="etsin">Etsin</h3>
-<p>Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.</p>
-<p>Api documentation:
-<a href="http://openscience.fi/etsin-api" target="_blank">http://openscience.fi/etsin-api</a></p>
-<h3 id="b2share">B2Share</h3>
-<p><a href="https://b2share.eudat.eu/" target="_blank">B2Share</a> is part of the <a href="https://eudat.eu/" target="_blank">EUDAT</a> collaborative data infrastructure.</p>
-<p>In B2Share the data is organized around communities, which all maintain their own metadata schemas for community related records. This means that harvested data structures can vary depending on which community the record belongs to. There is also a common schema that is shared with all the communities.</p>
-<p>API documentation
-<a href="https://b2share.eudat.eu/help/api" target="_blank">https://b2share.eudat.eu/help/api</a></p>
-<h3 id="zenodo">Zenodo</h3>
-<p><a href="https://zenodo.org" target="_blank">Zenodo</a> is a general purpose repository for all kinds of research outputs ranging from presentations to datasets. Users can create communities to organize content into subrepositories.</p>
-<p>Api documentation:
-<a href="http://developers.zenodo.org/" target="_blank">http://developers.zenodo.org/</a></p>
-<p>Example output from Hulib community in DataCite format:
-<a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib" target="_blank">https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib</a></p>
-<h3 id="finto">Finto</h3>
-<p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.</p>
-<h3 id="iow">IOW</h3>
-<p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is service for creating and maintaining descriptions for interoperability. In the context of of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
-<h2 id="implementation">Implementation</h2>
-<p>Architectural overview:</p>
-<p><img src="images/ATTX-Mildred-architecture.svg" alt="Architectural overview"></p>
-<p>Features:</p>
-<ul>
-<li>DataCite output format</li>
-<li>Custom output format if required</li>
-<li>Data validation based on JSON schemas</li>
-<li>simple data quality analysis</li>
-<li>Identifying dataset related to UH</li>
-<li>Deduplication of dataset metadata available from multiple sources</li>
-</ul>
+<p><img src="images/dc_services_overview.svg" alt="Figure 5. ATTX Platform Architecture"></p>
+<p>Figure 5. Pipeline for Publishing Dataset</p>
+<p>In all the cases presented above the Service Discovery component plays an important role for retrieving and acts as a router for requests - more information available at: <a href="ServiceDiscovery-Implementation.html">Service Discovery Implementation</a>.</p>
 
                                 
                                 </section>
@@ -1049,12 +1079,12 @@
 
             
                 
-                <a href="Use-case-Metax.html" class="navigation navigation-prev " aria-label="Previous page: UC3 - Metax">
+                <a href="Use-case-Mildred.html" class="navigation navigation-prev " aria-label="Previous page: UC4 - Mildred">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-next " aria-label="Next page: ATTX Architecture Overview">
+                <a href="ATTX-Broker-Deployment.html" class="navigation navigation-next " aria-label="Next page: ATTX Broker Deployment">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1065,7 +1095,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2017-07-31T14:00:13.773Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"next":{"title":"ATTX Broker Deployment","level":"2.1","depth":1,"path":"ATTX-Broker-Deployment.md","ref":"ATTX-Broker-Deployment.md","articles":[{"title":"Run on Single Machine PC/Mac/VM","level":"2.1.1","depth":2,"ref":"","articles":[{"title":"Building Swarm Mode on a PC/Mac","level":"2.1.1.1","depth":3,"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","ref":"Building-Docker-application-stacks-in-Swarm-Mode.md","articles":[]},{"title":"Running the ATTX Stack on a PC/Mac","level":"2.1.1.2","depth":3,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]}]},{"title":"Run on Distributed/Cloud","level":"2.1.2","depth":2,"ref":"","articles":[{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"2.1.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},{"title":"Deploying ATTX Components on Docker Swarm","level":"2.1.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]}]},{"title":"Deploying ATTX on Kontena","level":"2.1.3","depth":2,"path":"Deploying-ATTX-SB-on-Kontena.md","ref":"Deploying-ATTX-SB-on-Kontena.md","articles":[]}]},"previous":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"path":"Use-case-Mildred.md","ref":"Use-case-Mildred.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Architecture-Overview.md","mtime":"2017-07-31T14:00:13.607Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

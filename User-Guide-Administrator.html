@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>UC4 - Mildred · GitBook</title>
+        <title>Data Administrator's User guide · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ATTX-Architecture-Overview.html" />
+    <link rel="next" href="ATTX-Development-Environment.html" />
     
     
-    <link rel="prev" href="Use-case-Metax.html" />
+    <link rel="prev" href="Provenance-Service.html" />
     
 
     </head>
@@ -161,7 +161,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.4" data-path="Use-case-Mildred.html">
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
             
                 <a href="Use-case-Mildred.html">
             
@@ -593,7 +593,7 @@
         
         
     
-        <li class="chapter " data-level="5.1" data-path="User-Guide-Administrator.html">
+        <li class="chapter active" data-level="5.1" data-path="User-Guide-Administrator.html">
             
                 <a href="User-Guide-Administrator.html">
             
@@ -948,7 +948,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >UC4 - Mildred</a>
+        <a href="." >Data Administrator's User guide</a>
     </h1>
 </div>
 
@@ -963,65 +963,331 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jul-2017 10:25:08</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
-
-<h1 id="mildred-use-case">Mildred use case</h1>
-<p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
-<p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.</p>
-<!-- TOC START min:1 max:3 link:true update:false -->
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:46:16</div></div><h1 id="attx-semantic-broker---data-administrators-user-guide">ATTX Semantic Broker - Data Administrator&apos;s User guide</h1>
+<h2 id="introduction">Introduction</h2>
+<p>This user guide is for people who have an <em>ATTX Semantic Broker</em> platform instance up and running and want to start working with data. ATTX uses <a href="https://unifiedviews.eu/" target="_blank">UnifiedViews ETL tool</a> as the tool to define, execute, monitor, debug, schedule data related processes. In UnifiedViews these processes are defined as pipelines, which consists of steps that are implemented using DPUs (Data Processing Unit).</p>
+<p>The traditional way of using ETL tools is to create potentially complex pipelines that Extract data from one or more data sources, run multiple Transformations and finally Load the data to another system. In these scenarios, ETL tool sits in the middle, handling data flows from A to B. In ATTX Semantic Broker, ETL is part of the system itself and the system can use itself as the data source. From the ETL point of view, it is a opinionated framework for building pipelines.</p>
+<p>ATTX Semantic Broker has three types of pipelines: Ingestion, Processing and Distribution. Each type has its own characteristics, but the main ideas are as follows:</p>
 <ul>
-<li><a href="#approach">Approach</a></li>
-<li><a href="#user-stories">User stories</a></li>
-<li><a href="#data-sources">Data sources</a><ul>
-<li><a href="#etsin">Etsin</a></li>
-<li><a href="#b2share">B2Share</a></li>
-<li><a href="#zenodo">Zenodo</a></li>
-<li><a href="#finto">Finto</a></li>
-<li><a href="#iow">IOW</a></li>
+<li><strong>Ingestion pipelines</strong> are the only ones that work with external data;</li>
+<li><strong>Processing pipelines</strong> only work with internal data;</li>
+<li><strong>Distribution pipelines</strong> are the only ones that are used to expose/distribute/publish data to the public.</li>
+</ul>
+<h3 id="table-of-contents">Table of Contents</h3>
+<!-- TOC START min:1 max:3 link:true update:true -->
+<ul>
+<li><a href="#attx-semantic-broker---data-administrators-user-guide">ATTX Semantic Broker - Data Administrator&apos;s User guide</a><ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
 </ul>
 </li>
-<li><a href="#implementation">Implementation</a></li>
+<li><a href="#pipeline-types">Pipeline Types</a><ul>
+<li><a href="#ingestion-pipelines">Ingestion Pipelines</a></li>
+<li><a href="#processing-pipelines">Processing Pipelines</a></li>
+<li><a href="#distribution-pipelines">Distribution Pipelines</a></li>
+</ul>
+</li>
+<li><a href="#attx-dpus">ATTX DPUs</a><ul>
+<li><a href="#extractors">Extractors</a></li>
+<li><a href="#transformers">Transformers</a></li>
+<li><a href="#loaders">Loaders</a></li>
+</ul>
+</li>
+<li><a href="#semantic-broker-end-to-end-usage-scenario">Semantic Broker End to End Usage Scenario</a></li>
+</ul>
+</li>
 </ul>
 <!-- TOC END -->
-<h2 id="approach">Approach</h2>
-<p>Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred&apos;s steering group.</p>
-<p>One of the main ideas behind the use case, it the added value that ATTX broker deliver by running customizable validation and data quality processes over the harvested data. This additional data can also be published and used by the ThinkOpen site to deliver custom quality metrics alongside the dataset metadata.</p>
-<p>Etsin is already a service that aggregates dataset metadata from different sources, so why make another similar dataset? Mildred use case is interested specifically in UH&apos;s research outputs whereas Etsin is a national service. By creating an UH specific dataset, we have control over both the content and structure of the dataset, which makes it easier to integrate it with ThinkOpen work or any other UH specific use. It is also possible that some day the data might flow in an opposite direction between UH&apos;s dataset and Etsin.</p>
-<p>When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get <strong>some</strong> data. It is however possible to extend to those methods with more complex internal processing.</p>
-<p>TODO: Link to OpenScienceFair poster draft.</p>
-<h2 id="user-stories">User stories</h2>
-<h2 id="data-sources">Data sources</h2>
-<h3 id="etsin">Etsin</h3>
-<p>Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.</p>
-<p>Api documentation:
-<a href="http://openscience.fi/etsin-api" target="_blank">http://openscience.fi/etsin-api</a></p>
-<h3 id="b2share">B2Share</h3>
-<p><a href="https://b2share.eudat.eu/" target="_blank">B2Share</a> is part of the <a href="https://eudat.eu/" target="_blank">EUDAT</a> collaborative data infrastructure.</p>
-<p>In B2Share the data is organized around communities, which all maintain their own metadata schemas for community related records. This means that harvested data structures can vary depending on which community the record belongs to. There is also a common schema that is shared with all the communities.</p>
-<p>API documentation
-<a href="https://b2share.eudat.eu/help/api" target="_blank">https://b2share.eudat.eu/help/api</a></p>
-<h3 id="zenodo">Zenodo</h3>
-<p><a href="https://zenodo.org" target="_blank">Zenodo</a> is a general purpose repository for all kinds of research outputs ranging from presentations to datasets. Users can create communities to organize content into subrepositories.</p>
-<p>Api documentation:
-<a href="http://developers.zenodo.org/" target="_blank">http://developers.zenodo.org/</a></p>
-<p>Example output from Hulib community in DataCite format:
-<a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib" target="_blank">https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib</a></p>
-<h3 id="finto">Finto</h3>
-<p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.</p>
-<h3 id="iow">IOW</h3>
-<p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is service for creating and maintaining descriptions for interoperability. In the context of of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
-<h2 id="implementation">Implementation</h2>
-<p>Architectural overview:</p>
-<p><img src="images/ATTX-Mildred-architecture.svg" alt="Architectural overview"></p>
-<p>Features:</p>
+<h2 id="pipeline-types">Pipeline Types</h2>
+<p>Every pipeline essentially represents one or more datasets.</p>
+<h3 id="ingestion-pipelines">Ingestion Pipelines</h3>
+<p><strong>Simple download and replace</strong></p>
+<p>The simplest ingestion pipeline consists of three DPUs as depicted in figure X. In this example the downloaded data is already in RDF format and requires no transformations. Replace dataset loader means that old version of the data are always completely replaces with the new version.</p>
+<p><img src="images/Pipeline-DownloadRDF.png" alt="Download RDF" width="350"></p>
+<p>This kind of pipelines can be used to download ontologies or vocabularies to the Semantic Broker.</p>
+<p><strong>Download and transform</strong></p>
+<p>It more common that the source data is not in RDF format or that the structure of the data is not exactly what you want store internally. Figure X shows an example where <code>RMLTransformer</code> is used to transform from example CSV file into RDF before adding in to the Semantic Broker&apos;s data storage.</p>
+<p><img src="images/Pipeline-DownloadAndTransform.png" alt="Download and transform"></p>
+<p>Both replace and update data set DPUs require RDF input, so transformation step is required for all input data that is not available in RDF format.</p>
+<p><strong>Incremental harvesting</strong></p>
+<p>OAI-PMH harvesting interface allows one to harvest new records incrementally based on the timestamp they were last modified. Incremental harvesting requires <code>UpdateDataSet</code> DPU to be used, or otherwise the target dataset will only contain the latest changes.</p>
+<p><img src="images/Pipeline-HarvestData.png" alt="Ingestion pipeline example"></p>
+<p>Example workflow has two Loader DPUs, because we want to store clustered ids in to a separate dataset so that we can update the clustering configuration more easily.</p>
+<h3 id="processing-pipelines">Processing Pipelines</h3>
+<p><strong>Link by ID</strong></p>
+<p>This example uses clustered ids and harvested datasets as the source data and generated new explicit links between resource. For example:</p>
+<p>Clustered ids:</p>
+<pre><code class="lang-turtle">:pub1
+  attx:id &quot;urn:1&quot;
+
+:org1
+  attx:id &quot;orgID1&quot;
+</code></pre>
+<p>working data 1</p>
+<pre><code class="lang-turtle">:pub1
+  a Publication
+  urn &quot;urn:1&quot;
+  org &quot;orgID1&quot;
+</code></pre>
+<p>linkByID data set</p>
+<pre><code class="lang-turtle">:pub1
+  orgLink :org1
+</code></pre>
+<p><img src="images/Pipeline-LinkByID.png" alt="Processing pipeline example - Link by ID"></p>
+<p><strong>Simple reasoning</strong></p>
+<p><code>OWNReasoner</code> can be configured to use either pipeline specific ontology or ontology data set as it&apos;s configuration. This example shows an example of the latter case. <code>SelectExistingDataSets</code> DPU connected to the Ontology URI port is the data set that contains ontology triples where as the other <code>SelectExistingDataSets</code> DPU refers to the data set that contain triples that will the target of the reasoning process.</p>
+<p><img src="images/Pipeline-OWLReasoning.png" alt="Processing pipeline example - Reasoning"></p>
+<h3 id="distribution-pipelines">Distribution Pipelines</h3>
+<p>Basic distribution pipeline example that select all the required source data and uses the custom RDF to JSON mapper to transform graph into documents. Resulting documents are added to the REST API using <code>PublishToAPI</code> DPU.</p>
+<p><img src="images/Pipeline-PublishToAPI.png" alt="Publish to API" width="350"></p>
+<h2 id="attx-dpus">ATTX DPUs</h2>
+<p>ATTX Semantic Broker ships with custom <a href="https://github.com/UnifiedViews" target="_blank">UnifiedViews</a> DPUs that must be used when designing pipelines. DPUs have been categorized into extract, transform/generate and load classes and in most cases every pipeline contains at least one DPU from each category.</p>
+<h3 id="extractors">Extractors</h3>
+<p>ATTX extractor DPU are used to configure ingestion of external data source to the Semantic Broker or selection of existing data source(s) for processing or dissemination.</p>
+<h4 id="file-download">File Download</h4>
+<p>This DPU simply downloads and stores file from the given URL and passes it on to further processing. It can be used update dataset that are based on for example CSV exports.</p>
+<p>Configuration:</p>
 <ul>
-<li>DataCite output format</li>
-<li>Custom output format if required</li>
-<li>Data validation based on JSON schemas</li>
-<li>simple data quality analysis</li>
-<li>Identifying dataset related to UH</li>
-<li>Deduplication of dataset metadata available from multiple sources</li>
+<li>URL *</li>
+<li>username</li>
+<li>password</li>
+<li>method</li>
+<li>payload</li>
+<li>ignore SSL errors</li>
+<li>timeout</li>
 </ul>
+<p>Output:</p>
+<ul>
+<li>files</li>
+</ul>
+<h4 id="oai-pmh-harvester">OAI-PMH Harvester</h4>
+<p>This is a more complicated downloader that works with data sources that comply with <a href="http://www.openarchives.org/OAI/openarchivesprotocol.html" target="_blank">OAI-PMH 2.0 metadata harvesting protocol</a>. This harvester can be used for selective and incremental harvesting via set and from and until parameters. Set defines a named set of records i.e. &quot;Openly_available_theses&quot; for harvesting. From and until are <code>YYYY-MM-DD</code> (date) formatted string that can be used to filter harvested records based on their timestamps. Another way to filter records by times-tamp is to harvest only records that were added/modified/deleted since the previous successful execution of the pipeline.</p>
+<p>If the data source supports tracking of deleted records, those are outputted as a separate set of OAI-PMH identifiers.</p>
+<p>Configuration:</p>
+<ul>
+<li>base URL *</li>
+<li>metadata format *</li>
+<li>set</li>
+<li>Filter by date (bool)<ul>
+<li>from date</li>
+<li>until date</li>
+<li>since previous successful harvesting</li>
+</ul>
+</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>deleted ids<ul>
+<li>OAI-PMH identifiers of deleted records.</li>
+</ul>
+</li>
+<li>modified records  </li>
+</ul>
+<h4 id="select-existing-datasets">Select Existing Datasets</h4>
+<p>This DPU provides search interface to the existing dataset metadata and allows users to reuse their content as the data source for pipelines. This DPU must be used as a loader for both processing and distribution pipelines.</p>
+<p>Configuration/Output:</p>
+<ul>
+<li>Selected dataset URIs</li>
+</ul>
+<h3 id="transformers">Transformers</h3>
+<p>ATTX transformers create new data. New data can be metadata about the datasets or data that is generated through some type of processing, such as linking, reasoning or any kind of transformation.  </p>
+<h4 id="describe-external-data-source">Describe External Data Source</h4>
+<p>This DPU is used to input simple metadata about the data source that is being used as the basis of internal data set. The main difference between internal data set and external data source, is that latter <strong>must</strong> contain some type of indication of license. Same licensing information is then attached to any derived dataset from this data source. In the case two external datasets are used in the Processing pipeline with distinct licenses, the license associated with the derived dataset will be the most restrictive.</p>
+<p>Configuration:</p>
+<ul>
+<li>Name *</li>
+<li>Description</li>
+<li>License *</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>Data source metadata</li>
+</ul>
+<h4 id="describe-data-set">Describe Data Set</h4>
+<p>Provides simple metadata for the internal dataset, which is used for example by the &quot;Selected existing datasets&quot; DPU.</p>
+<p>Configuration:</p>
+<ul>
+<li>Name *</li>
+<li>Description</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>Data set metadata</li>
+</ul>
+<h4 id="cluster-ids">Cluster IDs</h4>
+<p>This DPU generates triples that cluster all the different resource identifier under one common property.</p>
+<p>When used as part of a ingest pipeline, one must use the RDF input connector. This provides the currently ingested RDF as the source for clustering.</p>
+<p>This DPU can also be used as part of a processing pipeline when paired with &quot;Select existing data sets&quot; DPU. This way the source data is the full content of one or more working graphs.</p>
+<p><em>How about a case where data about the same Thing is coming in from two different sources?</em></p>
+<p>Configuration:</p>
+<ul>
+<li>list of properties to use for clustering as URIs</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>Clustered IDs RDF</li>
+</ul>
+<p>Example:</p>
+<p>Configuration:</p>
+<ul>
+<li>dc:identifier, custom:urn</li>
+</ul>
+<p>Input</p>
+<pre><code class="lang-turtle">&lt;attx:ds/1/work/infra/1&gt;
+  &lt;dc:identifier&gt; &quot;infra/1&quot; ;
+  &lt;custom:urn&gt; &lt;urn:2&gt; .
+</code></pre>
+<p>Output:</p>
+<pre><code class="lang-turtle">&lt;attx:ds/1/work/infra/1&gt;
+  &lt;attx:id&gt; &quot;infra/1&quot; ;
+  &lt;attx:id&gt; &lt;urn:2&gt; .
+</code></pre>
+<h4 id="rml-transformer">RML Transformer</h4>
+<p>Uses RML processor to transform CSV, XML and JSON files to RDF.</p>
+<p>Configuration:</p>
+<ul>
+<li>RML configuration</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>RDF</li>
+</ul>
+<h4 id="link-by-id">Link by ID</h4>
+<p>Creates new explicit links from identifiers using the clustered IDs information.</p>
+<p>Configuration:</p>
+<ul>
+<li>Source type</li>
+<li>Source property</li>
+<li>Target property</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>RDF</li>
+</ul>
+<p>Example:</p>
+<p>working data 1</p>
+<pre><code class="lang-turtle">:pub1
+  a Publication
+  urn &quot;urn:1&quot;
+  org &quot;orgID1&quot;
+
+:org1
+  extID &quot;orgID1&quot;
+</code></pre>
+<p>ids graph</p>
+<pre><code class="lang-turtle">:pub1
+  attx:id &quot;urn:1&quot;
+
+:org1
+  attx:id &quot;orgID1&quot;
+</code></pre>
+<p>Configuration</p>
+<ul>
+<li>source type: Publication</li>
+<li>source property: org</li>
+<li>target property: orgLink</li>
+</ul>
+<p>New data</p>
+<pre><code class="lang-turtle">:pub1
+  orgLink :org1
+</code></pre>
+<h4 id="custom-rdf-to-json-mapper">Custom RDF to JSON Mapper</h4>
+<p>Uses custom configuration file to traverse and transform RDF to nested JSON documents.</p>
+<p><strong>TODO:
+Add more detailed description of mapping file.</strong></p>
+<p>RDF to JSON mapper can only work on existing data sets and cannot therefore be part of a ingestion pipeline.</p>
+<p>Input:</p>
+<ul>
+<li>dataset URIs</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>Custom mapping configuration</li>
+</ul>
+<h4 id="json-ld-framing-based-rdf-to-json-mapper">JSON-LD Framing Based RDF to JSON Mapper</h4>
+<p>Uses <a href="http://json-ld.org/spec/latest/json-ld-framing/" target="_blank">JSON-LD framing</a> to create deterministic serialization of a graph to JSON document.</p>
+<p>RDF to JSON mapper can only work on existing data sets and cannot therefore be part of a ingestion pipeline.</p>
+<p>Input:</p>
+<ul>
+<li>dataset URIs</li>
+</ul>
+<p>Output:</p>
+<ul>
+<li>Framing configuration</li>
+</ul>
+<h3 id="loaders">Loaders</h3>
+<p>ATTX Loaders are components handle generated data by either storing it internally or handing it over to a distribution component for public consumption. Loader DPUs only have inputs.</p>
+<h4 id="replace-data-set">Replace Data Set</h4>
+<p>DPU that replaces all the old content with new data. This DPU should be used, when the source data is from a data dump.</p>
+<p>Input data can be configured to be RDF passed down from previous DPUs or file generated by some other DPU.</p>
+<p>Inputs:</p>
+<ul>
+<li>Data set metadata</li>
+<li>New data</li>
+<li>New data files</li>
+</ul>
+<h4 id="update-data-set">Update Data Set</h4>
+<p>Update DPU uses input data to create a SPARQL update request, which will preserve any existing data that is not part of the update. It also handles situations where value of a certain property has changed without creating duplicate property values. For example:</p>
+<p>Old data:</p>
+<pre><code class="lang-turtle">&lt;subject&gt; &lt;dct:title&gt; &quot;Test&quot;
+</code></pre>
+<p>SPARQL update:</p>
+<pre><code class="lang-sparql">DELETE { &lt;subject&gt; &lt;dct:title&gt; &quot;Test&quot; }
+INSERT { &lt;subject&gt; &lt;dct:title&gt; &quot;Testing&quot; }
+</code></pre>
+<p>New data:</p>
+<pre><code class="lang-turtle">&lt;subject&gt; &lt;dct:title&gt; &quot;Testing&quot;
+</code></pre>
+<p>Inputs</p>
+<ul>
+<li>Data set metadata</li>
+<li>Deleted IDs</li>
+<li>Updated data</li>
+</ul>
+<p>Target graph is generated based on the contextual information.</p>
+<h4 id="publish-to-api">Publish to API</h4>
+<p>This DPU can be used to distributed generated JSON documents through a REST API.</p>
+<p>Input:</p>
+<ul>
+<li>dataset metadata</li>
+<li>configuration</li>
+</ul>
+<h4 id="publish-to-file">Publish to File</h4>
+<p>This DPU copies file to a web server with given path and file name.</p>
+<p>Configuration:</p>
+<ul>
+<li>path</li>
+<li>File name</li>
+</ul>
+<h2 id="semantic-broker-end-to-end-usage-scenario">Semantic Broker End to End Usage Scenario</h2>
+<p>This section provides a end to end example that uses ATTX Semantic Broker platform from harvest, to linking and distributing the data maintained by three different sources.</p>
+<p>Data sources are:</p>
+<ul>
+<li>Helda publication data  </li>
+<li>Finto vocabularies</li>
+<li>HY organization registry</li>
+</ul>
+<p>A first step consists of linking publication metadata with Finto vocabularies and organizational units using subject and contributor field respectively. In the following step it will use simple OWL reasoning on SKOS vocabulary to add links from linked subject&apos;s parent concepts to the publication. This allows users for example to search for &quot;Beverage&quot; and find things described as &quot;Tea&quot;. Finally, the distribution pipeline will add multilingual labels for the linked subjects.</p>
+<p>Example of result document:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;Testing&quot;</span>,  
+  <span class="hljs-string">&quot;org&quot;</span>: {
+    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Helsinki University Library&quot;</span>,
+    <span class="hljs-string">&quot;orgUnitCode&quot;</span>: <span class="hljs-string">&quot;Test&quot;</span>
+  },
+  <span class="hljs-string">&quot;subjects&quot;</span>: [
+    {
+      <span class="hljs-string">&quot;id&quot;</span>: <span class="hljs-string">&quot;http://www.yso.fi/onto/yso/p5127&quot;</span>,
+      <span class="hljs-string">&quot;label&quot;</span>: {
+        <span class="hljs-string">&quot;fi&quot;</span>: <span class="hljs-string">&quot;juomat&quot;</span>,
+        <span class="hljs-string">&quot;en&quot;</span>: <span class="hljs-string">&quot;beverages&quot;</span>,
+        <span class="hljs-string">&quot;sv&quot;</span>: <span class="hljs-string">&quot;drycker&quot;</span>
+      }
+    }
+  ]
+}
+</code></pre>
+<p><em>To be continued...</em></p>
 
                                 
                                 </section>
@@ -1049,12 +1315,12 @@
 
             
                 
-                <a href="Use-case-Metax.html" class="navigation navigation-prev " aria-label="Previous page: UC3 - Metax">
+                <a href="Provenance-Service.html" class="navigation navigation-prev " aria-label="Previous page: Provenance Service">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-next " aria-label="Next page: ATTX Architecture Overview">
+                <a href="ATTX-Development-Environment.html" class="navigation navigation-next " aria-label="Next page: ATTX Development Environment">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1065,7 +1331,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2017-07-31T14:00:13.773Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"next":{"title":"ATTX Development Environment","level":"6.1","depth":1,"path":"ATTX-Development-Environment.md","ref":"ATTX-Development-Environment.md","articles":[]},"previous":{"title":"Provenance Service","level":"4.1","depth":1,"path":"Provenance-Service.md","ref":"Provenance-Service.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"User-Guide-Administrator.md","mtime":"2017-07-31T14:00:13.776Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

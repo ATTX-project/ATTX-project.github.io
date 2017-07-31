@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>UC4 - Mildred · GitBook</title>
+        <title>Deploying ATTX Components on Docker Swarm · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ATTX-Architecture-Overview.html" />
+    <link rel="next" href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html" />
     
     
-    <link rel="prev" href="Use-case-Metax.html" />
+    <link rel="prev" href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html" />
     
 
     </head>
@@ -161,7 +161,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.4" data-path="Use-case-Mildred.html">
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
             
                 <a href="Use-case-Mildred.html">
             
@@ -285,7 +285,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.2" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+        <li class="chapter active" data-level="2.1.2.2" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
             
                 <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
             
@@ -948,7 +948,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >UC4 - Mildred</a>
+        <a href="." >Deploying ATTX Components on Docker Swarm</a>
     </h1>
 </div>
 
@@ -963,65 +963,88 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jul-2017 10:25:08</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
-
-<h1 id="mildred-use-case">Mildred use case</h1>
-<p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
-<p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 14-Jul-2017 11:08:34</div></div><h1 id="deploying-attx-components-on-docker-swarm">Deploying ATTX Components on Docker Swarm</h1>
+<p>This guide exemplifies how to deploy the ATTX components on Docker Swarm, by setting up OpenStack volumes for  data persistence and using a v3 Docker Composer YML definition file.</p>
+<h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
-<li><a href="#approach">Approach</a></li>
-<li><a href="#user-stories">User stories</a></li>
-<li><a href="#data-sources">Data sources</a><ul>
-<li><a href="#etsin">Etsin</a></li>
-<li><a href="#b2share">B2Share</a></li>
-<li><a href="#zenodo">Zenodo</a></li>
-<li><a href="#finto">Finto</a></li>
-<li><a href="#iow">IOW</a></li>
-</ul>
+<li><a href="#setting-up-openstack-volumes-for-data-persistence">Setting up OpenStack Volumes for Data Persistence</a></li>
+<li><a href="#deploying-the-attx-components">Deploying the ATTX Components</a><!-- TOC END -->
 </li>
-<li><a href="#implementation">Implementation</a></li>
 </ul>
-<!-- TOC END -->
-<h2 id="approach">Approach</h2>
-<p>Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred&apos;s steering group.</p>
-<p>One of the main ideas behind the use case, it the added value that ATTX broker deliver by running customizable validation and data quality processes over the harvested data. This additional data can also be published and used by the ThinkOpen site to deliver custom quality metrics alongside the dataset metadata.</p>
-<p>Etsin is already a service that aggregates dataset metadata from different sources, so why make another similar dataset? Mildred use case is interested specifically in UH&apos;s research outputs whereas Etsin is a national service. By creating an UH specific dataset, we have control over both the content and structure of the dataset, which makes it easier to integrate it with ThinkOpen work or any other UH specific use. It is also possible that some day the data might flow in an opposite direction between UH&apos;s dataset and Etsin.</p>
-<p>When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get <strong>some</strong> data. It is however possible to extend to those methods with more complex internal processing.</p>
-<p>TODO: Link to OpenScienceFair poster draft.</p>
-<h2 id="user-stories">User stories</h2>
-<h2 id="data-sources">Data sources</h2>
-<h3 id="etsin">Etsin</h3>
-<p>Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.</p>
-<p>Api documentation:
-<a href="http://openscience.fi/etsin-api" target="_blank">http://openscience.fi/etsin-api</a></p>
-<h3 id="b2share">B2Share</h3>
-<p><a href="https://b2share.eudat.eu/" target="_blank">B2Share</a> is part of the <a href="https://eudat.eu/" target="_blank">EUDAT</a> collaborative data infrastructure.</p>
-<p>In B2Share the data is organized around communities, which all maintain their own metadata schemas for community related records. This means that harvested data structures can vary depending on which community the record belongs to. There is also a common schema that is shared with all the communities.</p>
-<p>API documentation
-<a href="https://b2share.eudat.eu/help/api" target="_blank">https://b2share.eudat.eu/help/api</a></p>
-<h3 id="zenodo">Zenodo</h3>
-<p><a href="https://zenodo.org" target="_blank">Zenodo</a> is a general purpose repository for all kinds of research outputs ranging from presentations to datasets. Users can create communities to organize content into subrepositories.</p>
-<p>Api documentation:
-<a href="http://developers.zenodo.org/" target="_blank">http://developers.zenodo.org/</a></p>
-<p>Example output from Hulib community in DataCite format:
-<a href="https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib" target="_blank">https://zenodo.org/oai2d?verb=ListRecords&amp;metadataPrefix=oai_datacite&amp;set=user-hulib</a></p>
-<h3 id="finto">Finto</h3>
-<p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.</p>
-<h3 id="iow">IOW</h3>
-<p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is service for creating and maintaining descriptions for interoperability. In the context of of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
-<h2 id="implementation">Implementation</h2>
-<p>Architectural overview:</p>
-<p><img src="images/ATTX-Mildred-architecture.svg" alt="Architectural overview"></p>
-<p>Features:</p>
+<p>Given that the ATTX components are containerised, we need to ensure data persistence between container restarts. In practice, ATTX components will need access to file systems in data volumes in order to write and read data.</p>
+<p>The ATTX Docker Compose v3 YML file defines the mappings between the internal containers and file systems, and the following list states the containers that need data persistence, as well as the mappings between internal and file system data storage:</p>
 <ul>
-<li>DataCite output format</li>
-<li>Custom output format if required</li>
-<li>Data validation based on JSON schemas</li>
-<li>simple data quality analysis</li>
-<li>Identifying dataset related to UH</li>
-<li>Deduplication of dataset metadata available from multiple sources</li>
+<li>UnifiedViews DB (MySQL): <code>/uv-data/mysql:/var/lib/mysql</code>;</li>
+<li>ElasticSearch 1.3.4 (with Siren plugin): <code>/attx-data/essiren:/usr/share/elasticsearch/data</code>;</li>
+<li>Elasticsearch 5.2: <code>/attx-data/elasticsearch5:/usr/share/elasticsearch/data</code>;</li>
+<li>Fuseki: <code>/attx-data/fuseki:/data/fuseki</code>;</li>
+<li>GM-API: <code>/attx-data/gm-api:/app/data</code>.</li>
 </ul>
+<p>In short, the procedure will consist in first setting up OpenStack volumes for data persistency, and secondly in deploying the ATTX components defined in v3 Docker Composer YML with Docker Swarm commands.</p>
+<p><strong>Pre-requisite:</strong> Docker Swarm formed on Cpouta and essential components provisioned (cf. <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack (cPouta)</a>).</p>
+<h2 id="setting-up-openstack-volumes-for-data-persistence">Setting up OpenStack Volumes for Data Persistence</h2>
+<p><strong>1.</strong> Create a persistent storage volume for UnifiedViews (e.g. &apos;uv-data&apos;) and attach it to the Swarm Master, as per instructions in <a href="https://research.csc.fi/pouta-persistent-volumes" target="_blank">https://research.csc.fi/pouta-persistent-volumes</a>.</p>
+<p><strong>2.</strong> Create a persistent storage volume for ATTX components (e.g. &apos;attx-data&apos;) and attach it to the first Swarm worker, as per instructions in <a href="https://research.csc.fi/pouta-persistent-volumes" target="_blank">https://research.csc.fi/pouta-persistent-volumes</a>.</p>
+<p><strong>3.</strong> Next, you should partition the new volumes, label them, create new file systems on them, and mount them. If you wish, you can follow the above-mentioned CSC instructions as they are, but for consistency with  existing ATTX practices we do recommend you to tag the partitions as <code>uv-data</code> and <code>attx-data</code> and mount them in <code>/uv-data</code> and <code>/attx-data</code> respectively:</p>
+<p><strong>3.1</strong>
+Create a label (&quot;uv-data&quot;) for the partition that will be use to store UnifiedViews data:</p>
+<pre><code class="lang-shell">sudo e2label /dev/vdc1 uv-data
+</code></pre>
+<p>Create a <code>/uv-data</code> mount point and mount the volume:</p>
+<pre><code class="lang-shell">sudo mkdir /uv-data
+sudo mount /dev/vdc1 /uv-data
+</code></pre>
+<p>And taking the &quot;data&quot; label and &quot;/data&quot; change into account in /etc/fstab:</p>
+<pre><code class="lang-shell">sudo echo &quot;LABEL=uv-data    /uv-data    ext4    defaults    0    0&quot; &gt;&gt; /etc/fstab
+</code></pre>
+<p>Now you can create the directories that will be used by the UnifiedViews containers who need data persistence (<code>unified-views-mariadb</code>).</p>
+<pre><code class="lang-shell">sudo mkdir /uv-data/mariadb
+</code></pre>
+<p><strong>3.2.</strong>
+Create a label (<code>attx-data</code>) for the partition that will be use to store ATTX data:</p>
+<pre><code class="lang-shell">sudo e2label /dev/vdc1 attx-data
+</code></pre>
+<p>Create a <code>`/attx-data</code> mount point and mount the volume:</p>
+<pre><code class="lang-shell">sudo mkdir /attx-data
+sudo mount /dev/vdc1 /attx-data
+</code></pre>
+<p>And taking the <code>attx-data</code> label and <code>/attx-data</code> change into account in <code>`/etc/fstab</code>:</p>
+<pre><code class="lang-shell">sudo echo &quot;LABEL=attx-data    /attx-data    ext4    defaults    0    0&quot; &gt;&gt; /etc/fstab
+</code></pre>
+<p>Now you can create the directories that will be used by the ATTX containers that need data persistence (UnifiedViews DB, Fuseki, ElasticSearch 1.3.4, ElasticSearch 5.2)</p>
+<pre><code class="lang-shell">sudo mkdir /attx-data/essiren
+sudo mkdir /attx-data/elasticsearch5
+sudo mkdir /attx-data/fuseki
+sudo mkdir /attx-data/gmapi
+</code></pre>
+<h2 id="deploying-the-attx-components">Deploying the ATTX Components</h2>
+<p><strong>1.</strong>
+With the data volumes in place (as well as the Provisioning, cf. <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">Provisioning ATTX Components on CSC Open Stack cPouta</a>), it&apos;s now time deploy the ATTX application stack in Docker Swarm.</p>
+<p>Download the latest ATTX Docker Swarm YML stack (e.g. <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml" target="_blank">https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml</a>) to your Swarm Master node (e.g. attx-swarm-1), to <code>/home/cloud-user/swarm-mode-cpouta</code>, for example.</p>
+<p>To deploy the ATTX application stack in Docker Swarm from <code>/home/cloud-user/swarm-mode-cpouta</code>, run:</p>
+<pre><code class="lang-shell">docker stack deploy --compose-file attx-swarm.yml attx
+</code></pre>
+<p>Verify that all services are starting up:</p>
+<pre><code class="lang-shell">docker service ls
+</code></pre>
+<p>The output should be similar as follows (mind that the <code>uv-dpus</code> and <code>attx-shared</code> should run once and then exit):</p>
+<pre><code class="lang-shell">cloud-user@attx-swarm-1:~/swarm-mode-cpouta$ docker service ls
+ID            NAME                 MODE        REPLICAS  IMAGE
+2ghu5r2ig9ii  attx_essiren         replicated  1/1       attxtest/essiren:latest
+57b62rzt0dlw  attx_backend         replicated  1/1       tenforce/unified-views-backend:latest
+j8bbprqi695s  attx_wfapi           replicated  1/1       attxtest/wf-api:latest
+lttan3dficf0  attx_mysql           replicated  1/1       tenforce/unified-views-mariadb:feat-compact-modular
+n37grvnuclbt  attx_uv-dpus         replicated  0/1       tenforce/unified-views-add-dpus:latest
+nc4x8h88h84y  attx_attx-dpus       replicated  1/1       attxtest/uv-attx-dpus:latest
+ozwzjngvavwn  attx_frontend        replicated  1/1       tenforce/unified-views-frontend:latest
+te3o51dqwtmg  attx_shared          replicated  0/1       attxtest/uv-attx-shared:latest
+v2e06blmfzan  attx_elasticsearch5  replicated  1/1       attxtest/attx-es5:latest
+vmvjvz2swvp1  attx_fuseki          replicated  1/1       attxtest/attx-fuseki:latest
+wyi8p9zl770c  attx_gmapi           replicated  1/1       attxtest/gm-api:latest
+</code></pre>
+<p><strong>2.</strong>
+Once the ATTX services are running, you can also check whether UnifiedViews is operational. The UnifiedViews login page should be available at <code>http://&lt;Swarm_public_IP_address&gt;:8080/unifiedviews</code> and you should able to login.</p>
 
                                 
                                 </section>
@@ -1049,12 +1072,12 @@
 
             
                 
-                <a href="Use-case-Metax.html" class="navigation navigation-prev " aria-label="Previous page: UC3 - Metax">
+                <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html" class="navigation navigation-prev " aria-label="Previous page: Provisioning ATTX Components on CSC Open Stack (cPouta)">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="ATTX-Architecture-Overview.html" class="navigation navigation-next " aria-label="Next page: ATTX Architecture Overview">
+                <a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html" class="navigation navigation-next " aria-label="Next page: Applying Rolling Updates to Services in Docker Swarm">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1065,7 +1088,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2017-07-31T14:00:13.773Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deploying ATTX Components on Docker Swarm","level":"2.1.2.2","depth":3,"next":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"previous":{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"2.1.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","mtime":"2017-07-31T14:00:13.680Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
