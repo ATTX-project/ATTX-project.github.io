@@ -2,6 +2,7 @@
 
 This guide exemplifies how to provision 5 VMs in cPouta (CSC Open Stack) with Ansible, for forming a Docker Swarm and running the ATTX stack.
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [1. Preparing Ansible's Control Node](#1-preparing-ansibles-control-node)
   - [2. Upload and Edit Ansible's Configuration files](#2-upload-and-edit-ansibles-configuration-files)

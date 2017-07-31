@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Building with (Py)Gradle · GitBook</title>
+        <title>Consul Service Discovery Implementation · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Messaging-Brokers-Solutions.html" />
+    <link rel="next" href="Consul-for-Service-Discovery-on-Docker-Swarm.html" />
     
     
-    <link rel="prev" href="CSC-cPouta-Cloud-Services-Report.html" />
+    <link rel="prev" href="ServiceDiscovery-Implementation.html" />
     
 
     </head>
@@ -535,7 +535,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="3.4.1" data-path="Consul-ServiceDiscovery-Implementation.html">
+        <li class="chapter active" data-level="3.4.1" data-path="Consul-ServiceDiscovery-Implementation.html">
             
                 <a href="Consul-ServiceDiscovery-Implementation.html">
             
@@ -757,7 +757,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="7.1.3" data-path="Building-with-Gradle.html">
+        <li class="chapter " data-level="7.1.3" data-path="Building-with-Gradle.html">
             
                 <a href="Building-with-Gradle.html">
             
@@ -948,7 +948,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Building with (Py)Gradle</a>
+        <a href="." >Consul Service Discovery Implementation</a>
     </h1>
 </div>
 
@@ -963,295 +963,283 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 14-Jul-2017 11:08:34</div></div><h1 id="building-with-pygradle">Building with (Py)Gradle</h1>
-<p>Brief report on interacting and working with Gradle within the project.</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="consul-service-discovery-implementation">Consul Service Discovery Implementation</h1>
 <h3 id="table-of-contents">Table of Contents</h3>
-<!-- TOC START min:1 max:4 link:true update:true -->
+<!-- TOC START min:1 max:4 link:true update:false -->
 <ul>
-<li><a href="#building-with-pygradle">Building with (Py)Gradle</a><ul>
-<li><a href="#table-of-contents">Table of Contents</a><ul>
-<li><a href="#gradle">Gradle</a></li>
+<li><a href="#consul-in-practice">Consul in Practice</a><ul>
+<li><a href="#registering-a-service-with-consul">Registering a Service with Consul</a></li>
+<li><a href="#making-use-of-registered-services">Making Use of Registered Services</a><ul>
+<li><a href="#using-consul-tags">Using Consul Tags</a></li>
 </ul>
 </li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#setting-up">Setting up</a><ul>
-<li><a href="#python--gradle--">Python + Gradle = &#x2665;&#xFE0F;</a></li>
-</ul>
-</li>
-<li><a href="#setting-up-1">Setting up</a><ul>
-<li><a href="#creating-a-pypi-repository">Creating a PyPi repository</a></li>
-<li><a href="#python-project-setup">Python project setup</a></li>
-<li><a href="#excluding-depenencies">Excluding depenencies</a></li>
-</ul>
-</li>
-<li><a href="#building-and-running-tasks">Building and Running Tasks</a></li>
-<li><a href="#example-pygradle-projects">Example PyGradle Projects</a><ul>
-<li><a href="#documentation">Documentation</a></li>
+<li><a href="#storing-keyvalue-pairs-in-consul">Storing Key/Value pairs in Consul</a></li>
+<li><a href="#consul-and-docker-swarm">Consul and Docker SWARM</a><ul>
+<li><a href="#using-consul-catalog-for-service-discovery">Using Consul Catalog for Service Discovery</a></li>
+<li><a href="#using-consul-kv-for-service-discovery">Using Consul K/V for Service Discovery</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#references">References</a></li>
 </ul>
 <!-- TOC END -->
-<h2 id="gradle">Gradle</h2>
-<h3 id="installation">Installation</h3>
-<p>Installing on Ubuntu:</p>
+<h2 id="consul-in-practice">Consul in Practice</h2>
+<p>In order to understand what components, when they communicate and what/how they communicate to each other using Service Discover component, we envision the following:</p>
 <ul>
-<li><code>curl -s https://get.sdkman.io | bash</code> - install sdk</li>
-<li><code>sdk install gradle 3.5</code> - install gradle 3.5 (or any version 3.0+)</li>
-<li>check the installed version <code>gradle -v</code></li>
-<li>switching between versions <code>sdk use gradle 4.0</code></li>
+<li>(micro)services offered by the Graph, Workflow and Distribution components require to register services such as Graph-Manager-API, UVProvovenance-API, ElasticSearch or any other of processing components - see <a href="User-Guide-Administrator.html">Administrator&apos;s User Guide</a>;</li>
+<li>configurations specific to the Graph Store (e.g. Fuseki endpoint(s)) or the MariaDB configuration for UVProvovenance-API or several (micro)services parameters will be stored in the Consul KV store;</li>
+<li>Accessing the registered (micro)services can be achieved either directly from the Consul DNS/HTTP API or via the proxy/router (for additional load balancing), meanwhile accessing the KV store should be done directly from Consul HTTP API - these solutions fit into the <a href="http://microservices.io/patterns/index.html#service-discovery" target="_blank">Service Discovery patterns</a>.</li>
 </ul>
-<p>Installing on MacOS (assuming <a href="http://brew.sh/" target="_blank">homebrew</a> is installed):</p>
-<ul>
-<li><code>brew install gradle</code></li>
-<li>check the installed version <code>gradle -v</code></li>
-</ul>
-<h3 id="setting-up">Setting up</h3>
-<p>There are two ways to work with Gradle:</p>
-<ul>
-<li>install it on your machine - see <a href="#installation">Installation</a></li>
-<li>provide a <a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html" target="_blank">wrapper</a> so that others can also work with the same version or we can distribute the project for others that do no have Gradle installed, or need to work with a specific version.</li>
-</ul>
-<p>There are two ways to create a Gradle Wrapper (both require Gradle installed):</p>
-<ul>
-<li>use command <code>gradle wrapper --gradle-version 3.5</code> (last value is the version of Gradle set for the wrapper);</li>
-<li>in the <code>build.gradle</code> file create a wrapper task (see below) and use command <code>gradle wrapper</code></li>
-</ul>
-<pre><code class="lang-groovy">task wrapper(<span class="hljs-string">type:</span> Wrapper) {
-   gradleVersion = <span class="hljs-string">&apos;3.5&apos;</span>
-}
+<h3 id="registering-a-service-with-consul">Registering a Service with Consul</h3>
+<p>Registering a service can be achieved using one of the recommended libraries <a href="https://www.consul.io/api/libraries-and-sdks.html" target="_blank">https://www.consul.io/api/libraries-and-sdks.html</a> e.g. using python-consul</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> consul
+
+c = consul.Consul(host=<span class="hljs-string">&apos;attx-sandbox&apos;</span>, port=<span class="hljs-number">8500</span>)
+<span class="hljs-comment"># Register Service</span>
+c.agent.service.register(<span class="hljs-string">&apos;restapi&apos;</span>,
+                         service_id=<span class="hljs-string">&apos;restapi_1&apos;</span>,
+                         port=<span class="hljs-number">4300</span>,
+                         tags=[<span class="hljs-string">&apos;graph-component&apos;</span>])
 </code></pre>
-<h2 id="python--gradle--&#xFE0F;">Python + Gradle = &#x2665;&#xFE0F;</h2>
-<h3 id="setting-up">Setting up</h3>
-<p>Setting up steps overview - all these steps are detailed in this section:</p>
+<p>One of the main questions is when to de-register a service, however a more appropriate issue would be to do a healthcheck (<code>/health</code> endpoint already available for GM and WF APIs), also considering some of the services run under supervisor, and will try be restarted, the function of de-registering should be part of shutting down a service.</p>
+<h3 id="making-use-of-registered-services">Making Use of Registered Services</h3>
+<p>An overview how we might make use of such services is as described in the diagram below, however two cases can bet identified:</p>
 <ol>
-<li>acquire Gradle and (optional) create a Gradle wrapper - see <a href="#installation">Installation</a>;</li>
-<li>create PyPi repository - see <a href="#creating-a-pypi-repository">Creating a PyPi repository</a>;</li>
-<li>set up Python project structure;</li>
-<li>create <code>build.gradle</code> file with appropriate PyGradle plugin;</li>
-<li>generate project <code>setup.py</code>.</li>
+<li>accessing a service remote API such as HTTP/REST  at a particular location (host and port) via an client (e.g. browser, DPU);</li>
+<li>having different services talking to one another.</li>
 </ol>
-<p>One of the best way to work with Gradle in Python is using <a href="https://github.com/linkedin/pygradle" target="_blank">PyGradle</a>. It is also recommended using Gradle version 3.+ .</p>
-<p>PyGradle comes with several plugins available (for specific details refer to PyGradle github repository).</p>
-<table>
-<thead>
-<tr>
-<th>Plugin Name</th>
-<th>Used When</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python.md" target="_blank">com.linkedin.python</a></td>
-<td>Base Python Plugin</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-sdist.md" target="_blank">com.linkedin.python-sdist</a></td>
-<td>Developing Libraries</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-web-app.md" target="_blank">com.linkedin.python-web-app</a></td>
-<td>Developing Deployable Applications</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-cli.md" target="_blank">com.linkedin.python-cli</a></td>
-<td>Developing Command Line Applications</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-flyer.md" target="_blank">com.linkedin.python-flyer</a></td>
-<td>Developing Flyer (Flask + Ember) Applications</td>
-</tr>
-<tr>
-<td><a href="https://github.com/linkedin/pygradle/docs/python-pex.md" target="_blank">com.linkedin.python-pex</a></td>
-<td>Developing Pex Applications</td>
-</tr>
-</tbody>
-</table>
-<p>PyGradle depends on Ivy metadata to build a dependency graph, thus one cannot use pypi directly. For this reason it is recommended to build a local pypi repository using the <a href="https://github.com/linkedin/pygradle/tree/master/pivy-importer" target="_blank">pivy-importer</a>; for the latest pivy-importer jre see <a href="https://bintray.com/linkedin/maven/pivy-importer" target="_blank">pivy-importer jfrog bintray</a>.</p>
-<p>The plugins can be added from Gradle plugins repository (<a href="https://plugins.gradle.org/" target="_blank">https://plugins.gradle.org/</a>):</p>
-<pre><code class="lang-groovy">plugins {
-  id <span class="hljs-string">&quot;com.linkedin.python-cli&quot;</span> version <span class="hljs-string">&quot;0.6.1&quot;</span>
-}
+<p>While in both cases the Server-Side Service Discovery pattern could be used, it seems more feasible, to have the services talking to one another by querying the Service Registry/Discovery service directly or using Docker Flow Proxy (just for registering, TBD if they can talk to one another via Docker Flow Proxy) - see <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html">Consul for Service Discovery on Docker Swarm</a> for more details.</p>
+<pre><code>Client          Proxy/Router         Service Registry/Discovery      Service A
+
+                                                 1.register Service A
+
+                                              &lt;--------------------------+
+  2. Client request
+
++--------------------&gt;
+
+                    3. Proxy Asks for Service A
+
+                +--------------------------------&gt;
+                ^--------------------------------+
+
+                          4. Proxy Forwards request to Service A
+
+                    +-------------------------------------------------------&gt;
+
+             5. Service A responds to the request to Client (via Proxy)
+
+    &lt;----------------------------------------------------------------------+
+</code></pre><h4 id="using-consul-tags">Using Consul Tags</h4>
+<p>Tags could be used to distinguish between either special instances of a service, e.g. &quot;Reasoning with OWL-DL&quot; and &quot;Reasoning with RDFS+&quot; - same service but with different reasoners configure behind.</p>
+<pre><code class="lang-json">[{
+    <span class="hljs-string">&quot;Node&quot;</span>: <span class="hljs-string">&quot;app-registry-discovery-node1&quot;</span>,
+    <span class="hljs-string">&quot;Address&quot;</span>: <span class="hljs-string">&quot;x.x.x.x&quot;</span>,
+    <span class="hljs-string">&quot;ServiceID&quot;</span>: <span class="hljs-string">&quot;api-server-8000&quot;</span>,
+    <span class="hljs-string">&quot;ServiceName&quot;</span>: <span class="hljs-string">&quot;api-server&quot;</span>,
+    <span class="hljs-string">&quot;ServiceTags&quot;</span>: [<span class="hljs-string">&quot;dev&quot;</span>, <span class="hljs-string">&quot;provider-abc&quot;</span>],
+    <span class="hljs-string">&quot;ServiceAddress&quot;</span>: <span class="hljs-string">&quot;someserver.domain.com&quot;</span>,
+    <span class="hljs-string">&quot;ServicePort&quot;</span>: <span class="hljs-number">8000</span>
+}, {
+    <span class="hljs-string">&quot;Node&quot;</span>: <span class="hljs-string">&quot;app-registry-discovery-node1&quot;</span>,
+    <span class="hljs-string">&quot;Address&quot;</span>: <span class="hljs-string">&quot;x.x.x.x&quot;</span>,
+    <span class="hljs-string">&quot;ServiceID&quot;</span>: <span class="hljs-string">&quot;api-server-8001&quot;</span>,
+    <span class="hljs-string">&quot;ServiceName&quot;</span>: <span class="hljs-string">&quot;api-server&quot;</span>,
+    <span class="hljs-string">&quot;ServiceTags&quot;</span>: [<span class="hljs-string">&quot;dev&quot;</span>, <span class="hljs-string">&quot;provider-xyz&quot;</span>],
+    <span class="hljs-string">&quot;ServiceAddress&quot;</span>: <span class="hljs-string">&quot;someserver.domain.com&quot;</span>,
+    <span class="hljs-string">&quot;ServicePort&quot;</span>: <span class="hljs-number">8001</span>
+}]
 </code></pre>
-<p>or by jcenter</p>
-<pre><code class="lang-groovy">buildscript {
-    repositories {
-        jcenter()
+<p>Accessing services with specific tags would work such as:
+<code>http://consul-server/v1/catalog/service/api-server?tag=dev</code></p>
+<h3 id="storing-keyvalue-pairs-in-consul">Storing Key/Value pairs in Consul</h3>
+<p>Because the Consul provides something that resembles more of a dictionary than a document store, trying to register something like:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;first_level&quot;</span> : {
+    <span class="hljs-string">&quot;second_level&quot;</span> : {
+      <span class="hljs-string">&quot;third_level&quot;</span> : {
+        <span class="hljs-string">&quot;theKey&quot;</span> : <span class="hljs-string">&quot;theValue&quot;</span>
+      }
     }
-    dependencies {
-        classpath <span class="hljs-string">group:</span> <span class="hljs-string">&apos;com.linkedin.pygradle&apos;</span>, <span class="hljs-string">name:</span> <span class="hljs-string">&apos;pygradle-plugin&apos;</span>, <span class="hljs-string">version:</span> <span class="hljs-string">&apos;0.6.1&apos;</span>
-    }
-}
-apply <span class="hljs-string">plugin:</span> <span class="hljs-string">&apos;com.linkedin.python-cli&apos;</span>
-</code></pre>
-<h4 id="creating-a-pypi-repository">Creating a PyPi repository</h4>
-<p>There are two methods to provide a PyPi repository:</p>
-<ul>
-<li><p>local - that can be built following the instructions:
-Requires the pivy repository locally check <code>build.gradle</code></p>
-<ul>
-<li>download from <a href="https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.6.1" target="_blank">https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.6.1</a></li>
-<li><p>run as below</p>
-<pre><code class="lang-shell">java -jar ~/Software/pivy-importer-0.6.1-all.jar --repo /home/user/repository \
-  virtualenv:15.0.1 \
-  pip:7.1.2 \
-  gunicorn:19.6.0 \
-  lxml:3.6.4 rdflib:4.2.1 \
-  rdflib-jsonld:0.4.0  \
-  PyMySQL:0.7.9 \
-  setuptools:19.1.1 \
-  pytest:2.9.1 \
-  pytest-cov:2.2.1 \
-  pytest-xdist:1.14 \
-  setuptools:32.1.0 \
-  pytest-html:1.12.0  \
-  --replace alabaster:0.7=alabaster:0.7.1, \
-  pytz:0a=pytz:2016.4, \
-  Babel:0.8=Babel:1.0, \
-  sphinx_rtd_theme:0.1=sphinx_rtd_theme:0.1.1, \
-  idna:2.0.0=idna:2.1, \
-  chardet:2.2=chardet:2.3, \
-  setuptools:0.6a2=setuptools:32.1.0
-</code></pre>
-</li>
-</ul>
-</li>
-<li>hosted: one can build his own hosted PyPi repo for PyGradle using a <a href="https://github.com/ATTX-project/development-environment/tree/dev/pivy-repo" target="_blank">Docker image</a> - build your own repository using <a href="https://github.com/blankdots/ivy-pypi-repo" target="_blank">https://github.com/blankdots/ivy-pypi-repo</a></li>
-</ul>
-<h4 id="python-project-setup">Python project setup</h4>
-<p>For a full example and detailed description visit: <a href="https://github.com/linkedin/pygradle/tree/master/examples/example-project" target="_blank">https://github.com/linkedin/pygradle/tree/master/examples/example-project</a> .</p>
-<p>Standard python project tree -  <em>Note the lack of a <code>setup.py</code>, more on this in a moment</em>:</p>
-<pre><code class="lang-config">.
-&#x251C;&#x2500;&#x2500; README.md
-&#x251C;&#x2500;&#x2500; setup.cfg
-&#x251C;&#x2500;&#x2500; src
-&#x2502;   &#x2514;&#x2500;&#x2500; project
-&#x2502;       &#x2514;&#x2500;&#x2500; __init__.py
-&#x2502;       &#x2514;&#x2500;&#x2500; example.py
-&#x2514;&#x2500;&#x2500; test
-    &#x2514;&#x2500;&#x2500; test_example.py
-</code></pre>
-<p>Create a <code>build.gradle</code> file. An example of a such a file is bellow with some specific options.</p>
-<pre><code class="lang-groovy">plugins {
-  id <span class="hljs-string">&quot;com.linkedin.python-cli&quot;</span> version <span class="hljs-string">&quot;0.6.1&quot;</span>
-}
-
-python {
-  <span class="hljs-comment">// force to use a specific version for a plugin</span>
-  forceVersion(<span class="hljs-string">&apos;pypi&apos;</span>, <span class="hljs-string">&apos;pip&apos;</span>, <span class="hljs-string">&apos;7.1.2&apos;</span>)
-  <span class="hljs-comment">// set the test directory to be used by py.test</span>
-  <span class="hljs-comment">// by default it is test directory.</span>
-  testDir = file(<span class="hljs-string">&apos;tests&apos;</span>)
-
-  <span class="hljs-comment">// Use a specific python version if it is available in the PATH it</span>
-  <span class="hljs-comment">// will use it</span>
-  details.prependExecutableDirectory(<span class="hljs-keyword">new</span> File(<span class="hljs-string">&apos;/usr/bin/python3.4&apos;</span>))
-  <span class="hljs-comment">// or details.appendExecutableDirectory(new File(&apos;/usr/bin/python3.4&apos;))</span>
-  details.pythonVersion = <span class="hljs-string">&apos;3.4&apos;</span>
-}
-
-<span class="hljs-comment">// define an explicit installation sequence for the dependencies.</span>
-project.tasks.findByName(<span class="hljs-string">&apos;installPythonRequirements&apos;</span>).sorted = <span class="hljs-literal">false</span>
-
-dependencies {
-    python <span class="hljs-string">&apos;pypi:requests:2.9.1&apos;</span>
-    test <span class="hljs-string">&apos;pypi:mock:1.0.1&apos;</span>
-}
-
-repositories {
-  <span class="hljs-comment">// provided by LinkedIn as an example</span>
-   pyGradlePyPi()
-
-   <span class="hljs-comment">// using a local repository</span>
-   ivy{
-     name <span class="hljs-string">&apos;pypi-local&apos;</span>
-     url <span class="hljs-string">&quot;/home/user/pivy&quot;</span>
-     layout <span class="hljs-string">&apos;pattern&apos;</span> , {
-       artifact <span class="hljs-string">&apos;[organisation]/[module]/[revision]/[artifact]-[revision](-[classifier]).[ext]&apos;</span>
-       ivy <span class="hljs-string">&apos;[organisation]/[module]/[revision]/[module]-[revision].ivy&apos;</span>
-     }
-   }
-}
-</code></pre>
-<p>Create the <code>setup.py</code> using <code>gradle generateSetupPy</code></p>
-<p>The <code>setup.py</code> in this example was created using the above task, by default the &quot;setup&quot; section at the bottom is commented out, <strong>so please look it over before continuing. One would want to un-comment the whole section at the bottom of the <code>setup.py</code>.</strong> One would also like to add a <code>setup.cfg</code> e.g.:</p>
-<pre><code class="lang-config">[flake8]
-ignore = E121,E123,E226,W292
-max-line-length = 160
-</code></pre>
-<h4 id="excluding-depenencies">Excluding depenencies</h4>
-<p>If there are issues with dependencies in your project e.g. : <a href="https://github.com/linkedin/pygradle/issues/96" target="_blank">https://github.com/linkedin/pygradle/issues/96</a> one could exclude the dependency as follows:</p>
-<pre><code class="lang-groovy">dependencies {
-    python (<span class="hljs-string">&apos;pypi:connexion:1.0.129&apos;</span>) {
-        exclude <span class="hljs-string">module:</span> <span class="hljs-string">&apos;functools32&apos;</span>
-    }
-}
-</code></pre>
-<h3 id="building-and-running-tasks">Building and Running Tasks</h3>
-<p>There are two ways to run the tasks and build either with <code>gradle</code> or <code>./gradlew</code> commands. In the working directory where <code>build.gradle</code> file is available one can make use of the following commands.</p>
-<p>Building an running tasks is the same as the Gradle, however here are some examples customised to PyGradle:</p>
-<p>Tasks:</p>
-<ul>
-<li>clean: <code>gradle clean</code></li>
-<li>build: <code>gradle build</code></li>
-<li>other tasks: <code>gradle :runTests</code> (see below how to add this task) or <code>gradle pytest</code></li>
-<li>exclude tasks: <code>gradle build -x pytest</code></li>
-<li>do all: <code>gradle clean build -x pytest</code></li>
-<li>see tasks: <code>gradle tasks --all</code> and dependencies <code>gradle dependencies</code> (previous to Gradle 3.+ all the tasks could be seen simply with <code>gradle tasks</code> with 3.+ the <code>--all</code> parameter was added to limit the number of tasks shown)</li>
-<li>see test coverage <code>gradle pytest coverage</code> it will generate a html report in <code>build/coverage/htmlcov</code></li>
-</ul>
-<p>In order to generate a HTML test report one could use <code>pytest-html</code> dependency and creating a Gradle task for that:</p>
-<pre><code class="lang-groovy"><span class="hljs-comment">// generate Tests report via a script.</span>
-task runTests(<span class="hljs-string">type:</span>Exec) {
-  workingDir <span class="hljs-string">&apos;.&apos;</span>
-  <span class="hljs-comment">// Create the output folder</span>
-  doFirst {
-    mkdir(<span class="hljs-string">&apos;build/test-report&apos;</span>)
   }
-
-  commandLine <span class="hljs-string">&apos;./runTests.sh&apos;</span>
 }
 </code></pre>
-<p>where <code>runTests.sh</code> contains the command to activate the virtualenv created by PyGradle and run the tests.</p>
-<pre><code class="lang-bash"><span class="hljs-meta">#! /bin/bash</span>
-<span class="hljs-built_in">command</span> -v <span class="hljs-built_in">source</span> &gt;/dev/null 2&gt;&amp;1 || {
-  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;I require source but it&apos;s not installed.  Aborting.&quot;</span> &gt;&amp;2; <span class="hljs-built_in">exit</span> 1;
-}
-<span class="hljs-built_in">source</span> activate
-py.test tests --html=build/<span class="hljs-built_in">test</span>-report/index.html --self-contained-html
+<p>One would have several options (as pointed by: <a href="https://groups.google.com/forum/#!topic/consul-tool/DgwWdpntaAY" target="_blank">https://groups.google.com/forum/#!topic/consul-tool/DgwWdpntaAY</a>):</p>
+<ul>
+<li>Using one key per root and storing all the root tree as JSON object e.g.<code>/foo {json}</code>;</li>
+<li>Using key per 1-level children - and storing all grandchildren as JSON e.g. <code>/foo/bar {json}</code></li>
+<li>or storing each grand children per key e.g <code>/foo/bar/zar {json}</code></li>
+</ul>
+<p>the appropriate structure in Consul KV would be:
+<code>/first_level/second_level/third_level/theKey</code> and the value for that last key would be <code>theValue</code> - solution inspired by <a href="https://github.com/Cimpress-MCP/git2consul" target="_blank">https://github.com/Cimpress-MCP/git2consul</a></p>
+<p>Another option would be to encode a JSON object to Base64 - see <a href="https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding" target="_blank">Base64 encoding and decoding</a> or <a href="http://stackoverflow.com/questions/34341836/how-to-convert-a-json-object-to-a-base64-string" target="_blank">http://stackoverflow.com/questions/34341836/how-to-convert-a-json-object-to-a-base64-string</a></p>
+<h3 id="consul-and-docker-swarm">Consul and Docker SWARM</h3>
+<p>As illustrated in <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html">Consul for Service Discovery on Docker Swarm</a> we are making use of <a href="http://proxy.dockerflow.com" target="_blank">Docker Flow Proxy</a> and <a href="http://swarmlistener.dockerflow.com/" target="_blank">Docker Swarm Listener</a> in order to implement a Server-Side Service Discovery pattern. However there are a few naming conventions that should be taken into consideration.</p>
+<h4 id="using-consul-catalog-for-service-discovery">Using Consul Catalog for Service Discovery</h4>
+<p>In this solution there are two main components the Service Discovery (where service are registered in the Consul catalogue of service for being monitored, and possible for healthcheck) and the Service Registry (where the services are registered using the Docker Swarm listener and used by Docker Flow proxy in the Consul K/V store).</p>
+<ul>
+<li>Docker SWARM<ul>
+<li>serviceName = name of the docker container in the network</li>
+</ul>
+</li>
+<li>Docker Flow Proxy<ul>
+<li>serviceName = name of the container in the network</li>
+<li>servicePath = /[service name from consul]/endpoint</li>
+</ul>
+</li>
+<li>Consul<ul>
+<li>catalog<ul>
+<li>serviceName = application type of service</li>
+<li>serviceID = service name from SWARM</li>
+<li>tag = v1</li>
+</ul>
+</li>
+<li>kv<ul>
+<li>serviceName/description = &quot;Description of the the service&quot;</li>
+<li>serviceName/dataset = &apos;/ds&apos;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>Docker SWARM<ul>
+<li>serviceName = ES1</li>
+<li>serviceName = ES5</li>
+</ul>
+</li>
+<li>Docker Flow Proxy<ul>
+<li>elasticsearch 1.3<ul>
+<li>serviceName = ES1</li>
+<li>servicePath = /ES1/jsonRestAPI/</li>
+<li>reqPathSearch = /ES1/jsonRestAPI/</li>
+<li>reqPathReplace = /</li>
+</ul>
+</li>
+<li>elasticsearch 5.x<ul>
+<li>serviceName = ES5</li>
+<li>servicePath = /ES5/jsonRestAPI/</li>
+<li>reqPathSearch = /ES5/jsonRestAPI/</li>
+<li>reqPathReplace = /</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Consul<ul>
+<li>catalog<pre><code class="lang-json">[
+  {
+      <span class="hljs-string">&quot;serviceName&quot;</span>: <span class="hljs-string">&quot;jsonRestAPI&quot;</span>,
+      <span class="hljs-string">&quot;serviceID&quot;</span>: <span class="hljs-string">&quot;ES1&quot;</span>,
+      <span class="hljs-string">&quot;tags&quot;</span>: [<span class="hljs-string">&quot;v1&quot;</span>]
+  },
+  {
+      <span class="hljs-string">&quot;serviceName&quot;</span>: <span class="hljs-string">&quot;jsonRestAPI&quot;</span>,
+      <span class="hljs-string">&quot;serviceID&quot;</span>: <span class="hljs-string">&quot;ES5&quot;</span>,
+      <span class="hljs-string">&quot;tags&quot;</span>: [<span class="hljs-string">&quot;v1&quot;</span>]
+  }
+]
 </code></pre>
-<h3 id="example-pygradle-projects">Example PyGradle Projects</h3>
-<p>Besides the examples provided <a href="https://github.com/linkedin/pygradle/tree/master/examples" target="_blank">https://github.com/linkedin/pygradle/tree/master/examples</a> we provide two additional ones:</p>
+</li>
+<li>kv
+/ES1/description = &quot;REST API that uses old version of the ES&quot;
+/ES5/description = &quot;REST API implemented with the current version of the ES&quot;</li>
+</ul>
+</li>
+<li>Querying for services of type &quot;jsonRestAPI&quot; and version &quot;v1&quot;:
+<code>http://proxy/consul/catalog/service/jsonRestAPI?tag=v1</code><ul>
+<li>Returns: serviceIDs</li>
+</ul>
+</li>
+<li>Access the service (e.g. indexing): <code>proxy/[serviceID]/[serviceName]/[endpoint]</code><pre><code>  PUT http://proxy/ES1/jsonRestAPI/[indexName]/[document type]
+</code></pre></li>
+</ul>
+<h4 id="using-consul-kv-for-service-discovery">Using Consul K/V for Service Discovery</h4>
+<p>In this solution we would be using the services are registered using the Docker Swarm listener and used by Docker Flow proxy in the Consul K/V store in order to discover new services, and client side processing.</p>
+<p>In order to add new values to the Consul K/V store, we will have to pass some environment variables to the container and at the same time follow the structure of the docker flow proxy for registering service parameters.</p>
 <ul>
-<li>Example of of building a Falcon REST API using PyGradle (using python-web-app plugin) <a href="https://github.com/blankdots/pygradle-falcon-api" target="_blank">https://github.com/blankdots/pygradle-falcon-api</a></li>
-<li>Command line utility using <a href="http://click.pocoo.org/6/" target="_blank">Click</a> for converting RDF to JSON using a <a href="http://json-ld.org/spec/latest/json-ld-framing/" target="_blank">JSON-LD frame</a> <a href="https://github.com/blankdots/pygradle-jsonld-cli" target="_blank">https://github.com/blankdots/pygradle-jsonld-cli</a></li>
+<li>Docker SWARM<ul>
+<li>serviceName = name of the docker container in the network</li>
 </ul>
-<h2 id="documentation">Documentation</h2>
-<p>Getting started:</p>
+</li>
+<li>Docker Flow Proxy<ul>
+<li>serviceName = name of the container in the network</li>
+<li>servicePath = /[service name from consul]/endpoint</li>
+</ul>
+</li>
+<li>Consul<ul>
+<li>kv<ul>
+<li>/docker-flow/serviceName/description = &quot;Description of the the service&quot;</li>
+<li>/docker-flow/serviceName/dataset = &apos;/ds&apos;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
 <ul>
-<li>video<ul>
-<li>Gradle: Novice to Master @LinkedIn - Gradle Summit 2016 - <a href="https://www.youtube.com/watch?v=B79g5YuU_2Y" target="_blank">https://www.youtube.com/watch?v=B79g5YuU_2Y</a></li>
+<li>Docker SWARM<ul>
+<li>serviceName = ES1</li>
+<li>serviceName = ES5</li>
 </ul>
 </li>
-<li>source code<ul>
-<li><a href="https://github.com/ethankhall/gradle-summit-novice-to-master" target="_blank">https://github.com/ethankhall/gradle-summit-novice-to-master</a></li>
+<li>Docker Flow Proxy<ul>
+<li>elasticsearch 1.3<ul>
+<li>serviceName = ES1</li>
+<li>servicePath = /ES1/jsonRestAPI/</li>
+<li>reqPathSearch = /ES1/jsonRestAPI/</li>
+<li>reqPathReplace = /</li>
+</ul>
+</li>
+<li>elasticsearch 5.x<ul>
+<li>serviceName = ES5</li>
+<li>servicePath = /ES5/jsonRestAPI/</li>
+<li>reqPathSearch = /ES5/jsonRestAPI/</li>
+<li>reqPathReplace = /</li>
 </ul>
 </li>
 </ul>
-<p>Little as there is the documentation for PyGradle is somewhat useful:</p>
+</li>
+<li>Consul<ul>
+<li>kv
+/docker-flow/jsonRestAPI_ES1_v1/description = &quot;REST API that uses old version of the ES&quot;
+/docker-flow/jsonRestAPI_ES5_v1/description = &quot;REST API implemented with the current version of the ES&quot;</li>
+</ul>
+</li>
+<li>Querying for services of type &quot;jsonRestAPI&quot; and version &quot;v1&quot;:<ul>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?keys</code></li>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?recurse</code></li>
+</ul>
+</li>
+<li>Querying for services of type &quot;jsonRestAPI&quot;:<ul>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_?keys</code></li>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_?recurse</code></li>
+</ul>
+</li>
+<li>Querying for services of type &quot;jsonRestAPI&quot; ES1 versions:<ul>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1?keys</code></li>
+</ul>
+</li>
+<li>Querying for parameter keys of type &quot;jsonRestAPI&quot; ES1 version &quot;v1&quot;:<ul>
+<li><code>http://proxy/consul/v1/kv/docker-flow/service/jsonRestAPI_ES1_v1?keys</code></li>
+</ul>
+</li>
+<li>Access the service (e.g. indexing): <code>proxy/[serviceID]/[serviceName]/[endpoint]</code><pre><code>  PUT http://proxy/ES1/jsonRestAPI/[indexName]/[document type]
+</code></pre></li>
+</ul>
+<h2 id="references">References</h2>
 <ul>
-<li>videos<ul>
-<li>GradleSummit2015 Python builds with Gradle - <a href="https://www.youtube.com/watch?v=NRZAIcTA0N0" target="_blank">https://www.youtube.com/watch?v=NRZAIcTA0N0</a></li>
-<li>PyGradle @ LinkedIn - Gradle Summit 2016 - <a href="https://www.youtube.com/watch?v=kZWLcHtHx2U" target="_blank">https://www.youtube.com/watch?v=kZWLcHtHx2U</a></li>
-<li>Python Build Automation with Gradle at Linkedin - <a href="https://www.youtube.com/watch?v=At5X0bamEFI" target="_blank">https://www.youtube.com/watch?v=At5X0bamEFI</a></li>
-</ul>
-</li>
-<li>source code<ul>
-<li>Gradle examples for different code and IDEs: <a href="https://github.com/gradle/gradle/tree/f001402c8b7f404c923d972f1bc524b2de7b3fcd/subprojects/docs/src/samples" target="_blank">https://github.com/gradle/gradle/tree/f001402c8b7f404c923d972f1bc524b2de7b3fcd/subprojects/docs/src/samples</a></li>
-<li>PyGradle example project <a href="https://github.com/linkedin/pygradle/tree/master/examples/example-project" target="_blank">https://github.com/linkedin/pygradle/tree/master/examples/example-project</a></li>
-</ul>
-</li>
+<li><a href="https://stackoverflow.com/questions/42054051/service-discovery-in-docker-without-using-consul" target="_blank">https://stackoverflow.com/questions/42054051/service-discovery-in-docker-without-using-consul</a></li>
+<li><a href="https://stackoverflow.com/questions/39132292/how-to-deploy-consul-using-docker-1-12-swarm-mode" target="_blank">https://stackoverflow.com/questions/39132292/how-to-deploy-consul-using-docker-1-12-swarm-mode</a></li>
+<li>Installing Hashicorp&#x2019;s Consul and using Python 3 to communicate with it <a href="http://www.giantflyingsaucer.com/blog/?p=5579" target="_blank">http://www.giantflyingsaucer.com/blog/?p=5579</a></li>
+<li><a href="http://proxy.dockerflow.com/" target="_blank">http://proxy.dockerflow.com/</a></li>
+<li><a href="https://labs.magnet.me/nerds/2015/10/26/consultant-configuration-management-with-consul.html" target="_blank">https://labs.magnet.me/nerds/2015/10/26/consultant-configuration-management-with-consul.html</a> - for using the K/V Store</li>
+<li><a href="https://www.spirulasystems.com/blog/2015/06/25/building-an-automatic-environment-using-consul-and-docker-part-1/" target="_blank">https://www.spirulasystems.com/blog/2015/06/25/building-an-automatic-environment-using-consul-and-docker-part-1/</a></li>
+<li><a href="https://www.spirulasystems.com/blog/2015/07/02/automatic-environment-using-consul-and-docker-swarm-part-2/" target="_blank">https://www.spirulasystems.com/blog/2015/07/02/automatic-environment-using-consul-and-docker-swarm-part-2/</a></li>
+<li><a href="https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/" target="_blank">https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/</a></li>
+<li><a href="http://www.dblooman.com/consul/2016/09/11/Consul-and-Service-discovery,-how-it-can-help/" target="_blank">http://www.dblooman.com/consul/2016/09/11/Consul-and-Service-discovery,-how-it-can-help/</a></li>
+<li><a href="https://technologyconversations.com/2016/03/21/docker-flow-proxy-on-demand-haproxy-service-discovery-and-reconfiguration/" target="_blank">https://technologyconversations.com/2016/03/21/docker-flow-proxy-on-demand-haproxy-service-discovery-and-reconfiguration/</a></li>
 </ul>
 
                                 
@@ -1280,12 +1268,12 @@ py.test tests --html=build/<span class="hljs-built_in">test</span>-report/index.
 
             
                 
-                <a href="CSC-cPouta-Cloud-Services-Report.html" class="navigation navigation-prev " aria-label="Previous page: CSC cPouta Cloud Services Report">
+                <a href="ServiceDiscovery-Implementation.html" class="navigation navigation-prev " aria-label="Previous page: Service Discovery Implementation">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Messaging-Brokers-Solutions.html" class="navigation navigation-next " aria-label="Next page: Messaging Brokers Solutions Overview">
+                <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html" class="navigation navigation-next " aria-label="Next page: Consul for Service Discovery on Docker Swarm">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1296,7 +1284,7 @@ py.test tests --html=build/<span class="hljs-built_in">test</span>-report/index.
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Building with (Py)Gradle","level":"7.1.3","depth":2,"next":{"title":"Messaging Brokers Solutions Overview","level":"7.1.4","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},"previous":{"title":"CSC cPouta Cloud Services Report","level":"7.1.2","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Building-with-Gradle.md","mtime":"2017-07-31T14:00:13.641Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"next":{"title":"Consul for Service Discovery on Docker Swarm","level":"3.4.2","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]},"previous":{"title":"Service Discovery Implementation","level":"3.4","depth":1,"path":"ServiceDiscovery-Implementation.md","ref":"ServiceDiscovery-Implementation.md","articles":[{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"path":"Consul-ServiceDiscovery-Implementation.md","ref":"Consul-ServiceDiscovery-Implementation.md","articles":[]},{"title":"Consul for Service Discovery on Docker Swarm","level":"3.4.2","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-ServiceDiscovery-Implementation.md","mtime":"2017-07-31T14:00:13.657Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

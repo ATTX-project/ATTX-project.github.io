@@ -9,22 +9,24 @@ See also: [Release Plan](Release-Plan.md) for detailed planning of the issues.
 Deliverables:
 - [X] Decision on how to implement or plan the service discovery (select technology)
 - [X] Implement the distributed docker environment
-- [X] **Semantic Broker Release 1 for the public**
+- [X] **Semantic Broker Release 1.0 for the public**
 - [X] Use case 1 Infrastructures and Publications
 - [X] Publish Wiki
 
 ### Q2 - July 2017
 - All: Service discovery (finish)
-- GC: Generating provenance data inside GC (i.e. moving WF-API functionality to GC)
+- All: Messaging Service (start)
+- GC: Generating provenance data inside GC (i.e. moving WF-API functionality to UVProvenance-API for the Provenance Service)
 - GC: Incremental harvesting of external data (e.g. OAI-PMH)
 - GC: More complicated processing services (e.g. NER)
 - DP: Easier Semantic Broker deployment (start)
+- DP: Kontena Semantic Broker deployment
 
 Deliverable:
 - [ ] Every feature new release
 - [ ] Use case 2
 - [X] ELAG 2017 presentation
-- [ ] Semantic Broker Microservice architecture (start)
+- [ ] Semantic Broker Microservice architecture v2.0 (start)
 
 ### Q3 - September 2017
 - DP: Centralised logging

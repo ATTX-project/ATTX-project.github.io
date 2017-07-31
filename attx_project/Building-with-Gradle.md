@@ -2,8 +2,10 @@
 
 Brief report on interacting and working with Gradle within the project.
 
+### Table of Contents
 <!-- TOC START min:1 max:4 link:true update:true -->
 - [Building with (Py)Gradle](#building-with-pygradle)
+    - [Table of Contents](#table-of-contents)
   - [Gradle](#gradle)
     - [Installation](#installation)
     - [Setting up](#setting-up)
@@ -24,8 +26,9 @@ Brief report on interacting and working with Gradle within the project.
 
 Installing on Ubuntu:
 * `curl -s https://get.sdkman.io | bash` - install sdk
-* `sdk install gradle 3.5` - install gradle 3.5 (or latest version)
+* `sdk install gradle 3.5` - install gradle 3.5 (or any version 3.0+)
 * check the installed version `gradle -v`
+* switching between versions `sdk use gradle 4.0`
 
 Installing on MacOS (assuming [homebrew](http://brew.sh/) is installed):
 * `brew install gradle`
@@ -77,7 +80,7 @@ PyGradle depends on Ivy metadata to build a dependency graph, thus one cannot us
 The plugins can be added from Gradle plugins repository (https://plugins.gradle.org/):
 ```groovy
 plugins {
-  id "com.linkedin.python-cli" version "0.4.9"
+  id "com.linkedin.python-cli" version "0.6.1"
 }
 ```
 or by jcenter
@@ -87,7 +90,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath group: 'com.linkedin.pygradle', name: 'pygradle-plugin', version: '0.4.9'
+        classpath group: 'com.linkedin.pygradle', name: 'pygradle-plugin', version: '0.6.1'
     }
 }
 apply plugin: 'com.linkedin.python-cli'
@@ -98,11 +101,11 @@ apply plugin: 'com.linkedin.python-cli'
 There are two methods to provide a PyPi repository:
 * local - that can be built following the instructions:
 Requires the pivy repository locally check `build.gradle`
-  * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.4.9
+  * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.6.1
   * run as below
 
     ```shell
-    java -jar ~/Software/pivy-importer-0.4.9-all.jar --repo /home/user/repository \
+    java -jar ~/Software/pivy-importer-0.6.1-all.jar --repo /home/user/repository \
       virtualenv:15.0.1 \
       pip:7.1.2 \
       gunicorn:19.6.0 \
@@ -149,7 +152,7 @@ Create a `build.gradle` file. An example of a such a file is bellow with some sp
 
 ```groovy
 plugins {
-  id "com.linkedin.python-cli" version "0.4.9"
+  id "com.linkedin.python-cli" version "0.6.1"
 }
 
 python {

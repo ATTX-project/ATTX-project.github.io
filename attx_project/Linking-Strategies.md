@@ -4,7 +4,10 @@ This page describes how different graphs in the data store are linked together. 
 * linking between platform's internal graphs (such as provenance and generated datasets)
 * linking between datasets that are part of the working data through workflow executions.
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
+- [Linking Strategies](#linking-strategies)
+    - [Table of Contents](#table-of-contents)
   - [Provenance Data](#provenance-data)
   - [Working Data](#working-data)
   - [Linking Datasets](#linking-datasets)

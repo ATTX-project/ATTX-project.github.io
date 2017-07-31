@@ -1,5 +1,6 @@
 # Graph Store
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
   - [Configuring the Graph Store](#configuring-the-graph-store)
     - [Configuring Fuseki](#configuring-fuseki)

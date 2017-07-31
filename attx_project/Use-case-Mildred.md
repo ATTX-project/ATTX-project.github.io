@@ -1,11 +1,23 @@
 <h1 style="color:red">DRAFT - work in progress</h1>
 
-
 # Mildred use case
 
 The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university's [Think Open](https://www.helsinki.fi/en/research/think-open) site. Think open site brings together and to promotes openness related activities, such as open research data, open source code and publications, within the University of Helsinki.
 
 Use case is part of the [Mildred project](http://blogs.helsinki.fi/mildred/), which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.
+
+<!-- TOC START min:1 max:3 link:true update:false -->
+  - [Approach](#approach)
+  - [User stories](#user-stories)
+  - [Data sources](#data-sources)
+    - [Etsin](#etsin)
+    - [B2Share](#b2share)
+    - [Zenodo](#zenodo)
+    - [Finto](#finto)
+    - [IOW](#iow)
+  - [Implementation](#implementation)
+
+<!-- TOC END -->
 
 
 ## Approach
@@ -63,8 +75,7 @@ https://zenodo.org/oai2d?verb=ListRecords&metadataPrefix=oai_datacite&set=user-h
 
 Architectural overview:
 
-![Architectural overview](images/ATTX-Mildred-architecture.png)
-
+![Architectural overview](images/ATTX-Mildred-architecture.svg)
 
 Features:
 * DataCite output format

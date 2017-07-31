@@ -1,11 +1,14 @@
+<h1 style="color:red">TO BE REFACTORED</h1>
+
 # Graph Manager API
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Overview](#overview)
   - [Building the GM-API](#building-the-gm-api)
     - [Graph Store Connection](#graph-store-connection)
     - [Elasticsearch Connection](#elasticsearch-connection)
-    - [Workflow API connection](#workflow-api-connection)
+    - [UVProvovenance API Connection](#uvprovovenance-api-connection)
   - [Consuming the GM-API](#consuming-the-gm-api)
     - [health Endpoint](#health-endpoint)
     - [index Endpoint](#index-endpoint)
@@ -20,6 +23,8 @@
 
 <!-- TOC END -->
 
+
+
 ## Overview
 
 The Graph Manager REST API has the following endpoints:
@@ -27,10 +32,10 @@ The Graph Manager REST API has the following endpoints:
 * `cluster` - cluster the IDs from the working data in the Graph Store;
 * `link` - retrieve the links in the Graph Store see: [Linking Graphs](Linking-graphs.md);
 * `linkstrategy` - retrieve either all or specific linking strategies from the Graph Store;
-* `prov` - retrieve provenance from the Workflow API and update the Graph Store with the provenance information.
+* `prov` - retrieve provenance from the UVProvovenance API and update the Graph Store with the provenance information.
 * `health` - checks if the application is running.
 
-The GM exposes information from the Graph Store to the Distribution component (Elasticsearch). It runs the indexing processing, clustering of IDs for the data and also it communicates with the Workflow API about the Provenance information in the Graph Store.
+The GM exposes information from the Graph Store to the Distribution component (Elasticsearch). It runs the indexing processing, clustering of IDs for the data and also it communicates with the UVProvovenance API about the Provenance information in the Graph Store.
 
 Current version: `0.1` (URL for the endpoint should take into consideration for the API `http://host:4302/version/endpoint`)
 
@@ -64,9 +69,9 @@ In order to process data in Elasticsearch 1.3.4 and Elasticsearch Siren plugin:
 * endpoint for the Elasticsearch should be 9300 for the bulk import;
 * in the docker image there shoul be the `gc-rdf2json-indexer.jar`.
 
-### Workflow API Connection
+### UVProvovenance API Connection
 
-In order to process the provenance information and update the Graph Store with it, the Graph Manager API pulls the data from the [Workflow API](Workflow-API.md) upon calling the `/prov?start=true` endpoint.
+In order to process the provenance information and update the Graph Store with it, the Graph Manager API pulls the data from the [UVProvovenance API](UVProvovenance-API.md) upon calling the `/prov?start=true` endpoint.
 
 ## Consuming the GM-API
 
@@ -78,7 +83,7 @@ The Graph Manager API has the following endpoints:
 * `link/{id}` - retrieve the liking strategy with an ID or delete it (GET and DELETE methods available);
 * `linkstrategy` - retrieve all the URIs of linking strategies from the Graph Store (GET method available);
 * `linkstrategy/{id}` - retrieve all the URIs of linking strategies from the Graph Store (GET method available);
-* `prov` - retrieve provenance from the Workflow API and update the Graph Store (GET method available).
+* `prov` - retrieve provenance from the UVProvovenance API and update the Graph Store (GET method available).
 * `health` - responds with `200` so that we know the service is alive.
 
 When the response from an endpoint returns a JSON with a key `status`, there can be some times values: `Done`, `WIP` (Work In Progress), `Error` (some times a specific error).
@@ -329,7 +334,7 @@ The prov endpoint works as described below:
   * simple: http://localhost:4302/0.1/prov - retrieve status and see the last run
   * start provenance: http://localhost:4302/0.1/prov?start=true - to do a provenance update (there are two values to start true or false, default is false)
   * start provenance from specific date: http://localhost:4302/0.1/prov?start=true&modifiedSince=2017-02-09T13:05:50Z - to do a provenance update (using the format: `%Y-%m-%dT%H:%M:%SZ`)
-  * to configure the endpoints for the WF-API and Graph store the following parameters can be used:
+  * to configure the endpoints for the UVProvenance-API and Graph store the following parameters can be used:
     * `?wfapi=http://wfdockerimagename:port/apiversion` - the value can be a docker image name alongside the port and version - if not specified it defaults to `http://localhost:4302/0.1`;
     * `?graphStore=http://fusekidockerimagename:port/dataset` - the value can be a docker image name alongside the port and dataset (e.g. `ds` for production and `test` for testing) - if not specified it defaults to `http://localhost:3030/ds`.
     * whole request: http://localhost:4302/0.1/prov?start=true&?wfapi=http://wfdockerimagename:port/apiversion&?graphStore=http://fusekidockerimagename:port/dataset
@@ -355,7 +360,7 @@ or
 
 ```json
     {
-      "title": "Failed to do the get provenance from WF-API update."
+      "title": "Failed to do the get provenance from UVProvenance-API update."
     }
 ```
 
