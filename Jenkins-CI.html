@@ -963,7 +963,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="jenkins-ci">Jenkins CI</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 01-Aug-2017 07:18:13</div></div><h1 id="jenkins-ci">Jenkins CI</h1>
 <p>The role of Jenkins in the ATTX development infrastructure:</p>
 <ul>
 <li>Jenkins triggers, orchestrates, executes and monitors running of Gradle tasks using pipelines;</li>
@@ -971,8 +971,20 @@
 </ul>
 <p>So instead of using Jenkins plugin to call Docker and create images, we should create a Gradle task that uses Docker and call that task from a Jenkins pipeline.</p>
 <p>Orchestration is handled using Jenkins pipelines that all should share some of the common stages listed below.</p>
-<p><img src="images/cicd_jenkins-gradle-tools.svg" alt="Figure 1. ATTX Semantic Broker Architecture"></p>
-<p>Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)</p>
+<p><img src="images/cicd_jenkins-gradle-tools.svg" alt="Figure 1. Jenkins CI/CD Overview">
+Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)</p>
+<p>There are two types of flows:</p>
+<ol>
+<li>/feature-* branch to /dev branch</li>
+<li>/dev branch to /master branch</li>
+</ol>
+<p>Either one can be solved with Gradle plugins or github hooks</p>
+<p>The image below describes the build and deploy workflow from a /feature-* branch to /dev branch.</p>
+<p><img src="images/dev_workflow.svg" alt="build_workflow"></p>
+<h2 id="figure-2-dev-releases-branch-build-workflow">Figure 2. Dev releases branch build workflow</h2>
+<p>The image below describes the build and deploy workflow from a /dev branch to /master branch.</p>
+<p><img src="images/master_workflow.svg" alt="build_workflow_master">
+Figure 3. Master branch releases build workflow</p>
 <h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
@@ -1121,7 +1133,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Jenkins CI","level":"6.4.1","depth":2,"next":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"previous":{"title":"CI/CD Enviroment","level":"6.4","depth":1,"path":"CI-CD-Enviroment.md","ref":"CI-CD-Enviroment.md","articles":[{"title":"Jenkins CI","level":"6.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},{"title":"Containerized Testing","level":"6.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Jenkins-CI.md","mtime":"2017-07-31T14:00:13.708Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Jenkins CI","level":"6.4.1","depth":2,"next":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"previous":{"title":"CI/CD Enviroment","level":"6.4","depth":1,"path":"CI-CD-Enviroment.md","ref":"CI-CD-Enviroment.md","articles":[{"title":"Jenkins CI","level":"6.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},{"title":"Containerized Testing","level":"6.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Jenkins-CI.md","mtime":"2017-08-03T12:02:45.459Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-03T12:22:08.692Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
