@@ -9,9 +9,26 @@ So instead of using Jenkins plugin to call Docker and create images, we should c
 
 Orchestration is handled using Jenkins pipelines that all should share some of the common stages listed below.
 
-![Figure 1. ATTX Semantic Broker Architecture](images/cicd_jenkins-gradle-tools.svg)
-
+![Figure 1. Jenkins CI/CD Overview](images/cicd_jenkins-gradle-tools.svg)
 Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)
+
+
+There are two types of flows:
+1. /feature-* branch to /dev branch
+2. /dev branch to /master branch
+
+Either one can be solved with Gradle plugins or github hooks
+
+The image below describes the build and deploy workflow from a /feature-* branch to /dev branch.
+
+![build_workflow](images/dev_workflow.svg)
+Figure 2. Dev releases branch build workflow
+--------------------------------
+The image below describes the build and deploy workflow from a /dev branch to /master branch.
+
+![build_workflow_master](images/master_workflow.svg)
+Figure 3. Master branch releases build workflow
+
 
 ### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
