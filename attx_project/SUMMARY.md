@@ -39,6 +39,8 @@
 * [Service Discovery Implementation](ServiceDiscovery-Implementation.md)
   * [Consul Service Discovery Implementation](Consul-ServiceDiscovery-Implementation.md)
   * [Consul for Service Discovery on Docker Swarm](Consul-for-Service-Discovery-on-Docker-Swarm.md)
+* [Message Broker](MessageBroker.md)
+  * [ActiveMQ Message Broker](MessageBroker-ActiveMQ.md)
 
 ## Semantic Broker Services
 
