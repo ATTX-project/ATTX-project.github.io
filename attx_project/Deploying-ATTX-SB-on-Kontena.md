@@ -131,7 +131,7 @@ With a Kontena infrastructure platform in place, it's time to deploy our ATTX Se
 
 In practice (after some trial and error, but also with friendly help from Kontena staff), starting with [the Docker Compose v3 YAML file that we use with Docker Swarm](https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml), we were able to create a Kontena stack file ([attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml)), which we could deploy as following:
 
-`$ kontena stack create -name attx attx-kontena.yml`
+`$ kontena stack install --name attx attx-kontena.yml`
 
 And verify its basic properties, as configured in [attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml):
 
@@ -214,8 +214,147 @@ Practical result: successful deployment of our Semantic Broker stack, all applic
 
 ### Using Digital Ocean Block Storage
 
+Let's start by creating a Kontena grid computing environment for this exercise:
+```
+$ kontena grid create do-test
+[warn] Option --initial-size=1 is only recommended for test/dev usage
+[done] Creating do-test grid      
+[done] Switching scope to do-test grid     
+```
 
-## Work in progress
+And some Kontena Vagrant nodes in our local environment tool:
+
+```
+kontena vagrant node create
+> How many nodes?:  2
+> Choose a size  4096MB
+[done] Generating Vagrant config     
+[done] Triggering CoreOS Container Linux box update
+```
+
+Since Kontena's Digital Ocean plug-in makes it quite easy to manage droplets and block storage volumes, let's start by installing it on our kontena-cli environment:
+
+```
+$ kontena plugin install digitalocean
+ [done] Installing plugin digitalocean     
+Installed plugin digitalocean version 0.3.0
+
+```
+
+And follow on by creating a Kontena node in Digital Ocean:
+```
+$ kontena digitalocean node create
+> DigitalOcean API token:  
+> Choose a datacenter region:  Frankfurt 1
+> Select CoreOS channel Stable
+> Choose droplet size:  4GB/2CPU/60GB ($40/mo)
+> How many droplets?:  1
+ [done] Creating DigitalOcean droplet long-morning-64      
+ [done] Waiting for node long-morning-64 join to grid attx-do      
+
+
+
+```
+
+At this point, we have then 2 nodes running in Vagrant in our local environment, and one in Digital Ocean:
+
+```
+$ kontena node ls
+NAME                  VERSION   STATUS   INITIAL   LABELS
+⊛ long-morning-64     1.2.2     online   1 / 1     region=fra1,az=fra1,provider=digitalocean,master
+⊛ hidden-field-17     1.2.2     online   -         provider=vagrant
+⊛ falling-silence-7   1.2.2     online   -         provider=vagrant
+```
+
+Now we should login to [Digital Ocean](https://www.digitalocean.com/) to create a block storage volume and attach it to our newly created kontena node (long-morning-64). Once that is done, we can configure the attached volume as follows:
+
+```
+$ kontena node ssh long-morning-64
+$ sudo mkfs.ext4 -F /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01
+$ sudo mkdir -p /mnt/volume-fra1-01; sudo mount -o discard,defaults /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01 /mnt/volume-fra1-01; echo /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01 /mnt/volume-fra1-01 ext4 defaults,nofail,discard 0 0 | sudo tee -a /etc/fstab
+```
+
+So now that we have a "/mnt/volume-fra1-01" volume that we can use for UnifiedViews MySQL database, we can edit the mysql service defintion  in the attx stack yml file to use the block storage device mount point:
+```
+mysql:
+  image: attxtest/unified-views-mariadb:stable-1.2
+  ports:
+    - "3306:3306"
+  stateful: true
+  environment:
+    MYSQL_ROOT_PASSWORD: "UV"
+    MYSQL_PASSWORD: "UV"
+  volumes:
+    - /mnt/volume-fra1-01:/var/lib/mysql
+  affinity:
+    - label==master
+```
+
+And then we can deploy the service (but have to create shared volumes first with `kontena volume create --driver local --scope stack attx-uv-shared`, and `kontena volume create --driver local --scope stack attx-sb-shared`):
+
+```
+$ kontena stack install --name attx attx-do-kontena.yml
+```
+
+When the stack finishes deploying, we can check that indeed that the "mysql" service is running in the scheduled Digital Ocean node and using the defined block storage device with the `kontena service show attx/mysql` command:
+
+```
+attx-do/attx/mysql:
+  created: 2017-08-03T13:52:48.276Z
+  updated: 2017-08-03T13:52:48.276Z
+  stack: attx-do/attx
+  desired_state: running
+  image: attxtest/unified-views-mariadb:stable-1.2
+  revision: 1
+  stack_revision: 1
+  stateful: yes
+  scaling: 1
+  strategy: ha
+  deploy_opts:
+  dns: mysql.attx.attx-do.kontena.local
+  affinity:
+    - label==master
+  env:
+    - MYSQL_ROOT_PASSWORD=UV
+    - MYSQL_PASSWORD=UV
+  ports:
+    - 3306:3306/tcp
+  volumes:
+    - /mnt/volume-fra1-01:/var/lib/mysql
+  instances:
+    attx/mysql/1:
+      scheduled_to: long-morning-64
+      deploy_rev: 2017-08-03 13:52:49 UTC
+      rev: 2017-08-03 13:52:49 UTC
+      state: running
+      containers:
+        attx.mysql-1 (on long-morning-64):
+          dns: mysql-1.attx.attx-do.kontena.local
+          ip: 10.81.128.73
+          public ip: 207.154.202.178
+          status: running
+```
+
+And what if check the "/mnt/volume-fra1-01" on the long-morning-64 host?
+```
+long-morning-64 volume-fra1-01 # ls -l
+total 176200
+-rw-rw----. 1 999 rkt-admin    16384 Aug  3 13:54 aria_log.00000001
+-rw-rw----. 1 999 rkt-admin       52 Aug  3 13:54 aria_log_control
+-rw-rw----. 1 999 rkt-admin 50331648 Aug  3 14:21 ib_logfile0
+-rw-rw----. 1 999 rkt-admin 50331648 Aug  3 13:53 ib_logfile1
+-rw-rw----. 1 999 rkt-admin 79691776 Aug  3 14:21 ibdata1
+drwx------. 2 999 rkt-admin    16384 Aug  3 12:05 lost+found
+-rw-rw----. 1 999 rkt-admin        0 Aug  3 13:53 multi-master.info
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:53 mysql
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:53 performance_schema
+-rw-rw----. 1 999 rkt-admin    24576 Aug  3 13:54 tc.log
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:54 unified_views
+```
+
+Sucess :-) Though this wasn't a complicated exercise, using Kontena to deploy the ATTX SB stack in a mixed Digital Ocean and Vagrant environment is quite easy (at least compared with Docker Swarm).
+
+
 
 ### Deploying Kontena on CSC Open Stack (cPouta)
 #### Kontena Master
@@ -231,6 +370,7 @@ Based in our trial, we can say that:
 - [Volume management in Kontena](https://www.kontena.io/docs/using-kontena/volumes.html) is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them);
 - Kontena's stacks aren't exactly the same as Docker Compose stacks, and there's no conversion tool available. Reference to [Kontena's stack documentation](https://www.kontena.io/docs/references/kontena-yml.html) is advised. Expect some trial and error when editing complex Docker Compose YML files into Kontena YML.
 - Technical support from Kontena is to-the-point and quite friendly, and since it's provided by Kontena's development team, it gives it the feeling of being "by developers for developers".
+- Kontena's Vagrant and Digital Ocean plugins are quite easy to use,  and make it possible to store important data (e.g. UnifiedViews MySQL database) in cloud-based block storage volumes.
 
 ## References
 [Kontena](https://www.kontena.io/)
