@@ -23,10 +23,9 @@ In ATTX github repositories, IT/BDD (tests from now on) should be located in sep
 Overview of the steps performed during the test suite:
 * Start all required Semantic Broker containers
 * Wait for the services to come up
-* Build test code
 * Build test container (only during the containerised testing task)
 * Start test container (only during the containerised testing task)
-* Run tests
+* Build and Run tests
 * Export reports to the host machine
 * Stop all containers
 * The build is Successful or Failed depending on the results form the test container
@@ -35,7 +34,7 @@ Overview of the steps performed during the test suite:
 
 There are two tasks for running the tests:
 * `runIntegTests` -  for running the test in the local environment with all the ports exposed, thus allowing for rapid development; It will also start the containers needed, by default they will expose ports;
-* `runContainerTests` - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property `-PtestEnv=CI`. This task will run the tests inside a container on the same network as the other containers without the need of exposing all the ports.
+* `runContainerTests` - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property `-PtestEnv=CI`. This task will build and run the tests inside a container on the same network as the other containers without the need of exposing all the ports.
 
 Running the tests inside the container:
 * `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=CI clean runContainerTests`
@@ -78,6 +77,23 @@ Test project contains two Gradle configurations, one for developing tests and ma
 Example of the most relevant parts:
 
 ```groovy
+
+ext.src = [
+    "${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.dev&a=dev-test-helper&v=${attxTestHelperPlugin}&p=jar":"dev-test-helper-${attxTestHelperPlugin}.jar"
+]
+
+import de.undercouch.gradle.tasks.download.Download
+task downloadTestFiles
+
+for (s in src) {
+    task "downloadTestFiles_${s.key.hashCode()}"(type: Download) {
+        src s.key
+        dest new File("$projectDir", s.value)
+    }
+    downloadTestFiles.dependsOn("downloadTestFiles_${s.key.hashCode()}")
+}
+
+
 if (!project.hasProperty("testEnv") || project.testEnv == "dev") {
     ext.testSet = "localhost"
 } else if (project.testEnv == "CI"){
@@ -140,6 +156,8 @@ dcompose {
         ignoreExitCode = true
         baseDir = file('.')
         dockerFilename = 'Dockerfile'
+        buildArgs = ['attxTestHelperPlugin': "$attxTestHelperPlugin"]
+        env = ["REPO=$artifactRepoURL"]
         if (testSet == "container") {
             binds = ["/var/run/docker.sock:/run/docker.sock"]
         }
@@ -169,6 +187,7 @@ shadowJar {
 
 // making sure the that fresh build of test classes is done before building the image
 // Other prerequisites for the tests (e.g. artifacts) should be added here.
+buildTestImage.dependsOn downloadTestFiles
 buildTestImage.dependsOn shadowJar
 buildTestImage.dependsOn testClasses
 
@@ -199,7 +218,10 @@ task runContainerTests {
 Service configurations should include at least `image` and in order to run the tests in a local environment the `portBindings` properties. Test container configuration is mostly same for all the test projects.
 
 Rest of the configuration is the same for all the test projects (assuming that test container is always called `test`). `copyReportFiles` task copies report files from inside the container to the build/from-container directory.
-`ShadowJar` task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.   
+
+`downloadTestFiles` downloads the `dev-test-helper` artifact as the CI cannot download the artifact from inside the container without having the artifact repository (Archiva) exposed publicly or on the same container network as the `dcompose` task network.
+
+(not necessary as the tests are build and run inside the test container) `ShadowJar` task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.   
 
 `checkDPUDone` waits for the ATTX DPUS to be added to the front-end where there is a need for such test fixtures. The ATTX DPU waits for MySQL  (for about 4 minutes to be up) in order to add the DPU. If everything is OK the exit code of that container will be (By convention, an 'exit 0' indicates success - http://www.tldp.org/LDP/abs/html/exit-status.html). The same strategy is used to check the Tests fail or not inside the container - if the exit code is `0` the tests were successful if not the tests failed.
 
@@ -216,8 +238,29 @@ plugins {
     id "java"
 }
 
+ext {
+    imageRepo = "attx-dev"
+    artifactRepoPort = "8081"
+}
+
+if (!project.hasProperty("artifactRepoURL")) {
+    ext.artifactRepoURL = "http://${imageRepo}:${artifactRepoPort}"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "${artifactRepoURL}/repository/attx-releases"}
+}
+
 dependencies {
-    testCompile fileTree(dir: 'build/libs', include: ['*.jar'])
+    testCompile \
+        files("dev-test-helper.jar"),
+        'junit:junit:4.10',
+        'info.cukes:cucumber-java8:1.2.5',
+        'info.cukes:cucumber-junit:1.2.5',
+        'com.mashape.unirest:unirest-java:1.4.9',
+        'org.skyscreamer:jsonassert:1.4.0',
+        'org.awaitility:awaitility-groovy:2.0.0'
 }
 
 task integTest(type: Test){
@@ -257,6 +300,7 @@ task integTest(type: Test){
         systemProperties.remove 'es5.host'
     }
 }
+
 ```
 
 Dependencies are loaded from the überjar created by the `shadowJar` task in the `build.gradle`. This jar and classes directory includes everything that is needed to run the tests, so we can actually run Gradle in the offline mode (`--offline`). Building step is faster, since we don't have to download all the dependencies every time the tests are run.
@@ -270,23 +314,46 @@ RUN apt-get update \
     && apt-get install -y wget \
     && apt-get clean
 
-ENV DOCKERIZE_VERSION v0.3.0
+ENV DOCKERIZE_VERSION v0.5.0
 
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-RUN mkdir -p /tmp/
+RUN mkdir -p /tmp
 
-WORKDIR /tmp/
+WORKDIR /tmp
 
-COPY build /tmp/build
+ARG attxTestHelperPlugin
+
+COPY src /tmp/src
 COPY build.test.gradle /tmp/build.gradle
-COPY runTests.sh /tmp/
+COPY runTests.sh /tmp
 RUN chmod 700 /tmp/runTests.sh
+COPY dev-test-helper-${attxTestHelperPlugin}.jar /tmp/dev-test-helper.jar
 ```
 
 `frekele/gradle` image contains all the components to run Gradle 3.3. `dockerize` is used by the `runTests.sh` script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only `build.test.gradle` file is copied to the image. Image also doesn't run any script by default, instead the dcompose Gradle plugin is used to attach a command  `runTests.sh` to the test container, which runs dockerized checks and runs the tests.
+
+```bash
+#!/bin/sh
+
+# Wait for MySQL, the big number is because CI is slow.
+dockerize -wait tcp://mysql:3306 -timeout 240s
+dockerize -wait http://fuseki:3030 -timeout 60s
+dockerize -wait http://gmapi:4302/health -timeout 60s
+dockerize -wait http://wfapi:4301/health -timeout 60s
+dockerize -wait http://essiren:9200 -timeout 60s
+dockerize -wait tcp://essiren:9300 -timeout 60s
+dockerize -wait http://es5:9210 -timeout 60s
+# wait for es5 9310 apparently not working
+# dockerize -wait tcp://es5:9310 -timeout 60s
+
+echo  "Archiva repository URL: $REPO"
+
+gradle -PartifactRepoURL=$REPO integTest
+
+```
 
 ### Configuring Jenkins
 
