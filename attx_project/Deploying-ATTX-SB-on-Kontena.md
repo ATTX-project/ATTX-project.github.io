@@ -7,13 +7,9 @@
   - [Creating a Kontena grid](#creating-a-kontena-grid)
   - [Provisioning nodes on the grid](#creating-nodes-on-the-grid)
   - [Creating Kontena volumes](#creating-kontena-volumes)
-  - [Creating and deploying a Kontena Stack](#creating-a-kontena-stack)
-  - [Work in progress](#wip)
-    - [Using Digital Ocean Block Storage]
-    - [Deploying Kontena on CSC Open Stack (cPouta)]
-      - [Kontena Master]
-      - [Kontena grid and nodes]
-      - [Kontena volumes]
+  - [Creating and deploying a Kontena Stack](##creating-and-deploying-a-kontena-stack)
+  - [Using Digital Ocean Block Storage](#using-digital-ocean-block-storage)
+  - [Deploying Kontena on CSC Open Stack (cPouta) (Work in progress)](#using-digital-ocean-block-storage)
   - [Conclusions](#conclusions)
   - [References](#references)
 
