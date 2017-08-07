@@ -9,14 +9,23 @@ Adjacent to the - [Feature roadmap](https://github.com/ATTX-project/project-mana
 ### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Realease Version 2.0](#realease-version-20)
+  - [Realease Version 1.2](#realease-version-12)
   - [Realease Version 1.0](#realease-version-10)
 
 <!-- TOC END -->
 
+
 ## Realease Version 2.0
+Planned release date: **TBD**
+1. Microservice Architecture
+2. Service Discovery
+3. Messaging Service
+4. Provenance Service
+5. RML Service
+
+## Realease Version 1.2
 Planned release date: **30th of June 2017**
 1. Prepare for ELAG 2017
-2. Service Discovery
 3. User friendly version
 
 ## Realease Version 1.0

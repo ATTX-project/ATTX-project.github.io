@@ -42,7 +42,7 @@
 * [Message Broker](MessageBroker.md)
   * [ActiveMQ Message Broker](MessageBroker-ActiveMQ.md)
 
-## Semantic Broker Services
+## Broker Services
 
 * [Provenance Service](Provenance-Service.md)
 

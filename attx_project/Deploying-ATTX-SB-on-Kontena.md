@@ -18,7 +18,7 @@
 
 ## What is Kontena and why do we test it
 
-Kontena is a microservices orchestration and management platform. As such, it treats containers as computational instances of managed services.
+[Kontena](https://www.kontena.io/) is a microservices orchestration and management platform. As such, it treats containers as computational instances of managed services.
 
 As a platform, Kontena consists of:
 - Several Kontena Nodes: the virtual machines that run the containerised Kontena services;
@@ -84,14 +84,14 @@ Now that we have our Kontena grid, we can create three nodes to provide us with 
 
 We'll be asked for the number of nodes and RAM:
 
-```
+```shell
 > How many nodes?:  3
 > Choose a size  4096MB
 ```
 
 We can list the created nodes and ssh into them:
 
-```
+```shell
 $ kontena node ls
 NAME               VERSION   STATUS   INITIAL   LABELS
 ⊛ frosty-hill-15   1.2.2     online   1 / 1     provider=vagrant
@@ -131,7 +131,7 @@ In practice (after some trial and error, but also with friendly help from Konten
 
 And verify its basic properties, as configured in [attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml):
 
-```
+```shell
 $ kontena stack ls
 
 NAME            ⊝ attx
@@ -148,7 +148,7 @@ EXPOSED PORTS   *:1194->1194/udp
 
 And it was also straightforward to get more information about the newly-deployed stack services and their properties:
 
-```
+```shell
 $ kontena service ls
 
 NAME              INSTANCES   STATEFUL   STATE     EXPOSED PORTS
@@ -165,9 +165,9 @@ NAME              INSTANCES   STATEFUL   STATE     EXPOSED PORTS
 
 ```
 
-```
-$ kontena service show  attx/frontend
 
+`$ kontena service show  attx/frontend`
+```yml
 attx-demo/attx/frontend:
   created: 2017-06-30T09:50:35.909Z
   updated: 2017-06-30T09:50:35.909Z
@@ -211,7 +211,7 @@ Practical result: successful deployment of our Semantic Broker stack, all applic
 ### Using Digital Ocean Block Storage
 
 Let's start by creating a Kontena grid computing environment for this exercise:
-```
+```shell
 $ kontena grid create do-test
 [warn] Option --initial-size=1 is only recommended for test/dev usage
 [done] Creating do-test grid      
@@ -220,7 +220,7 @@ $ kontena grid create do-test
 
 And some Kontena Vagrant nodes in our local environment too:
 
-```
+```shell
 kontena vagrant node create
 > How many nodes?:  2
 > Choose a size  4096MB
@@ -230,7 +230,7 @@ kontena vagrant node create
 
 Since Kontena's Digital Ocean plug-in makes it quite easy to manage droplets and block storage volumes, let's start by installing it on our kontena-cli environment:
 
-```
+```shell
 $ kontena plugin install digitalocean
  [done] Installing plugin digitalocean     
 Installed plugin digitalocean version 0.3.0
@@ -238,7 +238,7 @@ Installed plugin digitalocean version 0.3.0
 ```
 
 And follow on by creating a Kontena node in Digital Ocean:
-```
+```shell
 $ kontena digitalocean node create
 > DigitalOcean API token:  
 > Choose a datacenter region:  Frankfurt 1
@@ -254,7 +254,7 @@ $ kontena digitalocean node create
 
 At this point, we have then 2 nodes running in Vagrant in our local environment, and one in Digital Ocean:
 
-```
+```shell
 $ kontena node ls
 NAME                  VERSION   STATUS   INITIAL   LABELS
 ⊛ long-morning-64     1.2.2     online   1 / 1     region=fra1,az=fra1,provider=digitalocean,master
@@ -271,7 +271,7 @@ $ sudo mkdir -p /mnt/volume-fra1-01; sudo mount -o discard,defaults /dev/disk/by
 ```
 
 So now that we have a "/mnt/volume-fra1-01" volume that we can use for UnifiedViews MySQL database, we can edit the mysql service defintion  in the attx stack yml file to use the block storage device mount point:
-```
+```yml
 mysql:
   image: attxtest/unified-views-mariadb:stable-1.2
   ports:
@@ -294,7 +294,7 @@ $ kontena stack install --name attx attx-do-kontena.yml
 
 When the stack finishes deploying, we can check that indeed the "mysql" service is running in the scheduled Digital Ocean node and using the defined block storage device with the `kontena service show attx/mysql` command:
 
-```
+```yml
 attx-do/attx/mysql:
   created: 2017-08-03T13:52:48.276Z
   updated: 2017-08-03T13:52:48.276Z
@@ -332,7 +332,7 @@ attx-do/attx/mysql:
 ```
 
 And what if we check the "/mnt/volume-fra1-01" on the long-morning-64 host?
-```
+```shell
 long-morning-64 volume-fra1-01 # ls -l
 total 176200
 -rw-rw----. 1 999 rkt-admin    16384 Aug  3 13:54 aria_log.00000001
@@ -371,7 +371,7 @@ Based in our trial, we can say that:
 - Kontena's Vagrant and Digital Ocean plugins are quite easy to use,  and make it possible to store important data (e.g. UnifiedViews MySQL database) in cloud-based block storage volumes.
 
 ## References
-[Kontena](https://www.kontena.io/)
-[Kontena Cloud](https://www.kontena.io/cloud)
-[Kontena Documentation](https://www.kontena.io/docs/)
-[Kontena Github](https://github.com/kontena/kontena)
+* [Kontena](https://www.kontena.io/)
+* [Kontena Cloud](https://www.kontena.io/cloud)
+* [Kontena Documentation](https://www.kontena.io/docs/)
+* [Kontena Github](https://github.com/kontena/kontena)
