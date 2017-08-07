@@ -566,10 +566,42 @@
             
         </li>
     
+        <li class="chapter " data-level="3.5" data-path="MessageBroker.html">
+            
+                <a href="MessageBroker.html">
+            
+                    
+                    Message Broker
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.5.1" data-path="MessageBroker-ActiveMQ.html">
+            
+                <a href="MessageBroker-ActiveMQ.html">
+            
+                    
+                    ActiveMQ Message Broker
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
         
-        <li class="header">Semantic Broker Services</li>
+        <li class="header">Broker Services</li>
         
         
     
@@ -963,7 +995,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 26-Jul-2017 11:26:55</div></div><h1 id="deploying-the-attx-semantic-broker-on-kontena">Deploying the ATTX Semantic Broker on Kontena</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 07-Aug-2017 06:26:46</div></div><h1 id="deploying-the-attx-semantic-broker-on-kontena">Deploying the ATTX Semantic Broker on Kontena</h1>
 <!-- TOC START min:1 max:4 link:true update:false -->
 <ul>
 <li><a href="#what-is-kontena">What is Kontena</a></li>
@@ -974,23 +1006,15 @@
 <li><a href="#creating-a-kontena-grid">Creating a Kontena grid</a></li>
 <li><a href="#creating-nodes-on-the-grid">Provisioning nodes on the grid</a></li>
 <li><a href="#creating-kontena-volumes">Creating Kontena volumes</a></li>
-<li><a href="#creating-a-kontena-stack">Creating and deploying a Kontena Stack</a></li>
-<li><a href="#wip">Work in progress</a><ul>
-<li>[Using Digital Ocean Block Storage]</li>
-<li>[Deploying Kontena on CSC Open Stack (cPouta)]<ul>
-<li>[Kontena Master]</li>
-<li>[Kontena grid and nodes]</li>
-<li>[Kontena volumes]</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="##creating-and-deploying-a-kontena-stack">Creating and deploying a Kontena Stack</a></li>
+<li><a href="#using-digital-ocean-block-storage">Using Digital Ocean Block Storage</a></li>
+<li><a href="#deploying-kontena-on-csc-open-stack-cpouta">Deploying Kontena on CSC Open Stack (cPouta) (Work in progress)</a></li>
 <li><a href="#conclusions">Conclusions</a></li>
 <li><a href="#references">References</a></li>
 </ul>
 <!-- TOC END -->
 <h2 id="what-is-kontena-and-why-do-we-test-it">What is Kontena and why do we test it</h2>
-<p>Kontena is a microservices orchestration and management platform. As such, it treats containers as computational instances of managed services.</p>
+<p><a href="https://www.kontena.io/" target="_blank">Kontena</a> is a microservices orchestration and management platform. As such, it treats containers as computational instances of managed services.</p>
 <p>As a platform, Kontena consists of:</p>
 <ul>
 <li>Several Kontena Nodes: the virtual machines that run the containerised Kontena services;</li>
@@ -1029,15 +1053,17 @@
 <p>Now that we have our Kontena grid, we can create three nodes to provide us with computing infrastructure. In our case, we&apos;ll provision those nodes in our development environment with <a href="https://www.vagrantup.com/docs/installation/index.html" target="_blank">Vagrant</a> (though we could have used AWS or Digital Ocean, for example).</p>
 <p><code>$ kontena vagrant node create</code></p>
 <p>We&apos;ll be asked for the number of nodes and RAM:</p>
-<pre><code>&gt; How many nodes?:  3
+<pre><code class="lang-shell">&gt; How many nodes?:  3
 &gt; Choose a size  4096MB
-</code></pre><p>We can list the created nodes and ssh into them:</p>
-<pre><code>$ kontena node ls
+</code></pre>
+<p>We can list the created nodes and ssh into them:</p>
+<pre><code class="lang-shell">$ kontena node ls
 NAME               VERSION   STATUS   INITIAL   LABELS
 &#x229B; frosty-hill-15   1.2.2     online   1 / 1     provider=vagrant
 &#x229B; young-river-48   1.2.2     online   -         provider=vagrant
 &#x229B; late-meadow-36   1.2.2     online   -         provider=vagrant
-</code></pre><pre><code>$ kontena node ssh frosty-hill-15
+</code></pre>
+<pre><code>$ kontena node ssh frosty-hill-15
 Last login: Fri Jun 30 09:56:32 UTC 2017 from 10.0.2.2 on pts/0
 Container Linux by CoreOS stable (1409.5.0)
 </code></pre><p>Thus it&apos;s confirmed that Kontena plugins use <a href="https://coreos.com/" target="_blank">CoreOS</a> as operating system for its nodes.</p>
@@ -1051,9 +1077,9 @@ Container Linux by CoreOS stable (1409.5.0)
 <h2 id="creating-and-deploying-a-kontena-stack">Creating and deploying a Kontena Stack</h2>
 <p>With a Kontena infrastructure platform in place, it&apos;s time to deploy our ATTX Semenatic Broker service stack. In Kontena, these are configured in a <a href="https://www.kontena.io/docs/references/kontena-yml.html" target="_blank">YAML file</a>, which <a href="https://www.kontena.io/docs/references/docker-compose-support.html" target="_blank">supports most of of the Docker-Compose v2 variables</a> but with a structure similar (e.g. in volume declaration) to <a href="https://docs.docker.com/compose/compose-file/" target="_blank">Docker Compose v3 YML</a>.</p>
 <p>In practice (after some trial and error, but also with friendly help from Kontena staff), starting with <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml" target="_blank">the Docker Compose v3 YAML file that we use with Docker Swarm</a>, we were able to create a Kontena stack file (<a href="https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml" target="_blank">attx-kontena.yml</a>), which we could deploy as following:</p>
-<p><code>$ kontena stack create -name attx attx-kontena.yml</code></p>
+<p><code>$ kontena stack install --name attx attx-kontena.yml</code></p>
 <p>And verify its basic properties, as configured in <a href="https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml" target="_blank">attx-kontena.yml</a>:</p>
-<pre><code>$ kontena stack ls
+<pre><code class="lang-shell">$ kontena stack ls
 
 NAME            &#x229D; attx
 STACK           attxproject/attx:0.1.11
@@ -1065,8 +1091,9 @@ STACK           kontena/vpn:1.3.1
 SERVICES        1
 STATE           running
 EXPOSED PORTS   *:1194-&gt;1194/udp
-</code></pre><p>And it was also straightforward to get more information about the newly-deployed stack services and their properties:</p>
-<pre><code>$ kontena service ls
+</code></pre>
+<p>And it was also straightforward to get more information about the newly-deployed stack services and their properties:</p>
+<pre><code class="lang-shell">$ kontena service ls
 
 NAME              INSTANCES   STATEFUL   STATE     EXPOSED PORTS
 &#x229D; attx/gmapi      1 / 1       yes        running   0.0.0.0:4302-&gt;4302/tcp
@@ -1079,48 +1106,156 @@ NAME              INSTANCES   STATEFUL   STATE     EXPOSED PORTS
 &#x229D; attx/fuseki     1 / 1       yes        running   0.0.0.0:3030-&gt;3030/tcp
 &#x229D; attx/mysql      1 / 1       yes        running   0.0.0.0:3306-&gt;3306/tcp
 &#x229D; vpn/server      1 / 1       yes        running   0.0.0.0:1194-&gt;1194/udp
-</code></pre><pre><code>$ kontena service show  attx/frontend
-
-attx-demo/attx/frontend:
-  created: 2017-06-30T09:50:35.909Z
-  updated: 2017-06-30T09:50:35.909Z
-  stack: attx-demo/attx
-  desired_state: running
-  image: attxtest/unified-views-frontend:stable-1.2
-  revision: 1
-  stack_revision: 1
-  stateful: no
-  scaling: 1
-  strategy: ha
-  deploy_opts:
-  dns: frontend.attx.attx-demo.kontena.local
-  affinity:
-    - label==master
-  ports:
-    - 8080:8080/tcp
-  volumes:
-    - attx-uv-shared:/unified-views
-    - attx-sb-shared:/attx-shared
-  links:
-    - shared
-    - mysql
-    - backend
-  instances:
-    attx/frontend/1:
-      scheduled_to: blue-sky-55
-      deploy_rev: 2017-06-30 09:52:28 UTC
-      rev: 2017-06-30 09:52:28 UTC
-      state: running
-      containers:
-        attx.frontend-1 (on blue-sky-55):
-          dns: frontend-1.attx.attx-demo.kontena.local
-          ip: 10.81.128.111
-          public ip: 128.214.91.110
-          status: running
-</code></pre><p>Practical result: successful deployment of our Semantic Broker stack, all applications and services operational as expected.</p>
+</code></pre>
+<p><code>$ kontena service show  attx/frontend</code></p>
+<pre><code class="lang-yml">attx-demo/attx/frontend:
+<span class="hljs-attr">  created:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-06</span><span class="hljs-bullet">-30</span>T09:<span class="hljs-number">50</span>:<span class="hljs-number">35.909</span>Z
+<span class="hljs-attr">  updated:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-06</span><span class="hljs-bullet">-30</span>T09:<span class="hljs-number">50</span>:<span class="hljs-number">35.909</span>Z
+<span class="hljs-attr">  stack:</span> attx-demo/attx
+<span class="hljs-attr">  desired_state:</span> running
+<span class="hljs-attr">  image:</span> attxtest/unified-views-frontend:stable<span class="hljs-bullet">-1.2</span>
+<span class="hljs-attr">  revision:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  stack_revision:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  stateful:</span> <span class="hljs-literal">no</span>
+<span class="hljs-attr">  scaling:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  strategy:</span> ha
+<span class="hljs-attr">  deploy_opts:</span>
+<span class="hljs-attr">  dns:</span> frontend.attx.attx-demo.kontena.local
+<span class="hljs-attr">  affinity:</span>
+<span class="hljs-bullet">    -</span> label==master
+<span class="hljs-attr">  ports:</span>
+<span class="hljs-bullet">    -</span> <span class="hljs-number">8080</span>:<span class="hljs-number">8080</span>/tcp
+<span class="hljs-attr">  volumes:</span>
+<span class="hljs-attr">    - attx-uv-shared:</span>/unified-views
+<span class="hljs-attr">    - attx-sb-shared:</span>/attx-shared
+<span class="hljs-attr">  links:</span>
+<span class="hljs-bullet">    -</span> shared
+<span class="hljs-bullet">    -</span> mysql
+<span class="hljs-bullet">    -</span> backend
+<span class="hljs-attr">  instances:</span>
+    attx/frontend/<span class="hljs-number">1</span>:
+<span class="hljs-attr">      scheduled_to:</span> blue-sky<span class="hljs-bullet">-55</span>
+<span class="hljs-attr">      deploy_rev:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-06</span><span class="hljs-bullet">-30</span> <span class="hljs-number">09</span>:<span class="hljs-number">52</span>:<span class="hljs-number">28</span> UTC
+<span class="hljs-attr">      rev:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-06</span><span class="hljs-bullet">-30</span> <span class="hljs-number">09</span>:<span class="hljs-number">52</span>:<span class="hljs-number">28</span> UTC
+<span class="hljs-attr">      state:</span> running
+<span class="hljs-attr">      containers:</span>
+        attx.frontend<span class="hljs-bullet">-1</span> (on blue-sky<span class="hljs-bullet">-55</span>):
+<span class="hljs-attr">          dns:</span> frontend<span class="hljs-bullet">-1.</span>attx.attx-demo.kontena.local
+<span class="hljs-attr">          ip:</span> <span class="hljs-number">10.81</span><span class="hljs-number">.128</span><span class="hljs-number">.111</span>
+          public ip: <span class="hljs-number">128.214</span><span class="hljs-number">.91</span><span class="hljs-number">.110</span>
+<span class="hljs-attr">          status:</span> running
+</code></pre>
+<p>Practical result: successful deployment of our Semantic Broker stack, all applications and services operational as expected.</p>
 <h3 id="using-digital-ocean-block-storage">Using Digital Ocean Block Storage</h3>
-<h2 id="work-in-progress">Work in progress</h2>
+<p>Let&apos;s start by creating a Kontena grid computing environment for this exercise:</p>
+<pre><code class="lang-shell">$ kontena grid create do-test
+[warn] Option --initial-size=1 is only recommended for test/dev usage
+[done] Creating do-test grid      
+[done] Switching scope to do-test grid
+</code></pre>
+<p>And some Kontena Vagrant nodes in our local environment too:</p>
+<pre><code class="lang-shell">kontena vagrant node create
+&gt; How many nodes?:  2
+&gt; Choose a size  4096MB
+[done] Generating Vagrant config     
+[done] Triggering CoreOS Container Linux box update
+</code></pre>
+<p>Since Kontena&apos;s Digital Ocean plug-in makes it quite easy to manage droplets and block storage volumes, let&apos;s start by installing it on our kontena-cli environment:</p>
+<pre><code class="lang-shell">$ kontena plugin install digitalocean
+ [done] Installing plugin digitalocean     
+Installed plugin digitalocean version 0.3.0
+</code></pre>
+<p>And follow on by creating a Kontena node in Digital Ocean:</p>
+<pre><code class="lang-shell">$ kontena digitalocean node create
+&gt; DigitalOcean API token:  
+&gt; Choose a datacenter region:  Frankfurt 1
+&gt; Select CoreOS channel Stable
+&gt; Choose droplet size:  4GB/2CPU/60GB ($40/mo)
+&gt; How many droplets?:  1
+ [done] Creating DigitalOcean droplet long-morning-64      
+ [done] Waiting for node long-morning-64 join to grid attx-do
+</code></pre>
+<p>At this point, we have then 2 nodes running in Vagrant in our local environment, and one in Digital Ocean:</p>
+<pre><code class="lang-shell">$ kontena node ls
+NAME                  VERSION   STATUS   INITIAL   LABELS
+&#x229B; long-morning-64     1.2.2     online   1 / 1     region=fra1,az=fra1,provider=digitalocean,master
+&#x229B; hidden-field-17     1.2.2     online   -         provider=vagrant
+&#x229B; falling-silence-7   1.2.2     online   -         provider=vagrant
+</code></pre>
+<p>Now we should login to <a href="https://www.digitalocean.com/" target="_blank">Digital Ocean</a> to create a block storage volume and attach it to our newly created kontena node (long-morning-64). Once that is done, we can configure the attached volume as follows:</p>
+<pre><code>$ kontena node ssh long-morning-64
+$ sudo mkfs.ext4 -F /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01
+$ sudo mkdir -p /mnt/volume-fra1-01; sudo mount -o discard,defaults /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01 /mnt/volume-fra1-01; echo /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01 /mnt/volume-fra1-01 ext4 defaults,nofail,discard 0 0 | sudo tee -a /etc/fstab
+</code></pre><p>So now that we have a &quot;/mnt/volume-fra1-01&quot; volume that we can use for UnifiedViews MySQL database, we can edit the mysql service defintion  in the attx stack yml file to use the block storage device mount point:</p>
+<pre><code class="lang-yml"><span class="hljs-attr">mysql:</span>
+<span class="hljs-attr">  image:</span> attxtest/unified-views-mariadb:stable<span class="hljs-bullet">-1.2</span>
+<span class="hljs-attr">  ports:</span>
+<span class="hljs-bullet">    -</span> <span class="hljs-string">&quot;3306:3306&quot;</span>
+<span class="hljs-attr">  stateful:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">  environment:</span>
+<span class="hljs-attr">    MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">&quot;UV&quot;</span>
+<span class="hljs-attr">    MYSQL_PASSWORD:</span> <span class="hljs-string">&quot;UV&quot;</span>
+<span class="hljs-attr">  volumes:</span>
+<span class="hljs-bullet">    -</span> /mnt/volume-fra1<span class="hljs-bullet">-01</span>:/var/lib/mysql
+<span class="hljs-attr">  affinity:</span>
+<span class="hljs-bullet">    -</span> label==master
+</code></pre>
+<p>And then we can deploy the service (but have to create shared volumes first with <code>kontena volume create --driver local --scope stack attx-uv-shared</code>, and <code>kontena volume create --driver local --scope stack attx-sb-shared</code>):</p>
+<pre><code>$ kontena stack install --name attx attx-do-kontena.yml
+</code></pre><p>When the stack finishes deploying, we can check that indeed the &quot;mysql&quot; service is running in the scheduled Digital Ocean node and using the defined block storage device with the <code>kontena service show attx/mysql</code> command:</p>
+<pre><code class="lang-yml">attx-do/attx/mysql:
+<span class="hljs-attr">  created:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-08</span><span class="hljs-bullet">-03</span>T13:<span class="hljs-number">52</span>:<span class="hljs-number">48.276</span>Z
+<span class="hljs-attr">  updated:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-08</span><span class="hljs-bullet">-03</span>T13:<span class="hljs-number">52</span>:<span class="hljs-number">48.276</span>Z
+<span class="hljs-attr">  stack:</span> attx-do/attx
+<span class="hljs-attr">  desired_state:</span> running
+<span class="hljs-attr">  image:</span> attxtest/unified-views-mariadb:stable<span class="hljs-bullet">-1.2</span>
+<span class="hljs-attr">  revision:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  stack_revision:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  stateful:</span> <span class="hljs-literal">yes</span>
+<span class="hljs-attr">  scaling:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  strategy:</span> ha
+<span class="hljs-attr">  deploy_opts:</span>
+<span class="hljs-attr">  dns:</span> mysql.attx.attx-do.kontena.local
+<span class="hljs-attr">  affinity:</span>
+<span class="hljs-bullet">    -</span> label==master
+<span class="hljs-attr">  env:</span>
+<span class="hljs-bullet">    -</span> MYSQL_ROOT_PASSWORD=UV
+<span class="hljs-bullet">    -</span> MYSQL_PASSWORD=UV
+<span class="hljs-attr">  ports:</span>
+<span class="hljs-bullet">    -</span> <span class="hljs-number">3306</span>:<span class="hljs-number">3306</span>/tcp
+<span class="hljs-attr">  volumes:</span>
+<span class="hljs-bullet">    -</span> /mnt/volume-fra1<span class="hljs-bullet">-01</span>:/var/lib/mysql
+<span class="hljs-attr">  instances:</span>
+    attx/mysql/<span class="hljs-number">1</span>:
+<span class="hljs-attr">      scheduled_to:</span> long-morning<span class="hljs-bullet">-64</span>
+<span class="hljs-attr">      deploy_rev:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-08</span><span class="hljs-bullet">-03</span> <span class="hljs-number">13</span>:<span class="hljs-number">52</span>:<span class="hljs-number">49</span> UTC
+<span class="hljs-attr">      rev:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-08</span><span class="hljs-bullet">-03</span> <span class="hljs-number">13</span>:<span class="hljs-number">52</span>:<span class="hljs-number">49</span> UTC
+<span class="hljs-attr">      state:</span> running
+<span class="hljs-attr">      containers:</span>
+        attx.mysql<span class="hljs-bullet">-1</span> (on long-morning<span class="hljs-bullet">-64</span>):
+<span class="hljs-attr">          dns:</span> mysql<span class="hljs-bullet">-1.</span>attx.attx-do.kontena.local
+<span class="hljs-attr">          ip:</span> <span class="hljs-number">10.81</span><span class="hljs-number">.128</span><span class="hljs-number">.73</span>
+          public ip: <span class="hljs-number">207.154</span><span class="hljs-number">.202</span><span class="hljs-number">.178</span>
+<span class="hljs-attr">          status:</span> running
+</code></pre>
+<p>And what if we check the &quot;/mnt/volume-fra1-01&quot; on the long-morning-64 host?</p>
+<pre><code class="lang-shell">long-morning-64 volume-fra1-01 # ls -l
+total 176200
+-rw-rw----. 1 999 rkt-admin    16384 Aug  3 13:54 aria_log.00000001
+-rw-rw----. 1 999 rkt-admin       52 Aug  3 13:54 aria_log_control
+-rw-rw----. 1 999 rkt-admin 50331648 Aug  3 14:21 ib_logfile0
+-rw-rw----. 1 999 rkt-admin 50331648 Aug  3 13:53 ib_logfile1
+-rw-rw----. 1 999 rkt-admin 79691776 Aug  3 14:21 ibdata1
+drwx------. 2 999 rkt-admin    16384 Aug  3 12:05 lost+found
+-rw-rw----. 1 999 rkt-admin        0 Aug  3 13:53 multi-master.info
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:53 mysql
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:53 performance_schema
+-rw-rw----. 1 999 rkt-admin    24576 Aug  3 13:54 tc.log
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:54 unified_views
+</code></pre>
+<p>Success :-) Though this wasn&apos;t a complicated exercise, using Kontena to deploy the ATTX SB stack in a mixed Digital Ocean and Vagrant environment is quite easy (at least compared to setting up similar environement using Docker Swarm).</p>
 <h3 id="deploying-kontena-on-csc-open-stack-cpouta">Deploying Kontena on CSC Open Stack (cPouta)</h3>
+<p>Work in progress.</p>
 <h4 id="kontena-master">Kontena Master</h4>
 <h4 id="kontena-grid-and-nodes">Kontena grid and nodes</h4>
 <h4 id="kontena-volumes">Kontena volumes</h4>
@@ -1130,15 +1265,18 @@ attx-demo/attx/frontend:
 <li>As a microservices orchestration and management platform, Kontena is quite user-friendly, especially given its focus on service management instead of container management;</li>
 <li><a href="https://www.kontena.io/docs/using-kontena/grids.html" target="_blank">Kontena&apos;s grid</a> infrastructure concept is quite convenient for the deployment,  management, and development of a microservices application stack, given not only it  includes Service Discovery, load balancing, overlay and VPN networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;</li>
 <li><a href="https://www.kontena.io/cloud" target="_blank">Kontena Cloud</a> makes it easy to deploy, manage, audit, and follow the performance of the infrastructure and services;</li>
-<li><a href="https://www.kontena.io/docs/using-kontena/volumes.html" target="_blank">Volume management in Kontena</a> is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it&apos;s up to the user to deploy and configure them);</li>
+<li><a href="https://www.kontena.io/docs/using-kontena/volumes.html" target="_blank">Volume management in Kontena</a> is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it&apos;s up to the user to deploy and configure them - It would be nice to be able to use something like <code>kontena digitalocean volume create</code>. );</li>
 <li>Kontena&apos;s stacks aren&apos;t exactly the same as Docker Compose stacks, and there&apos;s no conversion tool available. Reference to <a href="https://www.kontena.io/docs/references/kontena-yml.html" target="_blank">Kontena&apos;s stack documentation</a> is advised. Expect some trial and error when editing complex Docker Compose YML files into Kontena YML.</li>
 <li>Technical support from Kontena is to-the-point and quite friendly, and since it&apos;s provided by Kontena&apos;s development team, it gives it the feeling of being &quot;by developers for developers&quot;.</li>
+<li>Kontena&apos;s Vagrant and Digital Ocean plugins are quite easy to use,  and make it possible to store important data (e.g. UnifiedViews MySQL database) in cloud-based block storage volumes.</li>
 </ul>
 <h2 id="references">References</h2>
-<p><a href="https://www.kontena.io/" target="_blank">Kontena</a>
-<a href="https://www.kontena.io/cloud" target="_blank">Kontena Cloud</a>
-<a href="https://www.kontena.io/docs/" target="_blank">Kontena Documentation</a>
-<a href="https://github.com/kontena/kontena" target="_blank">Kontena Github</a></p>
+<ul>
+<li><a href="https://www.kontena.io/" target="_blank">Kontena</a></li>
+<li><a href="https://www.kontena.io/cloud" target="_blank">Kontena Cloud</a></li>
+<li><a href="https://www.kontena.io/docs/" target="_blank">Kontena Documentation</a></li>
+<li><a href="https://github.com/kontena/kontena" target="_blank">Kontena Github</a></li>
+</ul>
 
                                 
                                 </section>
@@ -1182,7 +1320,7 @@ attx-demo/attx/frontend:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Deploying ATTX on Kontena","level":"2.1.3","depth":2,"next":{"title":"Workflow Component","level":"3.1","depth":1,"path":"Workflow-Component.md","ref":"Workflow-Component.md","articles":[{"title":"ETL Artifacts","level":"3.1.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},{"title":"UnifiedViews Plugins","level":"3.1.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},{"title":"UVProvovenance API","level":"3.1.3","depth":2,"path":"UVProvenance-API.md","ref":"UVProvenance-API.md","articles":[]}]},"previous":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-SB-on-Kontena.md","mtime":"2017-08-03T12:02:45.417Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-03T12:22:08.692Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deploying ATTX on Kontena","level":"2.1.3","depth":2,"next":{"title":"Workflow Component","level":"3.1","depth":1,"path":"Workflow-Component.md","ref":"Workflow-Component.md","articles":[{"title":"ETL Artifacts","level":"3.1.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},{"title":"UnifiedViews Plugins","level":"3.1.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},{"title":"UVProvovenance API","level":"3.1.3","depth":2,"path":"UVProvenance-API.md","ref":"UVProvenance-API.md","articles":[]}]},"previous":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.3","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-SB-on-Kontena.md","mtime":"2017-08-07T14:00:08.141Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-07T14:01:13.218Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
