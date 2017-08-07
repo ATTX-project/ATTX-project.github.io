@@ -564,10 +564,42 @@
             
         </li>
     
+        <li class="chapter " data-level="3.5" data-path="MessageBroker.html">
+            
+                <a href="MessageBroker.html">
+            
+                    
+                    Message Broker
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.5.1" data-path="MessageBroker-ActiveMQ.html">
+            
+                <a href="MessageBroker-ActiveMQ.html">
+            
+                    
+                    ActiveMQ Message Broker
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
         
-        <li class="header">Semantic Broker Services</li>
+        <li class="header">Broker Services</li>
         
         
     
@@ -961,7 +993,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="containerised-testing">Containerised Testing</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 04-Aug-2017 12:56:19</div></div><h1 id="containerised-testing">Containerised Testing</h1>
 <p>This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.</p>
 <h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
@@ -985,10 +1017,9 @@
 <ul>
 <li>Start all required Semantic Broker containers</li>
 <li>Wait for the services to come up</li>
-<li>Build test code</li>
 <li>Build test container (only during the containerised testing task)</li>
 <li>Start test container (only during the containerised testing task)</li>
-<li>Run tests</li>
+<li>Build and Run tests</li>
 <li>Export reports to the host machine</li>
 <li>Stop all containers</li>
 <li>The build is Successful or Failed depending on the results form the test container</li>
@@ -997,16 +1028,16 @@
 <p>There are two tasks for running the tests:</p>
 <ul>
 <li><code>runIntegTests</code> -  for running the test in the local environment with all the ports exposed, thus allowing for rapid development; It will also start the containers needed, by default they will expose ports;</li>
-<li><code>runContainerTests</code> - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property <code>-PtestEnv=CI</code>. This task will run the tests inside a container on the same network as the other containers without the need of exposing all the ports.</li>
+<li><code>runContainerTests</code> - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property <code>-PtestEnv=CI</code>. This task will build and run the tests inside a container on the same network as the other containers without the need of exposing all the ports.</li>
 </ul>
 <p>Running the tests inside the container:</p>
 <ul>
-<li><code>gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases -PtestEnv=CI clean runContainerTests</code></li>
+<li><code>gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=CI clean runContainerTests</code></li>
 <li><code>gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev -PtestEnv=CI clean runContainerTests</code> (for pd-feature-tests)</li>
 </ul>
 <p>Run the test locally without containers and exposing the ports:</p>
 <ul>
-<li><p><code>gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081/repository/attx-releases clean runIntegTests</code></p>
+<li><p><code>gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 clean runIntegTests</code></p>
 </li>
 <li><p><code>gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests</code> (for pd-feature-tests)</p>
 </li>
@@ -1029,7 +1060,24 @@ dockerize -wait http://gmapi:4302/health -timeout 60s
 <p>Test project contains two Gradle configurations, one for developing tests and managing containers and the other one for running tests inside the container; these are <code>build.gradle</code> and <code>build.test.gradle</code> respectively.</p>
 <p><strong>build.gradle</strong></p>
 <p>Example of the most relevant parts:</p>
-<pre><code class="lang-groovy"><span class="hljs-keyword">if</span> (!project.hasProperty(<span class="hljs-string">&quot;testEnv&quot;</span>) || project.testEnv == <span class="hljs-string">&quot;dev&quot;</span>) {
+<pre><code class="lang-groovy">
+ext.src = [
+    <span class="hljs-string">&quot;${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.dev&amp;a=dev-test-helper&amp;v=${attxTestHelperPlugin}&amp;p=jar&quot;</span>:<span class="hljs-string">&quot;dev-test-helper-${attxTestHelperPlugin}.jar&quot;</span>
+]
+
+<span class="hljs-keyword">import</span> de.undercouch.gradle.tasks.download.Download
+task downloadTestFiles
+
+<span class="hljs-keyword">for</span> (s <span class="hljs-keyword">in</span> src) {
+    task <span class="hljs-string">&quot;downloadTestFiles_${s.key.hashCode()}&quot;</span>(<span class="hljs-string">type:</span> Download) {
+        src s.key
+        dest <span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;$projectDir&quot;</span>, s.value)
+    }
+    downloadTestFiles.dependsOn(<span class="hljs-string">&quot;downloadTestFiles_${s.key.hashCode()}&quot;</span>)
+}
+
+
+<span class="hljs-keyword">if</span> (!project.hasProperty(<span class="hljs-string">&quot;testEnv&quot;</span>) || project.testEnv == <span class="hljs-string">&quot;dev&quot;</span>) {
     ext.testSet = <span class="hljs-string">&quot;localhost&quot;</span>
 } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (project.testEnv == <span class="hljs-string">&quot;CI&quot;</span>){
     ext.testSet = <span class="hljs-string">&quot;container&quot;</span>
@@ -1091,6 +1139,8 @@ dcompose {
         ignoreExitCode = <span class="hljs-literal">true</span>
         baseDir = file(<span class="hljs-string">&apos;.&apos;</span>)
         dockerFilename = <span class="hljs-string">&apos;Dockerfile&apos;</span>
+        buildArgs = [<span class="hljs-string">&apos;attxTestHelperPlugin&apos;</span>: <span class="hljs-string">&quot;$attxTestHelperPlugin&quot;</span>]
+        env = [<span class="hljs-string">&quot;REPO=$artifactRepoURL&quot;</span>]
         <span class="hljs-keyword">if</span> (testSet == <span class="hljs-string">&quot;container&quot;</span>) {
             binds = [<span class="hljs-string">&quot;/var/run/docker.sock:/run/docker.sock&quot;</span>]
         }
@@ -1120,6 +1170,7 @@ shadowJar {
 
 <span class="hljs-comment">// making sure the that fresh build of test classes is done before building the image</span>
 <span class="hljs-comment">// Other prerequisites for the tests (e.g. artifacts) should be added here.</span>
+buildTestImage.dependsOn downloadTestFiles
 buildTestImage.dependsOn shadowJar
 buildTestImage.dependsOn testClasses
 
@@ -1147,8 +1198,9 @@ task runContainerTests {
 </code></pre>
 <p><code>dcompose</code> task configuration is first used to reference all the images required by the tests. In the example, test will require only the container (e.g. <code>gmapi</code>) that is the object of the tests, meanwhile the container that is the object of the tests will require the additional containers (<code>fuseki</code>, <code>essiren</code> and <code>gmapi</code>) in addition to the test container.
 Service configurations should include at least <code>image</code> and in order to run the tests in a local environment the <code>portBindings</code> properties. Test container configuration is mostly same for all the test projects.</p>
-<p>Rest of the configuration is the same for all the test projects (assuming that test container is always called <code>test</code>). <code>copyReportFiles</code> task copies report files from inside the container to the build/from-container directory.
-<code>ShadowJar</code> task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.   </p>
+<p>Rest of the configuration is the same for all the test projects (assuming that test container is always called <code>test</code>). <code>copyReportFiles</code> task copies report files from inside the container to the build/from-container directory.</p>
+<p><code>downloadTestFiles</code> downloads the <code>dev-test-helper</code> artifact as the CI cannot download the artifact from inside the container without having the artifact repository (Archiva) exposed publicly or on the same container network as the <code>dcompose</code> task network.</p>
+<p>(not necessary as the tests are build and run inside the test container) <code>ShadowJar</code> task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.   </p>
 <p><code>checkDPUDone</code> waits for the ATTX DPUS to be added to the front-end where there is a need for such test fixtures. The ATTX DPU waits for MySQL  (for about 4 minutes to be up) in order to add the DPU. If everything is OK the exit code of that container will be (By convention, an &apos;exit 0&apos; indicates success - <a href="http://www.tldp.org/LDP/abs/html/exit-status.html" target="_blank">http://www.tldp.org/LDP/abs/html/exit-status.html</a>). The same strategy is used to check the Tests fail or not inside the container - if the exit code is <code>0</code> the tests were successful if not the tests failed.</p>
 <p><strong>build.test.gradle</strong></p>
 <p>This is a very minimal build file that basically only includes dependency configuration.</p>
@@ -1158,8 +1210,29 @@ Service configurations should include at least <code>image</code> and in order t
     id <span class="hljs-string">&quot;java&quot;</span>
 }
 
+ext {
+    imageRepo = <span class="hljs-string">&quot;attx-dev&quot;</span>
+    artifactRepoPort = <span class="hljs-string">&quot;8081&quot;</span>
+}
+
+<span class="hljs-keyword">if</span> (!project.hasProperty(<span class="hljs-string">&quot;artifactRepoURL&quot;</span>)) {
+    ext.artifactRepoURL = <span class="hljs-string">&quot;http://${imageRepo}:${artifactRepoPort}&quot;</span>
+}
+
+repositories {
+    mavenCentral()
+    maven { url <span class="hljs-string">&quot;${artifactRepoURL}/repository/attx-releases&quot;</span>}
+}
+
 dependencies {
-    testCompile fileTree(<span class="hljs-string">dir:</span> <span class="hljs-string">&apos;build/libs&apos;</span>, <span class="hljs-string">include:</span> [<span class="hljs-string">&apos;*.jar&apos;</span>])
+    testCompile \
+        files(<span class="hljs-string">&quot;dev-test-helper.jar&quot;</span>),
+        <span class="hljs-string">&apos;junit:junit:4.10&apos;</span>,
+        <span class="hljs-string">&apos;info.cukes:cucumber-java8:1.2.5&apos;</span>,
+        <span class="hljs-string">&apos;info.cukes:cucumber-junit:1.2.5&apos;</span>,
+        <span class="hljs-string">&apos;com.mashape.unirest:unirest-java:1.4.9&apos;</span>,
+        <span class="hljs-string">&apos;org.skyscreamer:jsonassert:1.4.0&apos;</span>,
+        <span class="hljs-string">&apos;org.awaitility:awaitility-groovy:2.0.0&apos;</span>
 }
 
 task integTest(<span class="hljs-string">type:</span> Test){
@@ -1208,22 +1281,42 @@ task integTest(<span class="hljs-string">type:</span> Test){
     &amp;&amp; apt-get install -y wget \
     &amp;&amp; apt-get clean
 </span>
-<span class="hljs-keyword">ENV</span> DOCKERIZE_VERSION v0.<span class="hljs-number">3.0</span>
+<span class="hljs-keyword">ENV</span> DOCKERIZE_VERSION v0.<span class="hljs-number">5.0</span>
 
 <span class="hljs-keyword">RUN</span><span class="bash"> wget https://github.com/jwilder/dockerize/releases/download/<span class="hljs-variable">$DOCKERIZE_VERSION</span>/dockerize-linux-amd64-<span class="hljs-variable">$DOCKERIZE_VERSION</span>.tar.gz \
     &amp;&amp; tar -C /usr/<span class="hljs-built_in">local</span>/bin -xzvf dockerize-linux-amd64-<span class="hljs-variable">$DOCKERIZE_VERSION</span>.tar.gz \
     &amp;&amp; rm dockerize-linux-amd64-<span class="hljs-variable">$DOCKERIZE_VERSION</span>.tar.gz
 </span>
-<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /tmp/
+<span class="hljs-keyword">RUN</span><span class="bash"> mkdir -p /tmp
 </span>
-<span class="hljs-keyword">WORKDIR</span><span class="bash"> /tmp/
+<span class="hljs-keyword">WORKDIR</span><span class="bash"> /tmp
 </span>
-<span class="hljs-keyword">COPY</span><span class="bash"> build /tmp/build
+ARG attxTestHelperPlugin
+
+<span class="hljs-keyword">COPY</span><span class="bash"> src /tmp/src
 </span><span class="hljs-keyword">COPY</span><span class="bash"> build.test.gradle /tmp/build.gradle
-</span><span class="hljs-keyword">COPY</span><span class="bash"> runTests.sh /tmp/
+</span><span class="hljs-keyword">COPY</span><span class="bash"> runTests.sh /tmp
 </span><span class="hljs-keyword">RUN</span><span class="bash"> chmod 700 /tmp/runTests.sh
+</span><span class="hljs-keyword">COPY</span><span class="bash"> dev-test-helper-<span class="hljs-variable">${attxTestHelperPlugin}</span>.jar /tmp/dev-test-helper.jar
 </span></code></pre>
 <p><code>frekele/gradle</code> image contains all the components to run Gradle 3.3. <code>dockerize</code> is used by the <code>runTests.sh</code> script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only <code>build.test.gradle</code> file is copied to the image. Image also doesn&apos;t run any script by default, instead the dcompose Gradle plugin is used to attach a command  <code>runTests.sh</code> to the test container, which runs dockerized checks and runs the tests.</p>
+<pre><code class="lang-bash"><span class="hljs-meta">#!/bin/sh
+</span>
+<span class="hljs-comment"># Wait for MySQL, the big number is because CI is slow.</span>
+dockerize -wait tcp://mysql:3306 -timeout 240s
+dockerize -wait http://fuseki:3030 -timeout 60s
+dockerize -wait http://gmapi:4302/health -timeout 60s
+dockerize -wait http://wfapi:4301/health -timeout 60s
+dockerize -wait http://essiren:9200 -timeout 60s
+dockerize -wait tcp://essiren:9300 -timeout 60s
+dockerize -wait http://es5:9210 -timeout 60s
+<span class="hljs-comment"># wait for es5 9310 apparently not working</span>
+<span class="hljs-comment"># dockerize -wait tcp://es5:9310 -timeout 60s</span>
+
+<span class="hljs-built_in">echo</span>  <span class="hljs-string">&quot;Archiva repository URL: <span class="hljs-variable">$REPO</span>&quot;</span>
+
+gradle -PartifactRepoURL=<span class="hljs-variable">$REPO</span> integTest
+</code></pre>
 <h3 id="configuring-jenkins">Configuring Jenkins</h3>
 <p>Example configuration for Jenkins using pipeline plugin and declarative configurations:</p>
 <pre><code class="lang-groovy">pipeline {
@@ -1312,7 +1405,7 @@ task integTest(<span class="hljs-string">type:</span> Test){
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Containerized Testing","level":"6.4.3","depth":2,"next":{"title":"Reports","level":"7.1","depth":1,"ref":"","articles":[{"title":"Deploying the ATTX Semantic Broker on Kontena","level":"7.1.1","depth":2,"path":"Deploying-ATTX-SB-on-Kontena.md","ref":"Deploying-ATTX-SB-on-Kontena.md","articles":[]},{"title":"CSC cPouta Cloud Services Report","level":"7.1.2","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},{"title":"Building with (Py)Gradle","level":"7.1.3","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers Solutions Overview","level":"7.1.4","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},{"title":"Service Discovery Solutions Overview","level":"7.1.5","depth":2,"path":"Service-Discovery-Solutions.md","ref":"Service-Discovery-Solutions.md","articles":[]},{"title":"Workflow Management Tools Overview","level":"7.1.6","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]}]},"previous":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Containerized-testing.md","mtime":"2017-07-31T14:00:13.669Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-07-31T14:01:14.728Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Containerized Testing","level":"6.4.3","depth":2,"next":{"title":"Reports","level":"7.1","depth":1,"ref":"","articles":[{"title":"Deploying the ATTX Semantic Broker on Kontena","level":"7.1.1","depth":2,"path":"Deploying-ATTX-SB-on-Kontena.md","ref":"Deploying-ATTX-SB-on-Kontena.md","articles":[]},{"title":"CSC cPouta Cloud Services Report","level":"7.1.2","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},{"title":"Building with (Py)Gradle","level":"7.1.3","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers Solutions Overview","level":"7.1.4","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},{"title":"Service Discovery Solutions Overview","level":"7.1.5","depth":2,"path":"Service-Discovery-Solutions.md","ref":"Service-Discovery-Solutions.md","articles":[]},{"title":"Workflow Management Tools Overview","level":"7.1.6","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]}]},"previous":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Containerized-testing.md","mtime":"2017-08-07T14:00:08.140Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-07T14:01:13.218Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

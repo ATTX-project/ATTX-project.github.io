@@ -98,7 +98,7 @@ apply plugin: 'com.linkedin.python-cli'
 
 #### Creating a PyPi repository
 
-There are two methods to provide a PyPi repository:
+There are three methods to provide a PyPi repository:
 * local - that can be built following the instructions:
 Requires the pivy repository locally check `build.gradle`
   * download from https://bintray.com/linkedin/maven/pivy-importer#files/com/linkedin/pygradle/pivy-importer/0.6.1
@@ -128,6 +128,13 @@ Requires the pivy repository locally check `build.gradle`
 
     ```
 * hosted: one can build his own hosted PyPi repo for PyGradle using a [Docker image](https://github.com/ATTX-project/development-environment/tree/dev/pivy-repo) - build your own repository using https://github.com/blankdots/ivy-pypi-repo
+
+* pypi server as detailed here [PyGradle pipConfig](https://github.com/linkedin/pygradle/blob/master/docs/plugins/python.md#pipconfig-examples)
+```groovy
+python{
+     pipConfig = ['global':['index-url': 'https://<login>:<password>@your.repo.com/custom/url', 'timeout': '60']]
+}
+```
 
 #### Python project setup
 
@@ -263,6 +270,7 @@ Besides the examples provided https://github.com/linkedin/pygradle/tree/master/e
 ## Documentation
 
 Getting started:
+* [com.linkedin.python Gradle Plugin](https://github.com/linkedin/pygradle/blob/master/docs/plugins/python.md)
 * video
   * Gradle: Novice to Master @LinkedIn - Gradle Summit 2016 - https://www.youtube.com/watch?v=B79g5YuU_2Y
 * source code

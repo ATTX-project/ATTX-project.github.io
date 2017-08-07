@@ -26,7 +26,7 @@ Deliverable:
 - [ ] Every feature new release
 - [ ] Use case 2
 - [X] ELAG 2017 presentation
-- [ ] Semantic Broker Microservice architecture v2.0 (start)
+- [X] Semantic Broker Microservice architecture v2.0 (start)
 
 ### Q3 - September 2017
 - DP: Centralised logging
