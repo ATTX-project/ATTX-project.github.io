@@ -1,5 +1,6 @@
 # Deploying the ATTX Semantic Broker on Kontena
 
+### Table of Contents
 <!-- TOC START min:1 max:4 link:true update:false -->
   - [What is Kontena](#what-is-kontena)
   - [Installing Kontena CLI](#installing-kontena-cli)
