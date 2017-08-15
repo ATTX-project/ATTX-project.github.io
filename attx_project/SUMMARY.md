@@ -2,7 +2,7 @@
 
 ## ATTX Project
 
-* [Introduction](README.md)
+* [ATTX Project](README.md)
 * Applications and Use Cases
   * [UC1 - Infrastructure and Publications](Use-case-Infrastructures-and-publications.md)
   * [UC2 - Parallel Publication Dashboard](Use-case-Jyvaskyla.md)
@@ -45,6 +45,7 @@
 ## Broker Services
 
 * [Provenance Service](Provenance-Service.md)
+* [RML Service](RML-Service.md)
 
 ## User Guide
 
