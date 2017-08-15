@@ -995,90 +995,60 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 03-Aug-2017 12:15:18</div></div><p></p><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1><p></p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 09-Aug-2017 07:01:16</div></div><p></p><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1><p></p>
 <h1 id="provenance-service">Provenance Service</h1>
+<p>Example Provenance message:</p>
 <pre><code class="lang-json">{
-    <span class="hljs-string">&quot;id&quot;</span>: {
-        <span class="hljs-string">&quot;activityID&quot;</span>:<span class="hljs-number">134</span>,
-        <span class="hljs-string">&quot;workflowID&quot;</span>: <span class="hljs-number">135</span>,
-        <span class="hljs-string">&quot;agentID&quot;</span>: <span class="hljs-string">&quot;UVProv&quot;</span>
+  <span class="hljs-string">&quot;provenance&quot;</span> : {
+    <span class="hljs-string">&quot;context&quot;</span>: {
+      <span class="hljs-string">&quot;workflowID&quot;</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-string">&quot;activityID&quot;</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-string">&quot;stepID&quot;</span>: <span class="hljs-number">1</span>
     },
     <span class="hljs-string">&quot;agent&quot;</span>: {
-        <span class="hljs-string">&quot;prov:hadRole&quot;</span>: <span class="hljs-string">&quot;API&quot;</span>,
-        <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;UVProvenanceAPI&quot;</span>,
-        <span class="hljs-string">&quot;dcterms:source&quot;</span>: <span class="hljs-string">&quot;unifiedviews&quot;</span>,
-        <span class="hljs-string">&quot;prov:actedOnBehalfOf&quot;</span>: <span class="hljs-string">&quot;ProvenanceService&quot;</span>
+      <span class="hljs-string">&quot;ID&quot;</span>: <span class="hljs-string">&quot;agentID&quot;</span>,
+      <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;agentRole&quot;</span>      
     },
     <span class="hljs-string">&quot;activity&quot;</span>: {
-        <span class="hljs-string">&quot;executedSuccessful&quot;</span>: <span class="hljs-literal">true</span>,
-        <span class="hljs-string">&quot;prov:startedAtTime&quot;</span>: <span class="hljs-string">&quot;2017-07-17T12:51:23+02:00&quot;</span>,
-        <span class="hljs-string">&quot;prov:enededAtTime&quot;</span>: <span class="hljs-string">&quot;2017-07-17T12:54:51+02:00&quot;</span>,
-        <span class="hljs-string">&quot;prov:used&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/wf1_dataset1&quot;</span>,
-        <span class="hljs-string">&quot;prov:generated&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/wf1_dataset2&quot;</span>
-    },
-    <span class="hljs-string">&quot;workflow&quot;</span>: {
-        <span class="hljs-string">&quot;private&quot;</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-string">&quot;dcterms:title&quot;</span>: <span class="hljs-string">&quot;Acquisition and Mapping the VIRTA pubs data.&quot;</span>,
-        <span class="hljs-string">&quot;dcterms:description&quot;</span>: <span class="hljs-string">&quot;Example Workflow&quot;</span>,
-        <span class="hljs-string">&quot;steps&quot;</span>: [
-            {
-                <span class="hljs-string">&quot;stepID&quot;</span>: <span class="hljs-number">12515</span>,
-                <span class="hljs-string">&quot;isFirstStep&quot;</span>: <span class="hljs-literal">true</span>,
-                <span class="hljs-string">&quot;dcterms:title&quot;</span>: <span class="hljs-string">&quot;VIRTA Publication Step&quot;</span>,
-                <span class="hljs-string">&quot;dcterms:description&quot;</span>: <span class="hljs-string">&quot;Get the latest publication from VIRTA.&quot;</span>,
+      <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;activity title&quot;</span>,      
+      <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;step&quot;</span>,
+      <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;description&quot;</span>,
+      <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;SUCCESS&quot;</span>,
+      <span class="hljs-string">&quot;startTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>,
+      <span class="hljs-string">&quot;endTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>,
+      <span class="hljs-string">&quot;communication&quot;</span>: [
+        {          
+          <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;transformer&quot;</span>,
+          <span class="hljs-string">&quot;input&quot;</span>: {
+            <span class="hljs-string">&quot;frame&quot;</span>: {
+              <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Configuration&quot;</span>
+            },
+            <span class="hljs-string">&quot;inputGraphs&quot;</span>: {
+              <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;inputGraphs&quot;</span>
             }
-        ]
+          }
+        }
+      ]
+    },
+    <span class="hljs-string">&quot;input&quot;</span>: {
+      <span class="hljs-string">&quot;inputGraphs&quot;</span>: {
+        <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;inputGraphs&quot;</span>
+      }    
+    },
+    <span class="hljs-string">&quot;output&quot;</span>: {
+      <span class="hljs-string">&quot;outputGraphs&quot;</span>: {
+        <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;outputGraphs&quot;</span>
+      }
     }
+  },  
+  <span class="hljs-string">&quot;payload&quot;</span>: {
+    <span class="hljs-string">&quot;inputgraphs&quot;</span>: <span class="hljs-string">&quot;attx:dataset1&quot;</span>,    
+    <span class="hljs-string">&quot;outputGraphs&quot;</span>: <span class="hljs-string">&quot;http://platform/public/rest/documents&quot;</span>
+
+  }
 }
 </code></pre>
-<pre><code class="lang-turtle">@prefix attxonto: &lt;http://data.hulib.helsinki.fi/attx/onto#&gt; .
-@prefix attx: &lt;http://data.hulib.helsinki.fi/attx/&gt; .
-@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
-@prefix prov: &lt;http://www.w3.org/ns/prov#&gt; .
-@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
-@prefix pwo: &lt;http://purl.org/spar/pwo/&gt; .
 
-attx:worflow135_134_UVProv
-  a attxonto:Workflow ;
-  dcterms:title &quot;Acquisition and Mapping the VIRTA pubs data.&quot; ;
-  dcterms:description &quot;Example Workflow&quot;@en ;
-  pwo:hasFirstStep attx:step135_12515 ;
-  pwo:hasStep
-    attx:step135_12515 .
-
-attx:step135_12515
-  a attxonto:Step ;
-  dcterms:title &quot;VIRTA Publication Step&quot; ;
-  dcterms:description &quot;Get the latest publication from VIRTA.&quot;@en .
-
-attx:activity135_134_UVProv
-  a prov:Activity , attxonto:WorkflowExecution ;
-  prov:startedAtTime  &quot;2017-07-17T12:51:23+02:00&quot;^^xsd:dateTime ;
-  prov:endedAtTime &quot;2017-07-17T12:54:51+02:00&quot;^^xsd:dateTime ;
-  prov:qualifiedAssociation [ a prov:Assocation ;
-    prov:agent attx:UVProv ;
-    prov:hadPlan attx:worflow135_134_UVProv ;] ;
-  prov:used attx:dataset1 ;
-  prov:generated attx:dataset2 .
-
-attx:UVProv
-  a prov:Agent ;
-  prov:hadRole &quot;API&quot; ;
-  prov:actedOnBehalfOf attx:ProvenanceService ;
-  attxonto:usesArtifact attx:UVProvenanceAPI.
-
-attx:UVProvenanceAPI
-  a attxonto:Artifact ;
-  dcterms:source &quot;unifiedviews&quot; .
-</code></pre>
-<pre><code>activity(attx:activity135_134_UVProv,
-2017-07-17T12:51:23, 2017-07-17T12:54:51)
-wasAssociatedWith(attx:activity135_134_UVProv, attx:UVProv,
- attx:worflow135_134_UVProv, [prov:role=&apos;attx:API&apos;])
-used(attx:activity135_134_UVProv, attx:dataset1, -)
-wasGeneratedBy(attx:dataset2, attx:activity135_134_UVProv, -)
-</code></pre>
                                 
                                 </section>
                             
@@ -1121,7 +1091,7 @@ wasGeneratedBy(attx:dataset2, attx:activity135_134_UVProv, -)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Provenance Service","level":"4.1","depth":1,"next":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"path":"MessageBroker-ActiveMQ.md","ref":"MessageBroker-ActiveMQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Provenance-Service.md","mtime":"2017-08-03T12:20:55.657Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-07T14:01:13.218Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Provenance Service","level":"4.1","depth":1,"next":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"path":"MessageBroker-ActiveMQ.md","ref":"MessageBroker-ActiveMQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Provenance-Service.md","mtime":"2017-08-14T14:08:27.380Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-14T14:09:35.394Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

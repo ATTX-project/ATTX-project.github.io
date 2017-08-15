@@ -26,3 +26,4 @@ Instructions for running or deploying the solution on a cloud or local environme
   * [Provisioning ATTX Components on CSC Open Stack \(cPouta\)](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)
   * [Deploying ATTX Components on Docker Swarm](Deploying-ATTX-Components-on-Docker-Swarm.md)
   * [Applying Rolling Updates to Services in Docker Swarm](Applying-Rolling-Updates-to-services-in-Docker-Swarm.md)
+* [Deploying ATTX on Kontena](Deploying-ATTX-SB-on-Kontena.md)
