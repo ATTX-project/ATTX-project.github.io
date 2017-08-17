@@ -42,21 +42,21 @@ Etsin is a national research dataset registry that contains both manually inputt
 Based on CKAN.
 
 #### APIs
-Documentation: http://openscience.fi/etsin-api
-Data model: http://openscience.fi/etsin-data-model
+
+* Documentation: http://openscience.fi/etsin-api
+* Data model: http://openscience.fi/etsin-data-model
+* CKAN documentation: http://docs.ckan.org/en/ckan-2.7.0/api/#get-able-api-functions
 
 **REST**
 
+
 https://etsin.avointiede.fi/api/3
 
-CKAN documentation: http://docs.ckan.org/en/ckan-2.7.0/api/#get-able-api-functions
 
 **OAI-PMH**
 
 https://etsin.avointiede.fi/oai?verb=Identify
 
-Owner organization is only references in the header part of the record. For example:
-https://etsin.avointiede.fi/oai?verb=GetRecord&identifier=urn:nbn:fi:csc-kata20170611202023598902&metadataPrefix=oai_dc
 
 #### Usage
 
@@ -69,6 +69,8 @@ Request https://etsin.avointiede.fi/api/3/action/package_search?&q=owner_org:019
 Getting all the UH related datasets using REST api can be implemented by first constructing a list/graph of UH and related organizations and then querying all of them. More detailed information about an organization can be found from /organization_show endpoint. For example.  https://etsin.avointiede.fi/api/3/action/organization_show?id=35367e6f-6cd3-40e4-b2fe-aa391d34eeef, where value of the id parameter can be either name or id of the organization. "groups" property of the returned document contains information about the parent groups, which can be used to create a graph that represents the organizational hierarchy. After harvesting the child->parent relationships, inverse links can be added using simple ontology processing.
 
 
+When using OAI-PMH interface, owner organization is only references in the header part of the record. For example:
+https://etsin.avointiede.fi/oai?verb=GetRecord&identifier=urn:nbn:fi:csc-kata20170611202023598902&metadataPrefix=oai_dc
 
 ### B2Share
 
