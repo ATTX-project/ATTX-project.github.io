@@ -42,30 +42,29 @@ Etsin is a national research dataset registry that contains both manually inputt
 Based on CKAN.
 
 #### APIs
-Documentation:
-http://openscience.fi/etsin-api
-Data model:
-http://openscience.fi/etsin-data-model
+Documentation: http://openscience.fi/etsin-api
+Data model: http://openscience.fi/etsin-data-model
 
 **REST**
+
 https://etsin.avointiede.fi/api/3
 
-CKAN documentation
-http://docs.ckan.org/en/ckan-2.7.0/api/#get-able-api-functions
+CKAN documentation: http://docs.ckan.org/en/ckan-2.7.0/api/#get-able-api-functions
 
 **OAI-PMH**
 
 https://etsin.avointiede.fi/oai?verb=Identify
 
-Owner organization is only references in the <header> part of the record. For example:
+Owner organization is only references in the header part of the record. For example:
 https://etsin.avointiede.fi/oai?verb=GetRecord&identifier=urn:nbn:fi:csc-kata20170611202023598902&metadataPrefix=oai_dc
 
 #### Usage
 
 Every record in Etsin has an owner_org property, which connects it to the owning organization. Organizations (https://etsin.avointiede.fi/api/3/action/organization_list) form a hierarchy (https://etsin.avointiede.fi/organization).
 
-Is it possible to utilize the organizational hierarchy with the search API?
-Request https://etsin.avointiede.fi/api/3/action/package_search?&q=owner_org:01901 only return 10 hits that are explicitly connected with UH and not the 7000+ other records that are owned by UH's related organizational units.
+**TODO: Is it possible to utilize the organizational hierarchy with the search API?**
+
+Request https://etsin.avointiede.fi/api/3/action/package_search?&q=owner_org:01901 only return 10 hits that are explicitly connected with UH and not the 7000+ other records that are owned by UH related organizational units.
 
 Getting all the UH related datasets using REST api can be implemented by first constructing a list/graph of UH and related organizations and then querying all of them. More detailed information about an organization can be found from /organization_show endpoint. For example.  https://etsin.avointiede.fi/api/3/action/organization_show?id=35367e6f-6cd3-40e4-b2fe-aa391d34eeef, where value of the id parameter can be either name or id of the organization. "groups" property of the returned document contains information about the parent groups, which can be used to create a graph that represents the organizational hierarchy. After harvesting the child->parent relationships, inverse links can be added using simple ontology processing.
 
@@ -174,7 +173,7 @@ compared to
 
 Harvesting is available using OAI-PMH protocol. Harvesting can be targeted using sets that correspond to communities. For example https://zenodo.org/oai2d?verb=ListRecords&set=user-hulib&metadataPrefix=oai_dc would return records published by the University of Helsinki library.
 
-*TODO: What are the other UH related Zenode communities?*
+**TODO: What are the other UH related Zenode communities?**
 
 We can create another dataset that links communities to UH and use that to make the first broad classification of records.
 
