@@ -589,12 +589,12 @@ Conclusion: we have successfully deployed Kontena on cPouta :-)
 
 Based in our trial, we can say that:
 - As a microservices orchestration and management platform, Kontena is quite user-friendly, especially given its focus on service management instead of container management;
-- [Kontena's grid](https://www.kontena.io/docs/using-kontena/grids.html) infrastructure concept is quite convenient for the deployment,  management, and development of a microservices application stack, given not only it  includes Service Discovery, load balancing, overlay and VPN networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;
+- [Kontena's grid](https://www.kontena.io/docs/using-kontena/grids.html) infrastructure concept is quite convenient for the deployment, management, and development of a microservices application stack, given not only it  includes Service Discovery, load balancing, overlay and VPN networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;
 - [Kontena Cloud](https://www.kontena.io/cloud) makes it easy to deploy, manage, audit, and follow the performance of the infrastructure and services;
 - [Volume management in Kontena](https://www.kontena.io/docs/using-kontena/volumes.html) is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them - It would be nice to be able to use something like ```kontena digitalocean volume create```);
 - Kontena's stacks aren't exactly the same as Docker Compose stacks, and there's no conversion tool available. Reference to [Kontena's stack documentation](https://www.kontena.io/docs/references/kontena-yml.html) is advised. Expect some trial and error when editing complex Docker Compose YML files into Kontena YML.
 - Technical support from Kontena is to-the-point and quite friendly, and since it's provided by Kontena's development team, it gives it the feeling of being "by developers for developers".
-- Kontena's Vagrant and Digital Ocean plugins are quite easy to use,  and make it possible to store important data (e.g. UnifiedViews MySQL database) in cloud-based block storage volumes.
+- Kontena's Vagrant and Digital Ocean plugins are quite easy to use, and make it possible to store important data (e.g. UnifiedViews MySQL database) in cloud-based block storage volumes.
 
 ## References
 * [Kontena](https://www.kontena.io/)
