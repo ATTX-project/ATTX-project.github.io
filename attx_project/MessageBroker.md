@@ -1,9 +1,9 @@
 # Asynchronous communication between platform components
 
 
-Replicating request/response pattern between workflow steps and ATTX services.
+Replicating request/async response pattern between workflow steps and ATTX services. In order for the responses to be non blocking while waiting fro them, we recommend implementing under the assumption that the response might not arrive for a while.
 
-![Figure 1. Request/response pattern using message broker](images/messaging-request-response.svg)
+![Figure 1. Request/async response pattern using message broker](images/messaging-request-response.svg)
 
 
 Provenance service should receive all(?) the messages. This can implemented using Camel route that intercept, copies and sends messages to queue://core.provenance.
@@ -13,7 +13,7 @@ Provenance service should receive all(?) the messages. This can implemented usin
 * For queues, service must listen to a queue named "attx.{servicename}". Are there any reserved topic names?
 * Queues starting with "core." are reserved for special cases such as for provenance service.
 
-## How do ATTX service finds the MessageBroker?
+## How do ATTX service find the MessageBroker?
 
 Implementation alternatives:
 
@@ -31,10 +31,7 @@ This examples shows the steps, services and messages involved in a basic distrib
 
 **TODO: Maybe we need to add some messages related to provenance, depending on how it is implemented.**
 
-
 ![Distribution workflow and services](images/distribution-workflow-basic.svg)
-
-
 
 **Query datasets**
 Since the workflow is using data already existing in the platform, we need to be able to query the created datasets and their properties. Step will communicate with the GM-api and directly with the graphstore.
@@ -52,3 +49,7 @@ GM-api uses Fuseki's API to add, delete and retrieve triples from the graph stor
 
 **Manage indices**
 Indexing services uses Elastic's APIs to delete and create indices and to index JSON document either individually or in bulk.
+
+## References:
+
+* [Inter-Process Communication in a Microservices Architecture](https://www.nginx.com/blog/building-microservices-inter-process-communication/)

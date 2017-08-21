@@ -42,6 +42,23 @@ Base namespaces and/or named graphs convention:
 
 The [Graph Manager API](Graph-Manager-API.md) generates working datasets by following the `http://data.hulib.helsinki.fi/attx/work{generatedID}` where the `generatedID` is a result of hash algorithm. To be pointed out that the `http://data.hulib.helsinki.fi/attx/work` is the recommended base for the working datasets.
 
+Example of provenance header in TURTLE format:
+
+```turtle
+@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
+@prefix attxonto: <http://data.hulib.helsinki.fi/attx/onto#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix pwo: <http://purl.org/spar/pwo/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+```
+
 
 ## Related Data Models
 
