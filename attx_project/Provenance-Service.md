@@ -4,13 +4,13 @@
 Github repository: https://github.com/ATTX-project/provenance-service
 
 Considering a Microservices oriented system we identify two means of introducing a Provenance system in such a system:
-* Making all services of that system provenance aware - meaning each service will have to send messages to the Provenance Services that contain provenance related information;
-* Enable the system to capture in the communication between distinct services provenance related information and distribute it to the Provenance Service.
+* **Explicit Provenance** Making all services of that system provenance aware - meaning each service will have to send messages to the Provenance Services that contain provenance related information;
+* **Implicit Provenance** Enable the system to capture in the communication between distinct services provenance related information and distribute it to the Provenance Service.
 
 
 ## Generating Provenance information
 
-The sequence of messages below are meant to illustrate a series of services that communicate between each other and the provenance related messages are captured and converted to RDF (and illustrated for each message in Turtle format). 
+The sequence of messages below are meant to illustrate a series of services that communicate between each other and the provenance related messages are captured and converted to RDF (and illustrated for each message in Turtle format).
 
 **Step 1a** workflow-started-prov
 ```json

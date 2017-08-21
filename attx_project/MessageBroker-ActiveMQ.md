@@ -1,9 +1,8 @@
 # ActiveMQ - ATTX MessageBroker
 
-
 ## Image
 
-TBD
+Custom image derived from: https://github.com/krizsan/activemq-docker
 
 ## Configuration
 
@@ -32,7 +31,9 @@ MessageBroker can be accessed using multiple different protocols.
 When something goes wrong.
 
 * Where is the admin interface?
+    * available at: `http://<container-ip>:8161/hawtio/`
 * What are the admin credentials?
+    * default one available can be further configured using http://activemq.apache.org/security.html information
 
 ## References
 
