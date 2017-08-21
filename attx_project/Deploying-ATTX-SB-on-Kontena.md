@@ -43,8 +43,10 @@ Given the growing complexity of the ATTX Semantic Broker application stack, we d
 
 Kontena's CLI (Command Line Interface) [requires Ruby 2.1 or latest](https://www.ruby-lang.org/en/documentation/installation/). With Ruby in place, installing Kontena in Ubuntu 16.04 LTS is quite straightforward:
 
-`$ gem install --user-install kontena-cli`
-`$ export PATH=$PATH:/home/<username>/.gem/ruby/2.3.0/bin`
+```
+$ gem install --user-install kontena-cli
+$ export PATH=$PATH:/home/<username>/.gem/ruby/2.3.0/bin
+```
 
 Alternatively if running MacOS, [there is an installer available](https://github.com/kontena/kontena/releases/latest).
 
