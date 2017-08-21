@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Graph Store · GitBook</title>
+        <title>RML Service · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="ATTX-Data-Model.html" />
+    <link rel="next" href="User-Guide-Administrator.html" />
     
     
-    <link rel="prev" href="Graph-Manager-API.html" />
+    <link rel="prev" href="Provenance-Service.html" />
     
 
     </head>
@@ -426,7 +426,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.2.2" data-path="Graph-Store.html">
+        <li class="chapter " data-level="3.2.2" data-path="Graph-Store.html">
             
                 <a href="Graph-Store.html">
             
@@ -618,7 +618,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.2" data-path="RML-Service.html">
+        <li class="chapter active" data-level="4.2" data-path="RML-Service.html">
             
                 <a href="RML-Service.html">
             
@@ -993,7 +993,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Graph Store</a>
+        <a href="." >RML Service</a>
     </h1>
 </div>
 
@@ -1008,147 +1008,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="graph-store">Graph Store</h1>
-<h3 id="table-of-contents">Table of Contents</h3>
-<!-- TOC START min:1 max:3 link:true update:true -->
-<ul>
-<li><a href="#configuring-the-graph-store">Configuring the Graph Store</a><ul>
-<li><a href="#configuring-fuseki">Configuring Fuseki</a></li>
-<li><a href="#querying-the-default-graph">Querying the Default Graph</a></li>
-<li><a href="#adding-reasoning-capability">Adding Reasoning Capability</a></li>
-</ul>
-</li>
-</ul>
-<!-- TOC END -->
-<p>Graph Store functionalities include:</p>
-<ul>
-<li>managing up to date <strong>Working Data</strong> and <strong>Provenance and Workflow Data</strong> graphs;</li>
-<li>associates  <strong>Working Data</strong> with corresponding <strong>Provenance and Workflow Data</strong>;</li>
-<li>base graph store image is provided with ATTX specific <strong>Provenance and Workflow Ontology</strong>;</li>
-<li>is the LODSTOCK - Linked Open Data Stack for the platform generated data.</li>
-</ul>
-<p>Current store implementation: <a href="https://jena.apache.org/documentation/fuseki2/index.html" target="_blank">Apache Fuseki</a></p>
-<h2 id="configuring-the-graph-store">Configuring the Graph Store</h2>
-<h3 id="configuring-fuseki">Configuring Fuseki</h3>
-<pre><code class="lang-turtle">@prefix :        &lt;#&gt; .
-@prefix fuseki:  &lt;http://jena.apache.org/fuseki#&gt; .
-@prefix rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-@prefix rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-@prefix tdb:     &lt;http://jena.hpl.hp.com/2008/tdb#&gt; .
-@prefix ja:      &lt;http://jena.hpl.hp.com/2005/11/Assembler#&gt; .
-@prefix dc:      &lt;http://purl.org/dc/elements/1.1/&gt; .
-
-[] rdf:type fuseki:Server ;
-   fuseki:services (
-     &lt;#service_test&gt;
-     &lt;#service_prod&gt;
-   ) .
-
-# TDB loader configuration
-[] ja:loadClass &quot;org.apache.jena.tdb.TDB&quot; .
-tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
-tdb:GraphTDB    rdfs:subClassOf  ja:Model .
-
-# Development service endpoint for Use-case Data.
-# Recommended would be to split this into 2 services one for query with the inferenced dataset and one for update.
-&lt;#service_prod&gt; rdf:type fuseki:Service ;
-  rdfs:label                        &quot;TDB Service&quot; ;
-  fuseki:name                       &quot;ds&quot; ;       # http://host:port/ds
-  fuseki:serviceQuery               &quot;sparql&quot; ;   # SPARQL query service
-  fuseki:serviceQuery               &quot;query&quot; ;    # SPARQL query service (alt name)
-  fuseki:serviceUpdate              &quot;update&quot; ;   # SPARQL update service
-  fuseki:serviceUpload              &quot;upload&quot; ;   # Non-SPARQL upload service
-  fuseki:serviceReadWriteGraphStore &quot;data&quot; ;     # SPARQL Graph store protocol (read and write)
-  # A separate read-only graph store endpoint:
-  fuseki:serviceReadGraphStore      &quot;get&quot; ;      # SPARQL Graph store protocol (read only)
-  fuseki:dataset                    &lt;#dataset&gt; ;
-  .
-
-  #  http://data.hulib.helsinki.fi/attx - to be used as a base for data
-  #  http://data.hulib.helsinki.fi/attx/prov - for provenance data
-  #  http://data.hulib.helsinki.fi/attx/ids - for clusted data ids
-
-&lt;#dataset&gt; rdf:type ja:RDFDataset ;
-  ja:defaultGraph &lt;#default&gt; ;
-  # The graphs below will not be persistent in terms of namespacing.
-  # problem pointed http://mail-archives.apache.org/mod_mbox/jena-users/201603.mbox/%3CCA%2BRbaMCSPHOO6%3DHTBETY-C1e2VfDEhHRfJ0GMSBfwQ70KEsm3Q%40mail.gmail.com%3E
-  ja:namedGraph
-      [ ja:graphName      &lt;http://data.hulib.helsinki.fi/attx/onto&gt; ;
-        ja:graph          &lt;#attx-ontodb&gt; ] ;
-  ja:namedGraph
-      [ ja:graphName      &lt;http://data.hulib.helsinki.fi/attx/ids&gt; ;
-        ja:graph          &lt;#attx-ids&gt; ] ;
-  ja:namedGraph
-      [ ja:graphName      &lt;http://data.hulib.helsinki.fi/attx/prov&gt; ;
-        ja:graph          &lt;#attx-prov&gt; ] ;
-  .
-
-&lt;#default&gt; rdf:type tdb:GraphTDB ;
-  tdb:dataset &lt;#tdb_prod_dataset&gt; ;
-  .
-
-&lt;#attx-ontodb&gt; rdf:type ja:OntModel ;
-  ja:initialContent &lt;#attx-onto&gt; ;
-  .
-
-&lt;#attx-ids&gt; rdf:type tdb:GraphTDB ;
-  tdb:dataset &lt;#tdb_prod_dataset&gt; ;
-  tdb:graphName &lt;http://data.hulib.helsinki.fi/attx/ids&gt; ;
-  .
-
-&lt;#attx-prov&gt; rdf:type tdb:GraphTDB ;
-  tdb:dataset &lt;#tdb_prod_dataset&gt; ;
-  tdb:graphName &lt;http://data.hulib.helsinki.fi/attx/prov&gt; ;
-  .
-
-&lt;#tdb_prod_dataset&gt; rdf:type tdb:DatasetTDB ;
-  tdb:location &quot;DB&quot; ;
-  ## Query timeout on this dataset (milliseconds)
-  ja:context [ ja:cxtName &quot;arq:queryTimeout&quot; ;  ja:cxtValue &quot;3000&quot; ] ;
-  ## Default graph for query is the (read-only) union of all named graphs.
-  tdb:unionDefaultGraph true ;
-  .
-
-# Data
-&lt;#attx-onto&gt; ja:externalContent &lt;file:data/attx-onto.ttl&gt; .
-</code></pre>
-<h3 id="querying-the-default-graph">Querying the Default Graph</h3>
-<p>The Default Graph is the graph set to be the union of all other graphs and can be queried as follows:</p>
-<pre><code class="lang-turtle">SELECT ?subject ?predicate ?object
-WHERE { GRAPH &lt;urn:x-arq:DefaultGraph&gt; {
-    ?subject ?predicate ?object
-  }
-}
-</code></pre>
-<h3 id="adding-reasoning-capability">Adding Reasoning Capability</h3>
-<p>The reasoning capabilities can be added by the following lines for a specific dataset:</p>
-<pre><code class="lang-turtle">&lt;#dataset&gt;
-    rdf:type    ja:RDFDataset ;
-    ja:defaultGraph &lt;#model&gt; ;
-    .      
-
-######
-# Default Model : Inference rules (OWL, here)
-&lt;#model&gt; a ja:InfModel;
-    ja:baseModel &lt;#tdbGraph&gt;;
-    ja:reasoner
-    [ ja:reasonerURL
-        &lt;http://jena.hpl.hp.com/2003/OWLFBRuleReasoner&gt;
-    ]
-    .
-</code></pre>
-<p>Reasoners available in Jena for Fuseki configuration:</p>
-<ul>
-<li><code>http://jena.hpl.hp.com/2003/OWLFBRuleReasoner</code></li>
-<li><code>http://jena.hpl.hp.com/2003/RDFSExptRuleReasoner</code></li>
-<li><code>http://jena.hpl.hp.com/2003/TransitiveReasoner</code></li>
-<li><code>http://jena.hpl.hp.com/2003/GenericRuleReasoner</code></li>
-<li><code>http://jena.hpl.hp.com/2003/DAMLMicroReasonerFactory</code></li>
-<li><code>http://jena.hpl.hp.com/2003/OWLFBRuleReasoner</code></li>
-<li><code>http://jena.hpl.hp.com/2003/OWLMicroFBRuleReasoner</code></li>
-<li><code>http://jena.hpl.hp.com/2003/OWLMiniFBRuleReasoner</code></li>
-<li><code>http://jena.hpl.hp.com/2003/DIGReasoner</code></li>
-</ul>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 21-Aug-2017 11:21:52</div></div><p></p><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1><p></p>
+<h1 id="rml-service">RML Service</h1>
+<p>Github repository: <a href="https://github.com/ATTX-project/rml-service" target="_blank">https://github.com/ATTX-project/rml-service</a></p>
 
                                 
                                 </section>
@@ -1176,12 +1038,12 @@ WHERE { GRAPH &lt;urn:x-arq:DefaultGraph&gt; {
 
             
                 
-                <a href="Graph-Manager-API.html" class="navigation navigation-prev " aria-label="Previous page: Graph Manager API">
+                <a href="Provenance-Service.html" class="navigation navigation-prev " aria-label="Previous page: Provenance Service">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="ATTX-Data-Model.html" class="navigation navigation-next " aria-label="Next page: Ontology/Data model">
+                <a href="User-Guide-Administrator.html" class="navigation navigation-next " aria-label="Next page: Data Administrator's User guide">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1192,7 +1054,7 @@ WHERE { GRAPH &lt;urn:x-arq:DefaultGraph&gt; {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Graph Store","level":"3.2.2","depth":2,"next":{"title":"Ontology/Data model","level":"3.2.2.1","depth":3,"path":"ATTX-Data-Model.md","ref":"ATTX-Data-Model.md","articles":[]},"previous":{"title":"Graph Manager API","level":"3.2.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Store.md","mtime":"2017-08-03T12:02:45.451Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-21T14:10:21.830Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"RML Service","level":"4.2","depth":1,"next":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"Provenance Service","level":"4.1","depth":1,"path":"Provenance-Service.md","ref":"Provenance-Service.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"RML-Service.md","mtime":"2017-08-21T14:08:22.099Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-21T14:10:21.830Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

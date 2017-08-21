@@ -7,7 +7,7 @@
         <title>ActiveMQ Message Broker · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -100,7 +100,7 @@
                 <a href="./">
             
                     
-                    Introduction
+                    ATTX Project
             
                 </a>
             
@@ -618,6 +618,19 @@
             
         </li>
     
+        <li class="chapter " data-level="4.2" data-path="RML-Service.html">
+            
+                <a href="RML-Service.html">
+            
+                    
+                    RML Service
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -995,9 +1008,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 02-Aug-2017 10:35:54</div></div><h1 id="activemq---attx-messagebroker">ActiveMQ - ATTX MessageBroker</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 21-Aug-2017 11:21:52</div></div><h1 id="activemq---attx-messagebroker">ActiveMQ - ATTX MessageBroker</h1>
 <h2 id="image">Image</h2>
-<p>Which image are we using?</p>
+<p>Custom image derived from: <a href="https://github.com/krizsan/activemq-docker" target="_blank">https://github.com/krizsan/activemq-docker</a></p>
 <h2 id="configuration">Configuration</h2>
 <h3 id="authentication">Authentication</h3>
 <h3 id="certificates">Certificates</h3>
@@ -1008,12 +1021,30 @@
 <p>None at the moment. Move along.</p>
 <h2 id="using-activemq">Using ActiveMQ</h2>
 <p>MessageBroker can be accessed using multiple different protocols.</p>
-<p><a href="http://activemq.apache.org/cross-language-clients.html" target="_blank">List of code example</a></p>
+<ul>
+<li>OpenWire</li>
+<li>Stomp 1.0+ - in order to use with Python make use of the libraries (<a href="https://pypi.org/project/stompest/" target="_blank">https://pypi.org/project/stompest/</a> and <a href="https://pypi.org/project/stompest.async/" target="_blank">https://pypi.org/project/stompest.async/</a> or <a href="https://pypi.org/project/stomp.py/" target="_blank">https://pypi.org/project/stomp.py/</a>)</li>
+<li>JMS - recommended implementation is using Spring <a href="https://spring.io/guides/gs/messaging-jms/" target="_blank">https://spring.io/guides/gs/messaging-jms/</a></li>
+<li>AMQP v1.0 (<a href="http://qpid.apache.org/proton/" target="_blank">http://qpid.apache.org/proton/</a>)</li>
+<li>MQTT v3.1
+<a href="http://activemq.apache.org/cross-language-clients.html" target="_blank">List of code example</a></li>
+</ul>
+<h2 id="camel-integration">Camel Integration</h2>
 <h2 id="administration">Administration</h2>
 <p>When something goes wrong.</p>
 <ul>
-<li>Where is the admin interface?</li>
-<li>What are the admin credentials?</li>
+<li>Where is the admin interface?<ul>
+<li>available at: <code>http://&lt;container-ip&gt;:8161/hawtio/</code></li>
+</ul>
+</li>
+<li>What are the admin credentials?<ul>
+<li>default one available can be further configured using <a href="http://activemq.apache.org/security.html" target="_blank">http://activemq.apache.org/security.html</a> information</li>
+</ul>
+</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.devco.net/archives/2011/12/11/common-messaging-patterns-using-stomp.php" target="_blank">Common Messaging Patterns Using Stomp</a></li>
 </ul>
 
                                 
@@ -1058,7 +1089,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"next":{"title":"Provenance Service","level":"4.1","depth":1,"path":"Provenance-Service.md","ref":"Provenance-Service.md","articles":[]},"previous":{"title":"Message Broker","level":"3.5","depth":1,"path":"MessageBroker.md","ref":"MessageBroker.md","articles":[{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"path":"MessageBroker-ActiveMQ.md","ref":"MessageBroker-ActiveMQ.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"MessageBroker-ActiveMQ.md","mtime":"2017-08-03T12:02:45.460Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-14T14:09:35.394Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"next":{"title":"Provenance Service","level":"4.1","depth":1,"path":"Provenance-Service.md","ref":"Provenance-Service.md","articles":[]},"previous":{"title":"Message Broker","level":"3.5","depth":1,"path":"MessageBroker.md","ref":"MessageBroker.md","articles":[{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"path":"MessageBroker-ActiveMQ.md","ref":"MessageBroker-ActiveMQ.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"MessageBroker-ActiveMQ.md","mtime":"2017-08-21T14:08:22.098Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-21T14:10:21.830Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
