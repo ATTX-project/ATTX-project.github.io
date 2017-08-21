@@ -388,7 +388,7 @@ The script will ask you for a password, which will be the password of your CSC a
 At this point, the only pre-requisite left is to import the CoreOS image to cPouta. Since Kontena is based on [CoreOS](https://coreos.com/) and cPouta image catalogue doesn’t include a CoreOS image, you'll have to download it and push it to cPouta. You can find the [instructions at CoreOS website](https://coreos.com/os/docs/latest/booting-on-openstack.html), just be sure to note down the name you
 
 ```
-$ glance image-create --name Core \
+$ glance image-create --name CoreOS \
 >   --container-format bare \
 >   --disk-format qcow2 \
 >   --file coreos_production_openstack_image.img
@@ -518,8 +518,8 @@ $ openstack stack show cpouta-grid
 
 ```
 
-And also, we can check whether we have new Kontena nodes and whether we can create a test Nginx service on:
-
+And also, we can check whether we have new Kontena nodes and whether we can create a test Nginx service:
+```
 $ kontena node ls
 NAME                             VERSION   STATUS   INITIAL   LABELS
 ⊛ cpouta-grid-node-2.novalocal   1.3.4     online   1 / 3     -
