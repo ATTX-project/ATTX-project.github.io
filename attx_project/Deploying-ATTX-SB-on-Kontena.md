@@ -133,11 +133,11 @@ In this trial, we have created two Kontena volumes in our attx grid, that will b
 
 With a Kontena infrastructure platform in place, it's time to deploy our ATTX Semenatic Broker service stack. In Kontena, these are configured in a [YAML file](https://www.kontena.io/docs/references/kontena-yml.html), which [supports most of of the Docker-Compose v2 variables](https://www.kontena.io/docs/references/docker-compose-support.html) but with a structure similar (e.g. in volume declaration) to [Docker Compose v3 YML](https://docs.docker.com/compose/compose-file/).
 
-In practice (after some trial and error, but also with friendly help from Kontena staff), starting with [the Docker Compose v3 YAML file that we use with Docker Swarm](https://github.com/ATTX-project/platform-deployment/blob/dev/swarm-mode-cpouta/attx-swarm.yml), we were able to create a Kontena stack file ([attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml)), which we could deploy as following:
+In practice (after some trial and error, but also with friendly help from Kontena staff), starting with [the Docker Compose v3 YAML file that we use with Docker Swarm](https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/attx-kontena.yml), we were able to create a Kontena stack file ([attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/attx-kontena.yml)), which we could deploy as following:
 
 `$ kontena stack install --name attx attx-kontena.yml`
 
-And verify its basic properties, as configured in [attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/attx-kontena.yml):
+And verify its basic properties, as configured in [attx-kontena.yml](https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/attx-kontena.yml):
 
 ```shell
 $ kontena stack ls
@@ -362,7 +362,7 @@ Success :-) Though this wasn't a complicated exercise, using Kontena to deploy t
 ### Deploying Kontena on CSC's Open Stack (cPouta)
 
 
-Hereby, we exemplify how to deploy a Kontena master, grid, and 3 nodes to CSC's Open Stack (cPouta), using [ready-made Openstack HEAT templates](https://github.com/ATTX-project/platform-deployment/tree/feature-kontena/attx-kontena/cpouta). For this exercise you will need:
+Hereby, we exemplify how to deploy a Kontena master, grid, and 3 nodes to CSC's Open Stack (cPouta), using [ready-made Openstack HEAT templates](https://github.com/ATTX-project/platform-deployment/tree/dev/attx-kontena/cpouta). For this exercise you will need:
 
 1. [A CSC user account](https://research.csc.fi/csc-guide-getting-access-to-csc-services)
 2. [A cPouta project](https://research.csc.fi/pouta-application)
@@ -403,14 +403,14 @@ $ glance image-create --name CoreOS \
 
 #### Kontena Master
 
-Now we are almost ready to install the Kontena master with a [ready-made HEAT template](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/cpouta/heat-kontena-master.yml). We just need to generate its SSL certificate:
+Now we are almost ready to install the Kontena master with a [ready-made HEAT template](https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/cpouta/heat-kontena-master.yml). We just need to generate its SSL certificate:
 
 ```shell
 $ openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
 $ cat certificate.crt privateKey.key > kontena_master.pem
 ```
 
-Recommendation: generate Kontena master SSL certificate in the same folder where you downloaded the [HEAT templates](https://github.com/ATTX-project/platform-deployment/tree/feature-kontena/attx-kontena/cpouta).
+Recommendation: generate Kontena master SSL certificate in the same folder where you downloaded the [HEAT templates](https://github.com/ATTX-project/platform-deployment/tree/dev/attx-kontena/cpouta).
 
 Before installing Kontena master with the HEAT template, we should edit its parameters header in order to fit our cPouta project environment (the image name, for example):
 
@@ -498,7 +498,7 @@ Each Kontena grid has its own token, so be sure to retrieve it as well (the grid
 $ kontena grid show --token cpouta-grid
 <GRID_TOKEN>
 ```
-At this point, we should edit the [HEAT template for creating the grid services and nodes](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/cpouta/heat-grid.yml), and make sure that the values of the parameters matches the ones that were used used for creating the Master.
+At this point, we should edit the [HEAT template for creating the grid services and nodes](https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/cpouta/heat-grid.yml), and make sure that the values of the parameters matches the ones that were used used for creating the Master.
 
 Once that's in place, we can then install the Kontena grid services and nodes:
 
