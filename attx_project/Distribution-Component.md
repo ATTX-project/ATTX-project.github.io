@@ -10,3 +10,6 @@ The Distribution Component is composed of:
 * [ElasticSearch 5.x](ElasticSearch-5.md) which provides the latest functionality in order to index data as plain JSON \(after applying a JSON-LD frame\), JSON-LD or capturing logs.
 
 More on data indexing see: [Graph-Manager-API](Graph-Manager-API.md)
+
+### References
+* SOLR vs ElasticSearch http://solr-vs-elasticsearch.com/

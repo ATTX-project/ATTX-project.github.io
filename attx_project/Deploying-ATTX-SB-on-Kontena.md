@@ -43,8 +43,10 @@ Given the growing complexity of the ATTX Semantic Broker application stack, we d
 
 Kontena's CLI (Command Line Interface) [requires Ruby 2.1 or latest](https://www.ruby-lang.org/en/documentation/installation/). With Ruby in place, installing Kontena in Ubuntu 16.04 LTS is quite straightforward:
 
-`$ gem install --user-install kontena-cli`
-`$ export PATH=$PATH:/home/<username>/.gem/ruby/2.3.0/bin`
+```
+$ gem install --user-install kontena-cli
+$ export PATH=$PATH:/home/<username>/.gem/ruby/2.3.0/bin
+```
 
 Alternatively if running MacOS, [there is an installer available](https://github.com/kontena/kontena/releases/latest).
 
@@ -349,27 +351,252 @@ drwx------. 2 999 rkt-admin     4096 Aug  3 13:53 performance_schema
 drwx------. 2 999 rkt-admin     4096 Aug  3 13:54 unified_views
 ```
 
-Success :-) Though this wasn't a complicated exercise, using Kontena to deploy the ATTX SB stack in a mixed Digital Ocean and Vagrant environment is quite easy (at least compared to setting up similar environement using Docker Swarm).
+Success :-) Though this wasn't a complicated exercise, using Kontena to deploy the ATTX SB stack in a mixed Digital Ocean and Vagrant environment is quite easy (at least compared to setting up a similar environment using Docker Swarm).
 
 
-### Deploying Kontena on CSC Open Stack (cPouta)
+### Deploying Kontena on CSC's Open Stack (cPouta)
 
-Work in progress.
+
+Hereby, we exemplify how to deploy a Kontena master, grid, and 3 nodes to CSC's Open Stack (cPouta), using [ready-made Openstack HEAT templates](https://github.com/ATTX-project/platform-deployment/tree/feature-kontena/attx-kontena/cpouta). For this exercise you will need:
+
+1. [A CSC user account](https://research.csc.fi/csc-guide-getting-access-to-csc-services)
+2. [A cPouta project](https://research.csc.fi/pouta-application)
+3. [The SSH certificate used by your cPouta project](https://research.csc.fi/pouta-connecting-a-virtual-machine)
+4. OpenStack CLI tools
+5. Sourcing cPouta's environment variables
+6. Importing CoreOS image
+
+We assume that 1., 2., and 3., have been satisfied, i.e. that we already have a CSC user account, a cPouta project, and have generated and downloaded our project's SSH certificate.
+
+## Pre-Requisites
+
+Once we have your CSC user account and cPouta project up and and running, we'll need to install the OpenStack CLI. In Ubuntu, this can be done with the "apt" tool:
+
+```
+$ sudo apt-get install python-openstackclient python-novaclient python-neutronclient python-glanceclient python-cinderclient
+```
+
+Otherwise, if you prefer you can [install the OpenStack CLI tools using PIP](https://research.csc.fi/pouta-install-client).
+
+With the OpenStack CLI tools in place, it's now time to configure the terminal environment (e.g. BASH) and authenticate to cPouta, so that we can interact with CSC's OpenStack via command line. All cPouta projects have their authentication script available for download at their "[Access and Security](https://pouta.csc.fi/dashboard/project/access_and_security/api_access/openrc/)" dashboard panel.
+
+After downloading the authentication script, we can source the environment variables and login to cPouta:
+
+```
+$ source <your_cpouta_project_name>-openrc.sh
+```
+The script will ask you for a password, which will be the password of your CSC account.
+
+At this point, the only pre-requisite left is to import the CoreOS image to cPouta. Since Kontena is based on [CoreOS](https://coreos.com/) and cPouta image catalogue doesn’t include a CoreOS image, you'll have to download it and push it to cPouta. You can find the [instructions at CoreOS website](https://coreos.com/os/docs/latest/booting-on-openstack.html), just be sure to note down the name you
+
+```
+$ glance image-create --name CoreOS \
+>   --container-format bare \
+>   --disk-format qcow2 \
+>   --file coreos_production_openstack_image.img
+```
 
 #### Kontena Master
+
+Now we are almost ready to install the Kontena master with a [ready-made HEAT template](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/cpouta/heat-kontena-master.yml). We just need to generate its SSL certificate:
+
+```
+$ openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
+$ cat certificate.crt privateKey.key > kontena_master.pem
+```
+
+Recommendation: generate Kontena master SSL certificate in the same folder where you downloaded the [HEAT templates](https://github.com/ATTX-project/platform-deployment/tree/feature-kontena/attx-kontena/cpouta).
+
+Before installing Kontena master with the HEAT template, we should edit its parameters header in order to fit our cPouta project environment (the image name, for example):
+
+```
+parameters:
+  key_name:
+    type: string
+    default: Cpouta Test
+    # replace above with your key pair name as per: https://pouta.csc.fi/dashboard/project/access_and_security/
+  az:
+    type: string
+    default: nova
+    # above should be nova
+  public_network:
+    type: string
+    default: project_2000561
+    # replace the above with your project_name / tenant name e.g project_2000561
+  public_ip_pool:
+    type: string
+    default: public
+    # above should be public
+  name:
+    type: string
+    default: kontena-master
+    # this can stay as kontena-master
+  volume_size:
+    type: number
+    default: 20
+  image:
+    type: string
+    default: CoreOS
+    # the above should be the name you gave to the CoreOS image in cPouta
+```
+
+So now that we have Kontena's master SSL certificate and parameters in place, we can proceed with its installation:
+
+```
+$ openstack stack create --parameter image=CoreOS --template heat-kontena-master.yml Kontena-Master
+```
+And then check the installation status:
+
+```
+$ openstack stack list
++--------------------------------------+----------------+-----------------+----------------------+--------------+
+| ID                                   | Stack Name     | Stack Status    | Creation Time        | Updated Time |
++--------------------------------------+----------------+-----------------+----------------------+--------------+
+| 0e74c0f1-cd21-4903-8ce8-2c66649ec05d | Kontena-Master | CREATE_COMPLETE | 2017-08-02T15:10:39Z | None         |
++--------------------------------------+----------------+-----------------+----------------------+--------------+
+```
+
+We can also test the SSH conection to the Kontena Master (be sure to [double check Kontena Master public floating IP](https://pouta.csc.fi/dashboard/project/instances/):
+
+```
+$ export SSL_IGNORE_ERRORS=true
+$ ssh -i ~/.ssh/<cpouta_project_key>.pem core@<kontena_master_floating_public_ip>
+```
+
+It's also a good idea to retrieve and write down the initial admin code of our new Kontena master, so that we can register our local Kontena CLI to it:
+```
+$ openstack stack show Kontena-Master
+| outputs               | - description: Initial admin code                                                                                                |
+|                       |   output_key: initial_admin_code                                                                                                 |
+|                       |   output_value: <INITIAL_ADMIN_CODE>
+
+
+$ kontena master login --code <INITIAL_ADMIN_CODE> https://<kontena_master_floating_public_ip>:8443  
+```
+
+
+
+
 #### Kontena grid and nodes
-#### Kontena volumes
+
+With a Kontena master in place, and with our local Kontena CLI registred into it, we can create a grid and deploy nodes:
+
+```
+$ kontena grid create --initial-size=3 cpouta-grid
+ [done] Creating cpouta-grid grid      
+ [done] Switching scope to cpouta-grid grid    
+```
+
+Each Kontena grid has its own token, so be sure to retrieve it as well (the grid token will be needed to deploy the nodes into the grid with the HEAT template)
+
+```
+$ kontena grid show --token cpouta-grid
+<GRID_TOKEN>
+```
+At this point, we should edit the [HEAT template for creating the grid services and nodes](https://github.com/ATTX-project/platform-deployment/blob/feature-kontena/attx-kontena/cpouta/heat-grid.yml), and make sure that the values of the parameters matches the ones that were used used for creating the Master.
+
+Once that's in place, we can then install the Kontena grid services and nodes:
+
+```
+$ openstack stack create --parameter grid_name=<grid_name> --parameter kontena_master_uri=https://<master_public_ip>:8443 --parameter grid_token='<grid_token>' --parameter image=CoreOS -t heat-grid.yml <grid_name>
+
+```
+
+And after a few minutes, confirm that the installation was successful:
+
+```
+$ openstack stack show cpouta-grid
++-----------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| Field                 | Value                                                                                                                         |
++-----------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| id                    | 847453da-ebcf-493d-8770-fa8b2d575b0e                                                                                          |
+| stack_name            | cpouta-grid                                                                                                                   |
+| description           | Heat template to setup multi AZ grid                                                                                          |
+|                       |                                                                                                                               |
+| creation_time         | 2017-08-18T10:21:08Z                                                                                                          |
+| updated_time          | None                                                                                                                          |
+| stack_status          | CREATE_COMPLETE                                                                                                               |
+| stack_status_reason   | Stack CREATE completed successfully                                                                                           |
+
+```
+
+And also, we can check whether we have new Kontena nodes and whether we can create a test Nginx service:
+```
+$ kontena node ls
+NAME                             VERSION   STATUS   INITIAL   LABELS
+⊛ cpouta-grid-node-2.novalocal   1.3.4     online   1 / 3     -
+⊛ cpouta-grid-node-1.novalocal   1.3.4     online   2 / 3     -
+⊛ cpouta-grid-node-3.novalocal   1.3.4     online   3 / 3     -
+
+
+$ kontena service deploy nginx
+ [done] Deploying service nginx      
+⊛ Deployed instance cpouta-grid/null/nginx-1 to node cpouta-grid-node-3.novalocal
+madeira@lx6-hulib-2:~/workspace/ATTX/cPouta$ kontena node ls
+NAME                             VERSION   STATUS   INITIAL   LABELS
+⊛ cpouta-grid-node-2.novalocal   1.3.4     online   1 / 3     -
+⊛ cpouta-grid-node-1.novalocal   1.3.4     online   2 / 3     -
+⊛ cpouta-grid-node-3.novalocal   1.3.4     online   3 / 3     -
+
+$ kontena service ls
+NAME      INSTANCES   STATEFUL   STATE     EXPOSED PORTS
+⊝ nginx   1 / 1       no         running   0.0.0.0:80->80/tcp
+
+$ kontena service show nginx
+instances:
+    nginx/1:
+      scheduled_to: cpouta-grid-node-3.novalocal
+      deploy_rev: 2017-08-18 10:29:34 UTC
+      rev: 2017-08-18 10:29:34 UTC
+      state: running
+      containers:
+        nginx-1 (on cpouta-grid-node-3.novalocal):
+          dns: nginx-1.cpouta-grid.kontena.local
+          ip: 10.81.128.13
+          public ip: <node_public_ip>
+          status: running
+
+$ curl -k "<node_public_ip>"
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
+Conclusion: we have successfully deployed Kontena on cPouta :-)
+
 
 ## Conclusions
 
 Based in our trial, we can say that:
 - As a microservices orchestration and management platform, Kontena is quite user-friendly, especially given its focus on service management instead of container management;
-- [Kontena's grid](https://www.kontena.io/docs/using-kontena/grids.html) infrastructure concept is quite convenient for the deployment,  management, and development of a microservices application stack, given not only it  includes Service Discovery, load balancing, overlay and VPN networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;
+- [Kontena's grid](https://www.kontena.io/docs/using-kontena/grids.html) infrastructure concept is quite convenient for the deployment, management, and development of a microservices application stack, given not only it  includes Service Discovery, load balancing, overlay and VPN networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;
 - [Kontena Cloud](https://www.kontena.io/cloud) makes it easy to deploy, manage, audit, and follow the performance of the infrastructure and services;
-- [Volume management in Kontena](https://www.kontena.io/docs/using-kontena/volumes.html) is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them - It would be nice to be able to use something like ```kontena digitalocean volume create```. );
+- [Volume management in Kontena](https://www.kontena.io/docs/using-kontena/volumes.html) is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it's up to the user to deploy and configure them - It would be nice to be able to use something like ```kontena digitalocean volume create```);
 - Kontena's stacks aren't exactly the same as Docker Compose stacks, and there's no conversion tool available. Reference to [Kontena's stack documentation](https://www.kontena.io/docs/references/kontena-yml.html) is advised. Expect some trial and error when editing complex Docker Compose YML files into Kontena YML.
 - Technical support from Kontena is to-the-point and quite friendly, and since it's provided by Kontena's development team, it gives it the feeling of being "by developers for developers".
-- Kontena's Vagrant and Digital Ocean plugins are quite easy to use,  and make it possible to store important data (e.g. UnifiedViews MySQL database) in cloud-based block storage volumes.
+- Kontena's Vagrant and Digital Ocean plugins are quite easy to use, and make it possible to store important data (e.g. UnifiedViews MySQL database) in cloud-based block storage volumes.
 
 ## References
 * [Kontena](https://www.kontena.io/)

@@ -8,8 +8,8 @@ Overview based on:
 |----------------------------------------------------------------------------------------------------------|----|-----------|----------|
 | [Apache Kafka](http://kafka.apache.org/)                                                                 | ✔️️  | ✔️️         | ✔️️        |
 | [NATS](http://www.nats.io/)                                                                              |    |           |          |
-| [Active MQ](http://activemq.apache.org/) with "new" version [Appolo](http://activemq.apache.org/apollo/) | ✔️️  | ✔️️         | ✔️️        |
-| [RabbitMQ](https://www.rabbitmq.com/)                                                                    |    |           |          |
+| [Active MQ](http://activemq.apache.org/) | ✔️️  | ✔️️         | ✔️️  (using [hawt.io](http://hawt.io))      |
+| [RabbitMQ](https://www.rabbitmq.com/)                                                                    |  ✔️️  |      ✔️️     |     ✔️️     |
 | [Celery](http://www.celeryproject.org/)                                                                  |    |           |          |
 | [nsq.io](http://nsq.io/)                                                                                 | ✔️️  | ✔️️         | ~        |
 | [ZeroMQ](http://zeromq.org/)                                                                             | ✔️️  | ~         | ~        |

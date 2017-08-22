@@ -7,7 +7,7 @@
         <title>UC3 - Metax · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="generator" content="GitBook 3.2.3">
         
         
         
@@ -100,7 +100,7 @@
                 <a href="./">
             
                     
-                    Introduction
+                    ATTX Project
             
                 </a>
             
@@ -618,6 +618,19 @@
             
         </li>
     
+        <li class="chapter " data-level="4.2" data-path="RML-Service.html">
+            
+                <a href="RML-Service.html">
+            
+                    
+                    RML Service
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -995,38 +1008,24 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 19-May-2017 13:47:43</div></div><h1 id="proposal-use-case-metax-in-finnish">(Proposal) Use case Metax (in Finnish)</h1>
-<p>Osallistuja toimii ATTX-hankkeessa k&#xE4;ytt&#xF6;tapausosallistujan roolissa. Tuloksena on  ensimm&#xE4;inen konkreettinen k&#xE4;ytt&#xF6;tapaus, joka hy&#xF6;dynt&#xE4;&#xE4; uutta ATT-metatietomallia. Malli on kuvattu IOW-palvelussa ja l&#xF6;ytyy osoitteesta <a href="http://iow.csc.fi/model/att/" target="_blank">http://iow.csc.fi/model/att/</a>.</p>
-<p>Yhteisty&#xF6;n tavoitteena on testata ja analysoida ATT:n metatietomallin toimivuutta ja yhteensopivuutta k&#xE4;yt&#xF6;ss&#xE4; olevien j&#xE4;rjestelmien kanssa. Tuloksia voidaan h&#xF6;ydynt&#xE4;&#xE4; osana ATT-metatietoty&#xF6;ryhm&#xE4;n toimintaa sek&#xE4; Metax-projektia.</p>
-<p>Yhteisty&#xF6;n tuloksena toteutetaan:</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 18-Aug-2017 12:45:19</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
+
+<h1 id="use-case-metax">Use case Metax</h1>
+<p>Metax project aims to transform the data storage layer of the research data related services such as <a href="https://etsin.avointiede.fi/" target="_blank">Etsin</a> and IDA by creating a centralized data service that is used by all the related services. Migration of existing solutions to the new centralized model also requires migration of data. ATT initiative has created a new model for research data catalogs, which is maintained in IOW service (<a href="http://iow.csc.fi/model/att/" target="_blank">http://iow.csc.fi/model/att/</a>). The current idea is that the new model should also form the basis for the data managed in Metax, and therefore existing data must be converted to the new ATT model as part of the migration process.</p>
+<h2 id="approach">Approach</h2>
+<p>The goal of the ATTX Metax use case is to test and analyse the potential mappings from existing data to the new ATT model and the status and suitability of the new ATT model itself through prototyping. These prototypes will be implemented using ATTX components and configurations. Results of the use case should be beneficial both to the working group that is responsible for developing the model as well as to the project group in charge of implementing the migration of the existing data.</p>
+<p>Implementation of this use case might be affected by the progress and schedule of the Metax project itself. For example if Metax project reaches the data migration phase before ATTX implementation, it might be good to change the plan for the use case or drop it completely.</p>
+<h2 id="deliverables">Deliverables</h2>
+<p>List of initial deliverables:</p>
 <ul>
-<li>ATTX-alustan ominaisuus, joka mahdollistaa monimutkaisten mappausten toteuttamisen. Ominaisuutta tarvitaan Etsimen tietuetyyppisen (Record) datan muuntamisessa ATT-tietomallin mukaiseksi dataksi, joka koostuu useista toisiinsa linkitetyist&#xE4; identifioiduista resursseista (LinkedData).<ul>
-<li>ATTX-hanke</li>
+<li>ATTX feature that allows users to make complicated mappings. Mapping key-value type data records from Etsin service to the linked data based ATT model with multiple identifiable resources/records requires more complex tools than the other use cases.</li>
+<li>ATTX feature, which allows efficient distribution of RDF data. This can be implemented for example using LinkedDataFragments.</li>
+<li>ATTX feature, which validates selected data using data model description available from the IOW service. Descriptions can be for example JSON schemas or SHACL documents.</li>
+<li>Documention of mapping from Etsin (and IDA?) data to the new ATT model.</li>
+<li>PoC level implementation of Etsin (and IDA) data mapping to the new ATT model.</li>
 </ul>
-</li>
-<li>ATTX-alustan toiminnallisuus, joka mahdollistaa RDF-datan jakamisen julkisen rajapinnan (esim. LinkedDataFragments) avulla.<ul>
-<li>ATTX-hanke</li>
-</ul>
-</li>
-<li>ATTX-alustan ominaisuus, joka mahdollistaa datan validoinnin IOW:st&#xE4; haettujen tietomallikuvausten avulla.<ul>
-<li>ATTX-hanke ja CSC</li>
-</ul>
-</li>
-<li>Kuvaus Etsin (ja IDA?) j&#xE4;rjestelmien tietojen mappauksesta ATT:n metatietomalliin.<ul>
-<li>ATTX-hanke ja CSC</li>
-</ul>
-</li>
-<li>Etsin (ja IDA?) datan mappaus ATT:n tietomalliin.<ul>
-<li>ATTX-hanke ja CSC</li>
-</ul>
-</li>
-</ul>
-<p>K&#xE4;ytt&#xF6;tapauksessa tuotettavia datasetteja voidaan potentiaalisesti linkitt&#xE4;&#xE4; muissa k&#xE4;ytt&#xF6;tapauksissa toteutettuihin CRIS-pohjaisiin datasetteihin (esim. julkaisut, projektit, infrat).</p>
-<p>Toteutusta pilotoidaan SMEAR-aineistolla ja siihen liittyv&#xE4;ll&#xE4; metatiedolla. Kyseisen aineiston k&#xE4;ytt&#xF6;&#xF6;n on saatu lupa X?.</p>
-<p>TODO:
-Esimerkki Etsimen ja IDAn tietojen mappamisesta ATT-malliin.</p>
-<p>Seuraavaksi:
-Tapaaminen CSC:n kanssa 10.3.</p>
+<h2 id="mappings">Mappings</h2>
+<h2 id="implementation">Implementation</h2>
 
                                 
                                 </section>
@@ -1070,7 +1069,7 @@ Tapaaminen CSC:n kanssa 10.3.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"next":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"path":"Use-case-Mildred.md","ref":"Use-case-Mildred.md","articles":[]},"previous":{"title":"UC2 - Parallel Publication Dashboard","level":"1.2.2","depth":2,"path":"Use-case-Jyvaskyla.md","ref":"Use-case-Jyvaskyla.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Metax.md","mtime":"2017-08-03T12:02:45.523Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-08-14T14:09:35.394Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"next":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"path":"Use-case-Mildred.md","ref":"Use-case-Mildred.md","articles":[]},"previous":{"title":"UC2 - Parallel Publication Dashboard","level":"1.2.2","depth":2,"path":"Use-case-Jyvaskyla.md","ref":"Use-case-Jyvaskyla.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Metax.md","mtime":"2017-08-21T14:08:22.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-22T05:59:44.490Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
