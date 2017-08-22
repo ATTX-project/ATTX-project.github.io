@@ -371,7 +371,7 @@ Hereby, we exemplify how to deploy a Kontena master, grid, and 3 nodes to CSC's 
 5. Sourcing cPouta's environment variables
 6. Importing CoreOS image
 
-We assume that 1., 2., and 3., have been satisfied, i.e. that we already have a CSC user account, a cPouta project, and have generated and downloaded our project's SSH certificate.
+We assume that 1., 2., and 3., have been satisfied, i.e. that we already have a CSC user account, a cPouta project, and have generated and downloaded the project's SSH certificate.
 
 ## Pre-Requisites
 
@@ -392,7 +392,7 @@ $ source <your_cpouta_project_name>-openrc.sh
 ```
 The script will ask you for a password, which will be the password of your CSC account.
 
-At this point, the only pre-requisite left is to import the CoreOS image to cPouta. Since Kontena is based on [CoreOS](https://coreos.com/) and cPouta image catalogue doesn’t include a CoreOS image, you'll have to download it and push it to cPouta. You can find the [instructions at CoreOS website](https://coreos.com/os/docs/latest/booting-on-openstack.html), just be sure to note down the name you
+At this point, the only pre-requisite left is to import the CoreOS image to cPouta. Since Kontena is based on [CoreOS](https://coreos.com/) and cPouta image catalogue doesn’t include a CoreOS image, you'll have to download it and push it to cPouta. You can find the [instructions at CoreOS website](https://coreos.com/os/docs/latest/booting-on-openstack.html), just be sure to note down the name you chose for the image.
 
 ```shell
 $ glance image-create --name CoreOS \
@@ -445,7 +445,7 @@ parameters:
     # the above should be the name you gave to the CoreOS image in cPouta
 ```
 
-So now that we have Kontena's master SSL certificate and parameters in place, we can proceed with its installation:
+So now that we have Kontena's master SSL certificate and parameters in place, we can proceed with the installation:
 
 ```shell
 $ openstack stack create --parameter image=CoreOS --template heat-kontena-master.yml Kontena-Master
@@ -484,7 +484,7 @@ $ kontena master login --code <INITIAL_ADMIN_CODE> https://<kontena_master_float
 
 #### Kontena grid and nodes
 
-With a Kontena master in place, and with our local Kontena CLI registred into it, we can create a grid and deploy nodes:
+With our local Kontena CLI registered to the Kontena master, we can create a grid and deploy nodes:
 
 ```shell
 $ kontena grid create --initial-size=3 cpouta-grid
