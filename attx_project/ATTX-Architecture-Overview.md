@@ -5,6 +5,7 @@ The following components are part of the ATTX architecture.
 * [Graph Component](#graph-component)
 * [Distribution Component](#distribution-component)
 * [Semantic Broker Deployment](#platform-deployment)
+* [Message Broker](#message-broker)
 * [Service Discovery](#service-discovery)
 
 ![Figure 1. ATTX Platform Architecture](images/platform_architecture.png)
@@ -13,7 +14,7 @@ Figure 1. ATTX Semantic Broker Architecture
 
 ATTX Semantic Broker is composed of a collection of loosely coupled services, which implement several broker-like capabilities. Example of such services are illustrated in: **[Microservices Architecture](#microservices-example)**.
 
-Given that there are a collection of such services, we can still identify three core components under which we can cluster the services: **Workflow Component**, **Graph Component**, **Distribution Component** while the **Service Discovery** and the **Semantic Broker Deployment** gather all of them together in order to provide them as a individual services or as a platform. The communication and contracts between the components is specified in [Service Discovery](#service-discovery).
+Given that there are a collection of such services, we can still identify three core components under which we can cluster the services: **Workflow Component**, **Graph Component**, **Distribution Component** while the **Service Discovery** and the **Semantic Broker Deployment** gather all of them together in order to provide them as a individual services or as a platform. The communication and contracts between the components is specified in [Message Broker](#message-broker).
 
 ## Terminology and Acronyms
 
@@ -60,7 +61,14 @@ This ATTX Semantic Broker Deployment describes the necessary steps for setting u
 
 ## Service Discovery
 
-There are two versions to the service discovery/inter-component communication illustrated below:
+Service Discovery is part of the ATTX Semantic Broker core components as it addresses the need to deal with with static and manual configuration of components and at the same time the need to scale up the (micro)services offered by the broker.
+More details at:
+* [Service Discovery Implementation](ServiceDiscovery-Implementation.md)
+* [Service Discovery Solutions Overview](Service-Discovery-Solutions.md)
+
+## Message Broker
+
+There are two versions to the service discovery/inter-component communication illustrated below, both of them can adhere to a message based communication (mostly asynchronous) or REST-API based communication (mostly synchronous) or a combination of both.
 
 ![Figure 2. Version 1 of Inter-component Communication](images/v1.1-intercomponent_communication.svg)
 
@@ -76,7 +84,7 @@ Figure 3. Version 2 with Service discovery and processing services
 
 We chose UnifiedViews as a default interface for the [Workflow Component](Workflow-Component.md) however other ETL tools can be considered as long as they provide the necessary framework for extracting provenance(e.g. https://nifi.apache.org/ or https://github.com/spotify/luigi or http://www.dswarm.org/ etc. - see [Workflow Management Tools](Workflow-Management-Tools.md) ).
 
-While the communication between components is implemented using messaging middleware component such as ActiveMQ or RabbitMQ -  see [Messaging Broker Solutions](Messaging-Brokers-Solutions.md) - the communication between components does not have to be real time.
+While the communication between components is implemented using messaging middleware component such as ActiveMQ or RabbitMQ -  see [Message Broker](MessageBroker.md) - the communication between components does not have to be real time.
 
 ## Microservices Example
 
