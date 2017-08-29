@@ -30,16 +30,18 @@ The sequence of messages below are meant to illustrate a series of services that
             "type": "WorkflowExecution",
             "startTime": "2017-08-02T13:52:29+02:00"
         },
-        "input": {
-              "inputDataset": {
-                "role": "Dataset"                
-              }
-        },              
-        "output": {
-              "outputDataset": {
-                "role": "Dataset"
-              }
-        }        
+        "input": [
+          {
+            "key": "inputDataset",
+            "role": "Dataset"
+          }
+        ],
+        "output": [
+          {
+            "key": "outputDataset",
+            "role": "Dataset"
+          }
+        ]
     },
     "payload": {
         "inputDataset": "http://dataset/1",
@@ -108,16 +110,18 @@ attx:workflowingestionwf_activity1_outputDataset a prov:Entity ;
             "endTime": "2017-08-02T13:52:29+02:00",
             "status": "SUCCESS"
         },
-        "input": {
-              "harvestConfiguration": {
-                "role": "StepConfiguration"
-              }
-        },              
-        "output": {
-              "harvestedContent": {
-                "role": "DatasetContent"
-              }
-        }        
+        "input": [
+          {
+            "key": "harvestConfiguration",
+            "role": "StepConfiguration"
+          }
+        ],
+        "output": [
+          {
+            "key": "harvestedContent",
+            "role": "DatasetContent"
+          }
+        ]       
     },
     "payload": {
         "harvestConfiguration": {
@@ -198,18 +202,23 @@ attx:workflowingestionwf_activity1_harvestedContent a prov:Entity .
                 {
                     "agent": "RMLService",
 		    "role": "transformer",
-		    "input": {}
+		    "input": []
                 }
             ]
         },
-        "input": {
-            "harvestedContent": {}
-        },
-        "output": {
-              "transformerData": {
-                "role": "tempDataset"
-              }
-        }                      
+
+        "input": [
+          {
+            "key": "harvestedContent",
+            "role": ""
+          }
+        ],
+        "output": [
+          {
+            "key": "transformerData",
+            "role": "tempDataset"
+          }
+        ]                      
     },
 	"payload": {}
 }
@@ -281,16 +290,18 @@ attx:workflowingestionwf_activity1_transformerData a prov:Entity .
             "endTime": "2017-08-02T13:52:29+02:00",
             "status": "SUCCESS"
         },
-        "input": {
-            "inputGraphs": {
-                "role": "inputGraphs"
-            }
-        },
-        "output": {
-              "transformerData": {
-                "role": "tempDataset"
-              }
-        }
+        "input": [
+          {
+            "key": "inputGraphs",
+            "role": "inputGraphs"
+          }
+        ],
+        "output": [
+          {
+            "key": "transformerData",
+            "role": "tempDataset"
+          }
+        ]                        
     },
     "payload": {
         "inputGraphs": "attx:dataset1",
@@ -364,20 +375,25 @@ attx:workflowingestionwf_activity1_transformerData a prov:Entity ;
                 {
                     "agent": "GMAPI" ,
                     "role": "storage",
-		    "input": {}
-                }
-            ]
-        },
-        "input": {
-              "transformerData": {
-                "role": "tempDataset"
-              }
-        },
-        "output": {
-            "outputDataset": {
-                "role": "Dataset"
-            }
-        }    
+    		            "input": [
+                      {
+                        "key": "",
+                        "role": ""
+                      }
+                    ]
+        }],
+        "input": [
+          {
+            "key": "transformerData",
+            "role": "tempDataset"
+          }
+        ],
+        "output": [
+          {
+            "key": "outputDataset",
+            "role": "Dataset"
+          }
+        ]                         
     },
    "payload": {
        "transformerData": "attx:tempDataset",
@@ -461,16 +477,18 @@ attx:workflowingestionwf_activity1_transformerData a prov:Entity ;
             "type": "WorkflowExecution",
             "endTime": "2017-08-02T13:52:29+02:00"
         },
-        "input": {
-              "inputDataset": {
-                "role": "Dataset"
-              }
-        },              
-        "output": {
-              "outputDataset": {
-                "role": "Dataset"
-              }
-        }        
+        "input": [
+          {
+            "key": "inputDataset"
+            "role": "Dataset"
+          }
+        ],
+        "output": [
+          {
+            "key": "outputDataset"
+            "role": "Dataset"
+          }
+        ]                                         
     },
     "payload": {
         "inputDataset": "http://dataset/1",
@@ -538,11 +556,12 @@ attx:workflowingestionwf_activity1_outputDataset a prov:Entity ;
             "endTime": "2017-08-02T13:52:29+02:00",
             "status": "SUCCESS"
         },
-        "input": {
-            "inputGraphs": {
-                "role": "inputGraphs"
-            }
-        }
+        "input": [
+          {
+            "key": "inputGraphs",
+            "role": "inputGraphs"
+          }
+        ]        
     },
     "payload": {
         "inputGraphs": "attx:dataset1"
@@ -600,11 +619,12 @@ attx:workflowingestionwf_activity1_inputGraphs a prov:Entity ;
             "startTime": "2017-08-02T13:52:29+02:00",
             "endTime": "2017-08-02T13:52:29+02:00"
         },
-        "output": {
-              "outputDataset": {
-                "role": "Dataset"
-              }
-        }        
+        "input": [
+          {
+            "key": "outputDataset",
+            "role": "Dataset"
+          }
+        ]               
     },
     "payload": {
         "outputDataset": {
