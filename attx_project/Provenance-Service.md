@@ -375,13 +375,8 @@ attx:workflowingestionwf_activity1_transformerData a prov:Entity ;
                 {
                     "agent": "GMAPI" ,
                     "role": "storage",
-    		            "input": [
-                      {
-                        "key": "",
-                        "role": ""
-                      }
-                    ]
-        }],
+    		            "input": []
+        }]},
         "input": [
           {
             "key": "transformerData",
@@ -479,13 +474,13 @@ attx:workflowingestionwf_activity1_transformerData a prov:Entity ;
         },
         "input": [
           {
-            "key": "inputDataset"
+            "key": "inputDataset",
             "role": "Dataset"
           }
         ],
         "output": [
           {
-            "key": "outputDataset"
+            "key": "outputDataset",
             "role": "Dataset"
           }
         ]                                         
