@@ -30,7 +30,7 @@ Etsin is already a service that aggregates dataset metadata from different sourc
 
 When it comes to identifying which datasets are somehow related to the University of Helsinki, we will start with the simple methods that should have good precision but might not have acceptable recall, in order to get **some** data. It is however possible to extend to those methods with more complex internal processing.
 
-Use case is also featured as part of the OpenScienceFair 2017 in the poster session. ([poster proposal](https://attx-project.github.io/OSFair-2017.html)) 
+Use case is also featured as part of the OpenScienceFair 2017 in the poster session. ([poster proposal](https://attx-project.github.io/OSFair-2017.html))
 
 ## User stories
 
@@ -71,6 +71,14 @@ Getting all the UH related datasets using REST api can be implemented by first c
 
 When using OAI-PMH interface, owner organization is only references in the header part of the record. For example:
 https://etsin.avointiede.fi/oai?verb=GetRecord&identifier=urn:nbn:fi:csc-kata20170611202023598902&metadataPrefix=oai_dc
+
+*Game plan 1*
+
+* Harvest all organizations data and create org_unit -> parent_org_unit relationships
+* Use ontology to infer inverse relationships
+* Create a dataset of UH related Etsin organizations / Query for all UH related organizations.
+* Use harvesting API to get the updated records for every UH organization
+
 
 ### B2Share
 
