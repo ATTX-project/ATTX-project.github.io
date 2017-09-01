@@ -74,11 +74,152 @@ https://etsin.avointiede.fi/oai?verb=GetRecord&identifier=urn:nbn:fi:csc-kata201
 
 *Game plan 1*
 
-* Harvest all organizations data and create org_unit -> parent_org_unit relationships
+* Harvest all organizationnal data and create org_unit -> parent_org_unit relationships ()
 * Use ontology to infer inverse relationships
 * Create a dataset of UH related Etsin organizations / Query for all UH related organizations.
 * Use harvesting API to get the updated records for every UH organization
 
+
+**Datasets and pipelines**
+
+![Etsin datasets and pipelines](images/etsin-datasets.svg)
+
+**RML Mappings**
+
+Etsin organizations to internal model.
+
+
+
+```
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
+@prefix attx-work: <http://data.hulib.helsinki.fi/attx/work#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix etsin: <http://etsin.avointiede.fi/> .
+
+
+<etsin:orgs>
+  rml:logicalSource [
+    rml:source "https://etsin.avointiede.fi/api/3/action/organization_list?include_groups=True&all_fields=true&limit=10"  ;
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.result[*]"
+  ];
+
+
+  rr:subjectMap [
+    rr:template "etsin-org:{name}" ;
+    rr:class attx-work:Organization ;
+  ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:title;
+      rr:objectMap [
+        rml:reference "title"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:description;
+      rr:objectMap [
+        rml:reference "description"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:identifier;
+      rr:objectMap [
+        rml:reference "id" ;
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:setName;
+      rr:objectMap [
+        rml:reference "name" ;
+      ]
+    ];    
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:parentOrg;
+      rr:objectMap [
+        rr:template "etsin-org:{groups[*].name}" ;
+      ]
+    ];
+  .
+```
+
+Result sample
+
+```
+<etsin-org:02469-1054-karelia-1054-rehtorin-toimisto> a <http://data.hulib.helsinki.fi/attx/work#Organization> ;
+	<http://purl.org/dc/terms/title> "1054 Rehtorin toimisto" ;
+	<http://purl.org/dc/terms/identifier> "02469-1054" ;
+	<http://data.hulib.helsinki.fi/attx/work#parentOrg> <etsin-org:02469-karelia> ;
+	<http://data.hulib.helsinki.fi/attx/work#name> "02469-1054-karelia-1054-rehtorin-toimisto" .
+
+```
+
+Harvesting interface
+
+Source data with oai_dc metadata prefix.
+
+```
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
+@prefix attx-work: <http://data.hulib.helsinki.fi/attx/work#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix etsin: <http://etsin.avointiede.fi/> .
+@prefix etsin-ds: <http://etsin.avointiede.fi/dataset/> .
+@prefix oai: <http://www.openarchives.org/OAI/2.0/> .
+
+<etsin:datasets>
+  rml:logicalSource [
+    rml:source "https://etsin.avointiede.fi/oai?verb=ListRecords&set=01901-helsingin-yliopisto&metadataPrefix=oai_dc"  ;
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/*[local-name()='OAI-PMH']/*[local-name()='ListRecords']/*[local-name()='record']"
+  ];
+
+
+  rr:subjectMap [
+    rr:template "http://urn.fi/{*[local-name()='header']/*[local-name()='identifier']}" ;
+    rr:class attx-work:Dataset ;
+  ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:title;
+      rr:objectMap [
+        rml:reference "*[local-name()='metadata']/*[local-name()='dc']/*[local-name()='title']"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:owner;
+      rr:objectMap [
+        rr:template "etsin-org:{*[local-name()='header']/*[local-name()='setSpec']}"
+      ]
+    ];    
+.
+```
+
+Results
+
+```
+
+<http://urn.fi/urn%3Anbn%3Afi%3Acsc-kata20161121150636648833> a <http://data.hulib.helsinki.fi/attx/work#Dataset> ;
+	<http://purl.org/dc/terms/title> "DMPTuuli user survey raw data 2016" ;
+	<http://data.hulib.helsinki.fi/attx/work#owner> <etsin-org:01901-helsingin-yliopisto> .
+
+```
 
 ### B2Share
 
@@ -187,6 +328,137 @@ Harvesting is available using OAI-PMH protocol. Harvesting can be targeted using
 
 We can create another dataset that links communities to UH and use that to make the first broad classification of records.
 
+*Game plan*
+
+Since UH related data is distributed amongst different communities (i.e. there is no "UH" community), we can't limit our harvesting to any subset of communities, but we have go through all of them. We can either use the REST api to filter records via queries (e.g. publisher contains "helsinki") or first harvest all the records via OAI-PMH and do the filtering using internal processing. The best approach might be to use both.
+
+* Identify communities, which are directly related to UH, and harvest their data using OAI-PMH interface. -> zenodo-uh-communities-ds
+* Query all the other communities for potentially UH related data -> zenodo-uh-base-ds
+* Process zenodo-uh-related-ds internally to filter actually UH related data -> zenodo-uh-filtered-ds
+
+
+**Datasets and pipelines**
+
+![Midlred datasets and pipelines](images/mildred-datasets.svg)
+
+
+**RML Mappings**
+
+Community's datasets via OAI-PMH:
+
+```
+<etsin:datasets>
+  rml:logicalSource [
+    rml:source "https://zenodo.org/oai2d?verb=ListRecords&metadataPrefix=oai_datacite&set=user-hulib" ;    
+    rml:referenceFormulation ql:XPath ;
+    rml:iterator "/*[local-name()='OAI-PMH']/*[local-name()='ListRecords']/*[local-name()='record']/*[local-name()='metadata']/*[local-name()='oai_datacite']"
+  ];
+
+
+  rr:subjectMap [
+    rr:template "http://doi.org/{*[local-name()='payload']/*[local-name()='resource']/*[local-name()='identifier']}" ;
+    rr:class attx-work:Dataset ;
+  ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:title;
+      rr:objectMap [
+        rml:reference "*[local-name()='payload']/*[local-name()='resource']/*[local-name()='titles']/*[local-name()='title']"
+      ]
+    ];
+.
+
+```
+
+Result:
+
+```
+<http://doi.org/10.5281%2Fzenodo.10857> a <http://data.hulib.helsinki.fi/attx/work#Dataset> ;
+	<http://purl.org/dc/terms/title> "Research Goes On: Post-Observatory Astronomy Resources In Helsinki" .
+```
+
+Simple search through REST API:
+
+```
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
+@prefix attx-work: <http://data.hulib.helsinki.fi/attx/work#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix etsin: <http://etsin.avointiede.fi/> .
+
+
+<etsin:orgs>
+  rml:logicalSource [
+    rml:source "https://zenodo.org/api/records/?q=helsinki"  ;
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.hits.hits[*]"
+  ];
+
+
+  rr:subjectMap [
+    rr:template "http://doi.org/{doi}" ;
+    rr:class attx-work:Dataset ;
+  ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:title;
+      rr:objectMap [
+        rml:reference "metadata.title"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:description;
+      rr:objectMap [
+        rml:reference "metadata.description"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:identifier;
+      rr:objectMap [
+        rml:reference "id" ;
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:setName;
+      rr:objectMap [
+        rml:reference "communities[*].id" ;
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:isSupplementTo;
+      rr:objectMap [
+        rr:template "http://doi.org/{metadata.related_identifiers[?(@.relation=='isSupplementTo')].identifier}" ;
+      ]
+    ];    
+.
+```
+
+Results:
+
+```
+<http://doi.org/10.5281%2Fzenodo.30823> a <http://data.hulib.helsinki.fi/attx/work#Dataset> ;
+	<http://purl.org/dc/terms/title> "Information Practices of Clinical Researchers - New Services in New Time" ;
+	<http://purl.org/dc/terms/identifier> "30823" ;
+	<http://data.hulib.helsinki.fi/attx/work#setName> "hulib" ;
+	<http://purl.org/dc/terms/description> "test" .
+
+<http://doi.org/10.3897%2Fnatureconservation.8.6369.suppl3> a <http://data.hulib.helsinki.fi/attx/work#Dataset> ;
+	<http://purl.org/dc/terms/title> "test title 2" ;
+	<http://purl.org/dc/terms/identifier> "855230" ;
+	<http://purl.org/dc/terms/description> "Figure S2: Explanation note: The studied sites in August 2003: a) Top b) Grove c) Middle d) North." ;
+	<http://data.hulib.helsinki.fi/attx/work#isSupplementTo> <http://doi.org/10.3897%2Fnatureconservation.8.6369> .
+
+```
+
 ### Finto
 
 [Finto](http://finto.fi/en/) or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset describtion to provide linked data for complex queries and automatic inferencing of new data.
@@ -208,3 +480,5 @@ Features:
 * simple data quality analysis
 * Identifying dataset related to UH
 * Deduplication of dataset metadata available from multiple sources
+
+### Pipelines
