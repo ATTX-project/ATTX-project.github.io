@@ -1008,7 +1008,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 21-Aug-2017 11:21:52</div></div><p></p><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1><p></p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 29-Aug-2017 11:50:24</div></div><p></p><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1><p></p>
 <h1 id="provenance-service">Provenance Service</h1>
 <p>Github repository: <a href="https://github.com/ATTX-project/provenance-service" target="_blank">https://github.com/ATTX-project/provenance-service</a></p>
 <p>Considering a Microservices oriented system we identify two means of introducing a Provenance system in such a system:</p>
@@ -1035,16 +1035,18 @@
             <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;WorkflowExecution&quot;</span>,
             <span class="hljs-string">&quot;startTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>
         },
-        <span class="hljs-string">&quot;input&quot;</span>: {
-              <span class="hljs-string">&quot;inputDataset&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>                
-              }
-        },              
-        <span class="hljs-string">&quot;output&quot;</span>: {
-              <span class="hljs-string">&quot;outputDataset&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
-              }
-        }        
+        <span class="hljs-string">&quot;input&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;inputDataset&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
+          }
+        ],
+        <span class="hljs-string">&quot;output&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;outputDataset&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
+          }
+        ]
     },
     <span class="hljs-string">&quot;payload&quot;</span>: {
         <span class="hljs-string">&quot;inputDataset&quot;</span>: <span class="hljs-string">&quot;http://dataset/1&quot;</span>,
@@ -1109,16 +1111,18 @@ attx:workflowingestionwf_activity1_outputDataset a prov:Entity ;
             <span class="hljs-string">&quot;endTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>,
             <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;SUCCESS&quot;</span>
         },
-        <span class="hljs-string">&quot;input&quot;</span>: {
-              <span class="hljs-string">&quot;harvestConfiguration&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;StepConfiguration&quot;</span>
-              }
-        },              
-        <span class="hljs-string">&quot;output&quot;</span>: {
-              <span class="hljs-string">&quot;harvestedContent&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;DatasetContent&quot;</span>
-              }
-        }        
+        <span class="hljs-string">&quot;input&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;harvestConfiguration&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;StepConfiguration&quot;</span>
+          }
+        ],
+        <span class="hljs-string">&quot;output&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;harvestedContent&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;DatasetContent&quot;</span>
+          }
+        ]       
     },
     <span class="hljs-string">&quot;payload&quot;</span>: {
         <span class="hljs-string">&quot;harvestConfiguration&quot;</span>: {
@@ -1194,18 +1198,23 @@ attx:workflowingestionwf_activity1_harvestedContent a prov:Entity .
                 {
                     <span class="hljs-string">&quot;agent&quot;</span>: <span class="hljs-string">&quot;RMLService&quot;</span>,
             <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;transformer&quot;</span>,
-            <span class="hljs-string">&quot;input&quot;</span>: {}
+            <span class="hljs-string">&quot;input&quot;</span>: []
                 }
             ]
         },
-        <span class="hljs-string">&quot;input&quot;</span>: {
-            <span class="hljs-string">&quot;harvestedContent&quot;</span>: {}
-        },
-        <span class="hljs-string">&quot;output&quot;</span>: {
-              <span class="hljs-string">&quot;transformerData&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;tempDataset&quot;</span>
-              }
-        }                      
+
+        <span class="hljs-string">&quot;input&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;harvestedContent&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+          }
+        ],
+        <span class="hljs-string">&quot;output&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;transformerData&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;tempDataset&quot;</span>
+          }
+        ]                      
     },
     <span class="hljs-string">&quot;payload&quot;</span>: {}
 }
@@ -1275,16 +1284,18 @@ attx:workflowingestionwf_activity1_transformerData a prov:Entity .
             <span class="hljs-string">&quot;endTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>,
             <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;SUCCESS&quot;</span>
         },
-        <span class="hljs-string">&quot;input&quot;</span>: {
-            <span class="hljs-string">&quot;inputGraphs&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;inputGraphs&quot;</span>
-            }
-        },
-        <span class="hljs-string">&quot;output&quot;</span>: {
-              <span class="hljs-string">&quot;transformerData&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;tempDataset&quot;</span>
-              }
-        }
+        <span class="hljs-string">&quot;input&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;inputGraphs&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;inputGraphs&quot;</span>
+          }
+        ],
+        <span class="hljs-string">&quot;output&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;transformerData&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;tempDataset&quot;</span>
+          }
+        ]                        
     },
     <span class="hljs-string">&quot;payload&quot;</span>: {
         <span class="hljs-string">&quot;inputGraphs&quot;</span>: <span class="hljs-string">&quot;attx:dataset1&quot;</span>,
@@ -1354,20 +1365,20 @@ attx:workflowingestionwf_activity1_transformerData a prov:Entity ;
                 {
                     <span class="hljs-string">&quot;agent&quot;</span>: <span class="hljs-string">&quot;GMAPI&quot;</span> ,
                     <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;storage&quot;</span>,
-            <span class="hljs-string">&quot;input&quot;</span>: {}
-                }
-            ]
-        },
-        <span class="hljs-string">&quot;input&quot;</span>: {
-              <span class="hljs-string">&quot;transformerData&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;tempDataset&quot;</span>
-              }
-        },
-        <span class="hljs-string">&quot;output&quot;</span>: {
-            <span class="hljs-string">&quot;outputDataset&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
-            }
-        }    
+                        <span class="hljs-string">&quot;input&quot;</span>: []
+        }]},
+        <span class="hljs-string">&quot;input&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;transformerData&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;tempDataset&quot;</span>
+          }
+        ],
+        <span class="hljs-string">&quot;output&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;outputDataset&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
+          }
+        ]                         
     },
    <span class="hljs-string">&quot;payload&quot;</span>: {
        <span class="hljs-string">&quot;transformerData&quot;</span>: <span class="hljs-string">&quot;attx:tempDataset&quot;</span>,
@@ -1447,16 +1458,18 @@ attx:workflowingestionwf_activity1_transformerData a prov:Entity ;
             <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;WorkflowExecution&quot;</span>,
             <span class="hljs-string">&quot;endTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>
         },
-        <span class="hljs-string">&quot;input&quot;</span>: {
-              <span class="hljs-string">&quot;inputDataset&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
-              }
-        },              
-        <span class="hljs-string">&quot;output&quot;</span>: {
-              <span class="hljs-string">&quot;outputDataset&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
-              }
-        }        
+        <span class="hljs-string">&quot;input&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;inputDataset&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
+          }
+        ],
+        <span class="hljs-string">&quot;output&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;outputDataset&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
+          }
+        ]                                         
     },
     <span class="hljs-string">&quot;payload&quot;</span>: {
         <span class="hljs-string">&quot;inputDataset&quot;</span>: <span class="hljs-string">&quot;http://dataset/1&quot;</span>,
@@ -1521,11 +1534,12 @@ attx:workflowingestionwf_activity1_outputDataset a prov:Entity ;
             <span class="hljs-string">&quot;endTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>,
             <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;SUCCESS&quot;</span>
         },
-        <span class="hljs-string">&quot;input&quot;</span>: {
-            <span class="hljs-string">&quot;inputGraphs&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;inputGraphs&quot;</span>
-            }
-        }
+        <span class="hljs-string">&quot;input&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;inputGraphs&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;inputGraphs&quot;</span>
+          }
+        ]        
     },
     <span class="hljs-string">&quot;payload&quot;</span>: {
         <span class="hljs-string">&quot;inputGraphs&quot;</span>: <span class="hljs-string">&quot;attx:dataset1&quot;</span>
@@ -1580,11 +1594,12 @@ attx:workflowingestionwf_activity1_inputGraphs a prov:Entity ;
             <span class="hljs-string">&quot;startTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>,
             <span class="hljs-string">&quot;endTime&quot;</span>: <span class="hljs-string">&quot;2017-08-02T13:52:29+02:00&quot;</span>
         },
-        <span class="hljs-string">&quot;output&quot;</span>: {
-              <span class="hljs-string">&quot;outputDataset&quot;</span>: {
-                <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
-              }
-        }        
+        <span class="hljs-string">&quot;input&quot;</span>: [
+          {
+            <span class="hljs-string">&quot;key&quot;</span>: <span class="hljs-string">&quot;outputDataset&quot;</span>,
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;Dataset&quot;</span>
+          }
+        ]               
     },
     <span class="hljs-string">&quot;payload&quot;</span>: {
         <span class="hljs-string">&quot;outputDataset&quot;</span>: {
@@ -1659,7 +1674,7 @@ attx:workflowingestionwf_activity1_outputDataset a attxonto:Dataset,
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Provenance Service","level":"4.1","depth":1,"next":{"title":"RML Service","level":"4.2","depth":1,"path":"RML-Service.md","ref":"RML-Service.md","articles":[]},"previous":{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"path":"MessageBroker-ActiveMQ.md","ref":"MessageBroker-ActiveMQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Provenance-Service.md","mtime":"2017-08-21T14:08:22.099Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-08-28T14:08:46.370Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Provenance Service","level":"4.1","depth":1,"next":{"title":"RML Service","level":"4.2","depth":1,"path":"RML-Service.md","ref":"RML-Service.md","articles":[]},"previous":{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"path":"MessageBroker-ActiveMQ.md","ref":"MessageBroker-ActiveMQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Provenance-Service.md","mtime":"2017-09-04T14:08:10.361Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-09-04T14:08:54.979Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
