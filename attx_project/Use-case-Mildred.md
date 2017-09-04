@@ -89,8 +89,7 @@ https://etsin.avointiede.fi/oai?verb=GetRecord&identifier=urn:nbn:fi:csc-kata201
 Etsin organizations to internal model.
 
 
-
-```
+```turtle
 @prefix rr: <http://www.w3.org/ns/r2rml#>.
 @prefix rml: <http://semweb.mmlab.be/ns/rml#>.
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
@@ -155,7 +154,7 @@ Etsin organizations to internal model.
 
 Result sample
 
-```
+```rdf
 <etsin-org:02469-1054-karelia-1054-rehtorin-toimisto> a <http://data.hulib.helsinki.fi/attx/work#Organization> ;
 	<http://purl.org/dc/terms/title> "1054 Rehtorin toimisto" ;
 	<http://purl.org/dc/terms/identifier> "02469-1054" ;
@@ -168,7 +167,7 @@ Harvesting interface
 
 Source data with oai_dc metadata prefix.
 
-```
+```turtle
 @prefix rr: <http://www.w3.org/ns/r2rml#>.
 @prefix rml: <http://semweb.mmlab.be/ns/rml#>.
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
@@ -213,8 +212,7 @@ Source data with oai_dc metadata prefix.
 
 Results
 
-```
-
+```rdf
 <http://urn.fi/urn%3Anbn%3Afi%3Acsc-kata20161121150636648833> a <http://data.hulib.helsinki.fi/attx/work#Dataset> ;
 	<http://purl.org/dc/terms/title> "DMPTuuli user survey raw data 2016" ;
 	<http://data.hulib.helsinki.fi/attx/work#owner> <etsin-org:01901-helsingin-yliopisto> .
@@ -307,15 +305,15 @@ Affilations can be used to identify creators that are from UH. However, there ar
 
 Output from OAI-PMH interface does not include links to the file metadata (links.bucket). OAI-PMH also has license information in URI format.
 
-```
-license: {
-id: "CC-BY-4.0"
+```json
+"license": {
+    "id": "CC-BY-4.0"
 }
 ```
 
 compared to
 
-```
+```xml
 <rightsList>
   <rights rightsURI="https://creativecommons.org/licenses/by/4.0/" >Creative Commons Attribution 4.0</rights>
   <rights rightsURI="info:eu-repo/semantics/openAccess" >Open Access</rights>
@@ -372,14 +370,14 @@ Community's datasets via OAI-PMH:
 
 Result:
 
-```
+```rdf
 <http://doi.org/10.5281%2Fzenodo.10857> a <http://data.hulib.helsinki.fi/attx/work#Dataset> ;
 	<http://purl.org/dc/terms/title> "Research Goes On: Post-Observatory Astronomy Resources In Helsinki" .
 ```
 
 Simple search through REST API:
 
-```
+```turtle
 @prefix rr: <http://www.w3.org/ns/r2rml#>.
 @prefix rml: <http://semweb.mmlab.be/ns/rml#>.
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
@@ -444,7 +442,7 @@ Simple search through REST API:
 
 Results:
 
-```
+```rdf
 <http://doi.org/10.5281%2Fzenodo.30823> a <http://data.hulib.helsinki.fi/attx/work#Dataset> ;
 	<http://purl.org/dc/terms/title> "Information Practices of Clinical Researchers - New Services in New Time" ;
 	<http://purl.org/dc/terms/identifier> "30823" ;
@@ -482,3 +480,5 @@ Features:
 * Deduplication of dataset metadata available from multiple sources
 
 ### Pipelines
+
+TBD
