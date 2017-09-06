@@ -20,7 +20,7 @@
     * [Provisioning ATTX Components on CSC Open Stack \(cPouta\)](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)
     * [Deploying ATTX Components on Docker Swarm](Deploying-ATTX-Components-on-Docker-Swarm.md)
     * [Applying Rolling Updates to Services in Docker Swarm](Applying-Rolling-Updates-to-services-in-Docker-Swarm.md)
-  * [Deploying ATTX on Kontena](Deploying-ATTX-SB-on-Kontena.md)
+  * [Deploying ATTX Broker on Kontena](Deploying-ATTX-SB-on-Kontena.md)
 
 ## Core Components
 
@@ -41,6 +41,7 @@
   * [Consul for Service Discovery on Docker Swarm](Consul-for-Service-Discovery-on-Docker-Swarm.md)
 * [Message Broker](MessageBroker.md)
   * [ActiveMQ Message Broker](MessageBroker-ActiveMQ.md)
+  * [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md)
 
 ## Broker Services
 
@@ -64,7 +65,6 @@
 ## Reports & Contributions
 
 * Reports
-  * [Deploying the ATTX Semantic Broker on Kontena](Deploying-ATTX-SB-on-Kontena.md)
   * [CSC cPouta Cloud Services Report](CSC-cPouta-Cloud-Services-Report.md)
   * [Building with (Py)Gradle](Building-with-Gradle.md)
   * [Messaging Brokers Solutions Overview](Messaging-Brokers-Solutions.md)
