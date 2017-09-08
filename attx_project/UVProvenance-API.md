@@ -185,7 +185,7 @@ As specified above the UV Provenance API has two endpoints:
   ```
 * `activity` and `workflow` POST APIs will return `405` as this operation current is not allowed.
 
-## UVProvenance with Messaging Queues
+## UVProvenance with Message Broker
 
 The UVProvenance update can work with the [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md) in order to update the provenance in the Graph Store. It will send the message to the `provenance.inbox` queue every 30 minutes.
 By default it processes all activities and worfklows, in order to update the provenance information if it changed - e.g. an activity was run with new parameters and its status changed from `failed` to `success`.
