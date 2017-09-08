@@ -1,5 +1,3 @@
-<h1 style="color:red">TO BE REFACTORED</h1>
-
 # UVProvenance API
 
 ### Table of Contents
@@ -9,22 +7,28 @@
     - [Database Connection](#database-connection)
   - [Consuming the UVProvenance-API](#consuming-the-uvprovenance-api)
     - [health Endpoint](#health-endpoint)
+    - [provjob Endpoint](#provjob-endpoint)
     - [workflow Endpoint](#workflow-endpoint)
     - [activity Endpoint](#activity-endpoint)
+  - [UVProvenance with Messaging Queues](#uvprovenance-with-messaging-queues)
   - [How the Information is Extracted](#how-the-information-is-extracted)
 
 <!-- TOC END -->
 
 ## Overview
 
-The UV (UnifiedViews) Provenance REST API has two endpoints along with a health check endpoint:
+The UV (UnifiedViews) Provenance REST API has three endpoints along with a health check endpoint:
 * `workflow` - retrieve all the workflows and associated steps from the ETL Artifact;
 * `activity` - retrieve all successfully completed activities and associated datasets from the ETL Artifact;
+* `provjob` - start the provenance update job without waiting for the scheduled run;
 * `health` - checks if the application is running.
 
-The general purpose of the UV Provenance API is to provide metadata for workflows and activities such that it exposes information that is according with the [Ontology/Data model](ATTX-Data-Model.md). Such information could not easily be obtained directly from the [UnifiedViews REST API](https://grips.semantic-web.at/display/UDDOC/UnifiedViews+REST+API). Moreover the configuration necessary to extract this information is encoded in the Pipeline DPU configuration, as depicted in examples below.
+The general purpose of the UV Provenance API is to review metadata for workflows and activities such that it exposes information that is according with the [Ontology/Data model](ATTX-Data-Model.md). Such information could not easily be obtained directly from the [UnifiedViews REST API](https://grips.semantic-web.at/display/UDDOC/UnifiedViews+REST+API). Moreover the configuration necessary to extract this information is encoded in the Pipeline DPU configuration, as depicted in examples below.
 
-Current version: `0.1` (URL for the endpoint should take into consideration for the API `http://host:4301/version/endpoint`)
+Current version: `0.2` (URL for the endpoint should take into consideration for the API `http://host:4301/version/endpoint`).
+
+
+The UV Provenance application also has a Message-based communication part, which implements a basic message Producer that will send provenance messages as described in the [Provenance Service](Provenance-Service.md) to a specific queue (in our case `provenance.inbox`) in order to update the (missing) provenance information in the Graph Store.
 
 ## Building the UVProvenance-API
 
@@ -34,7 +38,7 @@ For building the UVProvenance-API see:
 
 ### Database Connection
 
-In order to run the tests successfully but also the UVProvenance-API successfully one would require an existing MYSQL database connection. Such a connection can be configured in `database.conf` file.
+In order to run the tests successfully but also the UVProvenance-API successfully one would require an existing MYSQL database connection. Such a connection can be configured in Docker file via the environment variable.
 
 At the same time it can be troubleshoot using the docker container:
 * connect to the running UVProvenance-API Docker container `docker exec -it container-id /bin/sh` (replace `container-id` with the ID of the docker container)
@@ -48,6 +52,7 @@ At the same time it can be troubleshoot using the docker container:
 As specified above the UV Provenance API has two endpoints:
 * `workflow` - retrieve all the workflows and associated steps from the ETL Artifact (only GET method possible);
 * `activity` - retrieve all successfully completed activities and associated datasets from the ETL Artifact (only GET method possible).
+* `provjob` - start the provenance update job without waiting for the scheduled run (only GET method possible) - responds with `202`;
 * `health` - responds with `200` so that we know the service is alive.
 
 ### health Endpoint
@@ -55,151 +60,142 @@ As specified above the UV Provenance API has two endpoints:
 * `health` GET API:
   * simple: http://localhost:4301/health responds with `200` in order for other applications to know the service is running.
 
+### provjob Endpoint
+  * `provjob` GET API:
+    * simple: http://localhost:4301/provjob responds with `202` in order to start the provenance update job without waiting for the scheduled run.
+
 ### workflow Endpoint
 
 * `workflow` GET API:
-  * simple: http://localhost:4301/0.1/workflow
-  * json-ld output: http://localhost:4301/0.1/workflow?format=json-ld
-  * modifiedSince parameter URL encoded: http://localhost:4301/0.1/workflow?modifiedSince=2017-01-03T08%3A14%3A14Z the date-string should be in this format `%Y-%m-%dT%H:%M:%SZ` e.g. `2017-01-03T08:14:14Z`
-  * all at once: http://localhost:4301/0.1/workflow?modifiedSince=2017-01-03T08%3A14%3A14Z&format=json-ld
+  * simple: http://localhost:4301/0.2/workflow
   * Responses: if status codes are `304` No Modified or `405` Method Not Allowed the response body is empty. If the Response status is `200` it will return data specific to workflows:
 
-  ```turtle
-  @base <http://data.hulib.helsinki.fi/attx/> .
-  @prefix attxonto: <http://data.hulib.helsinki.fi/attx/onto#> .
-  @prefix attx: <http://data.hulib.helsinki.fi/attx/> .
-  @prefix owl: <http://www.w3.org/2002/07/owl#> .
-  @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-  @prefix xml: <http://www.w3.org/XML/1998/namespace> .
-  @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-  @prefix prov: <http://www.w3.org/ns/prov#> .
-  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-  @prefix dcterms: <http://purl.org/dc/terms/> .
-  @prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
-  @prefix pwo: <http://purl.org/spar/pwo/> .
-
-  attx:wf2
-    a attxonto:Workflow ;
-    dcterms:title "Acquisition and Mapping the VIRTA pubs data with CRIS data." ;
-    dcterms:description "Workflow that uses VIRTA publication data in order to map titles and  identifiers from CRIS data for every publication and research fields."@en ;
-    pwo:hasFirstStep attx:step1 ;
-    pwo:hasStep
-      attx:wf2_step1 ,
-      attx:wf2_step2 ,
-      attx:wf2_step3 ,
-      attx:wf2_step4 ,
-      attx:wf2_step5 .
-
-  attx:wf2_step1
-    a attxonto:Step ;
-    dcterms:title "VIRTA Publication Input Step" ;
-    dcterms:description "DPU that gets the latest publication from VIRTA using the file dump."@en ;
-    pwo:hasNextStep attx:wf2_step2 .
-
-  attx:wf2_step2
-    a attxonto:Step ;
-    dcterms:title "CRIS Acquisition Step" ;
-    dcterms:description "DPU that acquires CRIS data."@en ;
-    prov:used attx:work2 ;
-    pwo:hasNextStep attx:wf2_step3 .
-
-  attx:wf2_step3
-    a attxonto:Step ;
-    dcterms:title "Mapping Step" ;
-    dcterms:description "DPU that maps the VIRTA data with CRIS data in order to match titles and identifies from the two data sets."@en ;
-    pwo:hasNextStep attx:wf2_step4 .
-
-  attx:wf2_step4
-    a attxonto:Step ;
-    dcterms:title "Adding wf2 Metadata Step" ;
-    dcterms:description "DPU that add necessary Metadata, to the specify provenance information."@en ;
-    pwo:hasNextStep attx:wf2_step5 .
-
-  attx:wf2_step5
-    a attxonto:Step ;
-    dcterms:title "Combined Publication Output Step" ;
-    dcterms:description "DPU that that contains the mapped data and writes it to the a file."@en .
-
-  ```
+  ```json
+    [
+      {
+       "provenance": {
+           "context": {
+               "activityID": "3",
+               "stepID": "2",
+               "workflowID": "2"
+           },
+           "agent": {
+               "role": "ETL",
+               "ID": "UnifiedViews"
+           },
+           "activity": {
+               "status": "success",
+               "type": "StepExecution",
+               "title": "uv-dpu-l-attx-uploader"
+           }
+       },
+       "payload": {}
+    },
+    {
+       "provenance": {
+           "context": {
+               "activityID": "4",
+               "stepID": "3",
+               "workflowID": "3"
+           },
+           "agent": {
+               "role": "ETL",
+               "ID": "UnifiedViews"
+           },
+           "activity": {
+               "status": "failed",
+               "type": "StepExecution",
+               "title": "uv-t-sparqlConstruct"
+           }
+       },
+       "payload": {}
+    }
+    ]
+    ```
 ### activity Endpoint
 
 * `activity` GET API:
-  * simple: http://localhost:4301/0.1/activity
-  * json-ld output: http://localhost:4301/0.1/activity?format=json-ld
-  * modifiedSince parameter URL encoded: http://localhost:4301/0.1/activity?modifiedSince=2017-01-03T08%3A14%3A14Z the date-string should be in this format `%Y-%m-%dT%H:%M:%SZ` e.g. `2017-01-03T08:14:14Z`
-  * all at once: http://localhost:4301/0.1/activity?modifiedSince=2017-01-03T08%3A14%3A14Z&format=json-ld
+  * simple: http://localhost:4301/0.2/activity
   * Responses: if status codes are `304` No Modified or `405` Method Not Allowed the response body is empty. If the Response status is `200` it will return data specific to activites:
 
-  ```turtle
-  @base <http://data.hulib.helsinki.fi/attx/> .
-  @prefix attxonto: <http://data.hulib.helsinki.fi/attx/onto#> .
-  @prefix attx: <http://data.hulib.helsinki.fi/attx/> .
-  @prefix owl: <http://www.w3.org/2002/07/owl#> .
-  @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-  @prefix xml: <http://www.w3.org/XML/1998/namespace> .
-  @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-  @prefix prov: <http://www.w3.org/ns/prov#> .
-  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-  @prefix dcterms: <http://purl.org/dc/terms/> .
-  @prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
-  @prefix pwo: <http://purl.org/spar/pwo/> .
-
-  attx:work1
-    a attxonto:Dataset, sd:Dataset ;
-    dcterms:title "VIRTA Publication Dataset" ;
-    dcterms:description "National list of publication that are part of the official VIRTA collection."@en;
-    dcterms:publisher "Ministry of Culture and Education" ;
-    dcterms:source <http://virta.fi/data_dump.csv> ; # actual source is a CSV file.
-    dcterms:license <http://creativecommons.org/licenses/by/4.0/> .
-
-  attx:work2
-    a attxonto:Dataset, sd:Dataset ;
-    dcterms:title "CRIS Publication Dataset" ;
-    dcterms:description "National list of publication that are part of the official CRIS collection."@en;
-    dcterms:publisher "Ministry of Culture and Education" ;
-    dcterms:source <http://cris.fi/data_dump.csv> ; # actual source is a CSV file.
-    dcterms:license <http://creativecommons.org/licenses/by/4.0/> .
-
-  attx:work3
-    a attxonto:Dataset, sd:Dataset ;
-    dcterms:title "Selected VIRTA Publication Data in RDF" ;
-    dcterms:description "Dataset includes titles and external identifiers for every publication and research fields, see mapping steps for details"@en;
-    dcterms:license <http://creativecommons.org/licenses/by/4.0/> . # license should be the same as original data
-
-  attx:activity2
-    a prov:Activity , attxonto:WorkflowExecution ;
-    prov:startedAtTime  "2016-11-17T13:02:10+02:00"^^xsd:dateTime ;
-    prov:endedAtTime "2016-11-17T13:40:47+02:00"^^xsd:dateTime ;
-    prov:qualifiedAssociation [
-      a prov:Assocation ;
-      prov:agent attx:ETL ;
-      prov:hadPlan attx:wf2 ;
-    ] ;
-    prov:used attx:work1 ;
-    prov:used attx:work2 ;
-    prov:generated attx:work3 .
-
-  # Specific Agent and Artifact information
-
-  attx:ETL
-    a prov:Agent ;
-    attxonto:usesArtifact attx:UnifiedViews.
-
-  attx:UnifiedViews
-    a attxonto:Artifact ;
-    dcterms:source <http://unifiedviews.eu> .
+  ```json
+  [
+  	{
+  		"provenance": {
+  			"context": {
+  				"activityID": "2",
+  				"workflowID": "1"
+  			},
+  			"agent": {
+  				"role": "ETL",
+  				"ID": "UnifiedViews"
+  			},
+  			"activity": {
+  				"status": "warning",
+  				"endTime": "2017-09-06T06:51:03",
+  				"type": "WorkflowExecution",
+  				"startTime": "2017-09-06T06:51:03",
+  				"title": "name Activity2"
+  			}
+  		},
+  		"payload": {}
+  	},
+  	{
+  		"provenance": {
+  			"context": {
+  				"activityID": "3",
+  				"workflowID": "2"
+  			},
+  			"agent": {
+  				"role": "ETL",
+  				"ID": "UnifiedViews"
+  			},
+  			"activity": {
+  				"status": "success",
+  				"endTime": "2017-09-06T11:39:12",
+  				"type": "WorkflowExecution",
+  				"startTime": "2017-09-06T11:39:12",
+  				"title": "ceva Activity3"
+  			}
+  		},
+  		"payload": {}
+  	},
+  	{
+  		"provenance": {
+  			"context": {
+  				"activityID": "4",
+  				"workflowID": "3"
+  			},
+  			"agent": {
+  				"role": "ETL",
+  				"ID": "UnifiedViews"
+  			},
+  			"activity": {
+  				"status": "failed",
+  				"endTime": "2017-09-06T11:40:16",
+  				"type": "WorkflowExecution",
+  				"startTime": "2017-09-06T11:40:16",
+  				"title": "error pipeline Activity4"
+  			}
+  		},
+  		"payload": {}
+  	}
+  ]
 
   ```
 * `activity` and `workflow` POST APIs will return `405` as this operation current is not allowed.
 
+## UVProvenance with Messaging Queues
+
+The UVProvenance update can work with the [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md) in order to update the provenance in the Graph Store. It will send the message to the `provenance.inbox` queue every 30 minutes.
+By default it processes all activities and worfklows, in order to update the provenance information if it changed - e.g. an activity was run with new parameters and its status changed from `failed` to `success`.
+
 ## How the Information is Extracted
 
 Extracting information associated to the provenance and workflow information can be classified in three types:
-* Database information related to pipelines and pipeline execution;
-* ATTX medata DPU plugin - see Example 2;
-* Other DPU specific information - see Example 1 - such as SPARQL query or SPARQL endpoint.
+* Database information related to pipelines and pipeline execution.
 
-Information specific to workflows and activities is extracted directly from the MySQL database for example activities and associated information are extracted from pipeline executions, however for information related to input and output graphs the `attxMetadataPlugin` DPU is used as illustrated in Example 2.
+Information specific to workflows and activities is extracted directly from the MySQL database for example activities and associated information are extracted from pipeline executions.
 
 ```sql
 SELECT exec_pipeline.id AS 'activityId',
@@ -211,69 +207,4 @@ FROM exec_pipeline, ppl_model
 WHERE exec_pipeline.pipeline_id = ppl_model.id AND\
 exec_pipeline.status = 5
 ORDER BY ppl_model.id
-```
-
-As depicted in the examples below often html tags are encoded and even more so the tags within them are encoded a second time, thus making it difficult to extract the required information.
-
-Example 1: SPARQL endpoint configuration
-```xml
-<object-stream>
-  <MasterConfigObject>
-    <configurations>
-      <entry>
-        <string>dpu_config</string>
-        <string><object-stream>
-  <eu.unifiedviews.plugins.extractor.sparqlendpoint.SparqlEndpointConfig__V1>
-    &lt;endpoint&gt;http://dbpedia.org/sparql&lt;/endpoint&gt;
-    &lt;query>PREFIX  dbo:  &amp;lt;http://dbpedia.org/ontology/&amp;gt;
-PREFIX  dbp:  &amp;lt;http://dbpedia.org/property/&amp;gt;
-PREFIX yago:	&amp;lt;http://dbpedia.org/class/yago/&amp;gt;
-PREFIX fi:  &amp;lt;http://helsinki.fi/example&amp;gt;
-CONSTRUCT {
-           ?subject fi:hasName ?name.
-           ?subject fi:hasOccupation ?occupation.
-}
-  WHERE
-    {
-      ?subject   a  dbo:Person;
-      dbp:name  ?name ;
-     dbo:occupation ?occupation.
-     FILTER (regex(?name, &amp;quot;Stefan&amp;quot; ))
-   }
-Limit 100  &lt;/query&gt;
-  </eu.unifiedviews.plugins.extractor.sparqlendpoint.SparqlEndpointConfig__V1>
-</object-stream></string>
-      </entry>
-      <entry>
-        <string>addon/faultToleranceWrap</string>
-        <string><object-stream>
-  <eu.unifiedviews.helpers.dpu.extension.faulttolerance.FaultTolerance_-Configuration__V1>
-    <enabled>false</enabled>
-    <exceptionNames class=&quot;linked-list&quot;/>
-    <maxRetryCount>-1</maxRetryCount>
-  </eu.unifiedviews.helpers.dpu.extension.faulttolerance.FaultTolerance_-Configuration__V1>
-</object-stream></string>
-      </entry>
-    </configurations>
-  </MasterConfigObject>
-</object-stream>
-```
-Using the ATTX metadata plugin (see information at: [UnifiedViews plugins](Unified-Views-plugins.md))
-Example 2: ATTX metadata configuration
-```xml
-<object-stream>
-    <MasterConfigObject>
-        <configurations>
-            <entry>
-                <string>dpu_config</string>
-                <string><object-stream> <org.uh.attx.etl.uv.dpu.transformer.metadata.TransformerATTXMetadataConfig__V1>
-&lt;inputGraphURI&gt;http://helsinki.fi/library/onto#dataset1&lt;/inputGraphURI&gt; &lt;inputGraphTitle&gt;Dbpedia&lt;/inputGraphTitle&gt;
-                    &lt;inputGraphDescription&gt;Sparql Endpoint Dbpedia specific query&lt;/inputGraphDescription&gt; &lt;inputGraphPublisher&gt;Dbpedia&lt;/inputGraphPublisher&gt; &lt;inputGraphSource&gt;http://dbpedia.org/sparql&lt;/inputGraphSource&gt;
-                    &lt;inputGraphLicence&gt;http://creativecommons.org/licenses/by-sa/3.0/&lt;/inputGraphLicence&gt; &lt;outputGraphURI&gt;http://helsinki.fi/library/onto#dataset2&lt;/outputGraphURI&gt; &lt;outputGraphTitle&gt;Testing specific output&lt;/outputGraphTitle&gt;
-                    &lt;outputGraphDescription&gt;Test Data&lt;/outputGraphDescription&gt; &lt;outputGraphPublisher&gt;http://helsinki.fi/library&lt;/outputGraphPublisher&gt; &lt;outputGraphSource&gt;http://helsinki.fi/library&lt;/outputGraphSource&gt;
-                    &lt;outputGraphLicence&gt;http://creativecommons.org/licenses/by-sa/3.0/&lt;/outputGraphLicence&gt; </org.uh.attx.etl.uv.dpu.transformer.metadata.TransformerATTXMetadataConfig__V1> </object-stream></string>
-            </entry>
-        </configurations>
-    </MasterConfigObject>
-</object-stream>
 ```
