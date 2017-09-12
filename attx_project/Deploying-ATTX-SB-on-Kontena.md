@@ -181,7 +181,7 @@ attx-demo/attx/frontend:
   updated: 2017-06-30T09:50:35.909Z
   stack: attx-demo/attx
   desired_state: running
-  image: attxtest/unified-views-frontend:stable-1.2
+  image: attxproject/unified-views-frontend:stable-1.2
   revision: 1
   stack_revision: 1
   stateful: no
@@ -281,7 +281,7 @@ $ sudo mkdir -p /mnt/volume-fra1-01; sudo mount -o discard,defaults /dev/disk/by
 So now that we have a "/mnt/volume-fra1-01" volume that we can use for UnifiedViews MySQL database, we can edit the mysql service defintion  in the attx stack yml file to use the block storage device mount point:
 ```yml
 mysql:
-  image: attxtest/unified-views-mariadb:stable-1.2
+  image: attxproject/unified-views-mariadb:stable-1.2
   ports:
     - "3306:3306"
   stateful: true
@@ -308,7 +308,7 @@ attx-do/attx/mysql:
   updated: 2017-08-03T13:52:48.276Z
   stack: attx-do/attx
   desired_state: running
-  image: attxtest/unified-views-mariadb:stable-1.2
+  image: attxproject/unified-views-mariadb:stable-1.2
   revision: 1
   stack_revision: 1
   stateful: yes
