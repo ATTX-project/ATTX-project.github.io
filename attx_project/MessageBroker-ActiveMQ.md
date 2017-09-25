@@ -1,18 +1,9 @@
 # ActiveMQ - ATTX MessageBroker
 
+
 ## Image
 
 Custom image derived from: https://github.com/krizsan/activemq-docker
-
-## Configuration
-
-### Authentication
-### Certificates
-### Service discovery
-### Connectors (available transport protocols)
-### Message store
-### Clustering
-None at the moment. Move along.
 
 ## Using ActiveMQ
 
@@ -23,8 +14,6 @@ MessageBroker can be accessed using multiple different protocols.
 * AMQP v1.0 (http://qpid.apache.org/proton/)
 * MQTT v3.1
 [List of code example](http://activemq.apache.org/cross-language-clients.html)
-
-## Camel Integration
 
 ## Administration
 

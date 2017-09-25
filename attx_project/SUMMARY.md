@@ -47,6 +47,7 @@
 ## Broker Services
 
 * [Provenance Service](Provenance-Service.md)
+  * [Example Provenance Messages](Provenance-Service-Examples.md)
 * [RML Service](RML-Service.md)
 
 ## User Guide

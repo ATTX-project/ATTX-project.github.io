@@ -35,14 +35,12 @@ Acronyms:
 
 The ATTX Workflow Component provides a configurable framework with the main purpose of managing, scheduling and monitoring data ingestion, processing and distribution related workflows. Workflow Component provides the Semantic Broker information related to provenance of the working data.
 
-* Github Repository: [workflow-component](https://github.com/ATTX-project/workflow-component)
 * Details about the [Workflow Component](Workflow-Component.md).
 
 ## Graph Component
 
 The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the Semantic Broker, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.
 
-* Github Repository: [graph-component](https://github.com/ATTX-project/graph-component)
 * Details about the [Graph Component](Graph-Component.md).
 
 ## Distribution Component
@@ -88,7 +86,7 @@ While the communication between components is implemented using messaging middle
 
 ## Microservices Example
 
-We would like to illustrate how such an architecture would look in practice and some of the microservices that might be part of it.
+We would like to illustrate how such an architecture would look in practice and some of the services that might be part of it.
 
 In Figure 4 we illustrate a pipeline that downloads a new version of a dataset and replaces the old one. We identified the following services to aid with this process:
 * _RMLService_ - converting the downloaded dataset from CSV format to RDF and storing it for access at a specified location;
@@ -101,7 +99,7 @@ In Figure 4 we illustrate a pipeline that downloads a new version of a dataset a
 Figure 4. Pipeline for downloading and replacing dataset
 
 As a continuation of the result of the pipeline depicted in Figure 4, the pipeline from Figure 5 exhibits the steps necessary for publishing the resulting data. In order to achieve this we identified the following services:
-* _ESDistributionService_ - microservice for constructing, based on the graph retrieved from Graph Store, JSON/JSON-LD formatted bulk data, that is stored on a volume. This microservice can be further divided into two other microservices:
+* _ESDistributionService_ - service for constructing, based on the graph retrieved from Graph Store, JSON/JSON-LD formatted bulk data, that is stored on a volume. This microservice can be further divided into two otherservices:
     * _RDFFramerService_ - converting the data from RDF to JSON/JSON-LD;
     * _indexService_ - (bulk) indexing at a specific endpoint;
 * _ElasticSearch_ - several versions might be available each providing different indexing mechanisms.

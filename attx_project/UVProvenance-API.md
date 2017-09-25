@@ -33,12 +33,17 @@ The UV Provenance application also has a Message-based communication part, which
 ## Building the UVProvenance-API
 
 For building the UVProvenance-API see:
-* [UVProvenance-API source](https://github.com/ATTX-project/workflow-component/blob/dev/UVProvenance-API/README.md) - building both the project and the  Docker image and testing from the source code
+* [UVProvenance-API source](https://github.com/ATTX-project/uv-provenance-service) - repository
+* Docker Image build - https://github.com/ATTX-project/platform-deployment/tree/dev/service-uvprov
 * short tutorial on [Gradle](Building-with-Gradle.md)
 
 ### Database Connection
 
-In order to run the tests successfully but also the UVProvenance-API successfully one would require an existing MYSQL database connection. Such a connection can be configured in Docker file via the environment variable.
+In order to run the tests successfully but also the UVProvenance-API successfully one would require an existing MYSQL database connection on which the UnifiedViews runs. Such a connection can be configured in Docker file via the environment variables:
+* `DBHOST` - container name or address for the MYSQL database (defaults to localhost);
+* `DBUSER` - user name;
+* `DBKEY` - password or key for that user;
+* `DBASE` - table which to access (defaults to `unified_views`).
 
 At the same time it can be troubleshoot using the docker container:
 * connect to the running UVProvenance-API Docker container `docker exec -it container-id /bin/sh` (replace `container-id` with the ID of the docker container)
