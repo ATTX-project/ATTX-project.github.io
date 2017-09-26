@@ -19,6 +19,7 @@
   * Run on Distributed/Cloud
     * [Provisioning ATTX Components on CSC Open Stack \(cPouta\)](Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md)
     * [Deploying ATTX Components on Docker Swarm](Deploying-ATTX-Components-on-Docker-Swarm.md)
+    * [Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta](Shared-NFS-Swarm-Cloud.md)
     * [Applying Rolling Updates to Services in Docker Swarm](Applying-Rolling-Updates-to-services-in-Docker-Swarm.md)
   * [Deploying ATTX Broker on Kontena](Deploying-ATTX-SB-on-Kontena.md)
 

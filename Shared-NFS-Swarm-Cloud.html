@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Graph Component · GitBook</title>
+        <title>Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Graph-Manager-API.html" />
+    <link rel="next" href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html" />
     
     
-    <link rel="prev" href="UVProvenance-API.html" />
+    <link rel="prev" href="Deploying-ATTX-Components-on-Docker-Swarm.html" />
     
 
     </head>
@@ -298,7 +298,7 @@
             
         </li>
     
-        <li class="chapter " data-level="2.1.2.3" data-path="Shared-NFS-Swarm-Cloud.html">
+        <li class="chapter active" data-level="2.1.2.3" data-path="Shared-NFS-Swarm-Cloud.html">
             
                 <a href="Shared-NFS-Swarm-Cloud.html">
             
@@ -412,7 +412,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.2" data-path="Graph-Component.html">
+        <li class="chapter " data-level="3.2" data-path="Graph-Component.html">
             
                 <a href="Graph-Component.html">
             
@@ -1006,7 +1006,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Graph Component</a>
+        <a href="." >Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta</a>
     </h1>
 </div>
 
@@ -1021,30 +1021,52 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 21-Jun-2017 09:06:07</div></div><h1 id="graph-component">Graph component</h1>
-<p>The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the platform, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.</p>
-<p>Graph Component is designed to:</p>
-<ul>
-<li>retrieve information from the <a href="UVProvenance-API.html">UV Provovenance API</a> in order to update the <strong>Provenance and Workflow Data</strong> graphs;</li>
-<li>manage the mapping - RML mappings;</li>
-<li>source data queries - select specific data from the <a href="Graph-Store.html">Graph Store</a> and after applying the mapping deliver it to target output;</li>
-<li>target output (e.g. endpoint API) - where to output the <a href="Graph-Store.html">Graph Store</a> data.</li>
-<li>There is an <a href="Graph-Manager-API.html">Graph Manager API</a> which handles all these specific tasks</li>
-<li>Ontology based linking/clustering of IDs</li>
-</ul>
-<p><strong>Github Repository: </strong><a href="https://github.com/ATTX-project/graph-component" target="_blank"><strong>graph-component</strong></a></p>
-<p>The Workflow Component consists of following parts:</p>
-<ul>
-<li><a href="Graph-Manager-API.html">Graph Manager API</a><ul>
-<li><a href="Graph-Store.html">Graph Store</a><ul>
-<li><a href="ATTX-Data-Model.html">Ontology/Data model</a></li>
-<li><a href="Linking-graphs.md">Linking</a></li>
-</ul>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 21-Sep-2017 09:55:38</div></div><h1 id="shared-nfs-volume-in-docker-swarm-on-cpouta">Shared NFS Volume in Docker Swarm (on cPouta)</h1>
+<p>Please find hereby the procedure to set-up a shared NFS filesystem in Docker Swarm with the <a href="http://netshare.containx.io/" target="_blank">Netshare Docker volume plugin</a></p>
+<ol>
+<li><p>Create a &quot;/d/attx-shared&quot; directory in the ATTX Master (attx-swarm-1): <code>sudo mkdir -p /d/attx-shared</code></p>
 </li>
-</ul>
+<li><p>Create a persistent volume and mount it to /d/attx-shared (instructions here: <a href="https://research.csc.fi/pouta-persistent-volumes" target="_blank">https://research.csc.fi/pouta-persistent-volumes</a>)</p>
 </li>
-</ul>
+<li><p>Install NFS tools to setup Master as NFS server:</p>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install nfs-kernel-server nfs-common
+</code></pre></li>
+<li><p>Configure your the new NFS server (attx-swarm-1) to share the &quot;/d/attx-shared&quot; directory:</p>
+</li>
+</ol>
+<pre><code>$ sudo vi /etc/exports
+</code></pre><p> Add the &quot;/d/attx-shared&quot; directory plus the IP address of the hosts that should read and write form it:</p>
+<pre><code>/d/attx/-shared &lt;attx-swarm-2_IP_ADDRESS&gt;(rw,fsid=0,insecure,no_subtree_check,sync)
 
+/d/attx/-shared &lt;attx-swarm-3_IP_ADDRESS&gt;(rw,fsid=0,insecure,no_subtree_check,sync)
+</code></pre><p>Restart the NFS server to take changes into effect:
+<code># sudo systemctl restart nfs-kernel-server</code></p>
+<ol>
+<li>On the NFS clients (attx-swarm-2 and attx-swarm-3), create a &quot;/d/attx-shared&quot; directory as mount point for the NFS export from the server (attx-swarm-1):</li>
+</ol>
+<p><code>$ sudo mkdir -p /d/attx-shared</code></p>
+<p>Install the NFS client tools and test mounting the NFS export into the local &quot;/d/attx-shared&quot;:</p>
+<pre><code># sudo apt-get install nfs-common
+# mount -t nfs -o proto=tcp,port=2049 &lt;nfs-server-IP&gt;:/ /d/attx-shared
+</code></pre><p>Remember to unmount it afterwards (<code>unmount /d/attx-shared</code>).</p>
+<ol>
+<li><p>Install and configure the NetShare Docker volume plugin in all hosts as per <a href="http://netshare.containx.io/docs/getting-started" target="_blank">http://netshare.containx.io/docs/getting-started</a></p>
+</li>
+<li><p>Check your attx-swarm.yml file:</p>
+</li>
+</ol>
+<p>With an NFS server and shared volume in place, and the other swarm node as NFS clients, and Docker NFS Volume plugin installed in all nodes, the changes to attx-shared.yml are as such:
+Volumes:</p>
+<pre><code>  attx-shared:
+    driver_opts:
+      type:  nfs
+      o: addr=192.168.1.31,rw
+      device: &quot;:/d/attx-shared&quot;
+</code></pre><p>Services:</p>
+<pre><code>volumes:
+  - attx_shared:/attx-shared
+</code></pre>
                                 
                                 </section>
                             
@@ -1071,12 +1093,12 @@
 
             
                 
-                <a href="UVProvenance-API.html" class="navigation navigation-prev " aria-label="Previous page: UVProvovenance API">
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html" class="navigation navigation-prev " aria-label="Previous page: Deploying ATTX Components on Docker Swarm">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Graph-Manager-API.html" class="navigation navigation-next " aria-label="Next page: Graph Manager API">
+                <a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html" class="navigation navigation-next " aria-label="Next page: Applying Rolling Updates to Services in Docker Swarm">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1087,7 +1109,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Graph Component","level":"3.2","depth":1,"next":{"title":"Graph Manager API","level":"3.2.1","depth":2,"path":"Graph-Manager-API.md","ref":"Graph-Manager-API.md","articles":[]},"previous":{"title":"UVProvovenance API","level":"3.1.3","depth":2,"path":"UVProvenance-API.md","ref":"UVProvenance-API.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Component.md","mtime":"2017-08-03T12:02:45.439Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-09-25T14:09:01.899Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta","level":"2.1.2.3","depth":3,"next":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.4","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"previous":{"title":"Deploying ATTX Components on Docker Swarm","level":"2.1.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Shared-NFS-Swarm-Cloud.md","mtime":"2017-09-25T14:08:22.549Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-09-25T14:09:01.899Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
