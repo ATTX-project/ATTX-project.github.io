@@ -1,0 +1,1609 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Deploying ATTX Broker on Kontena · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-git-author/style.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ATTX-Component-Workflow.html" />
+    
+    
+    <link rel="prev" href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">ATTX Project</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    ATTX Project
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Applications and Use Cases
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="Use-case-Infrastructures-and-publications.html">
+            
+                <a href="Use-case-Infrastructures-and-publications.html">
+            
+                    
+                    UC1 - Infrastructure and Publications
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="Use-case-Jyvaskyla.html">
+            
+                <a href="Use-case-Jyvaskyla.html">
+            
+                    
+                    UC2 - Parallel Publication Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="Use-case-Metax.html">
+            
+                <a href="Use-case-Metax.html">
+            
+                    
+                    UC3 - Metax
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
+            
+                <a href="Use-case-Mildred.html">
+            
+                    
+                    UC4 - Mildred
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="ATTX-Architecture-Overview.html">
+            
+                <a href="ATTX-Architecture-Overview.html">
+            
+                    
+                    ATTX Architecture Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Getting Started</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="ATTX-Broker-Deployment.html">
+            
+                <a href="ATTX-Broker-Deployment.html">
+            
+                    
+                    ATTX Broker Deployment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" >
+            
+                <span>
+            
+                    
+                    Run on Single Machine PC/Mac/VM
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1.1" data-path="Building-Docker-application-stacks-in-Swarm-Mode.html">
+            
+                <a href="Building-Docker-application-stacks-in-Swarm-Mode.html">
+            
+                    
+                    Building Swarm Mode on a PC/Mac
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.1.2" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+            
+                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+            
+                    
+                    Running the ATTX Stack on a PC/Mac
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" >
+            
+                <span>
+            
+                    
+                    Run on Distributed/Cloud
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.2.1" data-path="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                    
+                    Provisioning ATTX Components on CSC Open Stack (cPouta)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2.2" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                    
+                    Deploying ATTX Components on Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2.3" data-path="Shared-NFS-Swarm-Cloud.html">
+            
+                <a href="Shared-NFS-Swarm-Cloud.html">
+            
+                    
+                    Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2.4" data-path="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
+            
+                <a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
+            
+                    
+                    Applying Rolling Updates to Services in Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.1.3" data-path="Deploying-ATTX-SB-on-Kontena.html">
+            
+                <a href="Deploying-ATTX-SB-on-Kontena.html">
+            
+                    
+                    Deploying ATTX Broker on Kontena
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Core Components</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="ATTX-Component-Workflow.html">
+            
+                <a href="ATTX-Component-Workflow.html">
+            
+                    
+                    Workflow Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="ETL-Artifacts.html">
+            
+                <a href="ETL-Artifacts.html">
+            
+                    
+                    ETL Artifacts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2" data-path="Unified-Views-plugins.html">
+            
+                <a href="Unified-Views-plugins.html">
+            
+                    
+                    UnifiedViews Plugins
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.3" data-path="Service-UVProvenance.html">
+            
+                <a href="Service-UVProvenance.html">
+            
+                    
+                    UVProvovenance Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="ATTX-Component-Graph.html">
+            
+                <a href="ATTX-Component-Graph.html">
+            
+                    
+                    Graph Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="Service-Graph-Manager.html">
+            
+                <a href="Service-Graph-Manager.html">
+            
+                    
+                    Graph Manager Service
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1.1" data-path="Examples-Graph-Manager-Service.html">
+            
+                <a href="Examples-Graph-Manager-Service.html">
+            
+                    
+                    Graph Manager Message Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="Graph-Store.html">
+            
+                <a href="Graph-Store.html">
+            
+                    
+                    Graph Store
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.2.1" data-path="ATTX-Data-Model.html">
+            
+                <a href="ATTX-Data-Model.html">
+            
+                    
+                    Ontology/Data model
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.3" data-path="Linking-Strategies.html">
+            
+                <a href="Linking-Strategies.html">
+            
+                    
+                    Linking Strategies
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="ATTX-Component-Distribution.html">
+            
+                <a href="ATTX-Component-Distribution.html">
+            
+                    
+                    Distribution Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.3.1" data-path="ElasticSearch-with-Siren.html">
+            
+                <a href="ElasticSearch-with-Siren.html">
+            
+                    
+                    ElasticSearch 1.3 with Siren
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3.2" data-path="ElasticSearch-5.html">
+            
+                <a href="ElasticSearch-5.html">
+            
+                    
+                    ElasticSearch 5.x
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="ATTX-Component-ServiceDiscovery.md">
+            
+                <span>
+            
+                    
+                    Service Discovery
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.4.1" data-path="Consul-ServiceDiscovery-Implementation.html">
+            
+                <a href="Consul-ServiceDiscovery-Implementation.html">
+            
+                    
+                    Consul Service Discovery Implementation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.2" data-path="Consul-for-Service-Discovery-on-Docker-Swarm.html">
+            
+                <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html">
+            
+                    
+                    Consul for Service Discovery on Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="ATTX-Component-MessageBroker.html">
+            
+                <a href="ATTX-Component-MessageBroker.html">
+            
+                    
+                    Message Broker
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.5.1" data-path="MessageBroker-ActiveMQ.html">
+            
+                <a href="MessageBroker-ActiveMQ.html">
+            
+                    
+                    ActiveMQ Message Broker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5.2" data-path="MessageBroker-RabbitMQ.html">
+            
+                <a href="MessageBroker-RabbitMQ.html">
+            
+                    
+                    RabbitMQ Message Broker
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Broker Services</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="Service-Provenance.html">
+            
+                <a href="Service-Provenance.html">
+            
+                    
+                    Provenance Service
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="Examples-Provenance-Service.html">
+            
+                <a href="Examples-Provenance-Service.html">
+            
+                    
+                    Provenance Messages Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="Service-RML.html">
+            
+                <a href="Service-RML.html">
+            
+                    
+                    RML Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">User Guide</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="User-Guide-Administrator.html">
+            
+                <a href="User-Guide-Administrator.html">
+            
+                    
+                    Data Administrator's User guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Development Guidelines</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="ATTX-Development-Environment.html">
+            
+                <a href="ATTX-Development-Environment.html">
+            
+                    
+                    ATTX Development Environment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="Feature-roadmap.html">
+            
+                <a href="Feature-roadmap.html">
+            
+                    
+                    Feature Roadmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="Release-Plan.html">
+            
+                <a href="Release-Plan.html">
+            
+                    
+                    Release Plan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="CI-CD-Enviroment.html">
+            
+                <a href="CI-CD-Enviroment.html">
+            
+                    
+                    CI/CD Enviroment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.4.1" data-path="Jenkins-CI.html">
+            
+                <a href="Jenkins-CI.html">
+            
+                    
+                    Jenkins CI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4.2" data-path="Build-Environment-Setup.html">
+            
+                <a href="Build-Environment-Setup.html">
+            
+                    
+                    Build Environment Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4.3" data-path="Containerized-testing.html">
+            
+                <a href="Containerized-testing.html">
+            
+                    
+                    Containerized Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Reports & Contributions</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Reports
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="CSC-cPouta-Cloud-Services-Report.html">
+            
+                <a href="CSC-cPouta-Cloud-Services-Report.html">
+            
+                    
+                    CSC cPouta Cloud Services Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.1.2" data-path="Building-with-Gradle.html">
+            
+                <a href="Building-with-Gradle.html">
+            
+                    
+                    Building with (Py)Gradle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.1.3" data-path="Messaging-Brokers-Solutions.html">
+            
+                <a href="Messaging-Brokers-Solutions.html">
+            
+                    
+                    Messaging Brokers Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.1.4" data-path="Service-Discovery-Solutions.html">
+            
+                <a href="Service-Discovery-Solutions.html">
+            
+                    
+                    Service Discovery Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.1.5" data-path="Workflow-Management-Tools.html">
+            
+                <a href="Workflow-Management-Tools.html">
+            
+                    
+                    Workflow Management Tools Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" >
+            
+                <span>
+            
+                    
+                    Presentations
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.2.1" data-path="Presentation-ELAG-2017.html">
+            
+                <a href="Presentation-ELAG-2017.html">
+            
+                    
+                    ELAG2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2.2" data-path="Presentation-OSFair-2017.html">
+            
+                <a href="Presentation-OSFair-2017.html">
+            
+                    
+                    OSFair2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2.3" data-path="Presentation-SWIB-2017.html">
+            
+                <a href="Presentation-SWIB-2017.html">
+            
+                    
+                    SWIB2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2.4" data-path="Presentation-ISWC-2017.html">
+            
+                <a href="Presentation-ISWC-2017.html">
+            
+                    
+                    ISWC2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="Open-Contributions.html">
+            
+                <a href="Open-Contributions.html">
+            
+                    
+                    Open Source Contributions
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <a target="_blank" href="https://www.helsinki.fi/en/projects/attx-2016">
+            
+                    
+                    ATTX website
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Deploying ATTX Broker on Kontena</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 27-Sep-2017 12:10:39</div></div><h1 id="deploying-the-attx-semantic-broker-on-kontena">Deploying the ATTX Semantic Broker on Kontena</h1>
+<h3 id="table-of-contents">Table of Contents</h3>
+<!-- TOC START min:1 max:4 link:true update:false -->
+<ul>
+<li><a href="#what-is-kontena-and-why-do-we-test-it">What is Kontena and why do we test it</a></li>
+<li><a href="#installing-kontena-cli">Installing Kontena CLI</a><ul>
+<li><a href="#registering-kontena-cli-to-kontena-master">Registering Kontena CLI to Kontena Master</a></li>
+</ul>
+</li>
+<li><a href="#creating-a-kontena-grid">Creating a Kontena grid</a></li>
+<li><a href="#provisioning-nodes-on-the-grid">Provisioning nodes on the grid</a></li>
+<li><a href="#creating-kontena-volumes">Creating Kontena volumes</a></li>
+<li><a href="#creating-and-deploying-a-kontena-stack">Creating and deploying a Kontena Stack</a><ul>
+<li><a href="#using-digital-ocean-block-storage">Using Digital Ocean Block Storage</a></li>
+<li><a href="#deploying-kontena-on-cscs-open-stack-cpouta">Deploying Kontena on CSC&apos;s Open Stack (cPouta)</a></li>
+</ul>
+</li>
+<li><a href="#pre-requisites">Pre-Requisites</a><ul>
+<li><a href="#kontena-master">Kontena Master</a></li>
+<li><a href="#kontena-grid-and-nodes">Kontena grid and nodes</a></li>
+</ul>
+</li>
+<li><a href="#conclusions">Conclusions</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+<!-- TOC END -->
+<h2 id="what-is-kontena-and-why-do-we-test-it">What is Kontena and why do we test it</h2>
+<p><a href="https://www.kontena.io/" target="_blank">Kontena</a> is a microservices orchestration and management platform. As such, it treats containers as computational instances of managed services.</p>
+<p>As a platform, Kontena consists of:</p>
+<ul>
+<li>Several Kontena Nodes: the virtual machines that run the containerised Kontena services;</li>
+<li>A Kontena Master: Kontena&apos;s control and monitoring node;</li>
+</ul>
+<p>Kontena management is done via Kontena CLI, a Ruby-based Command Line Interface.</p>
+<p>Kontena&apos;s services are configured trough an YML file, which describes:</p>
+<ul>
+<li>The container image for the service;</li>
+<li>Networking definitions;</li>
+<li>Scaling properties;</li>
+<li>Stateful/stateless attributes.</li>
+</ul>
+<p>With such YML file, it&apos;s also possible to link together the defined services, so as to create an application stack.</p>
+<p>Hence, given our experience it could be described more as a &quot;container as a service platform&quot;, instead of a &quot;Docker container management system&quot;.</p>
+<p>Given the growing complexity of the ATTX Semantic Broker application stack, we decided to try out Kontena by testing the deployment of our stack with it. Hereby you can find our report.</p>
+<h2 id="installing-kontena-cli">Installing Kontena CLI</h2>
+<p>Kontena&apos;s CLI (Command Line Interface) <a href="https://www.ruby-lang.org/en/documentation/installation/" target="_blank">requires Ruby 2.1 or latest</a>. With Ruby in place, installing Kontena in Ubuntu 16.04 LTS is quite straightforward:</p>
+<pre><code>$ gem install --user-install kontena-cli
+$ export PATH=$PATH:/home/&lt;username&gt;/.gem/ruby/2.3.0/bin
+</code></pre><p>Alternatively if running MacOS, <a href="https://github.com/kontena/kontena/releases/latest" target="_blank">there is an installer available</a>.</p>
+<p>Using kontena-cli is also intuitive, given its tree-like command structure and help function (e.g. <code>kontena master --help</code>). Auto-completing of Kontena&apos;s commands can be enabled by adding <code>which kontena &gt; /dev/null &amp;&amp; . &quot;$( kontena whoami --bash-completion-path )&quot;</code> in the users &quot;~/.bashrc&quot; file.</p>
+<h3 id="registering-kontena-cli-to-kontena-master">Registering Kontena CLI to Kontena Master</h3>
+<p>All Kontena service management operations go trough a master node. Now that we have kontena-cli, we can register our client to the Kontena Master. In the case of our trial, we used a previously provisioned master node on Kontena Cloud and the respective token (&quot;<code>&lt;token_id&gt;</code>&quot;) (<a href="https://www.kontena.io/cloud" target="_blank">https://www.kontena.io/cloud</a>):</p>
+<p><code>$ kontena master join https://&lt;kontena_master&gt;.kontena.cloud &lt;token_id&gt;</code></p>
+<p>This command will open a default browser window -in our case Firefox- and ask for your Kontena Cloud account and password. Upon successful registration, the browser will exit and the following command will be displayed on the CLI terminal:</p>
+<p><code>Authenticated to Kontena Master &lt;kontena_master&gt; at https://&lt;kontena_master&gt;.kontena.cloud as &lt;kontena_cloud_username&gt;</code></p>
+<p>N.B.: Kontena Cloud is Kontena&apos;s hosted master cloud. It make it easier to manage, audit, and follow up the performance of your Kontena infrastructure it will host your Kontena masters, but not the nodes or storage: it&apos;s up to the user to provide the computational resources (e.g. own hardware, cloud providers, etc.). Nevertheless, it must be also noted that Kontena makes it quite easy to deploy and manage nodes and storage almost anywhere.</p>
+<h2 id="creating-a-kontena-grid">Creating a Kontena grid</h2>
+<p>In Kontena, a grid is a cluster-type logical unit that groups a set of nodes plus connectivity, DNS-based service discovery, storage settings, provision for VPN access and Load Balancing configuration.</p>
+<p>Now that we are logged in to a Kontena Master, we can provision such services by creating a grid:</p>
+<p><code>$ kontena grid create attx</code></p>
+<p>Something interesting in Kontena&apos;s proposition is that its nodes can be located either in a data centre, or in your laptop, or even in different cloud providers. Furthermore, once a Kontena grid is created, an overlay network (based on <a href="https://www.weave.works/" target="_blank">Weave</a>) for that is automatically created as well, enabling communication for all containerised services no matter where the host nodes are located.</p>
+<p>A new grid will also bring an <a href="https://coreos.com/etcd" target="_blank">etcd</a> DNS-based service which will automatically register newly deployed services, and whose key-value store can be accessed in case our applications need key-value Service Discovery.</p>
+<h2 id="provisioning-nodes-on-the-grid">Provisioning nodes on the grid</h2>
+<p>Now that we have our Kontena grid, we can create three nodes to provide us with computing infrastructure. In our case, we&apos;ll provision those nodes in our development environment with <a href="https://www.vagrantup.com/docs/installation/index.html" target="_blank">Vagrant</a> (though we could have used AWS or Digital Ocean, for example).</p>
+<p><code>$ kontena vagrant node create</code></p>
+<p>We&apos;ll be asked for the number of nodes and RAM:</p>
+<pre><code class="lang-shell">&gt; How many nodes?:  3
+&gt; Choose a size  4096MB
+</code></pre>
+<p>We can list the created nodes and ssh into them:</p>
+<pre><code class="lang-shell">$ kontena node ls
+NAME               VERSION   STATUS   INITIAL   LABELS
+&#x229B; frosty-hill-15   1.2.2     online   1 / 1     provider=vagrant
+&#x229B; young-river-48   1.2.2     online   -         provider=vagrant
+&#x229B; late-meadow-36   1.2.2     online   -         provider=vagrant
+</code></pre>
+<pre><code>$ kontena node ssh frosty-hill-15
+Last login: Fri Jun 30 09:56:32 UTC 2017 from 10.0.2.2 on pts/0
+Container Linux by CoreOS stable (1409.5.0)
+</code></pre><p>Thus it&apos;s confirmed that Kontena plugins use <a href="https://coreos.com/" target="_blank">CoreOS</a> as operating system for its nodes.</p>
+<h2 id="creating-kontena-volumes">Creating Kontena volumes</h2>
+<p>At this point, we have a grid (TCP/IP connectivity, DNS service discovery, etc.), and nodes (computing resources), but not persistent storage yet.</p>
+<p>Given that the Docker version of <a href="https://unifiedviews.eu/" target="_blank">UnifiedViews</a> requires a <a href="https://hub.docker.com/r/tenforce/unified-views-shared/" target="_blank">shared volume container</a>, let&apos;s proceed by creating an &quot;attx-uv-shared&quot; shared named volume in Kontena:</p>
+<p><code>$ kontena volume create --driver local --scope stack attx-uv-shared</code></p>
+<p>And since we also need to share files between our Semantic Broker components, let&apos;s create a &quot;attx-db-shared&quot; volume as well:</p>
+<p><code>$ kontena volume create --driver local --scope stack attx-sb-shared</code></p>
+<p>In this trial, we have created two Kontena volumes in our attx grid, that will be using the nodes&apos; file systems (<code>--driver local</code>), and that can be shared between  services in our Kontena stack (<code>--scope stack</code>).</p>
+<h2 id="creating-and-deploying-a-kontena-stack">Creating and deploying a Kontena Stack</h2>
+<p>With a Kontena infrastructure platform in place, it&apos;s time to deploy our ATTX Semenatic Broker service stack. In Kontena, these are configured in a <a href="https://www.kontena.io/docs/references/kontena-yml.html" target="_blank">YAML file</a>, which <a href="https://www.kontena.io/docs/references/docker-compose-support.html" target="_blank">supports most of of the Docker-Compose v2 variables</a> but with a structure similar (e.g. in volume declaration) to <a href="https://docs.docker.com/compose/compose-file/" target="_blank">Docker Compose v3 YML</a>.</p>
+<p>In practice (after some trial and error, but also with friendly help from Kontena staff), starting with <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/attx-kontena.yml" target="_blank">the Docker Compose v3 YAML file that we use with Docker Swarm</a>, we were able to create a Kontena stack file (<a href="https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/attx-kontena.yml" target="_blank">attx-kontena.yml</a>), which we could deploy as following:</p>
+<p><code>$ kontena stack install --name attx attx-kontena.yml</code></p>
+<p>And verify its basic properties, as configured in <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/attx-kontena.yml" target="_blank">attx-kontena.yml</a>:</p>
+<pre><code class="lang-shell">$ kontena stack ls
+
+NAME            &#x229D; attx
+STACK           attxproject/attx:0.1.11
+SERVICES        9
+STATE           running
+EXPOSED PORTS   *:3306-&gt;3306/tcp,*:3030-&gt;3030/tcp,*:9210-&gt;9210/tcp,*:9310-&gt;9310/tcp,*:8066-&gt;8066/tcp,*:8080-&gt;8080/tcp,*:4302-&gt;4302/tcp
+NAME            &#x229D; vpn
+STACK           kontena/vpn:1.3.1
+SERVICES        1
+STATE           running
+EXPOSED PORTS   *:1194-&gt;1194/udp
+</code></pre>
+<p>And it was also straightforward to get more information about the newly-deployed stack services and their properties:</p>
+<pre><code class="lang-shell">$ kontena service ls
+
+NAME              INSTANCES   STATEFUL   STATE     EXPOSED PORTS
+&#x229D; attx/gmapi      1 / 1       yes        running   0.0.0.0:4302-&gt;4302/tcp
+&#x229D; attx/attxdpus   1 / 1       no         running
+&#x229D; attx/frontend   1 / 1       no         running   0.0.0.0:8080-&gt;8080/tcp
+&#x229D; attx/backend    1 / 1       no         running   0.0.0.0:8066-&gt;8066/tcp
+&#x229D; attx/shared     1 / 1       no         running
+&#x229D; attx/wfapi      1 / 1       no         running
+&#x229D; attx/es5        1 / 1       yes        running   0.0.0.0:9210-&gt;9210/tcp,0.0.0.0:9310-&gt;9310/tcp
+&#x229D; attx/fuseki     1 / 1       yes        running   0.0.0.0:3030-&gt;3030/tcp
+&#x229D; attx/mysql      1 / 1       yes        running   0.0.0.0:3306-&gt;3306/tcp
+&#x229D; vpn/server      1 / 1       yes        running   0.0.0.0:1194-&gt;1194/udp
+</code></pre>
+<p><code>$ kontena service show  attx/frontend</code></p>
+<pre><code class="lang-yml">attx-demo/attx/frontend:
+<span class="hljs-attr">  created:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-06</span><span class="hljs-bullet">-30</span>T09:<span class="hljs-number">50</span>:<span class="hljs-number">35.909</span>Z
+<span class="hljs-attr">  updated:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-06</span><span class="hljs-bullet">-30</span>T09:<span class="hljs-number">50</span>:<span class="hljs-number">35.909</span>Z
+<span class="hljs-attr">  stack:</span> attx-demo/attx
+<span class="hljs-attr">  desired_state:</span> running
+<span class="hljs-attr">  image:</span> attxproject/unified-views-frontend:stable<span class="hljs-bullet">-1.2</span>
+<span class="hljs-attr">  revision:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  stack_revision:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  stateful:</span> <span class="hljs-literal">no</span>
+<span class="hljs-attr">  scaling:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  strategy:</span> ha
+<span class="hljs-attr">  deploy_opts:</span>
+<span class="hljs-attr">  dns:</span> frontend.attx.attx-demo.kontena.local
+<span class="hljs-attr">  affinity:</span>
+<span class="hljs-bullet">    -</span> label==master
+<span class="hljs-attr">  ports:</span>
+<span class="hljs-bullet">    -</span> <span class="hljs-number">8080</span>:<span class="hljs-number">8080</span>/tcp
+<span class="hljs-attr">  volumes:</span>
+<span class="hljs-attr">    - attx-uv-shared:</span>/unified-views
+<span class="hljs-attr">    - attx-sb-shared:</span>/attx-shared
+<span class="hljs-attr">  links:</span>
+<span class="hljs-bullet">    -</span> shared
+<span class="hljs-bullet">    -</span> mysql
+<span class="hljs-bullet">    -</span> backend
+<span class="hljs-attr">  instances:</span>
+    attx/frontend/<span class="hljs-number">1</span>:
+<span class="hljs-attr">      scheduled_to:</span> blue-sky<span class="hljs-bullet">-55</span>
+<span class="hljs-attr">      deploy_rev:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-06</span><span class="hljs-bullet">-30</span> <span class="hljs-number">09</span>:<span class="hljs-number">52</span>:<span class="hljs-number">28</span> UTC
+<span class="hljs-attr">      rev:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-06</span><span class="hljs-bullet">-30</span> <span class="hljs-number">09</span>:<span class="hljs-number">52</span>:<span class="hljs-number">28</span> UTC
+<span class="hljs-attr">      state:</span> running
+<span class="hljs-attr">      containers:</span>
+        attx.frontend<span class="hljs-bullet">-1</span> (on blue-sky<span class="hljs-bullet">-55</span>):
+<span class="hljs-attr">          dns:</span> frontend<span class="hljs-bullet">-1.</span>attx.attx-demo.kontena.local
+<span class="hljs-attr">          ip:</span> <span class="hljs-number">10.81</span><span class="hljs-number">.128</span><span class="hljs-number">.111</span>
+          public ip: <span class="hljs-number">128.214</span><span class="hljs-number">.91</span><span class="hljs-number">.110</span>
+<span class="hljs-attr">          status:</span> running
+</code></pre>
+<p>Practical result: successful deployment of our Semantic Broker stack, all applications and services operational as expected.</p>
+<h3 id="using-digital-ocean-block-storage">Using Digital Ocean Block Storage</h3>
+<p>Let&apos;s start by creating a Kontena grid computing environment for this exercise:</p>
+<pre><code class="lang-shell">$ kontena grid create do-test
+[warn] Option --initial-size=1 is only recommended for test/dev usage
+[done] Creating do-test grid      
+[done] Switching scope to do-test grid
+</code></pre>
+<p>And some Kontena Vagrant nodes in our local environment too:</p>
+<pre><code class="lang-shell">kontena vagrant node create
+&gt; How many nodes?:  2
+&gt; Choose a size  4096MB
+[done] Generating Vagrant config     
+[done] Triggering CoreOS Container Linux box update
+</code></pre>
+<p>Since Kontena&apos;s Digital Ocean plug-in makes it quite easy to manage droplets and block storage volumes, let&apos;s start by installing it on our kontena-cli environment:</p>
+<pre><code class="lang-shell">$ kontena plugin install digitalocean
+ [done] Installing plugin digitalocean     
+Installed plugin digitalocean version 0.3.0
+</code></pre>
+<p>And follow on by creating a Kontena node in Digital Ocean:</p>
+<pre><code class="lang-shell">$ kontena digitalocean node create
+&gt; DigitalOcean API token:  
+&gt; Choose a datacenter region:  Frankfurt 1
+&gt; Select CoreOS channel Stable
+&gt; Choose droplet size:  4GB/2CPU/60GB ($40/mo)
+&gt; How many droplets?:  1
+ [done] Creating DigitalOcean droplet long-morning-64      
+ [done] Waiting for node long-morning-64 join to grid attx-do
+</code></pre>
+<p>At this point, we have then 2 nodes running in Vagrant in our local environment, and one in Digital Ocean:</p>
+<pre><code class="lang-shell">$ kontena node ls
+NAME                  VERSION   STATUS   INITIAL   LABELS
+&#x229B; long-morning-64     1.2.2     online   1 / 1     region=fra1,az=fra1,provider=digitalocean,master
+&#x229B; hidden-field-17     1.2.2     online   -         provider=vagrant
+&#x229B; falling-silence-7   1.2.2     online   -         provider=vagrant
+</code></pre>
+<p>Now we should login to <a href="https://www.digitalocean.com/" target="_blank">Digital Ocean</a> to create a block storage volume and attach it to our newly created kontena node (long-morning-64). Once that is done, we can configure the attached volume as follows:</p>
+<pre><code class="lang-shell">$ kontena node ssh long-morning-64
+$ sudo mkfs.ext4 -F /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01
+$ sudo mkdir -p /mnt/volume-fra1-01; sudo mount -o discard,defaults /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01 /mnt/volume-fra1-01; echo /dev/disk/by-id/scsi-0DO_Volume_volume-fra1-01 /mnt/volume-fra1-01 ext4 defaults,nofail,discard 0 0 | sudo tee -a /etc/fstab
+</code></pre>
+<p>So now that we have a &quot;/mnt/volume-fra1-01&quot; volume that we can use for UnifiedViews MySQL database, we can edit the mysql service defintion  in the attx stack yml file to use the block storage device mount point:</p>
+<pre><code class="lang-yml"><span class="hljs-attr">mysql:</span>
+<span class="hljs-attr">  image:</span> attxproject/unified-views-mariadb:stable<span class="hljs-bullet">-1.2</span>
+<span class="hljs-attr">  ports:</span>
+<span class="hljs-bullet">    -</span> <span class="hljs-string">&quot;3306:3306&quot;</span>
+<span class="hljs-attr">  stateful:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">  environment:</span>
+<span class="hljs-attr">    MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">&quot;UV&quot;</span>
+<span class="hljs-attr">    MYSQL_PASSWORD:</span> <span class="hljs-string">&quot;UV&quot;</span>
+<span class="hljs-attr">  volumes:</span>
+<span class="hljs-bullet">    -</span> /mnt/volume-fra1<span class="hljs-bullet">-01</span>:/var/lib/mysql
+<span class="hljs-attr">  affinity:</span>
+<span class="hljs-bullet">    -</span> label==master
+</code></pre>
+<p>And then we can deploy the service (but have to create shared volumes first with <code>kontena volume create --driver local --scope stack attx-uv-shared</code>, and <code>kontena volume create --driver local --scope stack attx-sb-shared</code>):</p>
+<pre><code class="lang-shell">$ kontena stack install --name attx attx-do-kontena.yml
+</code></pre>
+<p>When the stack finishes deploying, we can check that indeed the &quot;mysql&quot; service is running in the scheduled Digital Ocean node and using the defined block storage device with the <code>kontena service show attx/mysql</code> command:</p>
+<pre><code class="lang-yml">attx-do/attx/mysql:
+<span class="hljs-attr">  created:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-08</span><span class="hljs-bullet">-03</span>T13:<span class="hljs-number">52</span>:<span class="hljs-number">48.276</span>Z
+<span class="hljs-attr">  updated:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-08</span><span class="hljs-bullet">-03</span>T13:<span class="hljs-number">52</span>:<span class="hljs-number">48.276</span>Z
+<span class="hljs-attr">  stack:</span> attx-do/attx
+<span class="hljs-attr">  desired_state:</span> running
+<span class="hljs-attr">  image:</span> attxproject/unified-views-mariadb:stable<span class="hljs-bullet">-1.2</span>
+<span class="hljs-attr">  revision:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  stack_revision:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  stateful:</span> <span class="hljs-literal">yes</span>
+<span class="hljs-attr">  scaling:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">  strategy:</span> ha
+<span class="hljs-attr">  deploy_opts:</span>
+<span class="hljs-attr">  dns:</span> mysql.attx.attx-do.kontena.local
+<span class="hljs-attr">  affinity:</span>
+<span class="hljs-bullet">    -</span> label==master
+<span class="hljs-attr">  env:</span>
+<span class="hljs-bullet">    -</span> MYSQL_ROOT_PASSWORD=UV
+<span class="hljs-bullet">    -</span> MYSQL_PASSWORD=UV
+<span class="hljs-attr">  ports:</span>
+<span class="hljs-bullet">    -</span> <span class="hljs-number">3306</span>:<span class="hljs-number">3306</span>/tcp
+<span class="hljs-attr">  volumes:</span>
+<span class="hljs-bullet">    -</span> /mnt/volume-fra1<span class="hljs-bullet">-01</span>:/var/lib/mysql
+<span class="hljs-attr">  instances:</span>
+    attx/mysql/<span class="hljs-number">1</span>:
+<span class="hljs-attr">      scheduled_to:</span> long-morning<span class="hljs-bullet">-64</span>
+<span class="hljs-attr">      deploy_rev:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-08</span><span class="hljs-bullet">-03</span> <span class="hljs-number">13</span>:<span class="hljs-number">52</span>:<span class="hljs-number">49</span> UTC
+<span class="hljs-attr">      rev:</span> <span class="hljs-number">2017</span><span class="hljs-bullet">-08</span><span class="hljs-bullet">-03</span> <span class="hljs-number">13</span>:<span class="hljs-number">52</span>:<span class="hljs-number">49</span> UTC
+<span class="hljs-attr">      state:</span> running
+<span class="hljs-attr">      containers:</span>
+        attx.mysql<span class="hljs-bullet">-1</span> (on long-morning<span class="hljs-bullet">-64</span>):
+<span class="hljs-attr">          dns:</span> mysql<span class="hljs-bullet">-1.</span>attx.attx-do.kontena.local
+<span class="hljs-attr">          ip:</span> <span class="hljs-number">10.81</span><span class="hljs-number">.128</span><span class="hljs-number">.73</span>
+          public ip: <span class="hljs-number">207.154</span><span class="hljs-number">.202</span><span class="hljs-number">.178</span>
+<span class="hljs-attr">          status:</span> running
+</code></pre>
+<p>And what if we check the &quot;/mnt/volume-fra1-01&quot; on the long-morning-64 host?</p>
+<pre><code class="lang-shell">long-morning-64 volume-fra1-01 # ls -l
+total 176200
+-rw-rw----. 1 999 rkt-admin    16384 Aug  3 13:54 aria_log.00000001
+-rw-rw----. 1 999 rkt-admin       52 Aug  3 13:54 aria_log_control
+-rw-rw----. 1 999 rkt-admin 50331648 Aug  3 14:21 ib_logfile0
+-rw-rw----. 1 999 rkt-admin 50331648 Aug  3 13:53 ib_logfile1
+-rw-rw----. 1 999 rkt-admin 79691776 Aug  3 14:21 ibdata1
+drwx------. 2 999 rkt-admin    16384 Aug  3 12:05 lost+found
+-rw-rw----. 1 999 rkt-admin        0 Aug  3 13:53 multi-master.info
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:53 mysql
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:53 performance_schema
+-rw-rw----. 1 999 rkt-admin    24576 Aug  3 13:54 tc.log
+drwx------. 2 999 rkt-admin     4096 Aug  3 13:54 unified_views
+</code></pre>
+<p>Success :-) Though this wasn&apos;t a complicated exercise, using Kontena to deploy the ATTX SB stack in a mixed Digital Ocean and Vagrant environment is quite easy (at least compared to setting up a similar environment using Docker Swarm).</p>
+<h3 id="deploying-kontena-on-cscs-open-stack-cpouta">Deploying Kontena on CSC&apos;s Open Stack (cPouta)</h3>
+<p>Hereby, we exemplify how to deploy a Kontena master, grid, and 3 nodes to CSC&apos;s Open Stack (cPouta), using <a href="https://github.com/ATTX-project/platform-deployment/tree/dev/attx-kontena/cpouta" target="_blank">ready-made Openstack HEAT templates</a>. For this exercise you will need:</p>
+<ol>
+<li><a href="https://research.csc.fi/csc-guide-getting-access-to-csc-services" target="_blank">A CSC user account</a></li>
+<li><a href="https://research.csc.fi/pouta-application" target="_blank">A cPouta project</a></li>
+<li><a href="https://research.csc.fi/pouta-connecting-a-virtual-machine" target="_blank">The SSH certificate used by your cPouta project</a></li>
+<li>OpenStack CLI tools</li>
+<li>Sourcing cPouta&apos;s environment variables</li>
+<li>Importing CoreOS image</li>
+</ol>
+<p>We assume that 1., 2., and 3., have been satisfied, i.e. that we already have a CSC user account, a cPouta project, and have generated and downloaded the project&apos;s SSH certificate.</p>
+<h2 id="pre-requisites">Pre-Requisites</h2>
+<p>Once we have your CSC user account and cPouta project up and and running, we&apos;ll need to install the OpenStack CLI. In Ubuntu, this can be done with the &quot;apt&quot; tool:</p>
+<pre><code>$ sudo apt-get install python-openstackclient python-novaclient python-neutronclient python-glanceclient python-cinderclient
+</code></pre><p>Otherwise, if you prefer you can <a href="https://research.csc.fi/pouta-install-client" target="_blank">install the OpenStack CLI tools using PIP</a>.</p>
+<p>With the OpenStack CLI tools in place, it&apos;s now time to configure the terminal environment (e.g. BASH) and authenticate to cPouta, so that we can interact with CSC&apos;s OpenStack via command line. All cPouta projects have their authentication script available for download at their &quot;<a href="https://pouta.csc.fi/dashboard/project/access_and_security/api_access/openrc/" target="_blank">Access and Security</a>&quot; dashboard panel.</p>
+<p>After downloading the authentication script, we can source the environment variables and login to cPouta:</p>
+<pre><code class="lang-shell">$ source &lt;your_cpouta_project_name&gt;-openrc.sh
+</code></pre>
+<p>The script will ask you for a password, which will be the password of your CSC account.</p>
+<p>At this point, the only pre-requisite left is to import the CoreOS image to cPouta. Since Kontena is based on <a href="https://coreos.com/" target="_blank">CoreOS</a> and cPouta image catalogue doesn&#x2019;t include a CoreOS image, you&apos;ll have to download it and push it to cPouta. You can find the <a href="https://coreos.com/os/docs/latest/booting-on-openstack.html" target="_blank">instructions at CoreOS website</a>, just be sure to note down the name you chose for the image.</p>
+<pre><code class="lang-shell">$ glance image-create --name CoreOS \
+&gt;   --container-format bare \
+&gt;   --disk-format qcow2 \
+&gt;   --file coreos_production_openstack_image.img
+</code></pre>
+<h4 id="kontena-master">Kontena Master</h4>
+<p>Now we are almost ready to install the Kontena master with a <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/cpouta/heat-kontena-master.yml" target="_blank">ready-made HEAT template</a>. We just need to generate its SSL certificate:</p>
+<pre><code class="lang-shell">$ openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
+$ cat certificate.crt privateKey.key &gt; kontena_master.pem
+</code></pre>
+<p>Recommendation: generate Kontena master SSL certificate in the same folder where you downloaded the <a href="https://github.com/ATTX-project/platform-deployment/tree/dev/attx-kontena/cpouta" target="_blank">HEAT templates</a>.</p>
+<p>Before installing Kontena master with the HEAT template, we should edit its parameters header in order to fit our cPouta project environment (the image name, for example):</p>
+<pre><code class="lang-yml"><span class="hljs-attr">parameters:</span>
+<span class="hljs-attr">  key_name:</span>
+<span class="hljs-attr">    type:</span> string
+<span class="hljs-attr">    default:</span> Cpouta Test
+    <span class="hljs-comment"># replace above with your key pair name as per: https://pouta.csc.fi/dashboard/project/access_and_security/</span>
+<span class="hljs-attr">  az:</span>
+<span class="hljs-attr">    type:</span> string
+<span class="hljs-attr">    default:</span> nova
+    <span class="hljs-comment"># above should be nova</span>
+<span class="hljs-attr">  public_network:</span>
+<span class="hljs-attr">    type:</span> string
+<span class="hljs-attr">    default:</span> project_2000561
+    <span class="hljs-comment"># replace the above with your project_name / tenant name e.g project_2000561</span>
+<span class="hljs-attr">  public_ip_pool:</span>
+<span class="hljs-attr">    type:</span> string
+<span class="hljs-attr">    default:</span> public
+    <span class="hljs-comment"># above should be public</span>
+<span class="hljs-attr">  name:</span>
+<span class="hljs-attr">    type:</span> string
+<span class="hljs-attr">    default:</span> kontena-master
+    <span class="hljs-comment"># this can stay as kontena-master</span>
+<span class="hljs-attr">  volume_size:</span>
+<span class="hljs-attr">    type:</span> number
+<span class="hljs-attr">    default:</span> <span class="hljs-number">20</span>
+<span class="hljs-attr">  image:</span>
+<span class="hljs-attr">    type:</span> string
+<span class="hljs-attr">    default:</span> CoreOS
+    <span class="hljs-comment"># the above should be the name you gave to the CoreOS image in cPouta</span>
+</code></pre>
+<p>So now that we have Kontena&apos;s master SSL certificate and parameters in place, we can proceed with the installation:</p>
+<pre><code class="lang-shell">$ openstack stack create --parameter image=CoreOS --template heat-kontena-master.yml Kontena-Master
+</code></pre>
+<p>And then check the installation status:</p>
+<pre><code class="lang-shell">$ openstack stack list
++--------------------------------------+----------------+-----------------+----------------------+--------------+
+| ID                                   | Stack Name     | Stack Status    | Creation Time        | Updated Time |
++--------------------------------------+----------------+-----------------+----------------------+--------------+
+| 0e74c0f1-cd21-4903-8ce8-2c66649ec05d | Kontena-Master | CREATE_COMPLETE | 2017-08-02T15:10:39Z | None         |
++--------------------------------------+----------------+-----------------+----------------------+--------------+
+</code></pre>
+<p>We can also test the SSH conection to the Kontena Master (be sure to <a href="https://pouta.csc.fi/dashboard/project/instances/" target="_blank">double check Kontena Master public floating IP</a>:</p>
+<pre><code class="lang-shell">$ export SSL_IGNORE_ERRORS=true
+$ ssh -i ~/.ssh/&lt;cpouta_project_key&gt;.pem core@&lt;kontena_master_floating_public_ip&gt;
+</code></pre>
+<p>It&apos;s also a good idea to retrieve and write down the initial admin code of our new Kontena master, so that we can register our local Kontena CLI to it:</p>
+<pre><code class="lang-shell">$ openstack stack show Kontena-Master
+| outputs               | - description: Initial admin code                                                                                                |
+|                       |   output_key: initial_admin_code                                                                                                 |
+|                       |   output_value: &lt;INITIAL_ADMIN_CODE&gt;
+
+
+$ kontena master login --code &lt;INITIAL_ADMIN_CODE&gt; https://&lt;kontena_master_floating_public_ip&gt;:8443
+</code></pre>
+<h4 id="kontena-grid-and-nodes">Kontena grid and nodes</h4>
+<p>With our local Kontena CLI registered to the Kontena master, we can create a grid and deploy nodes:</p>
+<pre><code class="lang-shell">$ kontena grid create --initial-size=3 cpouta-grid
+ [done] Creating cpouta-grid grid      
+ [done] Switching scope to cpouta-grid grid
+</code></pre>
+<p>Each Kontena grid has its own token, so be sure to retrieve it as well (the grid token will be needed to deploy the nodes into the grid with the HEAT template)</p>
+<pre><code class="lang-shell">$ kontena grid show --token cpouta-grid
+&lt;GRID_TOKEN&gt;
+</code></pre>
+<p>At this point, we should edit the <a href="https://github.com/ATTX-project/platform-deployment/blob/dev/attx-kontena/cpouta/heat-grid.yml" target="_blank">HEAT template for creating the grid services and nodes</a>, and make sure that the values of the parameters matches the ones that were used used for creating the Master.</p>
+<p>Once that&apos;s in place, we can then install the Kontena grid services and nodes:</p>
+<pre><code class="lang-shell">$ openstack stack create --parameter grid_name=&lt;grid_name&gt; --parameter kontena_master_uri=https://&lt;master_public_ip&gt;:8443 --parameter grid_token=&apos;&lt;grid_token&gt;&apos; --parameter image=CoreOS -t heat-grid.yml &lt;grid_name&gt;
+</code></pre>
+<p>And after a few minutes, confirm that the installation was successful:</p>
+<pre><code class="lang-shell">$ openstack stack show cpouta-grid
++-----------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| Field                 | Value                                                                                                                         |
++-----------------------+-------------------------------------------------------------------------------------------------------------------------------+
+| id                    | 847453da-ebcf-493d-8770-fa8b2d575b0e                                                                                          |
+| stack_name            | cpouta-grid                                                                                                                   |
+| description           | Heat template to setup multi AZ grid                                                                                          |
+|                       |                                                                                                                               |
+| creation_time         | 2017-08-18T10:21:08Z                                                                                                          |
+| updated_time          | None                                                                                                                          |
+| stack_status          | CREATE_COMPLETE                                                                                                               |
+| stack_status_reason   | Stack CREATE completed successfully                                                                                           |
+</code></pre>
+<p>And also, we can check whether we have new Kontena nodes and whether we can create a test Nginx service:</p>
+<pre><code class="lang-shell">$ kontena node ls
+NAME                             VERSION   STATUS   INITIAL   LABELS
+&#x229B; cpouta-grid-node-2.novalocal   1.3.4     online   1 / 3     -
+&#x229B; cpouta-grid-node-1.novalocal   1.3.4     online   2 / 3     -
+&#x229B; cpouta-grid-node-3.novalocal   1.3.4     online   3 / 3     -
+
+
+$ kontena service deploy nginx
+ [done] Deploying service nginx      
+&#x229B; Deployed instance cpouta-grid/null/nginx-1 to node cpouta-grid-node-3.novalocal
+madeira@lx6-hulib-2:~/workspace/ATTX/cPouta$ kontena node ls
+NAME                             VERSION   STATUS   INITIAL   LABELS
+&#x229B; cpouta-grid-node-2.novalocal   1.3.4     online   1 / 3     -
+&#x229B; cpouta-grid-node-1.novalocal   1.3.4     online   2 / 3     -
+&#x229B; cpouta-grid-node-3.novalocal   1.3.4     online   3 / 3     -
+
+$ kontena service ls
+NAME      INSTANCES   STATEFUL   STATE     EXPOSED PORTS
+&#x229D; nginx   1 / 1       no         running   0.0.0.0:80-&gt;80/tcp
+
+$ kontena service show nginx
+instances:
+    nginx/1:
+      scheduled_to: cpouta-grid-node-3.novalocal
+      deploy_rev: 2017-08-18 10:29:34 UTC
+      rev: 2017-08-18 10:29:34 UTC
+      state: running
+      containers:
+        nginx-1 (on cpouta-grid-node-3.novalocal):
+          dns: nginx-1.cpouta-grid.kontena.local
+          ip: 10.81.128.13
+          public ip: &lt;node_public_ip&gt;
+          status: running
+
+$ curl -k &quot;&lt;node_public_ip&gt;&quot;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+&lt;style&gt;
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;
+&lt;p&gt;If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.&lt;/p&gt;
+
+&lt;p&gt;For online documentation and support please refer to
+&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;
+Commercial support is available at
+&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Conclusion: we have successfully deployed Kontena on cPouta :-)</p>
+<h2 id="conclusions">Conclusions</h2>
+<p>Based in our trial, we can say that:</p>
+<ul>
+<li>As a microservices orchestration and management platform, Kontena is quite user-friendly, especially given its focus on service management instead of container management;</li>
+<li><a href="https://www.kontena.io/docs/using-kontena/grids.html" target="_blank">Kontena&apos;s grid</a> infrastructure concept is quite convenient for the deployment, management, and development of a microservices application stack, given not only it  includes Service Discovery, load balancing, overlay and VPN networking functionalities, but also that it enables the provisioning of nodes in different cloud environments;</li>
+<li><a href="https://www.kontena.io/cloud" target="_blank">Kontena Cloud</a> makes it easy to deploy, manage, audit, and follow the performance of the infrastructure and services;</li>
+<li><a href="https://www.kontena.io/docs/using-kontena/volumes.html" target="_blank">Volume management in Kontena</a> is straightforward and it can use use all Docker Volume plugins. Kontena can use volumes from different cloud providers (e.g. Digital Ocean block storage, AWS S3, etc.), and it can use data storage engines (though it&apos;s up to the user to deploy and configure them - It would be nice to be able to use something like <code>kontena digitalocean volume create</code>);</li>
+<li>Kontena&apos;s stacks aren&apos;t exactly the same as Docker Compose stacks, and there&apos;s no conversion tool available. Reference to <a href="https://www.kontena.io/docs/references/kontena-yml.html" target="_blank">Kontena&apos;s stack documentation</a> is advised. Expect some trial and error when editing complex Docker Compose YML files into Kontena YML.</li>
+<li>Technical support from Kontena is to-the-point and quite friendly, and since it&apos;s provided by Kontena&apos;s development team, it gives it the feeling of being &quot;by developers for developers&quot;.</li>
+<li>Kontena&apos;s Vagrant and Digital Ocean plugins are quite easy to use, and make it possible to store important data (e.g. UnifiedViews MySQL database) in cloud-based block storage volumes.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.kontena.io/" target="_blank">Kontena</a></li>
+<li><a href="https://www.kontena.io/cloud" target="_blank">Kontena Cloud</a></li>
+<li><a href="https://www.kontena.io/docs/" target="_blank">Kontena Documentation</a></li>
+<li><a href="https://github.com/kontena/kontena" target="_blank">Kontena Github</a></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html" class="navigation navigation-prev " aria-label="Previous page: Applying Rolling Updates to Services in Docker Swarm">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ATTX-Component-Workflow.html" class="navigation navigation-next " aria-label="Next page: Workflow Component">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Deploying ATTX Broker on Kontena","level":"2.1.3","depth":2,"next":{"title":"Workflow Component","level":"3.1","depth":1,"path":"ATTX-Component-Workflow.md","ref":"ATTX-Component-Workflow.md","articles":[{"title":"ETL Artifacts","level":"3.1.1","depth":2,"path":"ETL-Artifacts.md","ref":"ETL-Artifacts.md","articles":[]},{"title":"UnifiedViews Plugins","level":"3.1.2","depth":2,"path":"Unified-Views-plugins.md","ref":"Unified-Views-plugins.md","articles":[]},{"title":"UVProvovenance Service","level":"3.1.3","depth":2,"path":"Service-UVProvenance.md","ref":"Service-UVProvenance.md","articles":[]}]},"previous":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.4","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Deploying-ATTX-SB-on-Kontena.md","mtime":"2017-10-02T14:08:09.512Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-02T14:09:01.432Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+
