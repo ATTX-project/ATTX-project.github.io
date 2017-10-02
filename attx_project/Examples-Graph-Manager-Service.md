@@ -4,26 +4,95 @@
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Retrieve Graph Dataset](#retrieve-graph-dataset)
   - [Query Graph Dataset](#query-graph-dataset)
-  - [Update Graph Dataset](#update-graph-dataset)
+  - [Add Graph Dataset](#add-graph-dataset)
   - [Replace Graph Dataset](#replace-graph-dataset)
-    - [Replace using Turtle content](#replace-using-turtle-content)
-    - [replace using files paths](#replace-using-files-paths)
+    - [Replace using Turtle content](#replace-using-turtle-content)    
+  - [Update Graph Dataset](#update-graph-dataset)
+  - [Version Graph Dataset](#version-graph-dataset)
 
 <!-- TOC END -->
 
 
 ## Retrieve Graph Dataset
 
-## Query Graph Dataset
+Retrieve returns the content of the source graphs in a given format. Output can be store to a temporary file or returned as message payload.
 
-## Update Graph Dataset
+Possible values for outputType:
+* text/turtle
 
-## Replace Graph Dataset
 
-Example of replace name graph datasets are below. The replace named graph dataset implements a SPARQL 1.1 Graph Store HTTP Protocol [HTTP PUT Method](https://www.w3.org/TR/sparql11-http-rdf-update/#http-put)
+### Retrive with URI output
 
-### Replace using Turtle content
+```json
 
+{
+    "provenance": {
+        "context": {
+            "workflowID": "wf",
+            "activityID": 1,
+            "stepID": "stepid"
+        }
+    },
+    "payload": {
+        "graphManagerInput": {
+          "activity": "retrieve",
+          "contentType": "text/turtle",
+          "outputType": "URI",           
+          "sourceGraphs":
+          [
+              "http://work/dataset1",
+              "http://work/dataset2"
+          ]
+        }
+    }    
+}
+```
+Result:
+```json
+{
+    "provenance": {
+        "context": {
+            "workflowID": "wf",
+            "activityID": 1,
+            "stepID": "stepid"
+        }
+    },
+    "payload": {
+        "graphManagerOutput": {
+          "contentType": "text/turtle",
+          "outputType": "URI",            
+          "output": "file://temp/file1"
+        }
+    }
+}
+```
+
+### Retrive with Data output
+
+```json
+
+{
+    "provenance": {
+        "context": {
+            "workflowID": "wf",
+            "activityID": 1,
+            "stepID": "stepid"
+        }
+    },
+    "payload": {
+        "graphManagerInput": {
+          "activity": "retrieve",
+          "contentType": "application/n-triples",
+          "outputType": "Data",           
+          "sourceGraphs":
+          [
+              "http://work/dataset3"              
+          ]
+        }
+    }    
+}
+```
+Result:
 ```json
 {
     "provenance": {
@@ -34,14 +103,76 @@ Example of replace name graph datasets are below. The replace named graph datase
         }
     },
     "payload": {
-        "graphManagerInput": {
-            "contentType": "text/turtle",
-            "inputType": "Data",
-            "namedGraph": "default",
-            "input": "<http://example/egbook3> <http://purl.org/dc/elements/1.1/title> \"This is an example title 3153196587138\".",
-            "activity": "replace"
+        "graphManagerOutput": {
+          "contentType": "application/n-triples",
+          "outputType": "Data",            
+          "output": "<http://example.org/#spiderman> <http://www.perceive.net/schemas/relationship/enemyOf> <http://example.org/#green-goblin> ."
         }
     }
+}
+```
+## Query Graph Dataset
+
+Could this work with multiple source graphs?
+
+```json
+{
+    "provenance": {
+        "context": {
+            "workflowID": "wf",
+            "activityID": 1,
+            "stepID": "stepid"
+        }
+    },
+    "payload": {
+        "graphManagerInput": {
+          "activity": "query",
+          "outputType": "URI",           
+          "sourceGraphs":
+          [
+              "http://work/dataset3"              
+          ],
+          "input": "SELECT ?subject ?predicate ?object WHERE { ?subject ?predicate ?object} LIMIT 25"            
+        }
+    }
+}
+
+```
+
+## Add Graph Dataset
+
+Adds the source triples to the target graph and does not modify the existing data.
+
+```json
+
+{
+    "provenance": {
+        "context": {
+            "workflowID": "wf",
+            "activityID": 1,
+            "stepID": "stepid"
+        }
+    },
+    "payload": {
+        "graphManagerInput": {
+          "activity": "add",
+          "targetGraph": "http://work/dataset1",
+          "sourceData":
+          [
+            {
+              "contentType": "text/turtle",
+              "inputType": "URI",            
+              "input": "file://temp/file1"
+            },
+            {
+              "contentType": "application/n-triples",
+              "inputType": "Data",            
+              "input": "<http://example.org/#spiderman> <http://www.perceive.net/schemas/relationship/enemyOf> <http://example.org/#green-goblin> ."
+
+            }            
+          ]
+        }
+    }    
 }
 ```
 Result:
@@ -63,9 +194,17 @@ Result:
     }
 }
 ```
-### replace using files paths
+
+## Replace Graph Dataset
+
+Replace graph takes the input triples and adds them to the target graph. All possible previous content in the graph will be deleted. If there are more that one sources, the resulting graph contain distinct triples from all of them.
+
+Example of replace name graph dataset are below.
+
+### Replace using content from two sources
 
 ```json
+
 {
     "provenance": {
         "context": {
@@ -76,16 +215,26 @@ Result:
     },
     "payload": {
         "graphManagerInput": {
-            "contentType": "text/turtle",
-            "inputType": "URI",
-            "namedGraph": "default",
-            "input": "file:///home/local/example-data/example.ttl",
-            "activity": "replace"
+          "activity": "replace",
+          "targetGraph": "http://work/dataset1",
+          "sourceData":
+          [
+            {
+              "contentType": "text/turtle",
+              "inputType": "URI",            
+              "input": "file://temp/file1"
+            },
+            {
+              "contentType": "application/n-triples",
+              "inputType": "Data",            
+              "input": "<http://example.org/#spiderman> <http://www.perceive.net/schemas/relationship/enemyOf> <http://example.org/#green-goblin> ."
+
+            }            
+          ]
         }
-    }
+    }    
 }
 ```
-
 Result:
 ```json
 {
@@ -94,35 +243,22 @@ Result:
             "workflowID": "ingestionwf",
             "activityID": 1,
             "stepID": "replaceds"
-        },
-        "agent": {
-            "ID": "GMAPI",
-            "role": "storage"
-        },
-        "activity": {
-            "title": "Replace data in the graph",
-            "type": "ServiceExecution",
-            "startTime": "2017-08-02T13:52:29+02:00",
-            "endTime": "2017-08-02T13:52:29+02:00",
-            "status": "SUCCESS"
-        },
-        "input": [
-          {
-            "key": "inputGraphs",
-            "role": "tempDataset"
-          }
-      ],
-      "output": [
-        {
-          "key": "outpuGraphs",
-          "role": "Dataset"
         }
-      ]             
     },
     "payload": {
-        "inputGraphs": "file:///home/local/example-data/example.ttl",
-        "outpuGraphs": "default"
+        "graphManagerOutput": {
+            "count": 1,
+            "quadCount": 0,
+            "tripleCount": 1
+        }
     }
 }
-
 ```
+
+## Update Graph Dataset
+
+**TODO**
+
+## Version Graph Dataset
+
+**TODO**
