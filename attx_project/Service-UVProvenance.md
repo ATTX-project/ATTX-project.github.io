@@ -43,7 +43,8 @@ In order to run the tests successfully but also the UVProvenance-API successfull
 * `DBHOST` - container name or address for the MYSQL database (defaults to localhost);
 * `DBUSER` - database user name;
 * `DBKEY` - password or key for the database user;
-* `DBASE` - table which to access (defaults to `unified_views`).
+* `DBASE` - table which to access (defaults to `unified_views`);
+* `QTIME` - variable to set up the timer for publisher (defaults to 30 and input must be integer).
 
 At the same time it can be troubleshoot using the docker container:
 * connect to the running UVProvenance-API Docker container `docker exec -it container-id /bin/sh` (replace `container-id` with the ID of the docker container)
