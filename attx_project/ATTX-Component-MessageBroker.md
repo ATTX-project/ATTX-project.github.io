@@ -6,6 +6,11 @@ Replicating request/async response pattern between workflow steps and ATTX servi
 ![Figure 1. Request/async response pattern using message broker](images/messaging-request-response.svg)
 
 
+Two solutions have been taken into consideration for the Messaging service:
+* [ActiveMQ Message Broker](MessageBroker-ActiveMQ.md)
+* [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md) - selected
+
+
 Provenance service should receive all(?) the messages. This can implemented using Camel route that intercept, copies and sends messages to queue://core.provenance.
 
 ## Requirements for ATTX services

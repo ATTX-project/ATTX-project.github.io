@@ -19,9 +19,6 @@
 
 <!-- TOC END -->
 
-
-
-
 ## What is Kontena and why do we test it
 
 [Kontena](https://www.kontena.io/) is a microservices orchestration and management platform. As such, it treats containers as computational instances of managed services.

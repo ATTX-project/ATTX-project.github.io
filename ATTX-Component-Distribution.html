@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>UC1 - Infrastructure and Publications · GitBook</title>
+        <title>Distribution Component · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,8 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Use-case-Jyvaskyla.html" />
+    <link rel="next" href="ElasticSearch-with-Siren.html" />
     
+    
+    <link rel="prev" href="Linking-Strategies.html" />
     
 
     </head>
@@ -120,7 +122,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="Use-case-Infrastructures-and-publications.html">
+        <li class="chapter " data-level="1.2.1" data-path="Use-case-Infrastructures-and-publications.html">
             
                 <a href="Use-case-Infrastructures-and-publications.html">
             
@@ -506,7 +508,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="ATTX-Component-Distribution.html">
+        <li class="chapter active" data-level="3.3" data-path="ATTX-Component-Distribution.html">
             
                 <a href="ATTX-Component-Distribution.html">
             
@@ -1042,7 +1044,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >UC1 - Infrastructure and Publications</a>
+        <a href="." >Distribution Component</a>
     </h1>
 </div>
 
@@ -1057,96 +1059,19 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jul-2017 07:18:25</div></div><h1 id="uc1---infrastructures-and-publications">UC1 - Infrastructures and Publications</h1>
-<p>This pages describes the use cases identified as UC1, which deals with combining publication and infrastructure data.
-Steps:</p>
-<ol>
-<li>Get publication, infrastructure metadata from UH with links between them.</li>
-<li>Enrich infrastructure metadata using the service descriptions coming from the national infrastructure databank.</li>
-</ol>
-<h3 id="table-of-contents">Table of Contents</h3>
-<!-- TOC START min:1 max:3 link:true update:false -->
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Sep-2017 10:22:54</div></div><h1 id="distribution-component">Distribution Component</h1>
+<p>This ATTX Distribution Component provides the interface between the Graph Component and the applications designed for consuming and disseminating data.</p>
+<p>Github Repository: <a href="https://github.com/ATTX-project/distribution-component" target="_blank">https://github.com/ATTX-project/distribution-component</a></p>
+<p>The Distribution Component is composed of:</p>
 <ul>
-<li><a href="#data-sources">Data sources</a><ul>
-<li><a href="#research-infrastructures-databank">Research Infrastructures Databank</a></li>
-<li><a href="#tuhat---university-of-helsinkis-cris-system">TUHAT - University of Helsinki&apos;s CRIS System</a></li>
+<li><a href="ElasticSearch-with-Siren.html">ElasticSearch with Siren</a> artifact which has the role of indexing and making the Graph Store knowledge convenient accessible via an API;</li>
+<li><a href="ElasticSearch-5.html">ElasticSearch 5.x</a> which provides the latest functionality in order to index data as plain JSON (after applying a JSON-LD frame), JSON-LD or capturing logs.</li>
 </ul>
-</li>
-<li><a href="#workflows">Workflows</a></li>
-<li><a href="#working-data">Working Data</a></li>
-</ul>
-<!-- TOC END -->
-<h2 id="data-sources">Data sources</h2>
-<p>This section describes the the way different external datasets are accessed what the data looks like.</p>
-<h3 id="research-infrastructures-databank">Research Infrastructures Databank</h3>
+<p>More on data indexing see: <a href="Graph-Manager-API.md">Graph-Manager-API</a></p>
+<h3 id="references">References</h3>
 <ul>
-<li>UI: <a href="http://infras.openscience.fi/" target="_blank">http://infras.openscience.fi/</a></li>
-<li>API: <a href="http://avaa.tdata.fi/api/jsonws?contextPath=/tupa-portlet" target="_blank">http://avaa.tdata.fi/api/jsonws?contextPath=/tupa-portlet</a></li>
-<li>API documentation:<a href="http://avaa.tdata.fi/adata/tupa/" target="_blank">http://avaa.tdata.fi/adata/tupa/</a></li>
-<li>Datamodel: <a href="http://iow.csc.fi/model/tipa/" target="_blank">http://iow.csc.fi/model/tipa/</a></li>
+<li>SOLR vs ElasticSearch <a href="http://solr-vs-elasticsearch.com/" target="_blank">http://solr-vs-elasticsearch.com/</a></li>
 </ul>
-<h3 id="tuhat---university-of-helsinkis-cris-system">TUHAT - University of Helsinki&apos;s CRIS System</h3>
-<p>We are using the test instance of the TUHAT system.</p>
-<ul>
-<li>UI:<a href="https://tuha-test.it.helsinki.fi" target="_blank">https://tuha-test.it.helsinki.fi</a></li>
-<li>API: <a href="https://tuha-test.it.helsinki.fi/ws" target="_blank">https://tuha-test.it.helsinki.fi/ws</a></li>
-<li>API documentation: <a href="https://tuha-test.it.helsinki.fi/ws/doc" target="_blank">https://tuha-test.it.helsinki.fi/ws/doc</a></li>
-</ul>
-<p>Because API of the current PURE version does not support equipments (=infrastructure) we are forced to use other means to extract the information.</p>
-<p>The end result will a Turtle file that conforms to the data model described on this page. The file is downloadable from the <code>data.hulib.helsinki.fi</code> server.</p>
-<h2 id="workflows">Workflows</h2>
-<p>We will be using three workflows:</p>
-<ul>
-<li><code>harvestFromInfrastructureDatabank</code><ul>
-<li>Retrieves JSON from service API and transforms it into internal RDF (see below).</li>
-</ul>
-</li>
-<li><code>harvestFromHYCRIS</code><ul>
-<li>Retrieves three RDF files from library&apos;s server and uploads them to the internal graph.</li>
-</ul>
-</li>
-<li><code>linking</code><ul>
-<li>Creates identifier based links between infrastructure data coming from two different sources.</li>
-</ul>
-</li>
-</ul>
-<p>Workflows use very basic and custom built DPUs for transformations and processing.</p>
-<ul>
-<li>uc1-infras2internal - transformer</li>
-<li>uc1-linker - transformer<ul>
-<li>link processor that knows how to compare URN pid and URN urls (urn:nbn:fi:research-infras-201607252 vs. <a href="http://urn.fi/urn:nbn:fi:research-infras-201607252" target="_blank">http://urn.fi/urn:nbn:fi:research-infras-201607252</a>). PIDs are coming from infrastructure databank. There is no place in Tuhat to add external identifiers, but there is a place for links.</li>
-</ul>
-</li>
-</ul>
-<h2 id="working-data">Working Data</h2>
-<p>This model should evolve as the implementation of the use case becomes more complex.
-We assume that TUHAT infrastructure data contains identifiers that point to the infrastructure bank. The idea is to enrich the infrastructure information.</p>
-<p>See <a href="ATTX-Data-Model.html">Ontology/Data model</a> for more information with regards to namespaces and Ontology.</p>
-<p><strong>Example data</strong></p>
-<p>Infrastructure databank</p>
-<pre><code class="lang-turtle">&lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra/{urn}&gt;
-  a &lt;http://data.hulib.helsinki.fi/attx/types/Infrastructure&gt; ;
-  dct:title &quot;{name}&quot; ;
-  dct:identifier &lt;{urn}&gt; .
-</code></pre>
-<p>Tuhat</p>
-<pre><code class="lang-turtle">&lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/pub/{uuid}&gt;
-  a &lt;http://data.hulib.helsinki.fi/attx/types/Publication&gt; ;
-  dct:title &quot;{title}&quot; .
-
-&lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra/{uuid}&gt;
-  a &lt;http://data.hulib.helsinki.fi/attx/types/Infrastructure&gt; ;
-  dct:identifier &quot;{uuid}&quot; ;
-  dct:title &quot;{title}&quot; ;
-  attx:link &lt;{links url}&gt; .
-
-&lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/pub/{uuid}&gt;
-  dct:relation &lt;http://data.hulib.helsinki.fi/attx/work/{workflowID}/infra/{uuid}&gt; .
-</code></pre>
-<p>Link processor</p>
-<pre><code class="lang-turtle">&lt;http://data.hulib.helsinki.fi/attx/{workflowID}/work/infra/{urn}&gt;
-   skos:exactMatch &lt;http://data.hulib.helsinki.fi/attx/{workflowID}/work/pub/{uuid}&gt;
-</code></pre>
 
                                 
                                 </section>
@@ -1174,8 +1099,12 @@ We assume that TUHAT infrastructure data contains identifiers that point to the 
 
             
                 
+                <a href="Linking-Strategies.html" class="navigation navigation-prev " aria-label="Previous page: Linking Strategies">
+                    <i class="fa fa-angle-left"></i>
+                </a>
                 
-                <a href="Use-case-Jyvaskyla.html" class="navigation navigation-next navigation-unique" aria-label="Next page: UC2 - Parallel Publication Dashboard">
+                
+                <a href="ElasticSearch-with-Siren.html" class="navigation navigation-next " aria-label="Next page: ElasticSearch 1.3 with Siren">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1186,7 +1115,7 @@ We assume that TUHAT infrastructure data contains identifiers that point to the 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC1 - Infrastructure and Publications","level":"1.2.1","depth":2,"next":{"title":"UC2 - Parallel Publication Dashboard","level":"1.2.2","depth":2,"path":"Use-case-Jyvaskyla.md","ref":"Use-case-Jyvaskyla.md","articles":[]},"previous":{"title":"Applications and Use Cases","level":"1.2","depth":1,"ref":"","articles":[{"title":"UC1 - Infrastructure and Publications","level":"1.2.1","depth":2,"path":"Use-case-Infrastructures-and-publications.md","ref":"Use-case-Infrastructures-and-publications.md","articles":[]},{"title":"UC2 - Parallel Publication Dashboard","level":"1.2.2","depth":2,"path":"Use-case-Jyvaskyla.md","ref":"Use-case-Jyvaskyla.md","articles":[]},{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"path":"Use-case-Mildred.md","ref":"Use-case-Mildred.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Infrastructures-and-publications.md","mtime":"2017-08-03T12:02:45.509Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-02T14:09:01.432Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Distribution Component","level":"3.3","depth":1,"next":{"title":"ElasticSearch 1.3 with Siren","level":"3.3.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]},"previous":{"title":"Linking Strategies","level":"3.2.3","depth":2,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Component-Distribution.md","mtime":"2017-10-02T14:08:09.512Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-02T14:09:01.432Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -15,30 +15,43 @@ Deliverables:
 
 ### Q2 - July 2017
 - All: Service discovery (finish)
-- All: Messaging Service (start)
 - GC: Generating provenance data inside GC (i.e. moving WF-API functionality to UVProvenance-API for the Provenance Service)
 - GC: Incremental harvesting of external data (e.g. OAI-PMH)
 - GC: More complicated processing services (e.g. NER)
 - DP: Easier Semantic Broker deployment (start)
 - DP: Kontena Semantic Broker deployment
 
-Deliverable:
-- [ ] Every feature new release
-- [ ] Use case 2
+Deliverables:
 - [X] ELAG 2017 presentation
 - [X] Semantic Broker Microservice architecture v2.0 (start)
 
 ### Q3 - September 2017
-- DP: Centralised logging
-- DP: Easier Semantic Broker deployment (continue)
-- GC: Data validation (e.g with SHACL)
-- GC: RML based transformation of external data
+- Refactoring of the architecture (v2)
+- Messaging Service in use
+- Basic Provenance service
+- RML based transformation of external data
+- Easier Semantic Broker deployment (Kontena, OpenStack templates)
+- Kontena (cloud-service, deployment in cPouta)
+- Sharing data between services (NFS, DigitalOcean's block storage)
+- First results from the Metax Use case  
+- OSFAIR2017 poster with Mildred project
+- Article proposals for ISWC and IEEE Microservices journal
 
 ### Q4 - December 2017
-- GC + DC: Incremental updates to the DC datasets
-- GC + DC: Provenance browser
-- DC: RDF distribution (e.g. HDT and LinkedDataFragments)
+- Data validation with SHACL
+- Indexing service with JSON-LD framing
+- Platform support for ontology based inferencing
+- Incremental updates to the DC datasets (RDF Patch)
+- Prototyping provenance browser
+- Kontena as part of the CI/CD environment
+- Service discovery/registry
+- Demo instance running in cPouta
 
 Deliverable:
-- [ ] SWIB 2017 presentation (maybe)
-- [ ] https://www.it2017.fi/ (maybe)
+- [ ] SWIB 2017 presentation (coming)
+
+#### Q1/2018
+- Centralised logging
+- Provenance browser
+- RDF distribution (e.g. HDT and LinkedDataFragments)
+

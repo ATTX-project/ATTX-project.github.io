@@ -1,6 +1,16 @@
 # UnifiedViews Plugins
 
-Custom Unified Views plugins developed:
+Github repository: https://github.com/ATTX-project/uv-plugins
+
+New Custom Unified Views plugins developed:
+* `uv-common`
+* `attx-l-replaceds`
+* `attx-t-describeds`
+* `attx-t-describeexternalds`
+* `attx-t-rmlservice`
+
+
+Old Custom Unified Views plugins developed:
 * `uv-t-attx-template` plugin - basic template for creating a UnifiedViews plugin;
 * `uv-t-attx-metadata` plugin - collecting metadata specific to the input and output graphs;
 * `uv-dpu-l-attx-apicaller` plugin - general functionality for calling an API and retrieving data;

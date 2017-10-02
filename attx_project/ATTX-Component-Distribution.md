@@ -2,7 +2,7 @@
 
 This ATTX Distribution Component provides the interface between the Graph Component and the applications designed for consuming and disseminating data.
 
-**Github Repository: **[**distribution-component**](https://github.com/ATTX-project/distribution-component)
+Github Repository: https://github.com/ATTX-project/distribution-component
 
 The Distribution Component is composed of:
 

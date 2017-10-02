@@ -6,6 +6,7 @@ The goal of the use case is to create a dataset that provides an aggregated view
 
 Use case is part of the [Mildred project](http://blogs.helsinki.fi/mildred/), which aims to update the research data infstructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.
 
+### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Approach](#approach)
   - [User stories](#user-stories)

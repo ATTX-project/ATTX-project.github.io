@@ -23,6 +23,8 @@ Issue/Bug reporting:
   * https://github.com/UnifiedViews/Plugins/issues/417
 * Kontena.io
   * https://github.com/kontena/kontena/issues/2604
+* amqpstorm
+  * https://github.com/eandersson/amqpstorm/issues/42
 
 Forks:
 * gradle-pullrequest-builder adapted as a ATTX project plugin:

@@ -25,29 +25,31 @@
 
 ## Core Components
 
-* [Workflow Component](Workflow-Component.md)
+* [Workflow Component](ATTX-Component-Workflow.md)
   * [ETL Artifacts](ETL-Artifacts.md)
   * [UnifiedViews Plugins](Unified-Views-plugins.md)
-  * [UVProvovenance API](UVProvenance-API.md)
-* [Graph Component](Graph-Component.md)
-  * [Graph Manager API](Graph-Manager-API.md)
+  * [UVProvovenance Service](Service-UVProvenance.md)
+* [Graph Component](ATTX-Component-Graph.md)
+  * [Graph Manager Service](Service-Graph-Manager.md)
+    * [Graph Manager Message Examples](Examples-Graph-Manager-Service.md)
   * [Graph Store](Graph-Store.md)
     * [Ontology/Data model](ATTX-Data-Model.md)
-    * [Linking Strategies](Linking-Strategies.md)
-* [Distribution Component](Distribution-Component.md)
+  * [Linking Strategies](Linking-Strategies.md)
+* [Distribution Component](ATTX-Component-Distribution.md)
   * [ElasticSearch 1.3 with Siren](ElasticSearch-with-Siren.md)
   * [ElasticSearch 5.x](ElasticSearch-5.md)
-* [Service Discovery Implementation](ServiceDiscovery-Implementation.md)
+* [Service Discovery](ATTX-Component-ServiceDiscovery.md)
   * [Consul Service Discovery Implementation](Consul-ServiceDiscovery-Implementation.md)
   * [Consul for Service Discovery on Docker Swarm](Consul-for-Service-Discovery-on-Docker-Swarm.md)
-* [Message Broker](MessageBroker.md)
+* [Message Broker](ATTX-Component-MessageBroker.md)
   * [ActiveMQ Message Broker](MessageBroker-ActiveMQ.md)
   * [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md)
 
 ## Broker Services
 
-* [Provenance Service](Provenance-Service.md)
-* [RML Service](RML-Service.md)
+* [Provenance Service](Service-Provenance.md)
+  * [Provenance Messages Examples](Examples-Provenance-Service.md)
+* [RML Service](Service-RML.md)
 
 ## User Guide
 
@@ -73,10 +75,10 @@
   * [Workflow Management Tools Overview](Workflow-Management-Tools.md)
 
 * Presentations
-  * [ELAG2017](ELAG-2017.md)
-  * [OSFair2017](OSFair-2017.md)
-  * [SWIB2017](SWIB-2017.md)
-  * [ISWC2017](ISWC-2017.md)
+  * [ELAG2017](Presentation-ELAG-2017.md)
+  * [OSFair2017](Presentation-OSFair-2017.md)
+  * [SWIB2017](Presentation-SWIB-2017.md)
+  * [ISWC2017](Presentation-ISWC-2017.md)
 
 * [Open Source Contributions](Open-Contributions.md)
 
