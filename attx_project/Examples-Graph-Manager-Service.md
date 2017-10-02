@@ -128,10 +128,7 @@ Could this work with multiple source graphs?
         "graphManagerInput": {
           "activity": "query",
           "outputType": "URI",           
-          "sourceGraphs":
-          [
-              "http://work/dataset3"              
-          ],
+          "sourceGraph": "http://work/dataset3",
           "input": "SELECT ?subject ?predicate ?object WHERE { ?subject ?predicate ?object} LIMIT 25"            
         }
     }
