@@ -127,6 +127,7 @@ Could this work with multiple source graphs?
     "payload": {
         "graphManagerInput": {
           "activity": "query",
+          "contentType": "application/sparql-results+xml",
           "outputType": "Data",           
           "sourceGraph": "http://work/dataset3",
           "input": "SELECT ?subject ?predicate ?object WHERE { ?subject ?predicate ?object} LIMIT 25"            
