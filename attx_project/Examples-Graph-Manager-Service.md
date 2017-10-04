@@ -129,7 +129,7 @@ Could this work with multiple source graphs?
           "activity": "query",
           "contentType": "application/sparql-results+xml",
           "outputType": "Data",           
-          "sourceGraph": "http://work/dataset3",
+          "sourceGraphs": ["http://work/dataset2", "default"],
           "input": "SELECT ?subject ?predicate ?object WHERE { ?subject ?predicate ?object} LIMIT 25"            
         }
     }
