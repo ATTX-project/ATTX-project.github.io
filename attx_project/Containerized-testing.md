@@ -179,16 +179,11 @@ task copyReportFiles(type: DcomposeCopyFileFromContainerTask) {
 
 startTestContainer.finalizedBy copyReportFiles
 
-shadowJar {
-    classifier = 'tests'
-    from sourceSets.test.output
-    configurations = [project.configurations.testRuntime]
-}
 
 // making sure the that fresh build of test classes is done before building the image
 // Other prerequisites for the tests (e.g. artifacts) should be added here.
 buildTestImage.dependsOn downloadTestFiles
-buildTestImage.dependsOn shadowJar
+
 buildTestImage.dependsOn testClasses
 
 task checkDPUDone(type: DockerWaitContainer) {
@@ -221,7 +216,19 @@ Rest of the configuration is the same for all the test projects (assuming that t
 
 `downloadTestFiles` downloads the `dev-test-helper` artifact as the CI cannot download the artifact from inside the container without having the artifact repository (Archiva) exposed publicly or on the same container network as the `dcompose` task network.
 
-(not necessary as the tests are build and run inside the test container) `ShadowJar` task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.   
+(not necessary as the tests are build and run inside the test container) `ShadowJar` task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.  
+
+Dependencies are loaded from the überjar created by the `shadowJar` task in the `build.gradle`. This jar and classes directory includes everything that is needed to run the tests, so we can actually run Gradle in the offline mode (`--offline`). Building step is faster, since we don't have to download all the dependencies every time the tests are run.
+In order to use the `shadowJar` the following are required in the build file:
+
+```groovy
+shadowJar {
+    classifier = 'tests'
+    from sourceSets.test.output
+    configurations = [project.configurations.testRuntime]
+}
+buildTestImage.dependsOn shadowJar
+```
 
 `checkDPUDone` waits for the ATTX DPUS to be added to the front-end where there is a need for such test fixtures. The ATTX DPU waits for MySQL  (for about 4 minutes to be up) in order to add the DPU. If everything is OK the exit code of that container will be (By convention, an 'exit 0' indicates success - http://www.tldp.org/LDP/abs/html/exit-status.html). The same strategy is used to check the Tests fail or not inside the container - if the exit code is `0` the tests were successful if not the tests failed.
 
@@ -303,12 +310,11 @@ task integTest(type: Test){
 
 ```
 
-Dependencies are loaded from the überjar created by the `shadowJar` task in the `build.gradle`. This jar and classes directory includes everything that is needed to run the tests, so we can actually run Gradle in the offline mode (`--offline`). Building step is faster, since we don't have to download all the dependencies every time the tests are run.
 
 ### Dockerfile Description
 
 ```Dockerfile
-FROM frekele/gradle:3.3-jdk8
+FROM frekele/gradle:4.1-jdk8
 
 RUN apt-get update \
     && apt-get install -y wget \
@@ -325,15 +331,18 @@ RUN mkdir -p /tmp
 WORKDIR /tmp
 
 ARG attxTestHelperPlugin
+ARG UVreplaceDS
 
 COPY src /tmp/src
 COPY build.test.gradle /tmp/build.gradle
 COPY runTests.sh /tmp
 RUN chmod 700 /tmp/runTests.sh
+
+COPY attx-l-replaceds-${UVreplaceDS}.jar /tmp/attx-l-replaceds-${UVreplaceDS}.jar
 COPY dev-test-helper-${attxTestHelperPlugin}.jar /tmp/dev-test-helper.jar
 ```
 
-`frekele/gradle` image contains all the components to run Gradle 3.3. `dockerize` is used by the `runTests.sh` script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only `build.test.gradle` file is copied to the image. Image also doesn't run any script by default, instead the dcompose Gradle plugin is used to attach a command  `runTests.sh` to the test container, which runs dockerized checks and runs the tests.
+`frekele/gradle` image contains all the components to run Gradle 4.1. `dockerize` is used by the `runTests.sh` script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only `build.test.gradle` file is copied to the image. Image also doesn't run any script by default, instead the dcompose Gradle plugin is used to attach a command  `runTests.sh` to the test container, which runs dockerized checks and runs the tests.
 
 ```bash
 #!/bin/sh

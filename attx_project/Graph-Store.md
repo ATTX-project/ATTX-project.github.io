@@ -2,10 +2,13 @@
 
 ### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
+- [Graph Store](#graph-store)
+    - [Table of Contents](#table-of-contents)
   - [Configuring the Graph Store](#configuring-the-graph-store)
     - [Configuring Fuseki](#configuring-fuseki)
     - [Querying the Default Graph](#querying-the-default-graph)
     - [Adding Reasoning Capability](#adding-reasoning-capability)
+    - [Querying Named Graphs](#querying-named-graphs)
 
 <!-- TOC END -->
 
@@ -148,3 +151,37 @@ Reasoners available in Jena for Fuseki configuration:
 * `http://jena.hpl.hp.com/2003/OWLMicroFBRuleReasoner`
 * `http://jena.hpl.hp.com/2003/OWLMiniFBRuleReasoner`
 * `http://jena.hpl.hp.com/2003/DIGReasoner`
+
+### Querying Named Graphs
+
+explanation here:
+https://stackoverflow.com/questions/41197543/from-and-from-named-graph-in-sparql
+
+All these queries are equivalent:
+```sparql
+SELECT ?subject ?predicate ?object ?g
+FROM NAMED <http://data.hulib.helsinki.fi/attx/onto>
+WHERE {
+  GRAPH ?g {
+  ?subject ?predicate ?object
+}
+}
+```
+
+```sparql
+That is why this also works:
+SELECT ?subject ?predicate ?object
+WHERE {
+  GRAPH <http://data.hulib.helsinki.fi/attx/onto> {
+  ?subject ?predicate ?object
+}
+}
+```
+
+```sparql
+SELECT ?subject ?predicate ?object
+FROM <http://data.hulib.helsinki.fi/attx/onto>
+WHERE {
+  ?subject ?predicate ?object
+}
+```

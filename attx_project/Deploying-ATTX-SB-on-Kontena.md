@@ -54,8 +54,6 @@ Alternatively if running MacOS, [there is an installer available](https://github
 
 Using kontena-cli is also intuitive, given its tree-like command structure and help function (e.g. `kontena master --help`). Auto-completing of Kontena's commands can be enabled by adding `which kontena > /dev/null && . "$( kontena whoami --bash-completion-path )"` in the users "~/.bashrc" file.
 
-
-
 ### Registering Kontena CLI to Kontena Master
 
 All Kontena service management operations go trough a master node. Now that we have kontena-cli, we can register our client to the Kontena Master. In the case of our trial, we used a previously provisioned master node on Kontena Cloud and the respective token ("`<token_id>`") (https://www.kontena.io/cloud):
