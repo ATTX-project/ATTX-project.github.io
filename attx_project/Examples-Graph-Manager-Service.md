@@ -203,11 +203,7 @@ Result:
         }
     },
     "payload": {
-        "graphManagerOutput": {
-            "count": 1,
-            "quadCount": 0,
-            "tripleCount": 1
-        }
+        "graphManagerOutput": "success"
     }
 }
 ```
@@ -263,11 +259,7 @@ Result:
         }
     },
     "payload": {
-        "graphManagerOutput": {
-            "count": 1,
-            "quadCount": 0,
-            "tripleCount": 1
-        }
+        "graphManagerOutput": "success"
     }
 }
 ```
