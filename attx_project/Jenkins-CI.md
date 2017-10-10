@@ -28,21 +28,20 @@ Figure 1. Roles of Jenkins, Gradle and tools (i.e. Docker, java etc.)
 <!-- TOC END -->
 
 
-
 There are two types of flows:
-1. /feature-* branch to /dev branch
-2. /dev branch to /master branch
+1. `/feature-* branch` to `/dev` branch
+2. `/dev` branch to `/master` branch
 
 Either one can be solved with Gradle plugins or github hooks
 
-The image below describes the build and deploy workflow from a `/feature-name` branch to /dev branch.
+The image below describes the build and deploy workflow from a `/feature-name` branch to `/dev` branch.
 
 ![Figure 2. build_workflow](images/dev_workflow.svg)
 
 Figure 2. Dev releases branch build workflow
 
 
-The image below describes the build and deploy workflow from a /dev branch to /master branch.
+The image below describes the build and deploy workflow from a `/dev` branch to `/master` branch.
 
 ![build_workflow_master](images/master_workflow.svg)
 
@@ -143,7 +142,6 @@ Example: publishing test reports
 Artifacts are accessed from Jenkins. Normally artifacts are restricted to authenticated clients, but this can be changed by first setting property `hudson.security.ArtifactsPermission = true` (https://issues.jenkins-ci.org/browse/JENKINS-1871 and https://wiki.jenkins-ci.org/display/JENKINS/Features+controlled+by+system+properties) and then giving everyone access to the artifacts in the Jenkins security matrix.
 
 Other option is to set "Allow anonymous read access" in the security settings.
-
 
 ### Failure
 

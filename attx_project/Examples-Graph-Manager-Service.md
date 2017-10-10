@@ -127,13 +127,33 @@ Could this work with multiple source graphs?
     "payload": {
         "graphManagerInput": {
           "activity": "query",
-          "outputType": "URI",           
-          "sourceGraph": "http://work/dataset3",
+          "contentType": "application/sparql-results+xml",
+          "outputType": "Data",           
+          "sourceGraphs": ["http://work/dataset2", "default"],
           "input": "SELECT ?subject ?predicate ?object WHERE { ?subject ?predicate ?object} LIMIT 25"            
         }
     }
 }
 
+```
+Result:
+```json
+{
+    "provenance": {
+        "context": {
+            "workflowID": "ingestionwf",
+            "activityID": 1,
+            "stepID": "replaceds"
+        }
+    },
+    "payload": {
+        "graphManagerOutput": {
+          "contentType": "application/sparql-results+xml",
+          "outputType": "Data",            
+          "output": ""
+        }
+    }
+}
 ```
 
 ## Add Graph Dataset
@@ -183,11 +203,7 @@ Result:
         }
     },
     "payload": {
-        "graphManagerOutput": {
-            "count": 1,
-            "quadCount": 0,
-            "tripleCount": 1
-        }
+        "graphManagerOutput": "success"
     }
 }
 ```
@@ -243,16 +259,12 @@ Result:
         }
     },
     "payload": {
-        "graphManagerOutput": {
-            "count": 1,
-            "quadCount": 0,
-            "tripleCount": 1
-        }
+        "graphManagerOutput": "success"
     }
 }
 ```
 
-## Update Graph Dataset
+## Patch Graph Dataset
 
 **TODO**
 

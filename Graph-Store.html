@@ -1059,14 +1059,19 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="graph-store">Graph Store</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 04-Oct-2017 07:40:52</div></div><h1 id="graph-store">Graph Store</h1>
 <h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:true -->
 <ul>
-<li><a href="#configuring-the-graph-store">Configuring the Graph Store</a><ul>
+<li><a href="#graph-store">Graph Store</a><ul>
+<li><a href="#table-of-contents">Table of Contents</a><ul>
+<li><a href="#configuring-the-graph-store">Configuring the Graph Store</a></li>
+</ul>
+</li>
 <li><a href="#configuring-fuseki">Configuring Fuseki</a></li>
 <li><a href="#querying-the-default-graph">Querying the Default Graph</a></li>
 <li><a href="#adding-reasoning-capability">Adding Reasoning Capability</a></li>
+<li><a href="#querying-named-graphs">Querying Named Graphs</a></li>
 </ul>
 </li>
 </ul>
@@ -1200,6 +1205,32 @@ WHERE { GRAPH &lt;urn:x-arq:DefaultGraph&gt; {
 <li><code>http://jena.hpl.hp.com/2003/OWLMiniFBRuleReasoner</code></li>
 <li><code>http://jena.hpl.hp.com/2003/DIGReasoner</code></li>
 </ul>
+<h3 id="querying-named-graphs">Querying Named Graphs</h3>
+<p>explanation here:
+<a href="https://stackoverflow.com/questions/41197543/from-and-from-named-graph-in-sparql" target="_blank">https://stackoverflow.com/questions/41197543/from-and-from-named-graph-in-sparql</a></p>
+<p>All these queries are equivalent:</p>
+<pre><code class="lang-sparql">SELECT ?subject ?predicate ?object ?g
+FROM NAMED &lt;http://data.hulib.helsinki.fi/attx/onto&gt;
+WHERE {
+  GRAPH ?g {
+  ?subject ?predicate ?object
+}
+}
+</code></pre>
+<pre><code class="lang-sparql">That is why this also works:
+SELECT ?subject ?predicate ?object
+WHERE {
+  GRAPH &lt;http://data.hulib.helsinki.fi/attx/onto&gt; {
+  ?subject ?predicate ?object
+}
+}
+</code></pre>
+<pre><code class="lang-sparql">SELECT ?subject ?predicate ?object
+FROM &lt;http://data.hulib.helsinki.fi/attx/onto&gt;
+WHERE {
+  ?subject ?predicate ?object
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1243,7 +1274,7 @@ WHERE { GRAPH &lt;urn:x-arq:DefaultGraph&gt; {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Graph Store","level":"3.2.2","depth":2,"next":{"title":"Ontology/Data model","level":"3.2.2.1","depth":3,"path":"ATTX-Data-Model.md","ref":"ATTX-Data-Model.md","articles":[]},"previous":{"title":"Graph Manager Message Examples","level":"3.2.1.1","depth":3,"path":"Examples-Graph-Manager-Service.md","ref":"Examples-Graph-Manager-Service.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Store.md","mtime":"2017-08-03T12:02:45.451Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-02T14:09:01.432Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Graph Store","level":"3.2.2","depth":2,"next":{"title":"Ontology/Data model","level":"3.2.2.1","depth":3,"path":"ATTX-Data-Model.md","ref":"ATTX-Data-Model.md","articles":[]},"previous":{"title":"Graph Manager Message Examples","level":"3.2.1.1","depth":3,"path":"Examples-Graph-Manager-Service.md","ref":"Examples-Graph-Manager-Service.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Graph-Store.md","mtime":"2017-10-09T14:08:14.390Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-09T14:09:11.059Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
