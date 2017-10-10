@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta · GitBook</title>
+        <title>RML Messages Examples · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html" />
+    <link rel="next" href="User-Guide-Administrator.html" />
     
     
-    <link rel="prev" href="Deploying-ATTX-Components-on-Docker-Swarm.html" />
+    <link rel="prev" href="Service-RML.html" />
     
 
     </head>
@@ -298,7 +298,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.1.2.3" data-path="Shared-NFS-Swarm-Cloud.html">
+        <li class="chapter " data-level="2.1.2.3" data-path="Shared-NFS-Swarm-Cloud.html">
             
                 <a href="Shared-NFS-Swarm-Cloud.html">
             
@@ -696,7 +696,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="4.2.1" data-path="Examples-RML-Service.html">
+        <li class="chapter active" data-level="4.2.1" data-path="Examples-RML-Service.html">
             
                 <a href="Examples-RML-Service.html">
             
@@ -1063,7 +1063,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta</a>
+        <a href="." >RML Messages Examples</a>
     </h1>
 </div>
 
@@ -1078,52 +1078,42 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 21-Sep-2017 09:55:38</div></div><h1 id="shared-nfs-volume-in-docker-swarm-on-cpouta">Shared NFS Volume in Docker Swarm (on cPouta)</h1>
-<p>Please find hereby the procedure to set-up a shared NFS filesystem in Docker Swarm with the <a href="http://netshare.containx.io/" target="_blank">Netshare Docker volume plugin</a></p>
-<ol>
-<li><p>Create a &quot;/d/attx-shared&quot; directory in the ATTX Master (attx-swarm-1): <code>sudo mkdir -p /d/attx-shared</code></p>
-</li>
-<li><p>Create a persistent volume and mount it to /d/attx-shared (instructions here: <a href="https://research.csc.fi/pouta-persistent-volumes" target="_blank">https://research.csc.fi/pouta-persistent-volumes</a>)</p>
-</li>
-<li><p>Install NFS tools to setup Master as NFS server:</p>
-<pre><code>$ sudo apt-get update
-$ sudo apt-get install nfs-kernel-server nfs-common
-</code></pre></li>
-<li><p>Configure your the new NFS server (attx-swarm-1) to share the &quot;/d/attx-shared&quot; directory:</p>
-</li>
-</ol>
-<pre><code>$ sudo vi /etc/exports
-</code></pre><p> Add the &quot;/d/attx-shared&quot; directory plus the IP address of the hosts that should read and write form it:</p>
-<pre><code>/d/attx/-shared &lt;attx-swarm-2_IP_ADDRESS&gt;(rw,fsid=0,insecure,no_subtree_check,sync)
-
-/d/attx/-shared &lt;attx-swarm-3_IP_ADDRESS&gt;(rw,fsid=0,insecure,no_subtree_check,sync)
-</code></pre><p>Restart the NFS server to take changes into effect:
-<code># sudo systemctl restart nfs-kernel-server</code></p>
-<ol>
-<li>On the NFS clients (attx-swarm-2 and attx-swarm-3), create a &quot;/d/attx-shared&quot; directory as mount point for the NFS export from the server (attx-swarm-1):</li>
-</ol>
-<p><code>$ sudo mkdir -p /d/attx-shared</code></p>
-<p>Install the NFS client tools and test mounting the NFS export into the local &quot;/d/attx-shared&quot;:</p>
-<pre><code># sudo apt-get install nfs-common
-# mount -t nfs -o proto=tcp,port=2049 &lt;nfs-server-IP&gt;:/ /d/attx-shared
-</code></pre><p>Remember to unmount it afterwards (<code>unmount /d/attx-shared</code>).</p>
-<ol>
-<li><p>Install and configure the NetShare Docker volume plugin in all hosts as per <a href="http://netshare.containx.io/docs/getting-started" target="_blank">http://netshare.containx.io/docs/getting-started</a></p>
-</li>
-<li><p>Check your attx-swarm.yml file:</p>
-</li>
-</ol>
-<p>With an NFS server and shared volume in place, and the other swarm node as NFS clients, and Docker NFS Volume plugin installed in all nodes, the changes to attx-shared.yml are as such:
-Volumes:</p>
-<pre><code>  attx-shared:
-    driver_opts:
-      type:  nfs
-      o: addr=192.168.1.31,rw
-      device: &quot;:/d/attx-shared&quot;
-</code></pre><p>Services:</p>
-<pre><code>volumes:
-  - attx_shared:/attx-shared
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 09-Oct-2017 11:22:54</div></div><h1 id="rml-service-examples">RML service examples</h1>
+<h2 id="tranform-using-inline-input">Tranform using inline input</h2>
+<p>Request</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;provenance&quot;</span>: {
+        <span class="hljs-string">&quot;context&quot;</span>: {
+            <span class="hljs-string">&quot;workflowID&quot;</span>: <span class="hljs-string">&quot;wf&quot;</span>,
+            <span class="hljs-string">&quot;activityID&quot;</span>: <span class="hljs-number">1</span>,
+            <span class="hljs-string">&quot;stepID&quot;</span>: <span class="hljs-string">&quot;step&quot;</span>
+        }
+    },
+    <span class="hljs-string">&quot;payload&quot;</span>: {
+        <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;URI&quot;</span>,
+        <span class="hljs-string">&quot;input&quot;</span>: <span class="hljs-string">&quot;file:///attx-sb-shared/temp/file.json&quot;</span>,
+        <span class="hljs-string">&quot;mapping&quot;</span>: <span class="hljs-string">&quot;mapping content in turtle&quot;</span>
+    }    
+}
 </code></pre>
+<p>Response</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;provenance&quot;</span>: {
+        <span class="hljs-string">&quot;context&quot;</span>: {
+            <span class="hljs-string">&quot;workflowID&quot;</span>: <span class="hljs-string">&quot;wf&quot;</span>,
+            <span class="hljs-string">&quot;activityID&quot;</span>: <span class="hljs-number">1</span>,
+            <span class="hljs-string">&quot;stepID&quot;</span>: <span class="hljs-string">&quot;step&quot;</span>
+        }
+    },
+    <span class="hljs-string">&quot;payload&quot;</span>: {
+      <span class="hljs-string">&quot;contentType&quot;</span>: <span class="hljs-string">&quot;text/turtle&quot;</span>,
+      <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;SUCCESS&quot;</span>,
+      <span class="hljs-string">&quot;statusMessage&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+      <span class="hljs-string">&quot;transformedDatasetURL&quot;</span>: <span class="hljs-string">&quot;file:///attx-sb-shared/temp/file_transformer.ttl&quot;</span>
+    }    
+}
+</code></pre>
+
                                 
                                 </section>
                             
@@ -1150,12 +1140,12 @@ Volumes:</p>
 
             
                 
-                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html" class="navigation navigation-prev " aria-label="Previous page: Deploying ATTX Components on Docker Swarm">
+                <a href="Service-RML.html" class="navigation navigation-prev " aria-label="Previous page: RML Service">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html" class="navigation navigation-next " aria-label="Next page: Applying Rolling Updates to Services in Docker Swarm">
+                <a href="User-Guide-Administrator.html" class="navigation navigation-next " aria-label="Next page: Data Administrator's User guide">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1166,7 +1156,7 @@ Volumes:</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta","level":"2.1.2.3","depth":3,"next":{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.4","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]},"previous":{"title":"Deploying ATTX Components on Docker Swarm","level":"2.1.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Shared-NFS-Swarm-Cloud.md","mtime":"2017-09-25T14:08:22.549Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-10T06:38:12.717Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"RML Messages Examples","level":"4.2.1","depth":2,"next":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"RML Service","level":"4.2","depth":1,"path":"Service-RML.md","ref":"Service-RML.md","articles":[{"title":"RML Messages Examples","level":"4.2.1","depth":2,"path":"Examples-RML-Service.md","ref":"Examples-RML-Service.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Examples-RML-Service.md","mtime":"2017-10-09T14:08:14.389Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-10T06:38:12.717Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
