@@ -1,0 +1,1259 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ATTX Architecture Overview · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-git-author/style.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ATTX-Broker-Deployment.html" />
+    
+    
+    <link rel="prev" href="Use-case-Mildred.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">ATTX Project</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    ATTX Project
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Applications and Use Cases
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="Use-case-Infrastructures-and-publications.html">
+            
+                <a href="Use-case-Infrastructures-and-publications.html">
+            
+                    
+                    UC1 - Infrastructure and Publications
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="Use-case-Jyvaskyla.html">
+            
+                <a href="Use-case-Jyvaskyla.html">
+            
+                    
+                    UC2 - Parallel Publication Dashboard
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="Use-case-Metax.html">
+            
+                <a href="Use-case-Metax.html">
+            
+                    
+                    UC3 - Metax
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="Use-case-Mildred.html">
+            
+                <a href="Use-case-Mildred.html">
+            
+                    
+                    UC4 - Mildred
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="ATTX-Architecture-Overview.html">
+            
+                <a href="ATTX-Architecture-Overview.html">
+            
+                    
+                    ATTX Architecture Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Getting Started</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="ATTX-Broker-Deployment.html">
+            
+                <a href="ATTX-Broker-Deployment.html">
+            
+                    
+                    ATTX Broker Deployment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" >
+            
+                <span>
+            
+                    
+                    Run on Single Machine PC/Mac/VM
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1.1" data-path="Building-Docker-application-stacks-in-Swarm-Mode.html">
+            
+                <a href="Building-Docker-application-stacks-in-Swarm-Mode.html">
+            
+                    
+                    Building Swarm Mode on a PC/Mac
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.1.2" data-path="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+            
+                <a href="Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.html">
+            
+                    
+                    Running the ATTX Stack on a PC/Mac
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" >
+            
+                <span>
+            
+                    
+                    Run on Distributed/Cloud
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.2.1" data-path="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                <a href="Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.html">
+            
+                    
+                    Provisioning ATTX Components on CSC Open Stack (cPouta)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2.2" data-path="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                <a href="Deploying-ATTX-Components-on-Docker-Swarm.html">
+            
+                    
+                    Deploying ATTX Components on Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2.3" data-path="Shared-NFS-Swarm-Cloud.html">
+            
+                <a href="Shared-NFS-Swarm-Cloud.html">
+            
+                    
+                    Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2.4" data-path="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
+            
+                <a href="Applying-Rolling-Updates-to-services-in-Docker-Swarm.html">
+            
+                    
+                    Applying Rolling Updates to Services in Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="Deploying-ATTX-SB-on-Kontena.html">
+            
+                <a href="Deploying-ATTX-SB-on-Kontena.html">
+            
+                    
+                    Deploying ATTX Broker on Kontena
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Core Components</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="ATTX-Component-Workflow.html">
+            
+                <a href="ATTX-Component-Workflow.html">
+            
+                    
+                    Workflow Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.1.1" data-path="ETL-Artifacts.html">
+            
+                <a href="ETL-Artifacts.html">
+            
+                    
+                    ETL Artifacts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.2" data-path="Unified-Views-plugins.html">
+            
+                <a href="Unified-Views-plugins.html">
+            
+                    
+                    UnifiedViews Plugins
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.1.3" data-path="Service-UVProvenance.html">
+            
+                <a href="Service-UVProvenance.html">
+            
+                    
+                    UVProvovenance Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="ATTX-Component-Graph.html">
+            
+                <a href="ATTX-Component-Graph.html">
+            
+                    
+                    Graph Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="Service-Graph-Manager.html">
+            
+                <a href="Service-Graph-Manager.html">
+            
+                    
+                    Graph Manager Service
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1.1" data-path="Examples-Graph-Manager-Service.html">
+            
+                <a href="Examples-Graph-Manager-Service.html">
+            
+                    
+                    Graph Manager Message Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="Graph-Store.html">
+            
+                <a href="Graph-Store.html">
+            
+                    
+                    Graph Store
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.2.1" data-path="ATTX-Data-Model.html">
+            
+                <a href="ATTX-Data-Model.html">
+            
+                    
+                    Ontology/Data model
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.3" data-path="Linking-Strategies.html">
+            
+                <a href="Linking-Strategies.html">
+            
+                    
+                    Linking Strategies
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="ATTX-Component-Distribution.html">
+            
+                <a href="ATTX-Component-Distribution.html">
+            
+                    
+                    Distribution Component
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.3.1" data-path="ElasticSearch-with-Siren.html">
+            
+                <a href="ElasticSearch-with-Siren.html">
+            
+                    
+                    ElasticSearch 1.3 with Siren
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3.2" data-path="ElasticSearch-5.html">
+            
+                <a href="ElasticSearch-5.html">
+            
+                    
+                    ElasticSearch 5.x
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="ATTX-Component-ServiceDiscovery.html">
+            
+                <a href="ATTX-Component-ServiceDiscovery.html">
+            
+                    
+                    Service Discovery
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.4.1" data-path="Consul-ServiceDiscovery-Implementation.html">
+            
+                <a href="Consul-ServiceDiscovery-Implementation.html">
+            
+                    
+                    Consul Service Discovery Implementation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4.2" data-path="Consul-for-Service-Discovery-on-Docker-Swarm.html">
+            
+                <a href="Consul-for-Service-Discovery-on-Docker-Swarm.html">
+            
+                    
+                    Consul for Service Discovery on Docker Swarm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="ATTX-Component-MessageBroker.html">
+            
+                <a href="ATTX-Component-MessageBroker.html">
+            
+                    
+                    Message Broker
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.5.1" data-path="MessageBroker-ActiveMQ.html">
+            
+                <a href="MessageBroker-ActiveMQ.html">
+            
+                    
+                    ActiveMQ Message Broker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5.2" data-path="MessageBroker-RabbitMQ.html">
+            
+                <a href="MessageBroker-RabbitMQ.html">
+            
+                    
+                    RabbitMQ Message Broker
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Broker Services</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="Service-Provenance.html">
+            
+                <a href="Service-Provenance.html">
+            
+                    
+                    Provenance Service
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="Examples-Provenance-Service.html">
+            
+                <a href="Examples-Provenance-Service.html">
+            
+                    
+                    Provenance Messages Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="Service-RML.html">
+            
+                <a href="Service-RML.html">
+            
+                    
+                    RML Service
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.2.1" data-path="Examples-RML-Service.html">
+            
+                <a href="Examples-RML-Service.html">
+            
+                    
+                    RML Messages Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">User Guide</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="User-Guide-Administrator.html">
+            
+                <a href="User-Guide-Administrator.html">
+            
+                    
+                    Data Administrator's User guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Development Guidelines</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="ATTX-Development-Environment.html">
+            
+                <a href="ATTX-Development-Environment.html">
+            
+                    
+                    ATTX Development Environment
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="Feature-roadmap.html">
+            
+                <a href="Feature-roadmap.html">
+            
+                    
+                    Feature Roadmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="Release-Plan.html">
+            
+                <a href="Release-Plan.html">
+            
+                    
+                    Release Plan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="CI-CD-Enviroment.html">
+            
+                <a href="CI-CD-Enviroment.html">
+            
+                    
+                    CI/CD Enviroment
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.4.1" data-path="Jenkins-CI.html">
+            
+                <a href="Jenkins-CI.html">
+            
+                    
+                    Jenkins CI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4.2" data-path="Build-Environment-Setup.html">
+            
+                <a href="Build-Environment-Setup.html">
+            
+                    
+                    Build Environment Setup
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4.3" data-path="Containerized-testing.html">
+            
+                <a href="Containerized-testing.html">
+            
+                    
+                    Containerized Testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Reports & Contributions</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" >
+            
+                <span>
+            
+                    
+                    Reports
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1.1" data-path="CSC-cPouta-Cloud-Services-Report.html">
+            
+                <a href="CSC-cPouta-Cloud-Services-Report.html">
+            
+                    
+                    CSC cPouta Cloud Services Report
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.1.2" data-path="Building-with-Gradle.html">
+            
+                <a href="Building-with-Gradle.html">
+            
+                    
+                    Building with (Py)Gradle
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.1.3" data-path="Messaging-Brokers-Solutions.html">
+            
+                <a href="Messaging-Brokers-Solutions.html">
+            
+                    
+                    Messaging Brokers Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.1.4" data-path="Service-Discovery-Solutions.html">
+            
+                <a href="Service-Discovery-Solutions.html">
+            
+                    
+                    Service Discovery Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.1.5" data-path="Workflow-Management-Tools.html">
+            
+                <a href="Workflow-Management-Tools.html">
+            
+                    
+                    Workflow Management Tools Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" >
+            
+                <span>
+            
+                    
+                    Presentations
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.2.1" data-path="Presentation-ELAG-2017.html">
+            
+                <a href="Presentation-ELAG-2017.html">
+            
+                    
+                    ELAG2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2.2" data-path="Presentation-OSFair-2017.html">
+            
+                <a href="Presentation-OSFair-2017.html">
+            
+                    
+                    OSFair2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2.3" data-path="Presentation-SWIB-2017.html">
+            
+                <a href="Presentation-SWIB-2017.html">
+            
+                    
+                    SWIB2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2.4" data-path="Presentation-ISWC-2017.html">
+            
+                <a href="Presentation-ISWC-2017.html">
+            
+                    
+                    ISWC2017
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="Open-Contributions.html">
+            
+                <a href="Open-Contributions.html">
+            
+                    
+                    Open Source Contributions
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" >
+            
+                <a target="_blank" href="https://www.helsinki.fi/en/projects/attx-2016">
+            
+                    
+                    ATTX website
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ATTX Architecture Overview</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 25-Sep-2017 11:49:23</div></div><h1 id="attx-architecture-overview">ATTX Architecture Overview</h1>
+<p>The following components are part of the ATTX architecture.</p>
+<ul>
+<li><a href="#workflow-component">Workflow Component</a></li>
+<li><a href="#graph-component">Graph Component</a></li>
+<li><a href="#distribution-component">Distribution Component</a></li>
+<li><a href="#platform-deployment">Semantic Broker Deployment</a></li>
+<li><a href="#message-broker">Message Broker</a></li>
+<li><a href="#service-discovery">Service Discovery</a></li>
+</ul>
+<p><img src="images/platform_architecture.png" alt="Figure 1. ATTX Platform Architecture"></p>
+<p>Figure 1. ATTX Semantic Broker Architecture</p>
+<p>ATTX Semantic Broker is composed of a collection of loosely coupled services, which implement several broker-like capabilities. Example of such services are illustrated in: <strong><a href="#microservices-example">Microservices Architecture</a></strong>.</p>
+<p>Given that there are a collection of such services, we can still identify three core components under which we can cluster the services: <strong>Workflow Component</strong>, <strong>Graph Component</strong>, <strong>Distribution Component</strong> while the <strong>Service Discovery</strong> and the <strong>Semantic Broker Deployment</strong> gather all of them together in order to provide them as a individual services or as a platform. The communication and contracts between the components is specified in <a href="#message-broker">Message Broker</a>.</p>
+<h2 id="terminology-and-acronyms">Terminology and Acronyms</h2>
+<p>Acronyms:</p>
+<ul>
+<li><em>WF</em> - Workflow Component</li>
+<li><em>GC</em> - Graph Component</li>
+<li><em>DC</em> - Distribution Component</li>
+<li><em>PD</em> - Platform Deployment/Semantic Broker Deployment</li>
+<li><em>PD</em> - Service Discovery</li>
+<li><em>UV</em> - UnifiedViews (WF component implementation)</li>
+<li><em>ES</em> - ElasticSearch (DC component implementation)</li>
+<li><em>ETL Artifact</em> - any kind of ETL software (e.g. UnifiedViews)</li>
+<li>sometimes a <em>workflow</em> can also be referred to as <em>pipeline</em></li>
+<li>sometimes a <em>activity</em> can also be referred to as <em>executed job</em> or <em>pipeline execution</em></li>
+<li><em>artifact</em> - any software or application/programming language specific library</li>
+</ul>
+<h2 id="workflow-component">Workflow Component</h2>
+<p>The ATTX Workflow Component provides a configurable framework with the main purpose of managing, scheduling and monitoring data ingestion, processing and distribution related workflows. Workflow Component provides the Semantic Broker information related to provenance of the working data.</p>
+<ul>
+<li>Details about the <a href="Workflow-Component.md">Workflow Component</a>.</li>
+</ul>
+<h2 id="graph-component">Graph Component</h2>
+<p>The ATTX Graph component associated to this project has the main goal of aggregating the data that flows within the Semantic Broker, types of transformations (and associated workflows), the provenance information (agent and ETL processes performed) and other meta data.</p>
+<ul>
+<li>Details about the <a href="Graph-Component.md">Graph Component</a>.</li>
+</ul>
+<h2 id="distribution-component">Distribution Component</h2>
+<p>This ATTX Distribution Component provides the interface between the Workflow Component and/or Graph Component for public consumption of disseminated data.</p>
+<ul>
+<li>Github Repository: <a href="https://github.com/ATTX-project/distribution-component" target="_blank">distribution-component</a></li>
+<li>Details about the <a href="Distribution-Component.md">Distribution Component</a>.</li>
+</ul>
+<h3 id="semantic-broker-deployment">Semantic Broker Deployment</h3>
+<p>This ATTX Semantic Broker Deployment describes the necessary steps for setting up the whole ATTX Project or working with individual components.</p>
+<ul>
+<li>Github Repository: <a href="https://github.com/ATTX-project/platform-deployment" target="_blank">platform-deployment</a></li>
+<li>Details about the <a href="ATTX-Broker-Deployment.html">ATTX Broker Deployment</a>.</li>
+</ul>
+<h2 id="service-discovery">Service Discovery</h2>
+<p>Service Discovery is part of the ATTX Semantic Broker core components as it addresses the need to deal with with static and manual configuration of components and at the same time the need to scale up the (micro)services offered by the broker.
+More details at:</p>
+<ul>
+<li><a href="ServiceDiscovery-Implementation.md">Service Discovery Implementation</a></li>
+<li><a href="Service-Discovery-Solutions.html">Service Discovery Solutions Overview</a></li>
+</ul>
+<h2 id="message-broker">Message Broker</h2>
+<p>There are two versions to the service discovery/inter-component communication illustrated below, both of them can adhere to a message based communication (mostly asynchronous) or REST-API based communication (mostly synchronous) or a combination of both.</p>
+<p><img src="images/v1.1-intercomponent_communication.svg" alt="Figure 2. Version 1 of Inter-component Communication"></p>
+<p>Figure 2. Version 1 of Inter-component Communication</p>
+<ul>
+<li><strong>Version 1</strong> - represents the base structure for achieving the flow of data between the three core components. At this stage the distinction between the components is rudimentary. For example the Graph Manager consists of a single scheduled event that consumes the UVProvovenance API. Components communication with direct HTTP requests using hard-coded component names.</li>
+</ul>
+<p><img src="images/v3-intercomponent_communication.svg" alt="Figure 3. Version 3 of Inter-component Communication"></p>
+<p>Figure 3. Version 2 with Service discovery and processing services</p>
+<ul>
+<li><strong>Version 2</strong> - in this stage the components take shape such as Pipeline2 functionality is provided by the <a href="Graph-Component,md">Graph Manager Component</a>, and the Graph Manager also provides an API.</li>
+</ul>
+<p>We chose UnifiedViews as a default interface for the <a href="Workflow-Component.md">Workflow Component</a> however other ETL tools can be considered as long as they provide the necessary framework for extracting provenance(e.g. <a href="https://nifi.apache.org/" target="_blank">https://nifi.apache.org/</a> or <a href="https://github.com/spotify/luigi" target="_blank">https://github.com/spotify/luigi</a> or <a href="http://www.dswarm.org/" target="_blank">http://www.dswarm.org/</a> etc. - see <a href="Workflow-Management-Tools.html">Workflow Management Tools</a> ).</p>
+<p>While the communication between components is implemented using messaging middleware component such as ActiveMQ or RabbitMQ -  see <a href="MessageBroker.md">Message Broker</a> - the communication between components does not have to be real time.</p>
+<h2 id="microservices-example">Microservices Example</h2>
+<p>We would like to illustrate how such an architecture would look in practice and some of the services that might be part of it.</p>
+<p>In Figure 4 we illustrate a pipeline that downloads a new version of a dataset and replaces the old one. We identified the following services to aid with this process:</p>
+<ul>
+<li><em>RMLService</em> - converting the downloaded dataset from CSV format to RDF and storing it for access at a specified location;</li>
+<li><em>GM-API</em> - used for orchestrating access to the Graph Store and generation of provenance information;</li>
+<li><em>ProvenanceAPI</em> - based on the collected information and a trigger from <em>GM-API</em> this service will generate provenance data and store it to its own Graph Store or send it to <em>GM-API</em> on a request basis;</li>
+<li><em>UVProvenanceAPI</em> - used for extracting provenance information from UnifiedViews, as not all provenance information can be collected (start and end times of a pipeline/workflow, if a workflow is public or private, or if a pipeline execution is successful) by the DPUs and transmitted to <em>GM-API</em> and implicitly to <em>ProvenanceAPI</em>.</li>
+</ul>
+<p><img src="images/wf_services_overview.svg" alt="Figure 4. ATTX Platform Architecture"></p>
+<p>Figure 4. Pipeline for downloading and replacing dataset</p>
+<p>As a continuation of the result of the pipeline depicted in Figure 4, the pipeline from Figure 5 exhibits the steps necessary for publishing the resulting data. In order to achieve this we identified the following services:</p>
+<ul>
+<li><em>ESDistributionService</em> - service for constructing, based on the graph retrieved from Graph Store, JSON/JSON-LD formatted bulk data, that is stored on a volume. This microservice can be further divided into two otherservices:<ul>
+<li><em>RDFFramerService</em> - converting the data from RDF to JSON/JSON-LD;</li>
+<li><em>indexService</em> - (bulk) indexing at a specific endpoint;</li>
+</ul>
+</li>
+<li><em>ElasticSearch</em> - several versions might be available each providing different indexing mechanisms.</li>
+</ul>
+<p><img src="images/dc_services_overview.svg" alt="Figure 5. ATTX Platform Architecture"></p>
+<p>Figure 5. Pipeline for Publishing Dataset</p>
+<p>In all the cases presented above the Service Discovery component plays an important role for retrieving and acts as a router for requests - more information available at: <a href="ServiceDiscovery-Implementation.md">Service Discovery Implementation</a>.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Use-case-Mildred.html" class="navigation navigation-prev " aria-label="Previous page: UC4 - Mildred">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ATTX-Broker-Deployment.html" class="navigation navigation-next " aria-label="Next page: ATTX Broker Deployment">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"next":{"title":"ATTX Broker Deployment","level":"2.1","depth":1,"path":"ATTX-Broker-Deployment.md","ref":"ATTX-Broker-Deployment.md","articles":[{"title":"Run on Single Machine PC/Mac/VM","level":"2.1.1","depth":2,"ref":"","articles":[{"title":"Building Swarm Mode on a PC/Mac","level":"2.1.1.1","depth":3,"path":"Building-Docker-application-stacks-in-Swarm-Mode.md","ref":"Building-Docker-application-stacks-in-Swarm-Mode.md","articles":[]},{"title":"Running the ATTX Stack on a PC/Mac","level":"2.1.1.2","depth":3,"path":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","ref":"Running-the-ATTX-containerised-application-stack-in-your-own-PC-or-Mac.md","articles":[]}]},{"title":"Run on Distributed/Cloud","level":"2.1.2","depth":2,"ref":"","articles":[{"title":"Provisioning ATTX Components on CSC Open Stack (cPouta)","level":"2.1.2.1","depth":3,"path":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","ref":"Provisioning-ATTX-Components-on-CSC-Open-Stack-cPouta.md","articles":[]},{"title":"Deploying ATTX Components on Docker Swarm","level":"2.1.2.2","depth":3,"path":"Deploying-ATTX-Components-on-Docker-Swarm.md","ref":"Deploying-ATTX-Components-on-Docker-Swarm.md","articles":[]},{"title":"Setting-up a shared NFS filesystem in Docker Swarm running in CSC cPouta","level":"2.1.2.3","depth":3,"path":"Shared-NFS-Swarm-Cloud.md","ref":"Shared-NFS-Swarm-Cloud.md","articles":[]},{"title":"Applying Rolling Updates to Services in Docker Swarm","level":"2.1.2.4","depth":3,"path":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","ref":"Applying-Rolling-Updates-to-services-in-Docker-Swarm.md","articles":[]}]},{"title":"Deploying ATTX Broker on Kontena","level":"2.1.3","depth":2,"path":"Deploying-ATTX-SB-on-Kontena.md","ref":"Deploying-ATTX-SB-on-Kontena.md","articles":[]}]},"previous":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"path":"Use-case-Mildred.md","ref":"Use-case-Mildred.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Architecture-Overview.md","mtime":"2017-10-02T14:08:09.511Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-23T14:10:20.780Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+
