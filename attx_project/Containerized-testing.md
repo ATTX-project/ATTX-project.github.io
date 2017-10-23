@@ -39,13 +39,13 @@ There are two tasks for running the tests:
 * `runContainerTests` - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property `-PtestEnv=CI`. This task will build and run the tests inside a container on the same network as the other containers without the need of exposing all the ports.
 
 Running the tests inside the container:
-* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev -PtestEnv=CI clean runContainerTests`
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=CI clean runContainerTests`
 
 Run the test locally and exposing the ports. At the end of the tests the containers are removed:
-* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests`
+* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev clean runIntegTests`
 
 Run the test locally from console and exposing the container ports:
-* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests`
+* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev -PrunEnv=console clean runIntegTests`
 
 Test reports are exported to the folder configured in `copyReportFiles` task (default `$buildDir/reports/`).
 
