@@ -551,9 +551,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="ATTX-Component-ServiceDiscovery.md">
+        <li class="chapter " data-level="3.4" data-path="ATTX-Component-ServiceDiscovery.html">
             
-                <span>
+                <a href="ATTX-Component-ServiceDiscovery.html">
             
                     
                     Service Discovery
@@ -1076,7 +1076,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 10-Oct-2017 07:14:16</div></div><h1 id="containerised-testing">Containerised Testing</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 23-Oct-2017 10:16:48</div></div><h1 style="color:red" id="work-in-progress">Work In Progress</h1>
+
+<h1 id="containerised-testing">Containerised Testing</h1>
 <p>This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.</p>
 <h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
@@ -1110,16 +1112,20 @@
 <h2 id="testing-with-gradle">Testing with Gradle</h2>
 <p>There are two tasks for running the tests:</p>
 <ul>
-<li><code>runIntegTests</code> -  for running the test in the local environment with all the ports exposed, thus allowing for rapid development; It will also start the containers needed, by default they will expose ports;</li>
+<li><code>runIntegTests</code> -  for running the test in the local environment with all the ports exposed, thus allowing for rapid development; It will also start the containers needed, by default they will expose ports; Adding a <code>-PrunEnv=console</code> parameter will allow for continuous testing without removing any of the started containers;</li>
 <li><code>runContainerTests</code> - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property <code>-PtestEnv=CI</code>. This task will build and run the tests inside a container on the same network as the other containers without the need of exposing all the ports.</li>
 </ul>
 <p>Running the tests inside the container:</p>
 <ul>
-<li><code>gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev -PtestEnv=CI clean runContainerTests</code></li>
+<li><code>gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=CI clean runContainerTests</code></li>
 </ul>
-<p>Run the test locally without containers and exposing the ports:</p>
+<p>Run the test locally and exposing the ports. At the end of the tests the containers are removed:</p>
 <ul>
-<li><code>gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests</code></li>
+<li><code>gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev clean runIntegTests</code></li>
+</ul>
+<p>Run the test locally from console and exposing the container ports:</p>
+<ul>
+<li><code>gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev -PrunEnv=console clean runIntegTests</code></li>
 </ul>
 <p>Test reports are exported to the folder configured in <code>copyReportFiles</code> task (default <code>$buildDir/reports/</code>).</p>
 <h2 id="structure-of-feature-test-images">Structure of Feature-test Images</h2>
@@ -1141,7 +1147,7 @@ dockerize -wait http://gmapi:4302/health -timeout 60s
 <p>Example of the most relevant parts:</p>
 <pre><code class="lang-groovy">
 ext.src = [
-    <span class="hljs-string">&quot;${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.dev&amp;a=dev-test-helper&amp;v=${attxTestHelperPlugin}&amp;p=jar&quot;</span>:<span class="hljs-string">&quot;dev-test-helper-${attxTestHelperPlugin}.jar&quot;</span>
+    <span class="hljs-string">&quot;${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.wc.uv&amp;a=attx-l-replaceds&amp;v=${uvreplaceDS}&amp;p=jar&quot;</span>:<span class="hljs-string">&quot;attx-l-replaceds-${uvreplaceDS}.jar&quot;</span>
 ]
 
 <span class="hljs-keyword">import</span> de.undercouch.gradle.tasks.download.Download
@@ -1165,9 +1171,11 @@ task downloadTestFiles
 }
 
 ext {
-    testImageWF = <span class="hljs-string">&quot;latest&quot;</span>
-    testImageGM = <span class="hljs-string">&quot;latest&quot;</span>
-    testImageES5 = <span class="hljs-string">&quot;latest&quot;</span>
+    testTag           = <span class="hljs-string">&quot;latest&quot;</span>
+    testImageGM       = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    testImageFuseki   = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    testImageES5      = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    imageBase         = (<span class="hljs-string">&quot;${testTag}&quot;</span> == <span class="hljs-string">&quot;dev&quot;</span>) ?  &quot;attxproject&quot; : <span class="hljs-string">&quot;${imageRepo}:${imageRepoPort}&quot;</span>
 }
 
 dcompose {
@@ -1176,60 +1184,73 @@ dcompose {
         <span class="hljs-comment">// no user/pass</span>
     }
     networks {
-      gcTest
+      pdTest
     }
 
-    es5 {
+    messagebroker {
         forcePull = <span class="hljs-literal">true</span>
         forceRemoveImage = <span class="hljs-literal">true</span>
-        image = <span class="hljs-string">&quot;${imageRepo}:${imageRepoPort}/attx-es5:${testImageES5}&quot;</span>
-        networks = [gcTest]
-        hostName = <span class="hljs-string">&apos;es5&apos;</span>
+        image = <span class="hljs-string">&apos;rabbitmq:3.6.12-management&apos;</span>
+        networks = [pdTest]
         <span class="hljs-keyword">if</span> (testSet == <span class="hljs-string">&quot;localhost&quot;</span>) {
-            portBindings = [<span class="hljs-string">&apos;9210:9210&apos;</span>, <span class="hljs-string">&apos;9310:9310&apos;</span>]
+            portBindings = [<span class="hljs-string">&apos;4369:4369&apos;</span>,<span class="hljs-string">&apos;5671:5671&apos;</span>, <span class="hljs-string">&apos;5672:5672&apos;</span>, <span class="hljs-string">&apos;15671:15671&apos;</span>, <span class="hljs-string">&apos;15672:15672&apos;</span>, <span class="hljs-string">&apos;25672:25672&apos;</span>]
         }
+        env = [<span class="hljs-string">&apos;RABBITMQ_DEFAULT_USER=user&apos;</span>, <span class="hljs-string">&apos;RABBITMQ_DEFAULT_PASS=password&apos;</span>]
     }
 
-    wfapi {
+    fuseki {
         forcePull = <span class="hljs-literal">true</span>
         forceRemoveImage = <span class="hljs-literal">true</span>
-        image = <span class="hljs-string">&quot;${imageRepo}:${imageRepoPort}/uvprov-API:${testImageWF}&quot;</span>
-        dependsOn = [mysql]
-        networks = [gcTest]
-        hostName = <span class="hljs-string">&apos;wfapi&apos;</span>
+        image = <span class="hljs-string">&quot;${imageBase}/attx-fuseki:${testImageFuseki}&quot;</span>
+        networks = [pdTest]
+        hostName = <span class="hljs-string">&apos;fuseki&apos;</span>
         <span class="hljs-keyword">if</span> (testSet == <span class="hljs-string">&quot;localhost&quot;</span>) {
-            portBindings = [<span class="hljs-string">&apos;4301:4301&apos;</span>]
+            portBindings = [<span class="hljs-string">&apos;3030:3030&apos;</span>]
         }
+        env = [<span class="hljs-string">&apos;ADMIN_PASSWORD=pw123&apos;</span>]
     }
 
-    gmapi {
+
+    graphmanager {
         forcePull = <span class="hljs-literal">true</span>
         forceRemoveImage = <span class="hljs-literal">true</span>
-        image = <span class="hljs-string">&quot;${imageRepo}:${imageRepoPort}/gm-api:${testImageGM}&quot;</span>
-        dependsOn = [wfapi, es5]
-        networks = [gcTest]
-        hostName = <span class="hljs-string">&apos;gmapi&apos;</span>
+        image = <span class="hljs-string">&quot;${imageBase}/gm-api:${testImageGM}&quot;</span>
+        dependsOn = [messagebroker, fuseki]
+        networks = [pdTest]
+        hostName = <span class="hljs-string">&apos;graphmanager&apos;</span>
+        env = [<span class="hljs-string">&apos;MHOST=messagebroker&apos;</span>, <span class="hljs-string">&apos;GHOST=fuseki&apos;</span>]
+        volumes = [<span class="hljs-string">&apos;/attx-sb-shared&apos;</span>]
         <span class="hljs-keyword">if</span> (testSet == <span class="hljs-string">&quot;localhost&quot;</span>) {
             portBindings = [<span class="hljs-string">&apos;4302:4302&apos;</span>]
         }
+        binds = [<span class="hljs-string">&quot;${volumeDir}:/attx-sb-shared:rw&quot;</span>]
     }
 
     test {
         ignoreExitCode = <span class="hljs-literal">true</span>
         baseDir = file(<span class="hljs-string">&apos;.&apos;</span>)
         dockerFilename = <span class="hljs-string">&apos;Dockerfile&apos;</span>
-        buildArgs = [<span class="hljs-string">&apos;attxTestHelperPlugin&apos;</span>: <span class="hljs-string">&quot;$attxTestHelperPlugin&quot;</span>]
+        buildArgs = [<span class="hljs-string">&apos;UVreplaceDS&apos;</span>: <span class="hljs-string">&quot;$uvreplaceDS&quot;</span>]
         env = [<span class="hljs-string">&quot;REPO=$artifactRepoURL&quot;</span>]
         <span class="hljs-keyword">if</span> (testSet == <span class="hljs-string">&quot;container&quot;</span>) {
             binds = [<span class="hljs-string">&quot;/var/run/docker.sock:/run/docker.sock&quot;</span>]
         }
-        dependsOn = [gmapi] <span class="hljs-comment">// This dependency is not really needed however it reminds the scope of the tests.</span>
+        dependsOn = [graphmanager] <span class="hljs-comment">// This dependency is not really needed however it reminds the scope of the tests.</span>
         command = [<span class="hljs-string">&apos;sh&apos;</span>, <span class="hljs-string">&apos;-c&apos;</span>, <span class="hljs-string">&apos;/tmp/runTests.sh&apos;</span>]
         waitForCommand = <span class="hljs-literal">true</span>
         forceRemoveImage = <span class="hljs-literal">true</span>
-        attachStdout = <span class="hljs-literal">true</span> <span class="hljs-comment">// to view the output in the console</span>
-        networks = [gcTest]
+        attachStdout = <span class="hljs-literal">true</span>
+        attachStderr = <span class="hljs-literal">true</span>
+        networks = [pdTest]
+        volumes = [<span class="hljs-string">&apos;/attx-sb-shared&apos;</span>]
+        binds = [<span class="hljs-string">&quot;${volumeDir}:/attx-sb-shared:rw&quot;</span>]
     }
+}
+
+task copyFilesIntoContainer(<span class="hljs-string">type:</span> DockerCopyFileToContainer) {
+    targetContainerId { dcompose.graphmanager.containerId }
+    hostPath = <span class="hljs-string">&quot;$projectDir/src/test/resources/data/&quot;</span>
+    remotePath = <span class="hljs-string">&quot;/attx-sb-shared/&quot;</span>
 }
 
 task copyReportFiles(<span class="hljs-string">type:</span> DcomposeCopyFileFromContainerTask) {
@@ -1245,7 +1266,6 @@ startTestContainer.finalizedBy copyReportFiles
 <span class="hljs-comment">// making sure the that fresh build of test classes is done before building the image</span>
 <span class="hljs-comment">// Other prerequisites for the tests (e.g. artifacts) should be added here.</span>
 buildTestImage.dependsOn downloadTestFiles
-
 buildTestImage.dependsOn testClasses
 
 task checkDPUDone(<span class="hljs-string">type:</span> DockerWaitContainer) {
@@ -1270,11 +1290,11 @@ task runContainerTests {
     }
 }
 </code></pre>
-<p><code>dcompose</code> task configuration is first used to reference all the images required by the tests. In the example, test will require only the container (e.g. <code>gmapi</code>) that is the object of the tests, meanwhile the container that is the object of the tests will require the additional containers (<code>fuseki</code>, <code>essiren</code> and <code>gmapi</code>) in addition to the test container.
+<p><code>dcompose</code> task configuration is first used to reference all the images required by the tests. In the example, test will require only the container (e.g. <code>graphmanager</code>) that is the object of the tests, meanwhile the container that is the object of the tests will require the additional containers (<code>fuseki</code>, <code>messagebroker</code> and <code>graphmanager</code>) in addition to the test container.
 Service configurations should include at least <code>image</code> and in order to run the tests in a local environment the <code>portBindings</code> properties. Test container configuration is mostly same for all the test projects.</p>
 <p>Rest of the configuration is the same for all the test projects (assuming that test container is always called <code>test</code>). <code>copyReportFiles</code> task copies report files from inside the container to the build/from-container directory.</p>
 <p><code>downloadTestFiles</code> downloads the <code>dev-test-helper</code> artifact as the CI cannot download the artifact from inside the container without having the artifact repository (Archiva) exposed publicly or on the same container network as the <code>dcompose</code> task network.</p>
-<p>(not necessary as the tests are build and run inside the test container) <code>ShadowJar</code> task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.  </p>
+<p><strong>(not used as the tests are build and run inside the test container)</strong> <code>ShadowJar</code> task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.  </p>
 <p>Dependencies are loaded from the &#xFC;berjar created by the <code>shadowJar</code> task in the <code>build.gradle</code>. This jar and classes directory includes everything that is needed to run the tests, so we can actually run Gradle in the offline mode (<code>--offline</code>). Building step is faster, since we don&apos;t have to download all the dependencies every time the tests are run.
 In order to use the <code>shadowJar</code> the following are required in the build file:</p>
 <pre><code class="lang-groovy">shadowJar {
@@ -1308,31 +1328,50 @@ repositories {
 }
 
 dependencies {
-    testCompile \
-        files(<span class="hljs-string">&quot;dev-test-helper.jar&quot;</span>),
-        <span class="hljs-string">&apos;junit:junit:4.10&apos;</span>,
-        <span class="hljs-string">&apos;info.cukes:cucumber-java8:1.2.5&apos;</span>,
-        <span class="hljs-string">&apos;info.cukes:cucumber-junit:1.2.5&apos;</span>,
-        <span class="hljs-string">&apos;com.mashape.unirest:unirest-java:1.4.9&apos;</span>,
-        <span class="hljs-string">&apos;org.skyscreamer:jsonassert:1.4.0&apos;</span>,
-        <span class="hljs-string">&apos;org.awaitility:awaitility-groovy:2.0.0&apos;</span>
+    testCompile <span class="hljs-string">&quot;org.junit.jupiter:junit-jupiter-api:5.0.0&quot;</span>,
+            <span class="hljs-string">&apos;org.junit.platform:junit-platform-runner:1.0.1&apos;</span>,
+            <span class="hljs-string">&apos;info.cukes:cucumber-java8:1.2.5&apos;</span>,
+            <span class="hljs-string">&apos;info.cukes:cucumber-junit:1.2.5&apos;</span>,
+            <span class="hljs-string">&apos;com.mashape.unirest:unirest-java:1.4.9&apos;</span>,
+            <span class="hljs-string">&apos;org.skyscreamer:jsonassert:1.5.0&apos;</span>,
+            <span class="hljs-string">&apos;org.awaitility:awaitility-groovy:3.0.0&apos;</span>,
+            <span class="hljs-string">&apos;org.uh.hulib.attx.dev:dev-test-helper:1.5&apos;</span>,
+            <span class="hljs-string">&apos;org.uh.hulib.attx.wc.uv:uv-common:1.0-SNAPSHOT&apos;</span>,
+            <span class="hljs-string">&apos;com.rabbitmq:amqp-client:4.2.0&apos;</span>,
+            <span class="hljs-string">&apos;org.jdom:jdom2:2.0.5&apos;</span>,
+            <span class="hljs-string">&apos;org.apache.jena:jena-core:3.4.0&apos;</span>
+    testRuntime \
+        <span class="hljs-string">&quot;org.junit.jupiter:junit-jupiter-engine:5.0.0&quot;</span>,
+            <span class="hljs-string">&apos;org.junit.vintage:junit-vintage-engine:4.12.0&apos;</span>
 }
 
-task integTest(<span class="hljs-string">type:</span> Test){
+task containerIntegTest(<span class="hljs-string">type:</span> Test) {
+    Map&lt;String, Integer&gt; serviceMap = [ <span class="hljs-string">&quot;frontend&quot;</span> : <span class="hljs-number">8080</span>,
+                  <span class="hljs-string">&quot;uvprov&quot;</span> : <span class="hljs-number">4301</span>,
+                  <span class="hljs-string">&quot;provservice&quot;</span> : <span class="hljs-number">7030</span>,
+                  <span class="hljs-string">&quot;fuseki&quot;</span> : <span class="hljs-number">3030</span>,
+                  <span class="hljs-string">&quot;graphmanager&quot;</span> : <span class="hljs-number">4302</span>,
+                  <span class="hljs-string">&quot;es5&quot;</span>: <span class="hljs-number">9210</span>,
+                  <span class="hljs-string">&quot;rmlservice&quot;</span>: <span class="hljs-number">8090</span>,
+                  <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">5672</span>,
+                  <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">5671</span>,
+                  <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">4369</span> ]
+    ext.getHostPort = {services -&gt;
+        serviceMap.each{ host, port -&gt;
+            systemProperty <span class="hljs-string">&quot;${host}.port&quot;</span>, <span class="hljs-string">&quot;${port}&quot;</span>.toInteger()
+            systemProperty <span class="hljs-string">&quot;${host}.host&quot;</span>, <span class="hljs-string">&quot;${host}&quot;</span>
+        }
+    }
+
+    ext.removeHostPort = { services -&gt;
+        serviceMap.each{ host, port -&gt;
+            systemProperties.remove <span class="hljs-string">&quot;${host}.port&quot;</span>
+            systemProperties.remove <span class="hljs-string">&quot;${host}.host&quot;</span>
+         }
+    }
+
     doFirst {
-        systemProperty <span class="hljs-string">&apos;frontend.port&apos;</span>, <span class="hljs-number">8080</span>
-        systemProperty <span class="hljs-string">&apos;frontend.host&apos;</span>, <span class="hljs-string">&apos;frontend&apos;</span>
-        systemProperty <span class="hljs-string">&apos;wfapi.port&apos;</span>, <span class="hljs-number">4301</span>
-        systemProperty <span class="hljs-string">&apos;wfapi.host&apos;</span>, <span class="hljs-string">&apos;wfapi&apos;</span>
-        systemProperty <span class="hljs-string">&apos;fuseki.port&apos;</span>, <span class="hljs-number">3030</span>
-        systemProperty <span class="hljs-string">&apos;fuseki.host&apos;</span>, <span class="hljs-string">&apos;fuseki&apos;</span>
-        systemProperty <span class="hljs-string">&apos;gmapi.port&apos;</span>, <span class="hljs-number">4302</span>
-        systemProperty <span class="hljs-string">&apos;gmapi.host&apos;</span>, <span class="hljs-string">&apos;gmapi&apos;</span>
-        systemProperty <span class="hljs-string">&apos;essiren.port&apos;</span>, <span class="hljs-number">9200</span>
-        systemProperty <span class="hljs-string">&apos;essiren.tcp&apos;</span>, <span class="hljs-number">9300</span>
-        systemProperty <span class="hljs-string">&apos;essiren.host&apos;</span>, <span class="hljs-string">&apos;essiren&apos;</span>
-        systemProperty <span class="hljs-string">&apos;es5.port&apos;</span>, <span class="hljs-number">9210</span>
-        systemProperty <span class="hljs-string">&apos;es5.host&apos;</span>, <span class="hljs-string">&apos;es5&apos;</span>
+        getHostPort(serviceMap)
     }
     forkEvery = <span class="hljs-number">2</span>
     maxParallelForks = <span class="hljs-number">2</span>
@@ -1340,20 +1379,9 @@ task integTest(<span class="hljs-string">type:</span> Test){
         showStackTraces = <span class="hljs-literal">true</span>
     }
     doLast {
-        systemProperties.remove <span class="hljs-string">&apos;frontend.port&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;frontend.host&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;wfapi.port&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;wfapi.host&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;fuseki.port&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;fuseki.host&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;gmapi.port&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;gmapi.host&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;essiren.port&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;essiren.tcp&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;essiren.host&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;es5.port&apos;</span>
-        systemProperties.remove <span class="hljs-string">&apos;es5.host&apos;</span>
+        removeHostPort(serviceMap)
     }
+
 }
 </code></pre>
 <h3 id="dockerfile-description">Dockerfile Description</h3>
@@ -1373,7 +1401,6 @@ task integTest(<span class="hljs-string">type:</span> Test){
 </span>
 <span class="hljs-keyword">WORKDIR</span><span class="bash"> /tmp
 </span>
-ARG attxTestHelperPlugin
 ARG UVreplaceDS
 
 <span class="hljs-keyword">COPY</span><span class="bash"> src /tmp/src
@@ -1382,7 +1409,6 @@ ARG UVreplaceDS
 </span><span class="hljs-keyword">RUN</span><span class="bash"> chmod 700 /tmp/runTests.sh
 </span>
 <span class="hljs-keyword">COPY</span><span class="bash"> attx<span class="hljs-_">-l</span>-replaceds-<span class="hljs-variable">${UVreplaceDS}</span>.jar /tmp/attx<span class="hljs-_">-l</span>-replaceds-<span class="hljs-variable">${UVreplaceDS}</span>.jar
-</span><span class="hljs-keyword">COPY</span><span class="bash"> dev-test-helper-<span class="hljs-variable">${attxTestHelperPlugin}</span>.jar /tmp/dev-test-helper.jar
 </span></code></pre>
 <p><code>frekele/gradle</code> image contains all the components to run Gradle 4.1. <code>dockerize</code> is used by the <code>runTests.sh</code> script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only <code>build.test.gradle</code> file is copied to the image. Image also doesn&apos;t run any script by default, instead the dcompose Gradle plugin is used to attach a command  <code>runTests.sh</code> to the test container, which runs dockerized checks and runs the tests.</p>
 <pre><code class="lang-bash"><span class="hljs-meta">#!/bin/sh
@@ -1390,17 +1416,12 @@ ARG UVreplaceDS
 <span class="hljs-comment"># Wait for MySQL, the big number is because CI is slow.</span>
 dockerize -wait tcp://mysql:3306 -timeout 240s
 dockerize -wait http://fuseki:3030 -timeout 60s
-dockerize -wait http://gmapi:4302/health -timeout 60s
-dockerize -wait http://wfapi:4301/health -timeout 60s
-dockerize -wait http://essiren:9200 -timeout 60s
-dockerize -wait tcp://essiren:9300 -timeout 60s
-dockerize -wait http://es5:9210 -timeout 60s
-<span class="hljs-comment"># wait for es5 9310 apparently not working</span>
-<span class="hljs-comment"># dockerize -wait tcp://es5:9310 -timeout 60s</span>
+dockerize -wait http://fuseki:3030 -timeout 60s
+dockerize -wait http://graphmanager:4302/health -timeout 60s
 
 <span class="hljs-built_in">echo</span>  <span class="hljs-string">&quot;Archiva repository URL: <span class="hljs-variable">$REPO</span>&quot;</span>
 
-gradle -PartifactRepoURL=<span class="hljs-variable">$REPO</span> integTest
+gradle -b /tmp/build.gradle -PartifactRepoURL=<span class="hljs-variable">$REPO</span> containerIntegTest
 </code></pre>
 <h3 id="configuring-jenkins">Configuring Jenkins</h3>
 <p>Example configuration for Jenkins using pipeline plugin and declarative configurations:</p>
@@ -1444,7 +1465,7 @@ gradle -PartifactRepoURL=<span class="hljs-variable">$REPO</span> integTest
 <pre><code class="lang-groovy">dcompose {
 ...
   graphmanager {
-    image = <span class="hljs-string">&apos;attx-dev:5000/graphmanager:testtag&apos;</span>
+    image = <span class="hljs-string">&apos;attx-dev:5000/gm-api:testtag&apos;</span>
   }
 ...
 }
@@ -1490,7 +1511,7 @@ gradle -PartifactRepoURL=<span class="hljs-variable">$REPO</span> integTest
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Containerized Testing","level":"6.4.3","depth":2,"next":{"title":"Reports","level":"7.1","depth":1,"ref":"","articles":[{"title":"CSC cPouta Cloud Services Report","level":"7.1.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},{"title":"Building with (Py)Gradle","level":"7.1.2","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers Solutions Overview","level":"7.1.3","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},{"title":"Service Discovery Solutions Overview","level":"7.1.4","depth":2,"path":"Service-Discovery-Solutions.md","ref":"Service-Discovery-Solutions.md","articles":[]},{"title":"Workflow Management Tools Overview","level":"7.1.5","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]}]},"previous":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Containerized-testing.md","mtime":"2017-10-16T14:08:10.359Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-16T14:09:35.771Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Containerized Testing","level":"6.4.3","depth":2,"next":{"title":"Reports","level":"7.1","depth":1,"ref":"","articles":[{"title":"CSC cPouta Cloud Services Report","level":"7.1.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},{"title":"Building with (Py)Gradle","level":"7.1.2","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers Solutions Overview","level":"7.1.3","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},{"title":"Service Discovery Solutions Overview","level":"7.1.4","depth":2,"path":"Service-Discovery-Solutions.md","ref":"Service-Discovery-Solutions.md","articles":[]},{"title":"Workflow Management Tools Overview","level":"7.1.5","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]}]},"previous":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Containerized-testing.md","mtime":"2017-10-23T14:08:16.848Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-23T14:10:20.780Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

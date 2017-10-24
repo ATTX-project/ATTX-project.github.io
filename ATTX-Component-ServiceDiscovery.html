@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>OSFair2017 · GitBook</title>
+        <title>Service Discovery · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Presentation-SWIB-2017.html" />
+    <link rel="next" href="Consul-ServiceDiscovery-Implementation.html" />
     
     
-    <link rel="prev" href="Presentation-ELAG-2017.html" />
+    <link rel="prev" href="ElasticSearch-5.html" />
     
 
     </head>
@@ -553,7 +553,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="ATTX-Component-ServiceDiscovery.html">
+        <li class="chapter active" data-level="3.4" data-path="ATTX-Component-ServiceDiscovery.html">
             
                 <a href="ATTX-Component-ServiceDiscovery.html">
             
@@ -956,7 +956,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="7.2.2" data-path="Presentation-OSFair-2017.html">
+        <li class="chapter " data-level="7.2.2" data-path="Presentation-OSFair-2017.html">
             
                 <a href="Presentation-OSFair-2017.html">
             
@@ -1063,7 +1063,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >OSFair2017</a>
+        <a href="." >Service Discovery</a>
     </h1>
 </div>
 
@@ -1078,19 +1078,22 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Sep-2017 10:22:54</div></div><h1 id="opensciencefair-2017">OpenScienceFair 2017</h1>
-<p><a href="http://www.opensciencefair.eu/" target="_blank">http://www.opensciencefair.eu/</a></p>
-<h2 id="accepted-poster-proposal">(Accepted) Poster proposal</h2>
-<h3 id="mildred-meets-attx---increasing-findability-and-accessibility-of-the-research-data-using-semantic-broker">Mildred meets ATTX - increasing findability and accessibility of the research data using semantic broker</h3>
-<p><em>Pauli Assinen, Joonas Kes&#xE4;niemi</em></p>
-<p>Main contributions of the poster are as follows:</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 20-Oct-2017 13:04:49</div></div><h1 id="service-discovery-implementation">Service Discovery Implementation</h1>
+<p>Service Discovery is part of the ATTX Semantic Broker core components as it addresses the need to deal with with static and manual configuration of components and at the same time the need to scale up the (micro)services offered by the broker.</p>
+<p>Considering the following Service Discovery patterns:</p>
 <ul>
-<li>Provide an overview of how services developed in EU, national and organizational levels can be used to create new open research data services.</li>
-<li>Introduce ATTX project, which is developing a set of components for building semantic linked data brokers.</li>
+<li>Client-Side Service Discovery: <a href="http://microservices.io/patterns/client-side-discovery.html" target="_blank">http://microservices.io/patterns/client-side-discovery.html</a></li>
+<li>Server-Side Service Discovery: <a href="http://microservices.io/patterns/server-side-discovery.html" target="_blank">http://microservices.io/patterns/server-side-discovery.html</a></li>
 </ul>
-<p>Mildred project aims to update the research data infrastructure provided by the University of Helsinki for researchers. The project consists of five subprojects that deal with different aspects of the life cycle of research data. In this poster, we focus on subproject, which is responsible for building data publishing and metadata services. The goal is to make research data created and used by the researchers of University of Helsinki more open and reusable. There are already relevant data available, but it is distributed in various repositories and registries.</p>
-<p>We are creating an organization specific dataset containing metadata about research data. The selected sources for data harvesting are EUDAT/B2SHARE, Etsin, and Zenodo. The new aggregated dataset is re-published for public consumption using DataCite metadata schema. Same dataset is also used by the search and discovery features of University of Helsinki Think Open site that highlights the open data at the University of Helsinki.</p>
-<p>ATTX develops technology that can be used to implement this particular part of Mildred project&apos;s vision. ATTX develops cloud-based solution for building data brokers for ingestion, processing and dissemination of any kind of metadata using semantic web and linked data technologies (e.g. UnifiedViews). In Mildred&#x2019;s case, the data broker works as an interoperability layer between external data sources and Think Open site, it also tracks and makes available provenance and license data, thus contributing to the re-usability of the harvested and generated data. Broker can also be extended to use data from other sources such as Finnish thesaurus and ontology service or OpenAIRE to enrich the data. ATTX project is funded as part of the National Open Science and Research Initiative.</p>
+<p>In the implementation of such a Discovery Service we are exploring two solutions:</p>
+<ul>
+<li><a href="https://kontena.io/" target="_blank">Kontena.io</a></li>
+<li><a href="https://www.consul.io/" target="_blank">Consul.io</a> with the following results:<ul>
+<li><a href="Consul-ServiceDiscovery-Implementation.html">Consul Service Discovery Implementation</a></li>
+<li><a href="Consul-for-Service-Discovery-on-Docker-Swarm.html">Consul for Service Discovery on Docker Swarm</a></li>
+</ul>
+</li>
+</ul>
 
                                 
                                 </section>
@@ -1118,12 +1121,12 @@
 
             
                 
-                <a href="Presentation-ELAG-2017.html" class="navigation navigation-prev " aria-label="Previous page: ELAG2017">
+                <a href="ElasticSearch-5.html" class="navigation navigation-prev " aria-label="Previous page: ElasticSearch 5.x">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Presentation-SWIB-2017.html" class="navigation navigation-next " aria-label="Next page: SWIB2017">
+                <a href="Consul-ServiceDiscovery-Implementation.html" class="navigation navigation-next " aria-label="Next page: Consul Service Discovery Implementation">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1134,7 +1137,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"OSFair2017","level":"7.2.2","depth":2,"next":{"title":"SWIB2017","level":"7.2.3","depth":2,"path":"Presentation-SWIB-2017.md","ref":"Presentation-SWIB-2017.md","articles":[]},"previous":{"title":"ELAG2017","level":"7.2.1","depth":2,"path":"Presentation-ELAG-2017.md","ref":"Presentation-ELAG-2017.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Presentation-OSFair-2017.md","mtime":"2017-10-02T14:08:09.522Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-23T14:10:20.780Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Service Discovery","level":"3.4","depth":1,"next":{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"path":"Consul-ServiceDiscovery-Implementation.md","ref":"Consul-ServiceDiscovery-Implementation.md","articles":[]},"previous":{"title":"ElasticSearch 5.x","level":"3.3.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Component-ServiceDiscovery.md","mtime":"2017-10-23T14:08:16.848Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-10-23T14:10:20.780Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

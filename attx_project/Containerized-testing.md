@@ -1,3 +1,5 @@
+<h1 style="color:red">Work In Progress</h1>
+
 # Containerised Testing
 
 This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.
@@ -33,14 +35,17 @@ Overview of the steps performed during the test suite:
 ## Testing with Gradle
 
 There are two tasks for running the tests:
-* `runIntegTests` -  for running the test in the local environment with all the ports exposed, thus allowing for rapid development; It will also start the containers needed, by default they will expose ports;
+* `runIntegTests` -  for running the test in the local environment with all the ports exposed, thus allowing for rapid development; It will also start the containers needed, by default they will expose ports; Adding a `-PrunEnv=console` parameter will allow for continuous testing without removing any of the started containers;
 * `runContainerTests` - for running tests in the CI environment or a closed test setup, and for this one needs the Gradle property `-PtestEnv=CI`. This task will build and run the tests inside a container on the same network as the other containers without the need of exposing all the ports.
 
 Running the tests inside the container:
-* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev -PtestEnv=CI clean runContainerTests`
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=CI clean runContainerTests`
 
-Run the test locally without containers and exposing the ports:
-* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -Penv=dev clean runIntegTests`
+Run the test locally and exposing the ports. At the end of the tests the containers are removed:
+* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev clean runIntegTests`
+
+Run the test locally from console and exposing the container ports:
+* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev -PrunEnv=console clean runIntegTests`
 
 Test reports are exported to the folder configured in `copyReportFiles` task (default `$buildDir/reports/`).
 
@@ -76,7 +81,7 @@ Example of the most relevant parts:
 ```groovy
 
 ext.src = [
-    "${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.dev&a=dev-test-helper&v=${attxTestHelperPlugin}&p=jar":"dev-test-helper-${attxTestHelperPlugin}.jar"
+    "${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.wc.uv&a=attx-l-replaceds&v=${uvreplaceDS}&p=jar":"attx-l-replaceds-${uvreplaceDS}.jar"
 ]
 
 import de.undercouch.gradle.tasks.download.Download
@@ -100,9 +105,11 @@ if (!project.hasProperty("testEnv") || project.testEnv == "dev") {
 }
 
 ext {
-    testImageWF = "latest"
-    testImageGM = "latest"
-    testImageES5 = "latest"
+    testTag           = "latest"
+    testImageGM       = "${testTag}"
+    testImageFuseki   = "${testTag}"
+    testImageES5      = "${testTag}"
+    imageBase         = ("${testTag}" == "dev") ?  "attxproject" : "${imageRepo}:${imageRepoPort}"
 }
 
 dcompose {
@@ -111,60 +118,73 @@ dcompose {
         // no user/pass
     }
     networks {
-      gcTest
+      pdTest
     }
 
-    es5 {
+    messagebroker {
         forcePull = true
         forceRemoveImage = true
-        image = "${imageRepo}:${imageRepoPort}/attx-es5:${testImageES5}"
-        networks = [gcTest]
-        hostName = 'es5'
+        image = 'rabbitmq:3.6.12-management'
+        networks = [pdTest]
         if (testSet == "localhost") {
-            portBindings = ['9210:9210', '9310:9310']
+            portBindings = ['4369:4369','5671:5671', '5672:5672', '15671:15671', '15672:15672', '25672:25672']
         }
+        env = ['RABBITMQ_DEFAULT_USER=user', 'RABBITMQ_DEFAULT_PASS=password']
     }
 
-    wfapi {
+    fuseki {
         forcePull = true
         forceRemoveImage = true
-        image = "${imageRepo}:${imageRepoPort}/uvprov-API:${testImageWF}"
-        dependsOn = [mysql]
-        networks = [gcTest]
-        hostName = 'wfapi'
+        image = "${imageBase}/attx-fuseki:${testImageFuseki}"
+        networks = [pdTest]
+        hostName = 'fuseki'
         if (testSet == "localhost") {
-            portBindings = ['4301:4301']
+            portBindings = ['3030:3030']
         }
+        env = ['ADMIN_PASSWORD=pw123']
     }
 
-    gmapi {
+
+    graphmanager {
         forcePull = true
         forceRemoveImage = true
-        image = "${imageRepo}:${imageRepoPort}/gm-api:${testImageGM}"
-        dependsOn = [wfapi, es5]
-        networks = [gcTest]
-        hostName = 'gmapi'
+        image = "${imageBase}/gm-api:${testImageGM}"
+        dependsOn = [messagebroker, fuseki]
+        networks = [pdTest]
+        hostName = 'graphmanager'
+        env = ['MHOST=messagebroker', 'GHOST=fuseki']
+        volumes = ['/attx-sb-shared']
         if (testSet == "localhost") {
             portBindings = ['4302:4302']
         }
+        binds = ["${volumeDir}:/attx-sb-shared:rw"]
     }
 
     test {
         ignoreExitCode = true
         baseDir = file('.')
         dockerFilename = 'Dockerfile'
-        buildArgs = ['attxTestHelperPlugin': "$attxTestHelperPlugin"]
+        buildArgs = ['UVreplaceDS': "$uvreplaceDS"]
         env = ["REPO=$artifactRepoURL"]
         if (testSet == "container") {
             binds = ["/var/run/docker.sock:/run/docker.sock"]
         }
-        dependsOn = [gmapi] // This dependency is not really needed however it reminds the scope of the tests.
+        dependsOn = [graphmanager] // This dependency is not really needed however it reminds the scope of the tests.
         command = ['sh', '-c', '/tmp/runTests.sh']
         waitForCommand = true
         forceRemoveImage = true
-        attachStdout = true // to view the output in the console
-        networks = [gcTest]
+        attachStdout = true
+        attachStderr = true
+        networks = [pdTest]
+        volumes = ['/attx-sb-shared']
+        binds = ["${volumeDir}:/attx-sb-shared:rw"]
     }
+}
+
+task copyFilesIntoContainer(type: DockerCopyFileToContainer) {
+    targetContainerId { dcompose.graphmanager.containerId }
+    hostPath = "$projectDir/src/test/resources/data/"
+    remotePath = "/attx-sb-shared/"
 }
 
 task copyReportFiles(type: DcomposeCopyFileFromContainerTask) {
@@ -180,7 +200,6 @@ startTestContainer.finalizedBy copyReportFiles
 // making sure the that fresh build of test classes is done before building the image
 // Other prerequisites for the tests (e.g. artifacts) should be added here.
 buildTestImage.dependsOn downloadTestFiles
-
 buildTestImage.dependsOn testClasses
 
 task checkDPUDone(type: DockerWaitContainer) {
@@ -206,14 +225,14 @@ task runContainerTests {
 }
 ```
 
-`dcompose` task configuration is first used to reference all the images required by the tests. In the example, test will require only the container (e.g. `gmapi`) that is the object of the tests, meanwhile the container that is the object of the tests will require the additional containers (`fuseki`, `essiren` and `gmapi`) in addition to the test container.
+`dcompose` task configuration is first used to reference all the images required by the tests. In the example, test will require only the container (e.g. `graphmanager`) that is the object of the tests, meanwhile the container that is the object of the tests will require the additional containers (`fuseki`, `messagebroker` and `graphmanager`) in addition to the test container.
 Service configurations should include at least `image` and in order to run the tests in a local environment the `portBindings` properties. Test container configuration is mostly same for all the test projects.
 
 Rest of the configuration is the same for all the test projects (assuming that test container is always called `test`). `copyReportFiles` task copies report files from inside the container to the build/from-container directory.
 
 `downloadTestFiles` downloads the `dev-test-helper` artifact as the CI cannot download the artifact from inside the container without having the artifact repository (Archiva) exposed publicly or on the same container network as the `dcompose` task network.
 
-(not necessary as the tests are build and run inside the test container) `ShadowJar` task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.  
+**(not used as the tests are build and run inside the test container)** `ShadowJar` task create one big jar with all the dependencies required to run the tests, which allows us to run Gradle within in the container in offline mode, which does not trigger dependency downloads (faster). Other option would have been to attach a volume with the preloaded dependencies, but that would also required maintenance.  
 
 Dependencies are loaded from the überjar created by the `shadowJar` task in the `build.gradle`. This jar and classes directory includes everything that is needed to run the tests, so we can actually run Gradle in the offline mode (`--offline`). Building step is faster, since we don't have to download all the dependencies every time the tests are run.
 In order to use the `shadowJar` the following are required in the build file:
@@ -257,31 +276,50 @@ repositories {
 }
 
 dependencies {
-    testCompile \
-        files("dev-test-helper.jar"),
-        'junit:junit:4.10',
-        'info.cukes:cucumber-java8:1.2.5',
-        'info.cukes:cucumber-junit:1.2.5',
-        'com.mashape.unirest:unirest-java:1.4.9',
-        'org.skyscreamer:jsonassert:1.4.0',
-        'org.awaitility:awaitility-groovy:2.0.0'
+    testCompile "org.junit.jupiter:junit-jupiter-api:5.0.0",
+            'org.junit.platform:junit-platform-runner:1.0.1',
+            'info.cukes:cucumber-java8:1.2.5',
+            'info.cukes:cucumber-junit:1.2.5',
+            'com.mashape.unirest:unirest-java:1.4.9',
+            'org.skyscreamer:jsonassert:1.5.0',
+            'org.awaitility:awaitility-groovy:3.0.0',
+            'org.uh.hulib.attx.dev:dev-test-helper:1.5',
+            'org.uh.hulib.attx.wc.uv:uv-common:1.0-SNAPSHOT',
+            'com.rabbitmq:amqp-client:4.2.0',
+            'org.jdom:jdom2:2.0.5',
+            'org.apache.jena:jena-core:3.4.0'
+    testRuntime \
+        "org.junit.jupiter:junit-jupiter-engine:5.0.0",
+            'org.junit.vintage:junit-vintage-engine:4.12.0'
 }
 
-task integTest(type: Test){
+task containerIntegTest(type: Test) {
+    Map<String, Integer> serviceMap = [ "frontend" : 8080,
+                  "uvprov" : 4301,
+                  "provservice" : 7030,
+                  "fuseki" : 3030,
+                  "graphmanager" : 4302,
+                  "es5": 9210,
+                  "rmlservice": 8090,
+                  "messagebroker": 5672,
+                  "messagebroker": 5671,
+                  "messagebroker": 4369 ]
+    ext.getHostPort = {services ->
+        serviceMap.each{ host, port ->
+            systemProperty "${host}.port", "${port}".toInteger()
+            systemProperty "${host}.host", "${host}"
+        }
+    }
+
+    ext.removeHostPort = { services ->
+        serviceMap.each{ host, port ->
+            systemProperties.remove "${host}.port"
+            systemProperties.remove "${host}.host"
+         }
+    }
+
     doFirst {
-        systemProperty 'frontend.port', 8080
-        systemProperty 'frontend.host', 'frontend'
-        systemProperty 'wfapi.port', 4301
-        systemProperty 'wfapi.host', 'wfapi'
-        systemProperty 'fuseki.port', 3030
-        systemProperty 'fuseki.host', 'fuseki'
-        systemProperty 'gmapi.port', 4302
-        systemProperty 'gmapi.host', 'gmapi'
-        systemProperty 'essiren.port', 9200
-        systemProperty 'essiren.tcp', 9300
-        systemProperty 'essiren.host', 'essiren'
-        systemProperty 'es5.port', 9210
-        systemProperty 'es5.host', 'es5'
+        getHostPort(serviceMap)
     }
     forkEvery = 2
     maxParallelForks = 2
@@ -289,22 +327,10 @@ task integTest(type: Test){
         showStackTraces = true
     }
     doLast {
-        systemProperties.remove 'frontend.port'
-        systemProperties.remove 'frontend.host'
-        systemProperties.remove 'wfapi.port'
-        systemProperties.remove 'wfapi.host'
-        systemProperties.remove 'fuseki.port'
-        systemProperties.remove 'fuseki.host'
-        systemProperties.remove 'gmapi.port'
-        systemProperties.remove 'gmapi.host'
-        systemProperties.remove 'essiren.port'
-        systemProperties.remove 'essiren.tcp'
-        systemProperties.remove 'essiren.host'
-        systemProperties.remove 'es5.port'
-        systemProperties.remove 'es5.host'
+        removeHostPort(serviceMap)
     }
-}
 
+}
 ```
 
 
@@ -327,7 +353,6 @@ RUN mkdir -p /tmp
 
 WORKDIR /tmp
 
-ARG attxTestHelperPlugin
 ARG UVreplaceDS
 
 COPY src /tmp/src
@@ -336,7 +361,6 @@ COPY runTests.sh /tmp
 RUN chmod 700 /tmp/runTests.sh
 
 COPY attx-l-replaceds-${UVreplaceDS}.jar /tmp/attx-l-replaceds-${UVreplaceDS}.jar
-COPY dev-test-helper-${attxTestHelperPlugin}.jar /tmp/dev-test-helper.jar
 ```
 
 `frekele/gradle` image contains all the components to run Gradle 4.1. `dockerize` is used by the `runTests.sh` script to poll ports on different containers as a crude way to determine whether the service each container provides is up or not. Note that only `build.test.gradle` file is copied to the image. Image also doesn't run any script by default, instead the dcompose Gradle plugin is used to attach a command  `runTests.sh` to the test container, which runs dockerized checks and runs the tests.
@@ -347,18 +371,12 @@ COPY dev-test-helper-${attxTestHelperPlugin}.jar /tmp/dev-test-helper.jar
 # Wait for MySQL, the big number is because CI is slow.
 dockerize -wait tcp://mysql:3306 -timeout 240s
 dockerize -wait http://fuseki:3030 -timeout 60s
-dockerize -wait http://gmapi:4302/health -timeout 60s
-dockerize -wait http://wfapi:4301/health -timeout 60s
-dockerize -wait http://essiren:9200 -timeout 60s
-dockerize -wait tcp://essiren:9300 -timeout 60s
-dockerize -wait http://es5:9210 -timeout 60s
-# wait for es5 9310 apparently not working
-# dockerize -wait tcp://es5:9310 -timeout 60s
+dockerize -wait http://fuseki:3030 -timeout 60s
+dockerize -wait http://graphmanager:4302/health -timeout 60s
 
 echo  "Archiva repository URL: $REPO"
 
-gradle -PartifactRepoURL=$REPO integTest
-
+gradle -b /tmp/build.gradle -PartifactRepoURL=$REPO containerIntegTest
 ```
 
 ### Configuring Jenkins
@@ -410,7 +428,7 @@ If you want to run tests against other that 'latest' tag/versions of the images,
 dcompose {
 ...
   graphmanager {
-    image = 'attx-dev:5000/graphmanager:testtag'
+    image = 'attx-dev:5000/gm-api:testtag'
   }
 ...
 }
