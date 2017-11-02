@@ -38,6 +38,7 @@
 * [Distribution Component](ATTX-Component-Distribution.md)
   * [ElasticSearch 1.3 with Siren](ElasticSearch-with-Siren.md)
   * [ElasticSearch 5.x](ElasticSearch-5.md)
+  * [How Dissemination worflows work](Dissemination-Workflow.md)
 * [Service Discovery](ATTX-Component-ServiceDiscovery.md)
   * [Consul Service Discovery Implementation](Consul-ServiceDiscovery-Implementation.md)
   * [Consul for Service Discovery on Docker Swarm](Consul-for-Service-Discovery-on-Docker-Swarm.md)
