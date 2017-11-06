@@ -76,7 +76,7 @@ done
 And test the availability of the Consul agents in the worker nodes and that replication between the different instances is working:
 1. Create a Key-Value entry in the Consul Agent running in the second Swarm node: `curl -X PUT -d 'this is another test' "http://$(docker-machine ip swarm-2):8500/v1/kv/msg2"`
 2. Verify that our new Key-Value has been replicated to the Consul Server: `curl "http://$(docker-machine ip swarm-1):8500/v1/kv/msg2?raw"`
-3. Check that it has been replicated to the the Consul Agent running in the third Swarm Node: `curl "http://$(docker-machine ip swarm-3):8500/v1/kv/msg2?raw"`
+3. Check that it has been replicated to the Consul Agent running in the third Swarm Node: `curl "http://$(docker-machine ip swarm-3):8500/v1/kv/msg2?raw"`
 
 At the end of this initial step of our exercise, our system will look like this:
 ```

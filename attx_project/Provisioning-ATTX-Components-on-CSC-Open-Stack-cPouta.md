@@ -19,7 +19,7 @@ Requirements :
 
 2. A Key Pair certificate must be created and associated with all instances, to allow access as "cloud-user" (cPouta default). SSH access security group must be created and associated with all instances, so that SSH communication between them is possible. Public floating IP address must be associated with one instance, for external connections (SSH, SFTP) (cf. https://research.csc.fi/pouta-getting-started).
 
-3. The Key Pair certificate must be imported to the host computer of ATTX developer/user, in order to allow SSH and SFTP authentication to the instance associated with the the public floating IP address (cf. https://research.csc.fi/pouta-connecting-a-virtual-machine).
+3. The Key Pair certificate must be imported to the host computer of ATTX developer/user, in order to allow SSH and SFTP authentication to the instance associated with the public floating IP address (cf. https://research.csc.fi/pouta-connecting-a-virtual-machine).
 On linux commands to add certificates could be added by runing:
   * Start ssh agent (if not started) `eval "$(ssh-agent -s)"`
   * Add private key from a specific location: `ssh-add ~/user/cpouta.psk`

@@ -264,7 +264,7 @@ py.test tests --html=build/test-report/index.html --self-contained-html
 ### Example PyGradle Projects
 
 Besides the examples provided https://github.com/linkedin/pygradle/tree/master/examples we provide two additional ones:
-- Example of of building a Falcon REST API using PyGradle (using python-web-app plugin) https://github.com/blankdots/pygradle-falcon-api
+- Example of building a Falcon REST API using PyGradle (using python-web-app plugin) https://github.com/blankdots/pygradle-falcon-api
 - Command line utility using [Click](http://click.pocoo.org/6/) for converting RDF to JSON using a [JSON-LD frame](http://json-ld.org/spec/latest/json-ld-framing/) https://github.com/blankdots/pygradle-jsonld-cli
 
 ## Documentation

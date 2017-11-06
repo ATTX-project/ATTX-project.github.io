@@ -158,7 +158,7 @@ Plugins
 * [Gradle](https://gradle.org/)
 * [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin)
 
-By default, Gradle plugin seems to be using 2.31 version of the the Gradle. One must upgrade this to 3.1. by going to the project properties and changing the Gradle home.
+By default, Gradle plugin seems to be using 2.31 version of the Gradle. One must upgrade this to 3.1. by going to the project properties and changing the Gradle home.
 
 ### Test Coverage
 
