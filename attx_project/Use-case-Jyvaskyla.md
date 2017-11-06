@@ -33,7 +33,7 @@ Also, VIRTA is the official publication data set with strict requirements for co
 
 ## Approach
 
-In order to able to work with percentages, we need metadata data for every publication and well as the parallel published subset of publications. The the approach is to use combination of harvested (VIRTA) and master (CRIS) data sources in order to create the data set for all publications. We will then to use different kind of repositories, institutional, national and subject based, to get metadata data about the parallel published versions and associated files. Simple linking between these two data sets is done using the existing identifiers, such as DOIs and URNs.
+In order to able to work with percentages, we need metadata data for every publication and well as the parallel published subset of publications. the approach is to use combination of harvested (VIRTA) and master (CRIS) data sources in order to create the data set for all publications. We will then to use different kind of repositories, institutional, national and subject based, to get metadata data about the parallel published versions and associated files. Simple linking between these two data sets is done using the existing identifiers, such as DOIs and URNs.
 
 Use can be later be expanded to include other more complicated properties related to open access in general.
 
