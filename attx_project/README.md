@@ -47,6 +47,7 @@ Reports on technologies and related initiatives:
 * [Service Discovery Solutions Overview](Service-Discovery-Solutions.md)
 * [Workflow Management Tools Overview](Workflow-Management-Tools.md)
 * [Deploying ATTX on Kontena](Deploying-ATTX-SB-on-Kontena.md)
+* [API Gateway Solutions Overview](Solutions-API-Gateway.md)
 
 Open Source contributions on various projects:
 * [Open Source Projects Contributions](Open-Contributions.md)
