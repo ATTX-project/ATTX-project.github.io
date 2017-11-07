@@ -18,7 +18,7 @@ Steps:
 
 ## Data sources
 
-This section describes the the way different external datasets are accessed what the data looks like.
+This section describes the way different external datasets are accessed what the data looks like.
 
 ### Research Infrastructures Databank
 

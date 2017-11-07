@@ -39,7 +39,7 @@ This examples shows the steps, services and messages involved in a basic distrib
 ![Distribution workflow and services](images/distribution-workflow-basic.svg)
 
 **Query datasets**
-Since the workflow is using data already existing in the platform, we need to be able to query the created datasets and their properties. Step will communicate with the GM-api and directly with the graphstore.
+Since the workflow is using data already existing in the platform, we need to be able to query the created datasets and their properties. Step will communicate with the GM-API and directly with the graphstore.
 
 
 **Transform**
@@ -49,7 +49,7 @@ Example step uses [JSON-LD framing](https://json-ld.org/spec/latest/json-ld-fram
 Indexing services organizes ES indices and indexes the output from the Framer service.
 
 **Manage graphs**
-GM-api uses Fuseki's API to add, delete and retrieve triples from the graph store.
+GM-API uses Fuseki's API to add, delete and retrieve triples from the graph store.
 
 
 **Manage indices**

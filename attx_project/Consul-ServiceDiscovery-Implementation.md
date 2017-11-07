@@ -143,7 +143,7 @@ In this solution there are two main components the Service Discovery (where serv
       - serviceID = service name from SWARM
       - tag = v1
     - kv
-      - serviceName/description = "Description of the the service"
+      - serviceName/description = "Description of the service"
       - serviceName/dataset = '/ds'
 
 ----
@@ -202,7 +202,7 @@ In order to add new values to the Consul K/V store, we will have to pass some en
     - servicePath = /[service name from consul]/endpoint
 * Consul
     - kv
-      - /docker-flow/serviceName/description = "Description of the the service"
+      - /docker-flow/serviceName/description = "Description of the service"
       - /docker-flow/serviceName/dataset = '/ds'
 
 ----
