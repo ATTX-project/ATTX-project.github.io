@@ -1,11 +1,11 @@
 # Dissemination pipelines
 
-Dissemination workflow is used to transform subset of the working data stored as graphs into documents that can be accessed through an API or as a file. This document describes "pure" dissemenation graphs, that do not contain any other processing components other than the graph to document tranformation.
+Dissemination workflow is used to transform subset of the working data stored as graphs into documents that can be accessed through an API or as a file. This document describes "pure" dissemination graphs, that do not contain any other processing components other than the graph to document transformation.
 
 
 ## Workflow component
 
-Figure X shows the plugins required to build the simplest dissemination pipeline.
+Figure 1 Shows the plugins required to build the simplest dissemination pipeline.
 
 ![Figure 1. Simple dissemination UV pipeline](images/dp-overview.svg)
 
@@ -13,7 +13,7 @@ In the first step, the user can browse and search dataset in the working data an
 
 ## Services
 
-Figure 2. depicts thow the workflow plugins and services needed to implement the workflow.
+Figure 2. Depicts the workflow plugins and services needed to implement the workflow.
 
 ![Figure 2. Dissemination workflow and the required services](images/dp-services-and-messages.svg)
 
@@ -27,6 +27,6 @@ Example bulk document
 {"@id": "http://example.org/pub1","@type": "http://example.org/vocab#Publication","http://purl.org/dc/elements/1.1/creator": "Plato","http://purl.org/dc/elements/1.1/title": "The Republic"}    
 ```
 
-User can also give the document type as parameter. If document type is not given, the service will first try to parse the type using the value of @type property from the document. If that is not available, a static type "general" is used. Resulting ES bulk document is stored on the shared file system and the URI pointing to that document is sent back as a reply.
+User can also give the document type as parameter. If document type is not given, the service will first try to parse the type using the value of `@type` property from the document. If that is not available, a static type "General" is used. Resulting ES bulk document is stored on the shared file system and the URI pointing to that document is sent back as a reply.
 
-Indexing service receives the URI of the bulk file and the alias under which to index the documents. It first creates a new index under a generated name using the bulk file. If the indexing completes succesfully, the service then removes the alias from the existing index (if any), adds it to the new index and deletes the old index.
+Indexing service receives the URI of the bulk file and the alias under which to index the documents. It first creates a new index under a generated name using the bulk file. If the indexing completes successfully, the service then removes the alias from the existing index (if any), adds it to the new index and deletes the old index.

@@ -52,6 +52,8 @@
   * [Provenance Messages Examples](Examples-Provenance-Service.md)
 * [RML Service](Service-RML.md)
   * [RML Messages Examples](Examples-RML-Service.md)
+* [Indexing Service](Service-Indexing.md)
+* [Graph Framing Service](Service-Graph-Framing.md)
 
 ## User Guide
 

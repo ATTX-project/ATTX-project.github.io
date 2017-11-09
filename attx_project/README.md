@@ -28,6 +28,8 @@ ATTX 2016 is a research and development project run by the [Helsinki University 
 * ATTX Semantic Broker Services:
     * [Provenance Service](Service-Provenance.md)
     * [RML Service](Service-RML.md)
+    * [Indexing Service](Service-Indexing.md)
+    * [Graph Framing Service](Service-Graph-Framing.md)
 
 ---
 
