@@ -27,7 +27,6 @@ The general purpose of the UV Provenance API is to review metadata for workflows
 
 Current version: `0.2` (URL for the endpoint should take into consideration for the API `http://host:4301/version/endpoint`).
 
-
 The UV Provenance application also has a Message-based communication part, which implements a basic message Producer that will send provenance messages as described in the [Provenance Service](Provenance-Service.md) to a specific queue (in our case `provenance.inbox`) in order to update the (missing) provenance information in the Graph Store.
 
 ## Building the UVProvenance-API

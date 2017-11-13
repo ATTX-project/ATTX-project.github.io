@@ -1,4 +1,4 @@
-# RML service examples
+# RML Service examples
 
 ## Transform using inline input
 

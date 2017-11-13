@@ -42,10 +42,13 @@ Running the tests inside the container:
 * `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=CI clean runContainerTests`
 
 Run the test locally and exposing the ports. At the end of the tests the containers are removed:
-* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev clean runIntegTests`
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev clean runIntegTests`
 
 Run the test locally from console and exposing the container ports:
-* `gradle -PregistryURL=attx-dev:5000  -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev -PrunEnv=console clean runIntegTests`
+* `gradle -PregistryURL=attx-dev:5000 -PsnapshotRepoURL=http://attx-dev:8081 -PtestEnv=dev -PrunEnv=console clean runIntegTests`
+
+Running a specific test class:
+* `gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -PtestEnv=dev -PrunEnv=console runIntegTests --tests org.uh.attx.platform.test.GraphManagerIntegrationTest`
 
 Test reports are exported to the folder configured in `copyReportFiles` task (default `$buildDir/reports/`).
 

@@ -29,37 +29,84 @@ These are used in the generation of the Docker Images with specific tags dependi
 ```groovy
 if (!project.hasProperty("env") || project.env == "dev") {
 
-    ext.wfAPI               = "0.1"
-    ext.gmAPI               = "0.1"
-    ext.rdfINDEXER          = "99"
-    ext.attxMetadataPlugin  = "1.0-SNAPSHOT"
-    ext.attxInfras2IPlugin  = "1.0-SNAPSHOT"
-    ext.attxUploaderPlugin  = "1.0-SNAPSHOT"
-    ext.attxAPIPlugin       = "1.0-SNAPSHOT"
-    ext.imageES5            = "test"
-    ext.imageWF             = "test"
-    ext.imageGM             = "test"
-    ext.imageATTXAPIPlugin  = "test"
-    ext.imageATTXDPUs       = "test"
-    ext.imageATTXShared     = "test"
-    ext.imageFuseki         = "test"
+    ext.uvProv                    = "2.0-SNAPSHOT"
+    ext.gmAPI                     = "2.0-SNAPSHOT"
+    ext.gmFrame                   = "2.0-SNAPSHOT"
+    ext.indexing                  = "2.0-SNAPSHOT"
+    ext.provenanceS               = "2.0-SNAPSHOT"
+    ext.replacedsPlugin           = "1.0-SNAPSHOT"
+    ext.describedsPlugin          = "1.0-SNAPSHOT"
+    ext.describeexternaldsPlugin  = "1.0-SNAPSHOT"
+    ext.rmlservicePlugin          = "1.0-SNAPSHOT"
+    ext.sirenAPIPlugin            = "1.0-SNAPSHOT"
+    ext.RMLService                = "0.0.1-SNAPSHOT"
+
+    ext.imageBase           = "${imageRepo}:${imageRepoPort}"
+    ext.imageFraming        = "${privateRepoTag}"
+    ext.imageIndexing       = "${privateRepoTag}"
+    ext.imageES5            = "${privateRepoTag}"
+    ext.imageUVProv         = "${privateRepoTag}"
+    ext.imageProvenance     = "${privateRepoTag}"
+    ext.imageGM             = "${privateRepoTag}"
+    ext.imageSirenAPIPlugin = "${privateRepoTag}"
+    ext.imageATTXDPUs       = "${privateRepoTag}"
+    ext.imageFuseki         = "${privateRepoTag}"
+    ext.imageActivemq       = "${privateRepoTag}"
+    ext.imageRMLService     = "${privateRepoTag}"
 
 } else if (project.env == "release"){
 
-    ext.wfAPI               = "1.0"
-    ext.gmAPI               = "1.0"
-    ext.rdfINDEXER          = "1.0-SNAPSHOT"
-    ext.attxMetadataPlugin  = "1.0-SNAPSHOT"
-    ext.attxInfras2IPlugin  = "1.0-SNAPSHOT"
-    ext.attxUploaderPlugin  = "1.0-SNAPSHOT"
-    ext.attxAPIPlugin       = "1.0-SNAPSHOT"
-    ext.imageES5            = "latest"
-    ext.imageWF             = "latest"
-    ext.imageGM             = "latest"
-    ext.imageATTXAPIPlugin  = "latest"
-    ext.imageATTXDPUs       = "latest"
-    ext.imageATTXShared     = "latest"
-    ext.imageFuseki         = "latest"
+    ext.uvProv                    = "2.0-SNAPSHOT"
+    ext.gmAPI                     = "2.0-SNAPSHOT"
+    ext.gmFrame                   = "2.0-SNAPSHOT"
+    ext.indexing                  = "2.0-SNAPSHOT"
+    ext.provenanceS               = "2.0-SNAPSHOT"
+    ext.replacedsPlugin           = "1.0-SNAPSHOT"
+    ext.describedsPlugin          = "1.0-SNAPSHOT"
+    ext.describeexternaldsPlugin  = "1.0-SNAPSHOT"
+    ext.rmlservicePlugin          = "1.0-SNAPSHOT"
+    ext.sirenAPIPlugin            = "1.0-SNAPSHOT"
+    ext.RMLService                = "0.0.1-SNAPSHOT"
+
+    ext.imageBase           = "attxproject"
+    ext.imageFraming        = "${releaseTag}"
+    ext.imageIndexing       = "${releaseTag}"
+    ext.imageES5            = "${releaseTag}"
+    ext.imageUVProv         = "${releaseTag}"
+    ext.imageProvenance     = "${releaseTag}"
+    ext.imageGM             = "${releaseTag}"
+    ext.imageSirenAPIPlugin = "${releaseTag}"
+    ext.imageATTXDPUs       = "${releaseTag}"
+    ext.imageFuseki         = "${releaseTag}"
+    ext.imageActivemq       = "${releaseTag}"
+    ext.imageRMLService     = "${releaseTag}"
+
+} else if (project.env == "test"){
+
+    ext.uvProv                    = "2.0-SNAPSHOT"
+    ext.gmAPI                     = "2.0-SNAPSHOT"
+    ext.gmFrame                   = "2.0-SNAPSHOT"
+    ext.indexing                  = "2.0-SNAPSHOT"
+    ext.provenanceS               = "2.0-SNAPSHOT"
+    ext.replacedsPlugin           = "1.0-SNAPSHOT"
+    ext.describedsPlugin          = "1.0-SNAPSHOT"
+    ext.describeexternaldsPlugin  = "1.0-SNAPSHOT"
+    ext.rmlservicePlugin          = "1.0-SNAPSHOT"
+    ext.sirenAPIPlugin            = "1.0-SNAPSHOT"
+    ext.RMLService                = "0.0.1-SNAPSHOT"
+
+    ext.imageBase           = "attxproject"
+    ext.imageFraming        = "${testTag}"
+    ext.imageIndexing       = "${testTag}"
+    ext.imageES5            = "${testTag}"
+    ext.imageUVProv         = "${testTag}"
+    ext.imageProvenance     = "${testTag}"
+    ext.imageGM             = "${testTag}"
+    ext.imageSirenAPIPlugin = "${testTag}"
+    ext.imageATTXDPUs       = "${testTag}"
+    ext.imageFuseki         = "${testTag}"
+    ext.imageActivemq       = "${testTag}"
+    ext.imageRMLService     = "${testTag}"
 
 } else {
     throw new GradleException("Build project environment option not recognised.")
@@ -77,41 +124,45 @@ gradle build -Penv=release -PjenkinsArtifactRepoURL=http://localhost:8080 -Pregi
 Thus the steps for generating a release version are as follows:
 
 1. Set up version of the artifact to build - this will trigger a Jenkins pipeline which will deploy the artifact to repository (e.g. Archiva, Jenkins, Github etc.)
-1. Configure the Jenkins pipeline for building a Docker image to be the release version of that Docker Image, by specifying artifacts versions and image tags in the `common.gradle` from https://github.com/ATTX-project/platform-deployment/ repository
-1. Publish artifacts to docker hub - TO BE done manually until https://github.com/ATTX-project/platform-deployment/issues/25 is done.
-1. Create pull request for a repository from dev to master
-1. Follow https://help.github.com/articles/creating-releases/ for creating a Github release
+2. Configure the Jenkins pipeline for building a Docker image to be the release version of that Docker Image, by specifying artifacts versions and image tags in the `common.gradle` from https://github.com/ATTX-project/platform-deployment/ repository
+3. Publish artifacts to docker hub, using Jenkins CI.
+4. Create pull request for a repository from dev to master
+5. Follow https://help.github.com/articles/creating-releases/ for creating a Github release
 
 Alternative release generation:
 
 1. Set up version of the artifact to build - this will trigger a Jenkins pipeline which will deploy the artifact to repository (e.g. Archiva, Jenkins, Github etc.)
-1. Create pull request for a repository from a release-branch to master
-1. (optional) Follow https://help.github.com/articles/creating-releases/ for creating a Github release
-1. Configure the Jenkins pipeline for building a Docker image to be the release version of that Docker Image, by specifying artifacts versions and image tags in the `common.gradle` from https://github.com/ATTX-project/platform-deployment/ repository
-1. Publish artifacts to docker hub - via Jenkins pipelines .
+2. Create pull request for a repository from a release-branch to master
+3. (optional) Follow https://help.github.com/articles/creating-releases/ for creating a Github release
+4. Configure the Jenkins pipeline for building a Docker image to be the release version of that Docker Image, by specifying artifacts versions and image tags in the `common.gradle` from https://github.com/ATTX-project/platform-deployment/ repository
+5. Publish artifacts to docker hub - via Jenkins pipelines .
 
 
-### Example: Creating gmAPI test image for development
+### Example: Creating Graph Manager Service test image for development
 
-I wanted to test out a new version of the gm-API artifact. In order to do that I have to first create and push a new version of the artifact and them build and push a new gmAPI image.
+**Artifacts are also published to Docker hub with tag `dev`, along side the `latest` tag used for the private repository**
 
 1. Commit and push new code to a branch `feature-X`. Create new version for the test artifact.
-1. Create a new Jenkins pipeline using `gm-api` as the template
-1. Configure new pipeline. Change branch to `feature-X` in the checkout stage.
-1. Checkout platform-development code
-1. Modify `common.gradle` and set `ext.gmAPI` to reference the test artifact and change the `ext.imageGM` tag to something else (e.g. `test-featureX`)
-1. Build new test image:
+2. Create a new Jenkins pipeline using `gm-api` as the template
+3. Configure new pipeline. Change branch to `feature-X` in the checkout stage.
+4. Checkout platform-development code
+5. Modify `common.gradle` and set `ext.gmAPI` to reference the test artifact and change the `ext.imageGM` tag to something else (e.g. `test-featureX`)
+6. Build new test image:
 ```shell
-gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev buildGmapiImage
+gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev :service-graphManager:buildGmapiImage
 ```
-1. Push new test image:
+7. Push new test image:
 ```shell
-gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev pushGmapiImage
+gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev :service-graphManager:pushGmapiImage
+```
+8. Push new release image:
+```shell
+gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=release -PdockerUser=account -PdockerPass=Test1234 :service-graphManager:pushGmapiImage
 ```
 
-1. Push new release image:
+9. Push to Docker hub `dev` image:
 ```shell
-gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=release -PdockerUser=account -PdockerPass=Test1234 pushGmapiImage
+-PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=test -PdockerUser=account -PdockerPass=Test1234 :service-graphManager:pushGmapiImage
 ```
 
 You might want to remove the test image when you are done with testing.
