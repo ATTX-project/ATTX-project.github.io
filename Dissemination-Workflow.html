@@ -727,6 +727,32 @@
             
         </li>
     
+        <li class="chapter " data-level="4.3" data-path="Service-Indexing.html">
+            
+                <a href="Service-Indexing.html">
+            
+                    
+                    Indexing Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="Service-Graph-Framing.html">
+            
+                <a href="Service-Graph-Framing.html">
+            
+                    
+                    Graph Framing Service
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -937,6 +963,19 @@
             
         </li>
     
+        <li class="chapter " data-level="7.1.6" data-path="Solutions-API-Gateway.html">
+            
+                <a href="Solutions-API-Gateway.html">
+            
+                    
+                    API Gateway Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -1091,22 +1130,22 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 02-Nov-2017 14:17:49</div></div><h1 id="dissemination-pipelines">Dissemination pipelines</h1>
-<p>Dissemination workflow is used to transform subset of the working data stored as graphs into documents that can be accessed through an API or as a file. This document describes &quot;pure&quot; dissemenation graphs, that do not contain any other processing components other than the graph to document tranformation.</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 09-Nov-2017 08:26:05</div></div><h1 id="dissemination-pipelines">Dissemination pipelines</h1>
+<p>Dissemination workflow is used to transform subset of the working data stored as graphs into documents that can be accessed through an API or as a file. This document describes &quot;pure&quot; dissemination graphs, that do not contain any other processing components other than the graph to document transformation.</p>
 <h2 id="workflow-component">Workflow component</h2>
-<p>Figure X shows the plugins required to build the simplest dissemination pipeline.</p>
+<p>Figure 1 Shows the plugins required to build the simplest dissemination pipeline.</p>
 <p><img src="images/dp-overview.svg" alt="Figure 1. Simple dissemination UV pipeline"></p>
 <p>In the first step, the user can browse and search dataset in the working data and select appropriate ones as the data sources for the transformation. Next, transformation plugin allows user to apply a mapping that turns input graphs into documents (eg. JSON). Lastly, the publish plugin makes transformed data available through an API.</p>
 <h2 id="services">Services</h2>
-<p>Figure 2. depicts thow the workflow plugins and services needed to implement the workflow.</p>
+<p>Figure 2. Depicts the workflow plugins and services needed to implement the workflow.</p>
 <p><img src="images/dp-services-and-messages.svg" alt="Figure 2. Dissemination workflow and the required services"></p>
 <p>Selecting existing dataset is done by querying the GraphManager for provenance data related to the working graphs. Dataset metadata returned by the GM contains title and description of the dataset as well as information about the licenses associated with the dataset(?). Selected dataset URIs are outputted for further processing.</p>
 <p>Transformation step takes the dataset URIs as an input and sends them and the configured/generated mapping tot the FramingService. FramingService first uses the GraphManager to get access the actual content of the designated input datasets and then executes JSON-LD framing against a graph that merges triples from all the input datasets. FramingService outputs JSON using ElasticSearch&apos;s Bulk format. Bulk action defaults to &quot;index&quot; and the id of each document is parsed from the root resources of a resulting frame.</p>
 <p>Example bulk document</p>
 <pre><code>{ &quot;index&quot; : {  &quot;_type&quot; : &quot;publication&quot;, &quot;_id&quot; : &quot;http://example.org/pub1&quot; } }
 {&quot;@id&quot;: &quot;http://example.org/pub1&quot;,&quot;@type&quot;: &quot;http://example.org/vocab#Publication&quot;,&quot;http://purl.org/dc/elements/1.1/creator&quot;: &quot;Plato&quot;,&quot;http://purl.org/dc/elements/1.1/title&quot;: &quot;The Republic&quot;}
-</code></pre><p>User can also give the document type as parameter. If document type is not given, the service will first try to parse the type using the value of @type property from the document. If that is not available, a static type &quot;general&quot; is used. Resulting ES bulk document is stored on the shared file system and the URI pointing to that document is sent back as a reply.</p>
-<p>Indexing service receives the URI of the bulk file and the alias under which to index the documents. It first creates a new index under a generated name using the bulk file. If the indexing completes succesfully, the service then removes the alias from the existing index (if any), adds it to the new index and deletes the old index.</p>
+</code></pre><p>User can also give the document type as parameter. If document type is not given, the service will first try to parse the type using the value of <code>@type</code> property from the document. If that is not available, a static type &quot;General&quot; is used. Resulting ES bulk document is stored on the shared file system and the URI pointing to that document is sent back as a reply.</p>
+<p>Indexing service receives the URI of the bulk file and the alias under which to index the documents. It first creates a new index under a generated name using the bulk file. If the indexing completes successfully, the service then removes the alias from the existing index (if any), adds it to the new index and deletes the old index.</p>
 
                                 
                                 </section>
@@ -1150,7 +1189,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"How Dissemination worflows work","level":"3.3.3","depth":2,"next":{"title":"Service Discovery","level":"3.4","depth":1,"path":"ATTX-Component-ServiceDiscovery.md","ref":"ATTX-Component-ServiceDiscovery.md","articles":[{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"path":"Consul-ServiceDiscovery-Implementation.md","ref":"Consul-ServiceDiscovery-Implementation.md","articles":[]},{"title":"Consul for Service Discovery on Docker Swarm","level":"3.4.2","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"previous":{"title":"ElasticSearch 5.x","level":"3.3.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Dissemination-Workflow.md","mtime":"2017-11-06T14:08:11.674Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-07T08:42:01.656Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"How Dissemination worflows work","level":"3.3.3","depth":2,"next":{"title":"Service Discovery","level":"3.4","depth":1,"path":"ATTX-Component-ServiceDiscovery.md","ref":"ATTX-Component-ServiceDiscovery.md","articles":[{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"path":"Consul-ServiceDiscovery-Implementation.md","ref":"Consul-ServiceDiscovery-Implementation.md","articles":[]},{"title":"Consul for Service Discovery on Docker Swarm","level":"3.4.2","depth":2,"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","ref":"Consul-for-Service-Discovery-on-Docker-Swarm.md","articles":[]}]},"previous":{"title":"ElasticSearch 5.x","level":"3.3.2","depth":2,"path":"ElasticSearch-5.md","ref":"ElasticSearch-5.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Dissemination-Workflow.md","mtime":"2017-11-13T14:08:34.390Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-13T14:09:34.941Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

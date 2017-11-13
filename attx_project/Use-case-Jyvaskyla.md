@@ -162,15 +162,26 @@ Basic idea: Publication dataset is connected through harvesting events with othe
 
 ### University of Jyväskylä
 
+Linking strategies:
+* Tutka ID
+* JYX Handle
+* DOI
+
+
 **All publications**
 
-?
+Publication metadata is collected from the university's CRIS system. Data is exported as CSV files that can be accessed by the ATTX instance.
 
 **Parallel published**  
 
 Data source: JYX (https://jyx.jyu.fi)
 
-Harvesting interface: OAI-PMH
+Harvesting interface: OAI-PMH, metadata prefix: METS
+With mets metadata prefix we can harvest both article and file related files at the same time.
+
+TODOS:
+* DOI is not part of the METS
+* Parallel published file type is now exposed, but is should probably be formatted a bit differently.
 
 Fields:
 
@@ -180,6 +191,8 @@ Fields:
  * Eg. 'Publisher's PDF'
 * dc.identifier.urn
  * identifier of the parallel published version. Eg. 'URN:NBN:fi:jyu-xxxxxxx'
+
+
 
 
 ### University of Helsinki

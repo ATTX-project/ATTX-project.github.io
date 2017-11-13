@@ -5,6 +5,23 @@
 
 rabbitmq:3.6.11-management
 
+## Debuging messages using Firehose
+
+http://www.rabbitmq.com/firehose.html
+
+Enable trace
+```
+rabbitmqctl trace_on
+```
+
+Enable tracing plugin
+```
+rabbitmq-plugins enable rabbitmq_tracing
+```
+
+Tracing plugin assumes that there is guest/guest user available (add if missing).
+Tracing UI can be found under the Admin tab.
+
 ## Working with JMS messages
 
 JMS support is based on JMS topic selector plugin and JMS client library.

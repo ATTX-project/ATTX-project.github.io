@@ -52,6 +52,8 @@
   * [Provenance Messages Examples](Examples-Provenance-Service.md)
 * [RML Service](Service-RML.md)
   * [RML Messages Examples](Examples-RML-Service.md)
+* [Indexing Service](Service-Indexing.md)
+* [Graph Framing Service](Service-Graph-Framing.md)
 
 ## User Guide
 
@@ -75,6 +77,7 @@
   * [Messaging Brokers Solutions Overview](Messaging-Brokers-Solutions.md)
   * [Service Discovery Solutions Overview](Service-Discovery-Solutions.md)
   * [Workflow Management Tools Overview](Workflow-Management-Tools.md)
+  * [API Gateway Solutions Overview](Solutions-API-Gateway.md)
 
 * Presentations
   * [ELAG2017](Presentation-ELAG-2017.md)

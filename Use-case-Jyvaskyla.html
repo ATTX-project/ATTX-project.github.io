@@ -727,6 +727,32 @@
             
         </li>
     
+        <li class="chapter " data-level="4.3" data-path="Service-Indexing.html">
+            
+                <a href="Service-Indexing.html">
+            
+                    
+                    Indexing Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="Service-Graph-Framing.html">
+            
+                <a href="Service-Graph-Framing.html">
+            
+                    
+                    Graph Framing Service
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -937,6 +963,19 @@
             
         </li>
     
+        <li class="chapter " data-level="7.1.6" data-path="Solutions-API-Gateway.html">
+            
+                <a href="Solutions-API-Gateway.html">
+            
+                    
+                    API Gateway Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -1091,7 +1130,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 06-Nov-2017 17:52:38</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 08-Nov-2017 12:27:42</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
 
 <h1 id="use-case-jyv&#xE4;skyl&#xE4;---parallel-publishing-dashboard">Use case Jyv&#xE4;skyl&#xE4; - Parallel Publishing Dashboard</h1>
 <p>Parallel publication (rinnakkaistallennus in Finnish) is a version of the published research article that is freely available from the organizations digital repository or similar service. For more detailed description about parallel publishing and how it relates to OA (Open Access) in general see <a href="https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing" target="_blank">https://www.jyu.fi/tutkimus/rinnakkaisjulkaiseminen/en/open-access/parallel-publishing</a> (Jyv&#xE4;skyl&#xE4; university).</p>
@@ -1204,11 +1243,23 @@ field1 -- related --&gt; customThing1
 <li>How are the resource (Publication/File) URIs generated?</li>
 </ul>
 <h3 id="university-of-jyv&#xE4;skyl&#xE4;">University of Jyv&#xE4;skyl&#xE4;</h3>
+<p>Linking strategies:</p>
+<ul>
+<li>Tutka ID</li>
+<li>JYX Handle</li>
+<li>DOI</li>
+</ul>
 <p><strong>All publications</strong></p>
-<p>?</p>
+<p>Publication metadata is collected from the university&apos;s CRIS system. Data is exported as CSV files that can be accessed by the ATTX instance.</p>
 <p><strong>Parallel published</strong>  </p>
 <p>Data source: JYX (<a href="https://jyx.jyu.fi" target="_blank">https://jyx.jyu.fi</a>)</p>
-<p>Harvesting interface: OAI-PMH</p>
+<p>Harvesting interface: OAI-PMH, metadata prefix: METS
+With mets metadata prefix we can harvest both article and file related files at the same time.</p>
+<p>TODOS:</p>
+<ul>
+<li>DOI is not part of the METS</li>
+<li>Parallel published file type is now exposed, but is should probably be formatted a bit differently.</li>
+</ul>
 <p>Fields:</p>
 <ul>
 <li>dc.identifier.other<ul>
@@ -1310,7 +1361,7 @@ field1 -- related --&gt; customThing1
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC2 - Parallel Publication Dashboard","level":"1.2.2","depth":2,"next":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"previous":{"title":"UC1 - Infrastructure and Publications","level":"1.2.1","depth":2,"path":"Use-case-Infrastructures-and-publications.md","ref":"Use-case-Infrastructures-and-publications.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Jyvaskyla.md","mtime":"2017-11-07T08:41:38.679Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-07T08:42:01.656Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UC2 - Parallel Publication Dashboard","level":"1.2.2","depth":2,"next":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"previous":{"title":"UC1 - Infrastructure and Publications","level":"1.2.1","depth":2,"path":"Use-case-Infrastructures-and-publications.md","ref":"Use-case-Infrastructures-and-publications.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Jyvaskyla.md","mtime":"2017-11-13T14:08:34.416Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-13T14:09:34.941Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

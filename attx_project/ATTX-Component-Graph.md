@@ -4,7 +4,7 @@ The ATTX Graph component associated to this project has the main goal of aggrega
 
 Graph Component services are designed to:
 * source data queries - select specific data from the [Graph Store](Graph-Store.md) and after applying the mapping deliver it to target output;
-* target output \(e.g. endpoint API\) - where to output the [Graph Store](Graph-Store.md) data.
+* target output (e.g. endpoint API) - where to output the [Graph Store](Graph-Store.md) data.
 * There is an [Graph Manager Service](Service-Graph-Manager.md) which handles all these specific tasks
 * Ontology based linking/clustering of IDs
 
@@ -15,3 +15,5 @@ The Workflow Component consists of following parts:
   * [Graph Store](Graph-Store.md)
     * [Ontology/Data model](ATTX-Data-Model.md)
 * [Linking Strategies](Linking-Strategies.md)
+* [Provenance Service](Service-Provenance.md)
+* [RML Service](Service-RML.md)

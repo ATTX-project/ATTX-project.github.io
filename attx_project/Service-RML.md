@@ -4,17 +4,25 @@
 
 Github repository: https://github.com/ATTX-project/rml-service
 
+RML service is implemented as a SpringBoot application. It uses `spring-boot-starter-amqp` package to communicate with the RabbitMQ messagebroker, `spring-boot-starter-web` package to implement the application specific REST API and `spring-boot-starter-actuator` package to implement the introspection related APIs.
 
+Service can receive transformation request documents through REST API and RabbitMQ request queue.
 
-RML service is implemented as a SpringBoot application. It uses spring-boot-starter-amqp package to communicate with the RabbitMQ messagebroker, spring-boot-starter-web package to implement the application specific REST API and spring-boot-starter-actuator package to implement the introspection related APIs.
+### Table of Contents
+<!-- TOC START min:1 max:3 link:true update:true -->
+  - [Endpoints](#endpoints)
+  - [Building and running RML service](#building-and-running-rml-service)
+  - [Environment Variables (required)](#environment-variables-required)
+  - [RML Mapping](#rml-mapping)
+  - [Request/response documents](#requestresponse-documents)
 
-Service can receive transformation request documents through REST api and RabbitMQ request queue.
+<!-- TOC END -->
 
 ## Endpoints
 
-* GET /health - returns status of the service. Will return "not available", if the connection to the message broker is not available, otherwise returns status=up.
-* GET /metrics - Spring actuator's basic implementation.
-* POST /version/transform
+* GET `/health` - returns status of the service. Will return "not available", if the connection to the message broker is not available, otherwise returns status=up.
+* GET `/metrics` - Spring actuator's basic implementation.
+* POST `/version/transform`
 
 Current version is: 0.1
 
@@ -39,7 +47,7 @@ gradle bootRun
 Logical source must always use variable ```{filename}```
 Example:
 
-```
+```turtle
   rml:logicalSource [
     rml:source "{filename}"  ;
     rml:referenceFormulation ql:JSONPath ;
@@ -49,4 +57,4 @@ Example:
 
 ## Request/response documents
 
-See [examples](Examples-RML-Service.md)
+See [RML examples](Examples-RML-Service.md)

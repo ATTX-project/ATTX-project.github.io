@@ -727,6 +727,32 @@
             
         </li>
     
+        <li class="chapter " data-level="4.3" data-path="Service-Indexing.html">
+            
+                <a href="Service-Indexing.html">
+            
+                    
+                    Indexing Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="Service-Graph-Framing.html">
+            
+                <a href="Service-Graph-Framing.html">
+            
+                    
+                    Graph Framing Service
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -937,6 +963,19 @@
             
         </li>
     
+        <li class="chapter " data-level="7.1.6" data-path="Solutions-API-Gateway.html">
+            
+                <a href="Solutions-API-Gateway.html">
+            
+                    
+                    API Gateway Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -1091,44 +1130,61 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 20-Oct-2017 13:04:49</div></div><h1 style="color:red" id="work-in-progress">Work In Progress</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 13-Nov-2017 11:09:24</div></div><h1 style="color:red" id="work-in-progress">Work In Progress</h1>
 
 <h1 id="graph-manager-api">Graph Manager API</h1>
+<p>Github repository: <a href="https://github.com/ATTX-project/graphmanager-service" target="_blank">https://github.com/ATTX-project/graphmanager-service</a></p>
 <h3 id="table-of-contents">Table of Contents</h3>
+<!-- TOC START min:1 max:3 link:true update:true -->
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#building-graph-manager-service">Building Graph Manager Service</a><ul>
+<li><a href="#graph-store-connection">Graph Store Connection</a></li>
+<li><a href="#message-broker-connection">Message Broker Connection</a></li>
+</ul>
+</li>
+<li><a href="#environment-variables">Environment Variables</a></li>
+<li><a href="#service-api-endpoints">Service API Endpoints</a><ul>
+<li><a href="#health-endpoint">health Endpoint</a></li>
+<li><a href="#graph-endpoint">graph Endpoint</a></li>
+</ul>
+</li>
+</ul>
+<!-- TOC END -->
 <h2 id="overview">Overview</h2>
 <p>The Graph Manager REST API has the following endpoints:</p>
 <ul>
 <li><code>graph</code> - managing interaction with the Graph Store and retrieving statistics about it (e.g. list of named graphs, number of queries);</li>
 <li><code>health</code> - checks if the application is running.</li>
 </ul>
-<p>The Graph Manager Services</p>
 <p>Current version: <code>0.2</code> (URL for the endpoint should take into consideration for the API <code>http://host:4302/version/endpoint</code>)</p>
 <h2 id="building-graph-manager-service">Building Graph Manager Service</h2>
-<p>For formatted the GM-API see:</p>
+<p>In order to work with the service start with:</p>
 <ul>
-<li><a href="https://github.com/ATTX-project/graphmanager-service" target="_blank">GraphManager Service source</a> - building both the project and the  Docker image and testing from the source code;</li>
+<li><a href="https://github.com/ATTX-project/graphmanager-service" target="_blank">GraphManager Service source</a> - contains information on building both the project and the  Docker image and testing from the source code;</li>
 <li>short tutorial on <a href="Building-with-Gradle.html">Gradle</a>.</li>
 </ul>
 <h3 id="graph-store-connection">Graph Store Connection</h3>
-<p>The GM API requires a connection with the <a href="Graph-Store.html">Graph Store</a>, such a connection is specified either in the indexing or clustering or linkage requests.
-A graph store connection is required:</p>
+<p>The Graph Manager API requires a connection with the <a href="Graph-Store.html">Graph Store</a>.
+A graph store connection is required in order to:</p>
 <ul>
 <li>perform operations on the graph data stored such as update and replace;</li>
-<li>query and retrieve graph data, in order to place data in the distribution component.</li>
+<li>query and retrieve graph data.</li>
 </ul>
 <h3 id="message-broker-connection">Message Broker Connection</h3>
-<p>Graph Manager can work with the <a href="MessageBroker-RabbitMQ.html">RabbitMQ Message Broker</a> in order to manage the data in the Graph Store.</p>
+<p>Graph Manager can work with the <a href="MessageBroker-RabbitMQ.html">RabbitMQ Message Broker</a> in order facilitate other services to manage the data in the Graph Store.</p>
 <h2 id="environment-variables">Environment Variables</h2>
 <ul>
-<li><code>MHOST</code> - container name or address for the MessageBroker-RabbitMQ database (defaults to localhost);</li>
-<li><code>MUSER</code> - user name for MessageBroker;</li>
+<li><code>MHOST</code> - container name or address for the MessageBroker-RabbitMQ database (defaults to <code>localhost</code>);</li>
+<li><code>MUSER</code> - user name for MessageBroker (defaults to <code>user</code>);</li>
 <li><code>MPROVQUEUE</code> - provenance queue in the MessageBroker (defaults to <code>provenance.inbox</code>);</li>
 <li><code>MRPCQUEUE</code> - RPC Queue for responding to messages received by the GraphManager Queue (defaults to <code>attx.graphManager.inbox</code>);</li>
-<li><code>MKEY</code> - password for MessageBroker;</li>
-<li><code>GHOST</code> - Graph Store container name or address (defaults to localhost);</li>
-<li><code>GPORT</code> - Graph Store port;</li>
-<li><code>GKEY</code> - Graph Store password;</li>
-<li><code>DS</code> - Graph Store working dataset.</li>
+<li><code>MKEY</code> - password for MessageBroker (defaults to <code>password</code>);</li>
+<li><code>GHOST</code> - Graph Store container name or address (defaults to <code>localhost</code>);</li>
+<li><code>GPORT</code> - Graph Store port (defaults to <code>3030</code>);</li>
+<li><code>GKEY</code> - Graph Store password (defaults to <code>pw123</code>);</li>
+<li><code>DS</code> - Graph Store working dataset (defaults to <code>ds</code>)</li>
+<li><code>DATADIR</code> - data directory for storing results from graph store (defaults to <code>/attx-sb-shared</code>).</li>
 </ul>
 <h2 id="service-api-endpoints">Service API Endpoints</h2>
 <h3 id="health-endpoint">health Endpoint</h3>
@@ -1140,11 +1196,29 @@ A graph store connection is required:</p>
 </ul>
 <h3 id="graph-endpoint">graph Endpoint</h3>
 <ul>
-<li><code>graph/query</code></li>
-<li><code>graph/update</code></li>
-<li><code>graph?uri={graphURI}</code></li>
-<li><code>graph/list</code></li>
-<li><code>graph/statistics</code></li>
+<li><code>graph/query</code> POST API<ul>
+<li>Request:<pre><code class="lang-json">{
+<span class="hljs-string">&quot;targetGraph&quot;</span>: [<span class="hljs-string">&quot;default&quot;</span>],
+<span class="hljs-string">&quot;query&quot;</span>: <span class="hljs-string">&quot;SELECT ?subject ?predicate ?object WHERE { ?subject ?predicate ?object} LIMIT 25&quot;</span>,
+<span class="hljs-string">&quot;contentType&quot;</span>: <span class="hljs-string">&quot;application/sparql-results+xml&quot;</span>
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li><code>graph/update</code> POST API<ul>
+<li>Request:<pre><code class="lang-json">{
+<span class="hljs-string">&quot;targetGraph&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/strategy&quot;</span>,
+<span class="hljs-string">&quot;triples&quot;</span>: <span class="hljs-string">&quot;&lt;http://example/egbook3&gt; &lt;http://purl.org/dc/elements/1.1/title&gt;  \&quot;This is an example title\&quot;.&quot;</span>,
+<span class="hljs-string">&quot;contentType&quot;</span>: <span class="hljs-string">&quot;text/turtle&quot;</span>
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li><code>graph?uri={graphURI}</code> GET API</li>
+<li><code>graph/list</code> GET API</li>
+<li><code>graph/statistics</code> GET API</li>
 </ul>
 
                                 
@@ -1189,7 +1263,7 @@ A graph store connection is required:</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Graph Manager Service","level":"3.2.1","depth":2,"next":{"title":"Graph Manager Message Examples","level":"3.2.1.1","depth":3,"path":"Examples-Graph-Manager-Service.md","ref":"Examples-Graph-Manager-Service.md","articles":[]},"previous":{"title":"Graph Component","level":"3.2","depth":1,"path":"ATTX-Component-Graph.md","ref":"ATTX-Component-Graph.md","articles":[{"title":"Graph Manager Service","level":"3.2.1","depth":2,"path":"Service-Graph-Manager.md","ref":"Service-Graph-Manager.md","articles":[{"title":"Graph Manager Message Examples","level":"3.2.1.1","depth":3,"path":"Examples-Graph-Manager-Service.md","ref":"Examples-Graph-Manager-Service.md","articles":[]}]},{"title":"Graph Store","level":"3.2.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"3.2.2.1","depth":3,"path":"ATTX-Data-Model.md","ref":"ATTX-Data-Model.md","articles":[]}]},{"title":"Linking Strategies","level":"3.2.3","depth":2,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Service-Graph-Manager.md","mtime":"2017-10-23T14:08:16.848Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-07T08:42:01.656Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Graph Manager Service","level":"3.2.1","depth":2,"next":{"title":"Graph Manager Message Examples","level":"3.2.1.1","depth":3,"path":"Examples-Graph-Manager-Service.md","ref":"Examples-Graph-Manager-Service.md","articles":[]},"previous":{"title":"Graph Component","level":"3.2","depth":1,"path":"ATTX-Component-Graph.md","ref":"ATTX-Component-Graph.md","articles":[{"title":"Graph Manager Service","level":"3.2.1","depth":2,"path":"Service-Graph-Manager.md","ref":"Service-Graph-Manager.md","articles":[{"title":"Graph Manager Message Examples","level":"3.2.1.1","depth":3,"path":"Examples-Graph-Manager-Service.md","ref":"Examples-Graph-Manager-Service.md","articles":[]}]},{"title":"Graph Store","level":"3.2.2","depth":2,"path":"Graph-Store.md","ref":"Graph-Store.md","articles":[{"title":"Ontology/Data model","level":"3.2.2.1","depth":3,"path":"ATTX-Data-Model.md","ref":"ATTX-Data-Model.md","articles":[]}]},{"title":"Linking Strategies","level":"3.2.3","depth":2,"path":"Linking-Strategies.md","ref":"Linking-Strategies.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Service-Graph-Manager.md","mtime":"2017-11-13T14:08:34.415Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-13T14:09:34.941Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

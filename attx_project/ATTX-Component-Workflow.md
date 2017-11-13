@@ -6,4 +6,4 @@ The Workflow Component consists of:
 
 * ETL Engine/Artifact - more details about [ETL Artifacts](ETL-Artifacts.md) we make use of [UnifiedViews](https://unifiedviews.eu/) as an ETL tool;
 * Custom UnifiedViews [plugins](Unified-Views-plugins.md);
-* UVProvovenance service - more details about the [UVProvovenance-API](UVProvovenance-API.md).
+* UVProvovenance service - more details about the [UVProvovenance-API](UVProvovenance-API.md)
