@@ -727,6 +727,32 @@
             
         </li>
     
+        <li class="chapter " data-level="4.3" data-path="Service-Indexing.html">
+            
+                <a href="Service-Indexing.html">
+            
+                    
+                    Indexing Service
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="Service-Graph-Framing.html">
+            
+                <a href="Service-Graph-Framing.html">
+            
+                    
+                    Graph Framing Service
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -937,6 +963,19 @@
             
         </li>
     
+        <li class="chapter " data-level="7.1.6" data-path="Solutions-API-Gateway.html">
+            
+                <a href="Solutions-API-Gateway.html">
+            
+                    
+                    API Gateway Solutions Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -1091,7 +1130,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="build-environment-setup">Build Environment Setup</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 13-Nov-2017 09:16:58</div></div><h1 id="build-environment-setup">Build Environment Setup</h1>
 <h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
 <ul>
@@ -1116,37 +1155,84 @@
 <p>These are used in the generation of the Docker Images with specific tags depending on the environment as exemplified by the snippet below:</p>
 <pre><code class="lang-groovy"><span class="hljs-keyword">if</span> (!project.hasProperty(<span class="hljs-string">&quot;env&quot;</span>) || project.env == <span class="hljs-string">&quot;dev&quot;</span>) {
 
-    ext.wfAPI               = <span class="hljs-string">&quot;0.1&quot;</span>
-    ext.gmAPI               = <span class="hljs-string">&quot;0.1&quot;</span>
-    ext.rdfINDEXER          = <span class="hljs-string">&quot;99&quot;</span>
-    ext.attxMetadataPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.attxInfras2IPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.attxUploaderPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.attxAPIPlugin       = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.imageES5            = <span class="hljs-string">&quot;test&quot;</span>
-    ext.imageWF             = <span class="hljs-string">&quot;test&quot;</span>
-    ext.imageGM             = <span class="hljs-string">&quot;test&quot;</span>
-    ext.imageATTXAPIPlugin  = <span class="hljs-string">&quot;test&quot;</span>
-    ext.imageATTXDPUs       = <span class="hljs-string">&quot;test&quot;</span>
-    ext.imageATTXShared     = <span class="hljs-string">&quot;test&quot;</span>
-    ext.imageFuseki         = <span class="hljs-string">&quot;test&quot;</span>
+    ext.uvProv                    = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.gmAPI                     = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.gmFrame                   = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.indexing                  = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.provenanceS               = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.replacedsPlugin           = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.describedsPlugin          = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.describeexternaldsPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.rmlservicePlugin          = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.sirenAPIPlugin            = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.RMLService                = <span class="hljs-string">&quot;0.0.1-SNAPSHOT&quot;</span>
+
+    ext.imageBase           = <span class="hljs-string">&quot;${imageRepo}:${imageRepoPort}&quot;</span>
+    ext.imageFraming        = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageIndexing       = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageES5            = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageUVProv         = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageProvenance     = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageGM             = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageSirenAPIPlugin = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageATTXDPUs       = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageFuseki         = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageActivemq       = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
+    ext.imageRMLService     = <span class="hljs-string">&quot;${privateRepoTag}&quot;</span>
 
 } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (project.env == <span class="hljs-string">&quot;release&quot;</span>){
 
-    ext.wfAPI               = <span class="hljs-string">&quot;1.0&quot;</span>
-    ext.gmAPI               = <span class="hljs-string">&quot;1.0&quot;</span>
-    ext.rdfINDEXER          = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.attxMetadataPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.attxInfras2IPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.attxUploaderPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.attxAPIPlugin       = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
-    ext.imageES5            = <span class="hljs-string">&quot;latest&quot;</span>
-    ext.imageWF             = <span class="hljs-string">&quot;latest&quot;</span>
-    ext.imageGM             = <span class="hljs-string">&quot;latest&quot;</span>
-    ext.imageATTXAPIPlugin  = <span class="hljs-string">&quot;latest&quot;</span>
-    ext.imageATTXDPUs       = <span class="hljs-string">&quot;latest&quot;</span>
-    ext.imageATTXShared     = <span class="hljs-string">&quot;latest&quot;</span>
-    ext.imageFuseki         = <span class="hljs-string">&quot;latest&quot;</span>
+    ext.uvProv                    = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.gmAPI                     = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.gmFrame                   = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.indexing                  = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.provenanceS               = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.replacedsPlugin           = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.describedsPlugin          = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.describeexternaldsPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.rmlservicePlugin          = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.sirenAPIPlugin            = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.RMLService                = <span class="hljs-string">&quot;0.0.1-SNAPSHOT&quot;</span>
+
+    ext.imageBase           = <span class="hljs-string">&quot;attxproject&quot;</span>
+    ext.imageFraming        = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageIndexing       = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageES5            = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageUVProv         = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageProvenance     = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageGM             = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageSirenAPIPlugin = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageATTXDPUs       = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageFuseki         = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageActivemq       = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+    ext.imageRMLService     = <span class="hljs-string">&quot;${releaseTag}&quot;</span>
+
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (project.env == <span class="hljs-string">&quot;test&quot;</span>){
+
+    ext.uvProv                    = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.gmAPI                     = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.gmFrame                   = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.indexing                  = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.provenanceS               = <span class="hljs-string">&quot;2.0-SNAPSHOT&quot;</span>
+    ext.replacedsPlugin           = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.describedsPlugin          = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.describeexternaldsPlugin  = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.rmlservicePlugin          = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.sirenAPIPlugin            = <span class="hljs-string">&quot;1.0-SNAPSHOT&quot;</span>
+    ext.RMLService                = <span class="hljs-string">&quot;0.0.1-SNAPSHOT&quot;</span>
+
+    ext.imageBase           = <span class="hljs-string">&quot;attxproject&quot;</span>
+    ext.imageFraming        = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageIndexing       = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageES5            = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageUVProv         = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageProvenance     = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageGM             = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageSirenAPIPlugin = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageATTXDPUs       = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageFuseki         = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageActivemq       = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    ext.imageRMLService     = <span class="hljs-string">&quot;${testTag}&quot;</span>
 
 } <span class="hljs-keyword">else</span> {
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> GradleException(<span class="hljs-string">&quot;Build project environment option not recognised.&quot;</span>)
@@ -1160,7 +1246,7 @@
 <ol>
 <li>Set up version of the artifact to build - this will trigger a Jenkins pipeline which will deploy the artifact to repository (e.g. Archiva, Jenkins, Github etc.)</li>
 <li>Configure the Jenkins pipeline for building a Docker image to be the release version of that Docker Image, by specifying artifacts versions and image tags in the <code>common.gradle</code> from <a href="https://github.com/ATTX-project/platform-deployment/" target="_blank">https://github.com/ATTX-project/platform-deployment/</a> repository</li>
-<li>Publish artifacts to docker hub - TO BE done manually until <a href="https://github.com/ATTX-project/platform-deployment/issues/25" target="_blank">https://github.com/ATTX-project/platform-deployment/issues/25</a> is done.</li>
+<li>Publish artifacts to docker hub, using Jenkins CI.</li>
 <li>Create pull request for a repository from dev to master</li>
 <li>Follow <a href="https://help.github.com/articles/creating-releases/" target="_blank">https://help.github.com/articles/creating-releases/</a> for creating a Github release</li>
 </ol>
@@ -1172,23 +1258,26 @@
 <li>Configure the Jenkins pipeline for building a Docker image to be the release version of that Docker Image, by specifying artifacts versions and image tags in the <code>common.gradle</code> from <a href="https://github.com/ATTX-project/platform-deployment/" target="_blank">https://github.com/ATTX-project/platform-deployment/</a> repository</li>
 <li>Publish artifacts to docker hub - via Jenkins pipelines .</li>
 </ol>
-<h3 id="example-creating-gmapi-test-image-for-development">Example: Creating gmAPI test image for development</h3>
-<p>I wanted to test out a new version of the gm-API artifact. In order to do that I have to first create and push a new version of the artifact and them build and push a new gmAPI image.</p>
+<h3 id="example-creating-graph-manager-service-test-image-for-development">Example: Creating Graph Manager Service test image for development</h3>
+<p><strong>Artifacts are also published to Docker hub with tag <code>dev</code>, along side the <code>latest</code> tag used for the private repository</strong></p>
 <ol>
 <li>Commit and push new code to a branch <code>feature-X</code>. Create new version for the test artifact.</li>
 <li>Create a new Jenkins pipeline using <code>gm-api</code> as the template</li>
 <li>Configure new pipeline. Change branch to <code>feature-X</code> in the checkout stage.</li>
 <li>Checkout platform-development code</li>
 <li>Modify <code>common.gradle</code> and set <code>ext.gmAPI</code> to reference the test artifact and change the <code>ext.imageGM</code> tag to something else (e.g. <code>test-featureX</code>)</li>
-<li>Build new test image:<pre><code class="lang-shell">gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev buildGmapiImage
+<li>Build new test image:<pre><code class="lang-shell">gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev :service-graphManager:buildGmapiImage
 </code></pre>
 </li>
-<li><p>Push new test image:</p>
-<pre><code class="lang-shell">gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev pushGmapiImage
+<li>Push new test image:<pre><code class="lang-shell">gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=dev :service-graphManager:pushGmapiImage
 </code></pre>
 </li>
 <li><p>Push new release image:</p>
-<pre><code class="lang-shell">gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=release -PdockerUser=account -PdockerPass=Test1234 pushGmapiImage
+<pre><code class="lang-shell">gradle -PregistryURL=attx-dev:5000 -PartifactRepoURL=http://attx-dev:8081 -Penv=release -PdockerUser=account -PdockerPass=Test1234 :service-graphManager:pushGmapiImage
+</code></pre>
+</li>
+<li><p>Push to Docker hub <code>dev</code> image:</p>
+<pre><code class="lang-shell">-PregistryURL=attx-dev:5000 -PartifactRepoURL=http://archiva:8080 -Penv=test -PdockerUser=account -PdockerPass=Test1234 :service-graphManager:pushGmapiImage
 </code></pre>
 </li>
 </ol>
@@ -1243,7 +1332,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"next":{"title":"Containerized Testing","level":"6.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]},"previous":{"title":"Jenkins CI","level":"6.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Build-Environment-Setup.md","mtime":"2017-08-03T12:02:45.405Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-07T08:42:01.656Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"next":{"title":"Containerized Testing","level":"6.4.3","depth":2,"path":"Containerized-testing.md","ref":"Containerized-testing.md","articles":[]},"previous":{"title":"Jenkins CI","level":"6.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Build-Environment-Setup.md","mtime":"2017-11-13T14:08:34.389Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-13T14:09:34.941Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
