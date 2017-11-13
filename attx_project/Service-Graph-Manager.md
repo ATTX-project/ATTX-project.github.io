@@ -52,7 +52,8 @@ Graph Manager can work with the [RabbitMQ Message Broker](MessageBroker-RabbitMQ
 * `GHOST` - Graph Store container name or address (defaults to `localhost`);
 * `GPORT` - Graph Store port (defaults to `3030`);
 * `GKEY` - Graph Store password (defaults to `pw123`);
-* `DS` - Graph Store working dataset (defaults to `ds`).
+* `DS` - Graph Store working dataset (defaults to `ds`)
+* `DATADIR` - data directory for storing results from graph store (defaults to `/attx-sb-shared`).
 
 ## Service API Endpoints
 

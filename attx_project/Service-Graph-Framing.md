@@ -44,7 +44,8 @@ Provenance Service needs [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md) in
 * `MPROVQUEUE` - provenance queue in the MessageBroker (defaults to `provenance.inbox`);
 * `MRPCQUEUE` - RPC Queue for responding to messages received by the GraphManager Queue (defaults to `attx.ldframe.inbox`);
 * `GMHOST` - GraphManager container name or address (defaults to `localhost`);
-* `GMPORT` - GraphManager port (defaults to `4302`).
+* `GMPORT` - GraphManager port (defaults to `4302`)
+* `DATADIR` - data directory for storing results from graph store (defaults to `/attx-sb-shared`).
 
 ## Service API Endpoints
 
