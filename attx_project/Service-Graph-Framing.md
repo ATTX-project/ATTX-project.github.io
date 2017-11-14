@@ -6,6 +6,8 @@ Github repository: https://github.com/ATTX-project/graphframing-service
 
 ### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
+- [GraphFraming Service](#graphframing-service)
+    - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Building Graph Framing Service](#building-graph-framing-service)
     - [Graph Manager Service Connection](#graph-manager-service-connection)
@@ -44,6 +46,7 @@ Provenance Service needs [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md) in
 * `MPROVQUEUE` - provenance queue in the MessageBroker (defaults to `provenance.inbox`);
 * `MRPCQUEUE` - RPC Queue for responding to messages received by the GraphManager Queue (defaults to `attx.ldframe.inbox`);
 * `GMHOST` - GraphManager container name or address (defaults to `localhost`);
+* `GMVER` - API version of the GraphManager (defaults to `0.2`);
 * `GMPORT` - GraphManager port (defaults to `4302`)
 * `DATADIR` - data directory for storing results from graph store (defaults to `/attx-sb-shared`).
 
