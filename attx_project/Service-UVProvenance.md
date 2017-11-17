@@ -39,6 +39,10 @@ For building the UVProvenance-API see:
 ### Database Connection
 
 In order to run the tests successfully but also the UVProvenance-API successfully one would require an existing MYSQL database connection on which the UnifiedViews runs. Such a connection can be configured in Docker file via the environment variables:
+* `MHOST` - container name or address for the MessageBroker-RabbitMQ database (defaults to `localhost`);
+* `MUSER` - user name for MessageBroker (defaults to `user`);
+* `MQUEUE` - provenance queue in the MessageBroker (defaults to `provenance.inbox`);
+* `MKEY` - password for MessageBroker (defaults to `password`);
 * `DBHOST` - container name or address for the MYSQL database (defaults to localhost);
 * `DBUSER` - database user name;
 * `DBKEY` - password or key for the database user;
