@@ -7,11 +7,11 @@ Overview based on:
 
 | Service Tool                                           | Ok | Ecosystem | Features |
 |--------------------------------------------------------|----|-----------|----------|
-| [Netflix zull](https://github.com/Netflix/zuul)        |    |           |          |
-| [tyk.io](https://tyk.io/                               |    |           |          |
-| [getKong](https://getkong.org/)                        |    |           |          |
-| [WSO2 API management](https://wso2.com/api-management/ |    |           |          |
-| [rackla](https://github.com/AntonFagerberg/rackla)     |    |           |          |
-| [treegateway](http://treegateway.org/)                 |    |           |          |
-| [fusio-project](https://www.fusio-project.org)         |    |           |          |
-| [gravitee.io](https://gravitee.io/)                    |    |           |          |
+| [Netflix zull](https://github.com/Netflix/zuul)         |    |           |          |
+| [tyk.io](https://tyk.io/)                               |    |           |          |
+| [getKong](https://getkong.org/)                         |    |           |          |
+| [WSO2 API management](https://wso2.com/api-management/) |    |           |          |
+| [rackla](https://github.com/AntonFagerberg/rackla)      |    |           |          |
+| [treegateway](http://treegateway.org/)                  |    |           |          |
+| [fusio-project](https://www.fusio-project.org)          |    |           |          |
+| [gravitee.io](https://gravitee.io/)                     |    |           |          |
