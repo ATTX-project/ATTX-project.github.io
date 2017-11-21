@@ -5,8 +5,8 @@ Overview based on:
 * **Features** - Analytics, REST Management, Security etc.
 
 
-| Service Tool                                           | Ok | Ecosystem | Features |
-|--------------------------------------------------------|----|-----------|----------|
+| Service Tool                                            | Ok | Ecosystem | Features |
+|---------------------------------------------------------|----|-----------|----------|
 | [Netflix zull](https://github.com/Netflix/zuul)         |    |           |          |
 | [tyk.io](https://tyk.io/)                               |    |           |          |
 | [getKong](https://getkong.org/)                         |    |           |          |
