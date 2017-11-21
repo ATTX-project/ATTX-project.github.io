@@ -82,6 +82,7 @@ Graph Manager can work with the [RabbitMQ Message Broker](MessageBroker-RabbitMQ
       "contentType": "text/turtle"
     }
     ```
+* `graph/construct` POST API
 * `graph?uri={graphURI}` GET API
 * `graph/list` GET API
 * `graph/statistics` GET API

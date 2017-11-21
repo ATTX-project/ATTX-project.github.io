@@ -3,15 +3,17 @@
 ### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
   - [Retrieve Graph Dataset](#retrieve-graph-dataset)
+    - [Retrive with URI output](#retrive-with-uri-output)
+    - [Retrive with Data output](#retrive-with-data-output)
   - [Query Graph Dataset](#query-graph-dataset)
+  - [Construct Graph Dataset](#construct-graph-dataset)
   - [Add Graph Dataset](#add-graph-dataset)
   - [Replace Graph Dataset](#replace-graph-dataset)
-    - [Replace using Turtle content](#replace-using-turtle-content)    
-  - [Update Graph Dataset](#update-graph-dataset)
+    - [Replace using content from two sources](#replace-using-content-from-two-sources)
+  - [Patch Graph Dataset](#patch-graph-dataset)
   - [Version Graph Dataset](#version-graph-dataset)
 
 <!-- TOC END -->
-
 
 ## Retrieve Graph Dataset
 
@@ -151,6 +153,54 @@ Result:
           "contentType": "application/sparql-results+xml",
           "outputType": "Data",            
           "output": ""
+        }
+    }
+}
+```
+
+## Construct Graph Dataset
+
+Could this work with multiple source graphs?
+
+```json
+{
+"provenance": {
+    "context": {
+        "workflowID": "wf",
+        "activityID": 1,
+        "stepID": "stepid"
+    }
+},
+"payload": {
+    "graphManagerInput": {
+      "activity": "construct",
+      "contentType": "text/turtle",
+      "outputType": "Data",
+      "sourceGraphs": ["http://test.data", "default"],
+      "input": "PREFIX smth:<http://www.snee.com/ns/demo#> CONSTRUCT { ?p smth:hasGrandfather ?g . } WHERE {?p      smth:hasParent ?parent . ?parent smth:hasParent ?g . ?g      smth:gender    smth:male .}"
+    }
+}
+}
+```
+Result:
+```json
+{
+    "payload": {
+        "graphManagerOutput": {
+            "contentType": "text/turtle",
+            "output": "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix smth: <http://www.snee.com/ns/demo#> .\n@prefix xml: <http://www.w3.org/XML/1998/namespace> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n\nsmth:Jane smth:hasGrandfather smth:Pat .\n\nsmth:Mike smth:hasGrandfather smth:Pat .\n\n",
+            "outputType": "Data"
+        }
+    },
+    "provenance": {
+        "agent": {
+            "ID": "GraphManager",
+            "role": "storage"
+        },
+        "context": {
+            "activityID": "1",
+            "stepID": "stepid",
+            "workflowID": "wf"
         }
     }
 }
