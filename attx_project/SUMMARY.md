@@ -53,7 +53,9 @@
 * [RML Service](Service-RML.md)
   * [RML Messages Examples](Examples-RML-Service.md)
 * [Indexing Service](Service-Indexing.md)
+  * [Indexing Messages Examples](Examples-Indexing-Service.md)
 * [Graph Framing Service](Service-Graph-Framing.md)
+  * [Graph Framing Messages Examples](Examples-Graph-Framing-Service.md)
 
 ## User Guide
 

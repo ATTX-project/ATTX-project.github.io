@@ -1,5 +1,3 @@
-<h1 style="color:red">Work In Progress</h1>
-
 # Containerised Testing
 
 This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.
@@ -83,6 +81,15 @@ Example of the most relevant parts:
 
 ```groovy
 
+/* === Setting Configuration for the Test Environments === */
+
+ext {
+    testTag           = "dev"
+    testImageGM       = "${testTag}"
+    testImageFuseki   = "${testTag}"
+//    We are testing images tagged with dev on the public Docker Hub
+    imageBase         = ("${testTag}" == "dev") ?  "attxproject" : "${imageRepo}:${imageRepoPort}"
+
 ext.src = [
     "${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.wc.uv&a=attx-l-replaceds&v=${uvreplaceDS}&p=jar":"attx-l-replaceds-${uvreplaceDS}.jar"
 ]
@@ -107,13 +114,26 @@ if (!project.hasProperty("testEnv") || project.testEnv == "dev") {
     throw new GradleException("Build project environment option not recognised.")
 }
 
-ext {
-    testTag           = "latest"
-    testImageGM       = "${testTag}"
-    testImageFuseki   = "${testTag}"
-    testImageES5      = "${testTag}"
-    imageBase         = ("${testTag}" == "dev") ?  "attxproject" : "${imageRepo}:${imageRepoPort}"
+def data = ""
+
+def loadConfiguration() {
+    def jsonSlurper = new JsonSlurper()
+    def reader = new BufferedReader(new InputStreamReader(new FileInputStream("$project.projectDir/testEnv.json"), "UTF-8"))
+    def data = jsonSlurper.parse(reader)
+    return data
 }
+
+if (project.hasProperty("network")) {
+    ext.testNetwork = project.network
+    data = loadConfiguration()
+} else {
+    ext.testNetwork = "pdTest"
+    data = loadConfiguration()
+}
+
+def base = data.networks."${testNetwork}".baseImage
+
+/* === Build the Images and Environments === */
 
 dcompose {
     createComposeFile.useTags = true
@@ -152,9 +172,14 @@ dcompose {
         forcePull = true
         forceRemoveImage = true
         image = "${imageBase}/gm-api:${testImageGM}"
-        dependsOn = [messagebroker, fuseki]
-        networks = [pdTest]
-        hostName = 'graphmanager'
+        def dependlist = []
+        if ( base == "graphmanager") {
+            data.networks."${testNetwork}".dependencies.each{dependlist.add(service("${it}"))}
+        } else {
+            dependlist = [messagebroker, fuseki]
+        }
+        dependsOn = dependlist
+        networks = [network("${testNetwork}")]
         env = ['MHOST=messagebroker', 'GHOST=fuseki']
         volumes = ['/attx-sb-shared']
         if (testSet == "localhost") {
@@ -264,49 +289,45 @@ plugins {
     id "java"
 }
 
-ext {
-    imageRepo = "attx-dev"
-    artifactRepoPort = "8081"
-}
-
-if (!project.hasProperty("artifactRepoURL")) {
-    ext.artifactRepoURL = "http://${imageRepo}:${artifactRepoPort}"
-}
-
 repositories {
     mavenCentral()
-    maven { url "${artifactRepoURL}/repository/attx-releases"}
 }
 
 dependencies {
-    testCompile "org.junit.jupiter:junit-jupiter-api:5.0.0",
+    testCompile \
+            files("/tmp/uv-common-1.0-SNAPSHOT.jar"),
+            'org.apache.commons:commons-io:1.3.2',
+            'com.fasterxml.jackson.core:jackson-databind:2.9.2',
+            'com.fasterxml.jackson.core:jackson-core:2.9.2',
+            'org.junit.jupiter:junit-jupiter-api:5.0.0',
             'org.junit.platform:junit-platform-runner:1.0.1',
             'info.cukes:cucumber-java8:1.2.5',
             'info.cukes:cucumber-junit:1.2.5',
             'com.mashape.unirest:unirest-java:1.4.9',
             'org.skyscreamer:jsonassert:1.5.0',
             'org.awaitility:awaitility-groovy:3.0.0',
-            'org.uh.hulib.attx.dev:dev-test-helper:1.5',
-            'org.uh.hulib.attx.wc.uv:uv-common:1.0-SNAPSHOT',
             'com.rabbitmq:amqp-client:4.2.0',
             'org.jdom:jdom2:2.0.5',
             'org.apache.jena:jena-core:3.4.0'
     testRuntime \
-        "org.junit.jupiter:junit-jupiter-engine:5.0.0",
+        'org.junit.jupiter:junit-jupiter-engine:5.0.0',
             'org.junit.vintage:junit-vintage-engine:4.12.0'
 }
 
 task containerIntegTest(type: Test) {
     Map<String, Integer> serviceMap = [ "frontend" : 8080,
-                  "uvprov" : 4301,
-                  "provservice" : 7030,
-                  "fuseki" : 3030,
-                  "graphmanager" : 4302,
-                  "es5": 9210,
-                  "rmlservice": 8090,
-                  "messagebroker": 5672,
-                  "messagebroker": 5671,
-                  "messagebroker": 4369 ]
+                                        "uvprov" : 4301,
+                                        "provservice" : 7030,
+                                        "ldframe" : 4303,
+                                        "indexservice" : 4304,
+                                        "fuseki" : 3030,
+                                        "graphmanager" : 4302,
+                                        "es5": 9210,
+                                        "rmlservice": 8090,
+                                        "messagebroker": 5672,
+                                        "messagebroker": 5671,
+                                        "messagebroker": 4369,
+                                        "testdata": 80  ]
     ext.getHostPort = {services ->
         serviceMap.each{ host, port ->
             systemProperty "${host}.port", "${port}".toInteger()

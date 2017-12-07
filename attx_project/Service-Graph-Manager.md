@@ -1,5 +1,3 @@
-<h1 style="color:red">Work In Progress</h1>
-
 # Graph Manager API
 
 Github repository: https://github.com/ATTX-project/graphmanager-service

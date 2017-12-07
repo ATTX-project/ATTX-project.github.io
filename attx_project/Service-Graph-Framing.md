@@ -1,5 +1,3 @@
-<h1 style="color:red">Work In Progress</h1>
-
 # GraphFraming Service
 
 Github repository: https://github.com/ATTX-project/graphframing-service
