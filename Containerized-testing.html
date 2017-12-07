@@ -736,6 +736,25 @@
             
 
             
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.3.1" data-path="Examples-Indexing-Service.html">
+            
+                <a href="Examples-Indexing-Service.html">
+            
+                    
+                    Indexing Messages Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
         <li class="chapter " data-level="4.4" data-path="Service-Graph-Framing.html">
@@ -748,6 +767,25 @@
                 </a>
             
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.4.1" data-path="Examples-Graph-Framing-Service.html">
+            
+                <a href="Examples-Graph-Framing-Service.html">
+            
+                    
+                    Graph Framing Messages Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -1128,9 +1166,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 13-Nov-2017 09:16:58</div></div><h1 style="color:red" id="work-in-progress">Work In Progress</h1>
-
-<h1 id="containerised-testing">Containerised Testing</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 07-Dec-2017 11:39:31</div></div><h1 id="containerised-testing">Containerised Testing</h1>
 <p>This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.</p>
 <h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
@@ -1202,6 +1238,15 @@ dockerize -wait http://gmapi:4302/health -timeout 60s
 <p><strong>build.gradle</strong></p>
 <p>Example of the most relevant parts:</p>
 <pre><code class="lang-groovy">
+<span class="hljs-comment">/* === Setting Configuration for the Test Environments === */</span>
+
+ext {
+    testTag           = <span class="hljs-string">&quot;dev&quot;</span>
+    testImageGM       = <span class="hljs-string">&quot;${testTag}&quot;</span>
+    testImageFuseki   = <span class="hljs-string">&quot;${testTag}&quot;</span>
+<span class="hljs-comment">//    We are testing images tagged with dev on the public Docker Hub</span>
+    imageBase         = (<span class="hljs-string">&quot;${testTag}&quot;</span> == <span class="hljs-string">&quot;dev&quot;</span>) ?  &quot;attxproject&quot; : <span class="hljs-string">&quot;${imageRepo}:${imageRepoPort}&quot;</span>
+
 ext.src = [
     <span class="hljs-string">&quot;${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.wc.uv&amp;a=attx-l-replaceds&amp;v=${uvreplaceDS}&amp;p=jar&quot;</span>:<span class="hljs-string">&quot;attx-l-replaceds-${uvreplaceDS}.jar&quot;</span>
 ]
@@ -1226,13 +1271,26 @@ task downloadTestFiles
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> GradleException(<span class="hljs-string">&quot;Build project environment option not recognised.&quot;</span>)
 }
 
-ext {
-    testTag           = <span class="hljs-string">&quot;latest&quot;</span>
-    testImageGM       = <span class="hljs-string">&quot;${testTag}&quot;</span>
-    testImageFuseki   = <span class="hljs-string">&quot;${testTag}&quot;</span>
-    testImageES5      = <span class="hljs-string">&quot;${testTag}&quot;</span>
-    imageBase         = (<span class="hljs-string">&quot;${testTag}&quot;</span> == <span class="hljs-string">&quot;dev&quot;</span>) ?  &quot;attxproject&quot; : <span class="hljs-string">&quot;${imageRepo}:${imageRepoPort}&quot;</span>
+<span class="hljs-keyword">def</span> data = <span class="hljs-string">&quot;&quot;</span>
+
+<span class="hljs-keyword">def</span> loadConfiguration() {
+    <span class="hljs-keyword">def</span> jsonSlurper = <span class="hljs-keyword">new</span> JsonSlurper()
+    <span class="hljs-keyword">def</span> reader = <span class="hljs-keyword">new</span> BufferedReader(<span class="hljs-keyword">new</span> InputStreamReader(<span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">&quot;$project.projectDir/testEnv.json&quot;</span>), <span class="hljs-string">&quot;UTF-8&quot;</span>))
+    <span class="hljs-keyword">def</span> data = jsonSlurper.parse(reader)
+    <span class="hljs-keyword">return</span> data
 }
+
+<span class="hljs-keyword">if</span> (project.hasProperty(<span class="hljs-string">&quot;network&quot;</span>)) {
+    ext.testNetwork = project.network
+    data = loadConfiguration()
+} <span class="hljs-keyword">else</span> {
+    ext.testNetwork = <span class="hljs-string">&quot;pdTest&quot;</span>
+    data = loadConfiguration()
+}
+
+<span class="hljs-keyword">def</span> base = data.networks.<span class="hljs-string">&quot;${testNetwork}&quot;</span>.baseImage
+
+<span class="hljs-comment">/* === Build the Images and Environments === */</span>
 
 dcompose {
     createComposeFile.useTags = <span class="hljs-literal">true</span>
@@ -1271,9 +1329,14 @@ dcompose {
         forcePull = <span class="hljs-literal">true</span>
         forceRemoveImage = <span class="hljs-literal">true</span>
         image = <span class="hljs-string">&quot;${imageBase}/gm-api:${testImageGM}&quot;</span>
-        dependsOn = [messagebroker, fuseki]
-        networks = [pdTest]
-        hostName = <span class="hljs-string">&apos;graphmanager&apos;</span>
+        <span class="hljs-keyword">def</span> dependlist = []
+        <span class="hljs-keyword">if</span> ( base == <span class="hljs-string">&quot;graphmanager&quot;</span>) {
+            data.networks.<span class="hljs-string">&quot;${testNetwork}&quot;</span>.dependencies.each{dependlist.add(service(<span class="hljs-string">&quot;${it}&quot;</span>))}
+        } <span class="hljs-keyword">else</span> {
+            dependlist = [messagebroker, fuseki]
+        }
+        dependsOn = dependlist
+        networks = [network(<span class="hljs-string">&quot;${testNetwork}&quot;</span>)]
         env = [<span class="hljs-string">&apos;MHOST=messagebroker&apos;</span>, <span class="hljs-string">&apos;GHOST=fuseki&apos;</span>]
         volumes = [<span class="hljs-string">&apos;/attx-sb-shared&apos;</span>]
         <span class="hljs-keyword">if</span> (testSet == <span class="hljs-string">&quot;localhost&quot;</span>) {
@@ -1369,49 +1432,45 @@ buildTestImage.dependsOn shadowJar
     id <span class="hljs-string">&quot;java&quot;</span>
 }
 
-ext {
-    imageRepo = <span class="hljs-string">&quot;attx-dev&quot;</span>
-    artifactRepoPort = <span class="hljs-string">&quot;8081&quot;</span>
-}
-
-<span class="hljs-keyword">if</span> (!project.hasProperty(<span class="hljs-string">&quot;artifactRepoURL&quot;</span>)) {
-    ext.artifactRepoURL = <span class="hljs-string">&quot;http://${imageRepo}:${artifactRepoPort}&quot;</span>
-}
-
 repositories {
     mavenCentral()
-    maven { url <span class="hljs-string">&quot;${artifactRepoURL}/repository/attx-releases&quot;</span>}
 }
 
 dependencies {
-    testCompile <span class="hljs-string">&quot;org.junit.jupiter:junit-jupiter-api:5.0.0&quot;</span>,
+    testCompile \
+            files(<span class="hljs-string">&quot;/tmp/uv-common-1.0-SNAPSHOT.jar&quot;</span>),
+            <span class="hljs-string">&apos;org.apache.commons:commons-io:1.3.2&apos;</span>,
+            <span class="hljs-string">&apos;com.fasterxml.jackson.core:jackson-databind:2.9.2&apos;</span>,
+            <span class="hljs-string">&apos;com.fasterxml.jackson.core:jackson-core:2.9.2&apos;</span>,
+            <span class="hljs-string">&apos;org.junit.jupiter:junit-jupiter-api:5.0.0&apos;</span>,
             <span class="hljs-string">&apos;org.junit.platform:junit-platform-runner:1.0.1&apos;</span>,
             <span class="hljs-string">&apos;info.cukes:cucumber-java8:1.2.5&apos;</span>,
             <span class="hljs-string">&apos;info.cukes:cucumber-junit:1.2.5&apos;</span>,
             <span class="hljs-string">&apos;com.mashape.unirest:unirest-java:1.4.9&apos;</span>,
             <span class="hljs-string">&apos;org.skyscreamer:jsonassert:1.5.0&apos;</span>,
             <span class="hljs-string">&apos;org.awaitility:awaitility-groovy:3.0.0&apos;</span>,
-            <span class="hljs-string">&apos;org.uh.hulib.attx.dev:dev-test-helper:1.5&apos;</span>,
-            <span class="hljs-string">&apos;org.uh.hulib.attx.wc.uv:uv-common:1.0-SNAPSHOT&apos;</span>,
             <span class="hljs-string">&apos;com.rabbitmq:amqp-client:4.2.0&apos;</span>,
             <span class="hljs-string">&apos;org.jdom:jdom2:2.0.5&apos;</span>,
             <span class="hljs-string">&apos;org.apache.jena:jena-core:3.4.0&apos;</span>
     testRuntime \
-        <span class="hljs-string">&quot;org.junit.jupiter:junit-jupiter-engine:5.0.0&quot;</span>,
+        <span class="hljs-string">&apos;org.junit.jupiter:junit-jupiter-engine:5.0.0&apos;</span>,
             <span class="hljs-string">&apos;org.junit.vintage:junit-vintage-engine:4.12.0&apos;</span>
 }
 
 task containerIntegTest(<span class="hljs-string">type:</span> Test) {
     Map&lt;String, Integer&gt; serviceMap = [ <span class="hljs-string">&quot;frontend&quot;</span> : <span class="hljs-number">8080</span>,
-                  <span class="hljs-string">&quot;uvprov&quot;</span> : <span class="hljs-number">4301</span>,
-                  <span class="hljs-string">&quot;provservice&quot;</span> : <span class="hljs-number">7030</span>,
-                  <span class="hljs-string">&quot;fuseki&quot;</span> : <span class="hljs-number">3030</span>,
-                  <span class="hljs-string">&quot;graphmanager&quot;</span> : <span class="hljs-number">4302</span>,
-                  <span class="hljs-string">&quot;es5&quot;</span>: <span class="hljs-number">9210</span>,
-                  <span class="hljs-string">&quot;rmlservice&quot;</span>: <span class="hljs-number">8090</span>,
-                  <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">5672</span>,
-                  <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">5671</span>,
-                  <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">4369</span> ]
+                                        <span class="hljs-string">&quot;uvprov&quot;</span> : <span class="hljs-number">4301</span>,
+                                        <span class="hljs-string">&quot;provservice&quot;</span> : <span class="hljs-number">7030</span>,
+                                        <span class="hljs-string">&quot;ldframe&quot;</span> : <span class="hljs-number">4303</span>,
+                                        <span class="hljs-string">&quot;indexservice&quot;</span> : <span class="hljs-number">4304</span>,
+                                        <span class="hljs-string">&quot;fuseki&quot;</span> : <span class="hljs-number">3030</span>,
+                                        <span class="hljs-string">&quot;graphmanager&quot;</span> : <span class="hljs-number">4302</span>,
+                                        <span class="hljs-string">&quot;es5&quot;</span>: <span class="hljs-number">9210</span>,
+                                        <span class="hljs-string">&quot;rmlservice&quot;</span>: <span class="hljs-number">8090</span>,
+                                        <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">5672</span>,
+                                        <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">5671</span>,
+                                        <span class="hljs-string">&quot;messagebroker&quot;</span>: <span class="hljs-number">4369</span>,
+                                        <span class="hljs-string">&quot;testdata&quot;</span>: <span class="hljs-number">80</span>  ]
     ext.getHostPort = {services -&gt;
         serviceMap.each{ host, port -&gt;
             systemProperty <span class="hljs-string">&quot;${host}.port&quot;</span>, <span class="hljs-string">&quot;${port}&quot;</span>.toInteger()
@@ -1567,7 +1626,7 @@ gradle -b /tmp/build.gradle -PartifactRepoURL=<span class="hljs-variable">$REPO<
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Containerized Testing","level":"6.4.3","depth":2,"next":{"title":"Reports","level":"7.1","depth":1,"ref":"","articles":[{"title":"CSC cPouta Cloud Services Report","level":"7.1.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},{"title":"Building with (Py)Gradle","level":"7.1.2","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers Solutions Overview","level":"7.1.3","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},{"title":"Service Discovery Solutions Overview","level":"7.1.4","depth":2,"path":"Service-Discovery-Solutions.md","ref":"Service-Discovery-Solutions.md","articles":[]},{"title":"Workflow Management Tools Overview","level":"7.1.5","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]},{"title":"API Gateway Solutions Overview","level":"7.1.6","depth":2,"path":"Solutions-API-Gateway.md","ref":"Solutions-API-Gateway.md","articles":[]}]},"previous":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Containerized-testing.md","mtime":"2017-11-13T14:08:34.390Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-12-04T14:08:51.599Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Containerized Testing","level":"6.4.3","depth":2,"next":{"title":"Reports","level":"7.1","depth":1,"ref":"","articles":[{"title":"CSC cPouta Cloud Services Report","level":"7.1.1","depth":2,"path":"CSC-cPouta-Cloud-Services-Report.md","ref":"CSC-cPouta-Cloud-Services-Report.md","articles":[]},{"title":"Building with (Py)Gradle","level":"7.1.2","depth":2,"path":"Building-with-Gradle.md","ref":"Building-with-Gradle.md","articles":[]},{"title":"Messaging Brokers Solutions Overview","level":"7.1.3","depth":2,"path":"Messaging-Brokers-Solutions.md","ref":"Messaging-Brokers-Solutions.md","articles":[]},{"title":"Service Discovery Solutions Overview","level":"7.1.4","depth":2,"path":"Service-Discovery-Solutions.md","ref":"Service-Discovery-Solutions.md","articles":[]},{"title":"Workflow Management Tools Overview","level":"7.1.5","depth":2,"path":"Workflow-Management-Tools.md","ref":"Workflow-Management-Tools.md","articles":[]},{"title":"API Gateway Solutions Overview","level":"7.1.6","depth":2,"path":"Solutions-API-Gateway.md","ref":"Solutions-API-Gateway.md","articles":[]}]},"previous":{"title":"Build Environment Setup","level":"6.4.2","depth":2,"path":"Build-Environment-Setup.md","ref":"Build-Environment-Setup.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Containerized-testing.md","mtime":"2017-12-07T11:40:14.744Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-12-07T11:40:49.996Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
