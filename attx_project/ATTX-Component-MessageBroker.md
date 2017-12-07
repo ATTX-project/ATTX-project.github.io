@@ -1,6 +1,5 @@
 # Asynchronous communication between platform components
 
-
 Replicating request/async response pattern between workflow steps and ATTX services. In order for the responses to be non blocking while waiting fro them, we recommend implementing under the assumption that the response might not arrive for a while.
 
 ![Figure 1. Request/async response pattern using message broker](images/messaging-request-response.svg)
@@ -15,7 +14,7 @@ Provenance service should receive all(?) the messages. This can implemented usin
 
 ## Requirements for ATTX services
 
-* For queues, service must listen to a queue named "attx.{servicename}". Are there any reserved topic names?
+* For queues, service must listen to a queue named `attx.{servicename}` or `attx.{servicename}.inbox` or `provenance.inbox`. Are there any reserved topic names?
 * Queues starting with "core." are reserved for special cases such as for provenance service.
 
 ## How do ATTX service find the MessageBroker?

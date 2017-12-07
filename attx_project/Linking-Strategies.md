@@ -13,7 +13,6 @@ This page describes how different graphs in the data store are linked together. 
   - [Linking Datasets](#linking-datasets)
     - [Linking Provenance and Working Data Graphs](#linking-provenance-and-working-data-graphs)
     - [Linking Between Working Data Graphs](#linking-between-working-data-graphs)
-  - [Working with Datasets](#working-with-datasets)
 
 <!-- TOC END -->
 
@@ -194,7 +193,3 @@ results of identifier based linking processing on an object property:
   <attx:ds/1/work/pub/2> attx:hasRelatedInfra <attx:ds/2/work/infra/1>
 }
 ```
-
-## Working with Datasets
-
-TBD
