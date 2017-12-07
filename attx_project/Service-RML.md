@@ -1,5 +1,3 @@
-<h1 style="color:red">Work In Progress</h1>
-
 # RML Service
 
 Github repository: https://github.com/ATTX-project/rml-service
@@ -9,7 +7,7 @@ RML service is implemented as a SpringBoot application. It uses `spring-boot-sta
 Service can receive transformation request documents through REST API and RabbitMQ request queue.
 
 ### Table of Contents
-<!-- TOC START min:1 max:3 link:true update:true -->
+<!-- TOC START min:1 max:3 link:true update:false -->
   - [Endpoints](#endpoints)
   - [Building and running RML service](#building-and-running-rml-service)
   - [Environment Variables (required)](#environment-variables-required)

@@ -1,5 +1,3 @@
-<h1 style="color:red">Work In Progress</h1>
-
 # Provenance Service
 
 Github repository: https://github.com/ATTX-project/provenance-service
@@ -28,6 +26,7 @@ Considering a Microservices oriented system we identify two means of introducing
 The Provenance Service REST API has the following endpoints:
 * `graph` - managing interaction with the Graph Store and retrieving statistics about it (e.g. list of named graphs, number of queries);
 * `prov` - endpoint for registering provenance information directly;
+* `index` - index provenance information in Elasticsearch;
 * `status` - status of a provenance job with a specific ID;
 * `health` - checks if the application is running.
 
@@ -50,16 +49,57 @@ A graph store connection is required in order to:
 
 Provenance Service needs [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md) in order to communicate with other services that want to register provenance information in the Graph Store.
 
+### Elasticsearch Connection
+
+In order to index provenance data into Elasticsearch, we require both the [Graph Framing Service](Service-Graph-Framing.md) and the [Indexing Service](Service-Indexing.md). The parameters for these services as as follows:
+* alias: `attx`;
+* document type: name graph in Graph Store e.g. if the named graph is `http://data.hulib.helsinki.fi/prov_workflow1_activity6` the document type is `workflow1_activity6`.
+
+Provenance JSON-LD frame:
+```json
+{
+  "@type": "http://www.w3.org/ns/prov#Activity",
+  "http://www.w3.org/ns/prov#qualifiedAssociation": {
+    "@explicit": "true",
+    "http://www.w3.org/ns/prov#hadPlan": {
+      "@explicit": true,
+      "http://www.w3.org/2000/01/rdf-schema#label": ""
+    }
+  },
+  "http://www.w3.org/ns/prov#qualifiedCommunication": {
+    "@explicit": "true",
+    "http://www.w3.org/ns/prov#activity": ""
+  },
+  "http://www.w3.org/ns/prov#qualifiedGeneration": {
+    "@explicit": "true",
+    "http://www.w3.org/ns/prov#entity": ""
+  },
+  "http://www.w3.org/ns/prov#qualifiedUsage": {
+    "@explicit": "true",
+    "http://www.w3.org/ns/prov#entity": ""
+  }
+}
+```
+
 ## Environment Variables
 
 * `MHOST` - container name or address for the MessageBroker-RabbitMQ database (defaults to `localhost`);
 * `MUSER` - user name for MessageBroker (defaults to `user`);
 * `MQUEUE` - provenance queue in the MessageBroker (defaults to `provenance.inbox`);
+* `FRAMEQUEUE`- Graph Framing queue in the MessageBroker (defaults to `attx.ldframe.inbox`);
+* `INDEXQUEUE`- Elasticsearch Indexing queue in the MessageBroker (defaults to `attx.indexing.inbox`);
 * `MKEY` - password for MessageBroker (defaults to `password`);
 * `GHOST` - Graph Store container name or address (defaults to `localhost`);
 * `GPORT` - Graph Store port (defaults to `3030`);
 * `GKEY` - Graph Store password (defaults to `pw123`);
-* `DS` - Graph Store working dataset (defaults to `ds`).
+* `DS` - Graph Store working dataset (defaults to `ds`);
+* `FRAMEHOST` - container name for Graph Framing Service (defaults to `localhost`);
+* `FRAMEVER` - version of the Graph Framing Service API (defaults to `0.2`);
+* `FRAMEPORT` - port for the Graph Framing Service (defaults to `4303`);
+* `INDEXHOST`- container name for the Elasticsearch Indexing Service (defaults to `localhost`);
+* `INDEXVER` - version of the Elasticsearch Indexing Service API (defaults to `0.2`);
+* `INDEXPORT` - port for the Elasticsearch Indexing Service (defaults to `4304`);
+* `QTIME` - variable to set up the timer for publisher (defaults to 9 minutes and input must be integer).
 
 ## Service API Endpoints
 

@@ -738,6 +738,25 @@
             
 
             
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.3.1" data-path="Examples-Indexing-Service.html">
+            
+                <a href="Examples-Indexing-Service.html">
+            
+                    
+                    Indexing Messages Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
         <li class="chapter " data-level="4.4" data-path="Service-Graph-Framing.html">
@@ -750,6 +769,25 @@
                 </a>
             
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.4.1" data-path="Examples-Graph-Framing-Service.html">
+            
+                <a href="Examples-Graph-Framing-Service.html">
+            
+                    
+                    Graph Framing Messages Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -1130,9 +1168,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 13-Nov-2017 09:16:58</div></div><h1 style="color:red" id="work-in-progress">Work In Progress</h1>
-
-<h1 id="provenance-service">Provenance Service</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 07-Dec-2017 11:39:31</div></div><h1 id="provenance-service">Provenance Service</h1>
 <p>Github repository: <a href="https://github.com/ATTX-project/provenance-service" target="_blank">https://github.com/ATTX-project/provenance-service</a></p>
 <p>Considering a Microservices oriented system we identify two means of introducing a Provenance system in such a system:</p>
 <ul>
@@ -1163,6 +1199,7 @@
 <ul>
 <li><code>graph</code> - managing interaction with the Graph Store and retrieving statistics about it (e.g. list of named graphs, number of queries);</li>
 <li><code>prov</code> - endpoint for registering provenance information directly;</li>
+<li><code>index</code> - index provenance information in Elasticsearch;</li>
 <li><code>status</code> - status of a provenance job with a specific ID;</li>
 <li><code>health</code> - checks if the application is running.</li>
 </ul>
@@ -1182,16 +1219,55 @@ A graph store connection is required in order to:</p>
 </ul>
 <h3 id="message-broker-connection">Message Broker Connection</h3>
 <p>Provenance Service needs <a href="MessageBroker-RabbitMQ.html">RabbitMQ Message Broker</a> in order to communicate with other services that want to register provenance information in the Graph Store.</p>
+<h3 id="elasticsearch-connection">Elasticsearch Connection</h3>
+<p>In order to index provenance data into Elasticsearch, we require both the <a href="Service-Graph-Framing.html">Graph Framing Service</a> and the <a href="Service-Indexing.html">Indexing Service</a>. The parameters for these services as as follows:</p>
+<ul>
+<li>alias: <code>attx</code>;</li>
+<li>document type: name graph in Graph Store e.g. if the named graph is <code>http://data.hulib.helsinki.fi/prov_workflow1_activity6</code> the document type is <code>workflow1_activity6</code>.</li>
+</ul>
+<p>Provenance JSON-LD frame:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Activity&quot;</span>,
+  <span class="hljs-string">&quot;http://www.w3.org/ns/prov#qualifiedAssociation&quot;</span>: {
+    <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,
+    <span class="hljs-string">&quot;http://www.w3.org/ns/prov#hadPlan&quot;</span>: {
+      <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#label&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+    }
+  },
+  <span class="hljs-string">&quot;http://www.w3.org/ns/prov#qualifiedCommunication&quot;</span>: {
+    <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,
+    <span class="hljs-string">&quot;http://www.w3.org/ns/prov#activity&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+  },
+  <span class="hljs-string">&quot;http://www.w3.org/ns/prov#qualifiedGeneration&quot;</span>: {
+    <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,
+    <span class="hljs-string">&quot;http://www.w3.org/ns/prov#entity&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+  },
+  <span class="hljs-string">&quot;http://www.w3.org/ns/prov#qualifiedUsage&quot;</span>: {
+    <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,
+    <span class="hljs-string">&quot;http://www.w3.org/ns/prov#entity&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+  }
+}
+</code></pre>
 <h2 id="environment-variables">Environment Variables</h2>
 <ul>
 <li><code>MHOST</code> - container name or address for the MessageBroker-RabbitMQ database (defaults to <code>localhost</code>);</li>
 <li><code>MUSER</code> - user name for MessageBroker (defaults to <code>user</code>);</li>
 <li><code>MQUEUE</code> - provenance queue in the MessageBroker (defaults to <code>provenance.inbox</code>);</li>
+<li><code>FRAMEQUEUE</code>- Graph Framing queue in the MessageBroker (defaults to <code>attx.ldframe.inbox</code>);</li>
+<li><code>INDEXQUEUE</code>- Elasticsearch Indexing queue in the MessageBroker (defaults to <code>attx.indexing.inbox</code>);</li>
 <li><code>MKEY</code> - password for MessageBroker (defaults to <code>password</code>);</li>
 <li><code>GHOST</code> - Graph Store container name or address (defaults to <code>localhost</code>);</li>
 <li><code>GPORT</code> - Graph Store port (defaults to <code>3030</code>);</li>
 <li><code>GKEY</code> - Graph Store password (defaults to <code>pw123</code>);</li>
-<li><code>DS</code> - Graph Store working dataset (defaults to <code>ds</code>).</li>
+<li><code>DS</code> - Graph Store working dataset (defaults to <code>ds</code>);</li>
+<li><code>FRAMEHOST</code> - container name for Graph Framing Service (defaults to <code>localhost</code>);</li>
+<li><code>FRAMEVER</code> - version of the Graph Framing Service API (defaults to <code>0.2</code>);</li>
+<li><code>FRAMEPORT</code> - port for the Graph Framing Service (defaults to <code>4303</code>);</li>
+<li><code>INDEXHOST</code>- container name for the Elasticsearch Indexing Service (defaults to <code>localhost</code>);</li>
+<li><code>INDEXVER</code> - version of the Elasticsearch Indexing Service API (defaults to <code>0.2</code>);</li>
+<li><code>INDEXPORT</code> - port for the Elasticsearch Indexing Service (defaults to <code>4304</code>);</li>
+<li><code>QTIME</code> - variable to set up the timer for publisher (defaults to 9 minutes and input must be integer).</li>
 </ul>
 <h2 id="service-api-endpoints">Service API Endpoints</h2>
 <h3 id="health-endpoint">health Endpoint</h3>
@@ -1277,7 +1353,7 @@ A graph store connection is required in order to:</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Provenance Service","level":"4.1","depth":1,"next":{"title":"Provenance Messages Examples","level":"4.1.1","depth":2,"path":"Examples-Provenance-Service.md","ref":"Examples-Provenance-Service.md","articles":[]},"previous":{"title":"RabbitMQ Message Broker","level":"3.5.2","depth":2,"path":"MessageBroker-RabbitMQ.md","ref":"MessageBroker-RabbitMQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Service-Provenance.md","mtime":"2017-11-13T14:08:34.416Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-27T14:09:39.346Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Provenance Service","level":"4.1","depth":1,"next":{"title":"Provenance Messages Examples","level":"4.1.1","depth":2,"path":"Examples-Provenance-Service.md","ref":"Examples-Provenance-Service.md","articles":[]},"previous":{"title":"RabbitMQ Message Broker","level":"3.5.2","depth":2,"path":"MessageBroker-RabbitMQ.md","ref":"MessageBroker-RabbitMQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Service-Provenance.md","mtime":"2017-12-07T11:40:14.753Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-12-07T11:40:49.996Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

@@ -13,7 +13,7 @@
 
 ## Ontology/Data Model - ATTXOnto
 
-**The full ontology description and examples are available at: https://attx-project.github.io/attx-onto/**
+**The full ontology description and examples are available at:** https://attx-project.github.io/attx-onto/
 
 The ontology/data model has the purpose of describing how and when the data flows within the platform, types of transformations (and associated workflows), the provenance information (agent and associated processes performed) and other meta data.
 
