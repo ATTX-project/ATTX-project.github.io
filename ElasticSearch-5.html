@@ -1168,81 +1168,184 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 19-May-2017 13:47:43</div></div><h1 id="elasticsearch-5x">ElasticSearch 5.x</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 07-Dec-2017 12:32:44</div></div><h1 id="elasticsearch-5x">ElasticSearch 5.x</h1>
 <p>Version 5.x of ElasticSearch provides an alternative indexing endpoint for the distribution component exposed data, and the same time different data structure.</p>
 <p>Another functionality is the centralised logging which aims to connect provenance information with the components processes.</p>
+<h3 id="table-of-contents">Table of Contents</h3>
+<!-- TOC START min:1 max:3 link:true update:true -->
+<ul>
+<li><a href="#data-structure">Data structure</a><ul>
+<li><a href="#indexing-working-data">Indexing Working data</a></li>
+<li><a href="#indexing-json-ld-provenance">Indexing JSON-LD Provenance</a></li>
+</ul>
+</li>
+</ul>
+<!-- TOC END -->
 <h2 id="data-structure">Data structure</h2>
-<p>Currently ATTX Semantic Broker offers functionality for indexing semantic data as plain JSON (formatted via a JSON-LD frame) or a whole JSON-LD.</p>
-<h3 id="elasticsearch-5x-and-json-derived-from-json-ld-frame">Elasticsearch 5.x and JSON derived from JSON-LD frame</h3>
+<p>Currently ATTX Semantic Broker offers functionality for indexing semantic data as plain JSON (formatted via a JSON-LD frame by using <a href="Service-Graph-Framing.html">Graph Framing Service</a>) or a whole JSON-LD (using <a href="Service-Graph-Framing.html">Graph Framing Service</a> but providing an empty frame; this might raise issues with the depth of the JSON documents <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html#mapping-limit-settings" target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html#mapping-limit-settings</a> that by default is <code>20</code>).</p>
+<h3 id="indexing-working-data">Indexing Working data</h3>
 <p>Indexing data formatted via a JSON-LD frame, takes the complexity of formatting the data from the client, exposing only the necessary information for the client to use in a specific application.</p>
-<p>Given a JSON-LD frame (included in the POST <code>index</code> request):</p>
+<p>Given a JSON-LD frame:</p>
 <pre><code class="lang-json">{
   <span class="hljs-string">&quot;@context&quot;</span>: {
-    <span class="hljs-string">&quot;@vocab&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/&quot;</span>,
-    <span class="hljs-string">&quot;dcterms&quot;</span>: <span class="hljs-string">&quot;http://purl.org/dc/terms/&quot;</span>,
-    <span class="hljs-string">&quot;rdf&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>,
-    <span class="hljs-string">&quot;rdfs&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#&quot;</span>,
-    <span class="hljs-string">&quot;xsd&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema#&quot;</span>,
-    <span class="hljs-string">&quot;attx-types&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/types/&quot;</span>,
-    <span class="hljs-string">&quot;attx-types:Infrastructure&quot;</span>: {
-    <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;@id&quot;</span>
+    <span class="hljs-string">&quot;dc&quot;</span>: <span class="hljs-string">&quot;http://purl.org/dc/elements/1.1/&quot;</span>,
+    <span class="hljs-string">&quot;ex&quot;</span>: <span class="hljs-string">&quot;http://example.org/vocab#&quot;</span>,
+    <span class="hljs-string">&quot;dct&quot;</span>: <span class="hljs-string">&quot;http://purl.org/dc/terms/&quot;</span>,
+    <span class="hljs-string">&quot;work&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/work#&quot;</span>,
+    <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;dct:title&quot;</span>
+
   },
-    <span class="hljs-string">&quot;attx:hasclusteredID&quot;</span>: {
-      <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/id&quot;</span>
-    }
-    ,
-    <span class="hljs-string">&quot;dcterms:identifier&quot;</span>: {
-      <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;@id&quot;</span>,
-      <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://purl.org/dc/terms/identifier&quot;</span>
-    }
-  },
-  <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;attx-types:Infrastructure&quot;</span>
+  <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;work:Publication&quot;</span>,
+  <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">&quot;@requireAll&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
 }
 </code></pre>
-<p>The resulting JSON-LD would have the following structure:</p>
+<p>The following results are available in ElasticSearch</p>
 <pre><code class="lang-json">{
-  <span class="hljs-string">&quot;@context&quot;</span>: {
-    <span class="hljs-string">&quot;@vocab&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/&quot;</span>,
-    <span class="hljs-string">&quot;dcterms&quot;</span>: <span class="hljs-string">&quot;http://purl.org/dc/terms/&quot;</span>,
-    <span class="hljs-string">&quot;rdf&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;</span>,
-    <span class="hljs-string">&quot;rdfs&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#&quot;</span>,
-    <span class="hljs-string">&quot;xsd&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema#&quot;</span>,
-    <span class="hljs-string">&quot;attx-types&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/types/&quot;</span>,
-    <span class="hljs-string">&quot;attx-types:Infrastructure&quot;</span>: {
-      <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;@id&quot;</span>
+    <span class="hljs-string">&quot;took&quot;</span>: <span class="hljs-number">3</span>,
+    <span class="hljs-string">&quot;timed_out&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-string">&quot;_shards&quot;</span>: {
+        <span class="hljs-string">&quot;total&quot;</span>: <span class="hljs-number">5</span>,
+        <span class="hljs-string">&quot;successful&quot;</span>: <span class="hljs-number">5</span>,
+        <span class="hljs-string">&quot;skipped&quot;</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-string">&quot;failed&quot;</span>: <span class="hljs-number">0</span>
     },
-    <span class="hljs-string">&quot;attx:hasclusteredID&quot;</span>: {
-      <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/id&quot;</span>
-    },
-    <span class="hljs-string">&quot;dcterms:identifier&quot;</span>: {
-      <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;@id&quot;</span>,
-      <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://purl.org/dc/terms/identifier&quot;</span>
+    <span class="hljs-string">&quot;hits&quot;</span>: {
+        <span class="hljs-string">&quot;total&quot;</span>: <span class="hljs-number">3</span>,
+        <span class="hljs-string">&quot;max_score&quot;</span>: <span class="hljs-number">1.0</span>,
+        <span class="hljs-string">&quot;hits&quot;</span>: [{
+            <span class="hljs-string">&quot;_index&quot;</span>: <span class="hljs-string">&quot;testindex_service_20171207_120336&quot;</span>,
+            <span class="hljs-string">&quot;_type&quot;</span>: <span class="hljs-string">&quot;testdoc4&quot;</span>,
+            <span class="hljs-string">&quot;_id&quot;</span>: <span class="hljs-string">&quot;tutka:75547&quot;</span>,
+            <span class="hljs-string">&quot;_score&quot;</span>: <span class="hljs-number">1.0</span>,
+            <span class="hljs-string">&quot;_source&quot;</span>: {
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;tutka:75547&quot;</span>,
+                <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;work:Publication&quot;</span>,
+                <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;The Importance of Phytoplankton Biomolecule Availability for Secondary Production&quot;</span>
+            }
+        }, {
+            <span class="hljs-string">&quot;_index&quot;</span>: <span class="hljs-string">&quot;testindex_service_20171207_120336&quot;</span>,
+            <span class="hljs-string">&quot;_type&quot;</span>: <span class="hljs-string">&quot;testdoc4&quot;</span>,
+            <span class="hljs-string">&quot;_id&quot;</span>: <span class="hljs-string">&quot;tutka:68691&quot;</span>,
+            <span class="hljs-string">&quot;_score&quot;</span>: <span class="hljs-number">1.0</span>,
+            <span class="hljs-string">&quot;_source&quot;</span>: {
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;tutka:68691&quot;</span>,
+                <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;work:Publication&quot;</span>,
+                <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;A Competence-based View on the Global Software Development Process&quot;</span>
+            }
+        }, {
+            <span class="hljs-string">&quot;_index&quot;</span>: <span class="hljs-string">&quot;testindex_service_20171207_120336&quot;</span>,
+            <span class="hljs-string">&quot;_type&quot;</span>: <span class="hljs-string">&quot;testdoc4&quot;</span>,
+            <span class="hljs-string">&quot;_id&quot;</span>: <span class="hljs-string">&quot;tutka:69464&quot;</span>,
+            <span class="hljs-string">&quot;_score&quot;</span>: <span class="hljs-number">1.0</span>,
+            <span class="hljs-string">&quot;_source&quot;</span>: {
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;tutka:69464&quot;</span>,
+                <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;work:Publication&quot;</span>,
+                <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;A gap analysis of Internet-of-Things platforms&quot;</span>
+            }
+        }]
     }
-  },
-  <span class="hljs-string">&quot;@graph&quot;</span>: [
-    {
-      <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/3/work/infra/urn:nbn:fi:research-infras-201607251&quot;</span>,
-      <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;attx-types:Infrastructure&quot;</span>,
-      <span class="hljs-string">&quot;attx:hasclusteredID&quot;</span>: {
-        <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;urn:nbn:fi:research-infras-201607251&quot;</span>
-      },
-      <span class="hljs-string">&quot;dcterms:identifier&quot;</span>: <span class="hljs-string">&quot;urn:nbn:fi:research-infras-201607251&quot;</span>,
-      <span class="hljs-string">&quot;dcterms:title&quot;</span>: <span class="hljs-string">&quot;European Social Survey&quot;</span>
-    },
-    {
-      <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/3/work/infra/urn:nbn:fi:research-infras-2016072510&quot;</span>,
-      <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;attx-types:Infrastructure&quot;</span>,
-      <span class="hljs-string">&quot;attx:hasclusteredID&quot;</span>: {
-        <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;urn:nbn:fi:research-infras-2016072510&quot;</span>
-      },
-      <span class="hljs-string">&quot;dcterms:identifier&quot;</span>: <span class="hljs-string">&quot;urn:nbn:fi:research-infras-2016072510&quot;</span>,
-      <span class="hljs-string">&quot;dcterms:title&quot;</span>: <span class="hljs-string">&quot;Finnish Marine Research Infrastructure&quot;</span>
-    }]
-  }
+}
 </code></pre>
-<h3 id="elasticsearch-5x-indexing-json-ld">Elasticsearch 5.x indexing JSON-LD</h3>
-<p>Provides more flexibility on the client side for formatting the data, and at the same adding more complexity to the client requests.</p>
-<p>To Be Continued.</p>
+<h3 id="indexing-json-ld-provenance">Indexing JSON-LD Provenance</h3>
+<p>Example of Provenance data indexed in ElasticSearch as JSON-LD.
+Snapshot of a provenance document:</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;_index&quot;</span>: <span class="hljs-string">&quot;attx_service_20171205_155508&quot;</span>,
+    <span class="hljs-string">&quot;_type&quot;</span>: <span class="hljs-string">&quot;workflow4_activity4&quot;</span>,
+    <span class="hljs-string">&quot;_id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/workflow4_activity4_UnifiedViews&quot;</span>,
+    <span class="hljs-string">&quot;_score&quot;</span>: <span class="hljs-number">1.0</span>,
+    <span class="hljs-string">&quot;_source&quot;</span>: {
+        <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/onto#hasStatus&quot;</span>: <span class="hljs-string">&quot;success&quot;</span>,
+        <span class="hljs-string">&quot;http://purl.org/dc/terms/title&quot;</span>: <span class="hljs-string">&quot;Publish dataset Activity4&quot;</span>,
+        <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/workflow4_activity4_UnifiedViews&quot;</span>,
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#qualifiedAssociation&quot;</span>: {
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/workflow4_activity4_association_9ca904254f6dd6f3ab04911d87fdc863&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Association&quot;</span>,
+            <span class="hljs-string">&quot;http://www.w3.org/ns/prov#hadPlan&quot;</span>: {
+                <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#label&quot;</span>: <span class="hljs-string">&quot;Workflow: workflow4_activity4&quot;</span>,
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/workflow4_activity4&quot;</span>,
+                <span class="hljs-string">&quot;@type&quot;</span>: [<span class="hljs-string">&quot;http://www.w3.org/ns/prov#Plan&quot;</span>, <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/onto#Workflow&quot;</span>]
+            }
+        },
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#qualifiedGeneration&quot;</span>: [{
+            <span class="hljs-string">&quot;http://www.w3.org/ns/prov#entity&quot;</span>: {
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_58b5c907d4f9ea7d0b38815530267a39&quot;</span>
+            },
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/generated_73bb9267396ee27272353dfe12715a29&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Generation&quot;</span>
+        }, {
+            <span class="hljs-string">&quot;http://www.w3.org/ns/prov#entity&quot;</span>: {
+                <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/title&quot;</span>: <span class="hljs-string">&quot;Published DS&quot;</span>,
+                <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#comment&quot;</span>: <span class="hljs-string">&quot;Generated Dataset&quot;</span>,
+                <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/uri&quot;</span>: <span class="hljs-string">&quot;testindex&quot;</span>,
+                <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#label&quot;</span>: <span class="hljs-string">&quot;Published DS&quot;</span>,
+                <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/description&quot;</span>: <span class="hljs-string">&quot;test&quot;</span>,
+                <span class="hljs-string">&quot;http://purl.org/dc/terms/source&quot;</span>: [<span class="hljs-string">&quot;{u&apos;uri&apos;: u&apos;testindex&apos;}&quot;</span>, <span class="hljs-string">&quot;{u&apos;title&apos;: u&apos;Published DS&apos;, u&apos;uri&apos;: u&apos;testindex&apos;, u&apos;description&apos;: u&apos;test&apos;}&quot;</span>, <span class="hljs-string">&quot;testindex&quot;</span>],
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_58b5c907d4f9ea7d0b38815530267a39&quot;</span>,
+                <span class="hljs-string">&quot;@type&quot;</span>: [<span class="hljs-string">&quot;http://www.w3.org/ns/prov#Entity&quot;</span>, <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/onto#Dataset&quot;</span>]
+            },
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/generated_9e49b97e924bcb33c7b6ef6f475f376c&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Generation&quot;</span>
+        }],
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#qualifiedCommunication&quot;</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#qualifiedUsage&quot;</span>: [{
+            <span class="hljs-string">&quot;http://www.w3.org/ns/prov#entity&quot;</span>: {
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_e288657519292e97999ef572d18da25e&quot;</span>
+            },
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/used_7e09c07b247836ed5061d5970bdb8aaf&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Usage&quot;</span>
+        }, {
+            <span class="hljs-string">&quot;http://www.w3.org/ns/prov#entity&quot;</span>: {
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_f1d141de65f33e5f8585e2e1320446c8&quot;</span>
+            },
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/used_bea1221ed9964ce238c80a23ce478797&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Usage&quot;</span>
+        }, {
+            <span class="hljs-string">&quot;http://www.w3.org/ns/prov#entity&quot;</span>: {
+                <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_0195a4f171e7f9a59fb63e5cdb276046&quot;</span>
+            },
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/used_754826bd75c25f278f76be731b61063a&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Usage&quot;</span>
+        }],
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#generated&quot;</span>: {
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_58b5c907d4f9ea7d0b38815530267a39&quot;</span>
+        },
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#endedAtTime&quot;</span>: {
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema#dateTime&quot;</span>,
+            <span class="hljs-string">&quot;@value&quot;</span>: <span class="hljs-string">&quot;2017-12-05T09:18:11&quot;</span>
+        },
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#wasAssociatedWith&quot;</span>: {
+            <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#label&quot;</span>: <span class="hljs-string">&quot;UnifiedViews&quot;</span>,
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/UnifiedViews&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: [<span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/onto#Artifact&quot;</span>, <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Agent&quot;</span>]
+        },
+        <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#label&quot;</span>: <span class="hljs-string">&quot;Publish dataset Activity4&quot;</span>,
+        <span class="hljs-string">&quot;@type&quot;</span>: [<span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/onto#WorkflowExecution&quot;</span>, <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Activity&quot;</span>],
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#startedAtTime&quot;</span>: {
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema#dateTime&quot;</span>,
+            <span class="hljs-string">&quot;@value&quot;</span>: <span class="hljs-string">&quot;2017-12-05T09:18:01&quot;</span>
+        },
+        <span class="hljs-string">&quot;http://www.w3.org/ns/prov#used&quot;</span>: [{
+            <span class="hljs-string">&quot;http://purl.org/dc/terms/source&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/work/wf_2_step_10/output&quot;</span>,
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_0195a4f171e7f9a59fb63e5cdb276046&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Entity&quot;</span>,
+            <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#comment&quot;</span>: <span class="hljs-string">&quot;Used Dataset&quot;</span>
+        }, {
+            <span class="hljs-string">&quot;http://purl.org/dc/terms/source&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/work/wf_1_step_2/output&quot;</span>,
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_e288657519292e97999ef572d18da25e&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Entity&quot;</span>,
+            <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#comment&quot;</span>: <span class="hljs-string">&quot;Used Dataset&quot;</span>
+        }, {
+            <span class="hljs-string">&quot;http://purl.org/dc/terms/source&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/work/wf_3_step_14/output&quot;</span>,
+            <span class="hljs-string">&quot;@id&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/entity_f1d141de65f33e5f8585e2e1320446c8&quot;</span>,
+            <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;http://www.w3.org/ns/prov#Entity&quot;</span>,
+            <span class="hljs-string">&quot;http://www.w3.org/2000/01/rdf-schema#comment&quot;</span>: <span class="hljs-string">&quot;Used Dataset&quot;</span>
+        }]
+    }
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1286,7 +1389,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"ElasticSearch 5.x","level":"3.3.2","depth":2,"next":{"title":"How Dissemination worflows work","level":"3.3.3","depth":2,"path":"Dissemination-Workflow.md","ref":"Dissemination-Workflow.md","articles":[]},"previous":{"title":"ElasticSearch 1.3 with Siren","level":"3.3.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-5.md","mtime":"2017-08-03T12:02:45.426Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-12-07T11:40:49.996Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ElasticSearch 5.x","level":"3.3.2","depth":2,"next":{"title":"How Dissemination worflows work","level":"3.3.3","depth":2,"path":"Dissemination-Workflow.md","ref":"Dissemination-Workflow.md","articles":[]},"previous":{"title":"ElasticSearch 1.3 with Siren","level":"3.3.1","depth":2,"path":"ElasticSearch-with-Siren.md","ref":"ElasticSearch-with-Siren.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ElasticSearch-5.md","mtime":"2017-12-07T12:33:30.440Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-12-07T12:33:47.200Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
