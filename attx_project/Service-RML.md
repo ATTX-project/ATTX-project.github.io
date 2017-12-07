@@ -22,7 +22,7 @@ Service can receive transformation request documents through REST API and Rabbit
 * GET `/metrics` - Spring actuator's basic implementation.
 * POST `/version/transform`
 
-Current version is: 0.1
+Current version is: `0.1`
 
 ## Building and running RML service
 

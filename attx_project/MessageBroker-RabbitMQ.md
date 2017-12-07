@@ -1,6 +1,5 @@
 # RabbitMQ - ATTX MessageBroker
 
-
 ## Image
 
 rabbitmq:3.6.11-management

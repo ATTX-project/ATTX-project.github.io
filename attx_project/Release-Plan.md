@@ -16,7 +16,7 @@ Adjacent to the - [Feature roadmap](https://github.com/ATTX-project/project-mana
 
 
 ## Realease Version 2.0
-Planned release date: **TBD**
+Planned release date: **December 2017**
 1. Microservice Architecture
 2. Service Discovery
 3. Messaging Service

@@ -20,7 +20,6 @@ Use case is part of the [Mildred project](http://blogs.helsinki.fi/mildred/), wh
 
 <!-- TOC END -->
 
-
 ## Approach
 
 Dataset related metadata is still relatively sparse, compared to other research outputs, such as publications. In this use case we are concentrating solely on data sources that were chosen by the project Mildred's steering group.

@@ -1,6 +1,5 @@
 # ActiveMQ - ATTX MessageBroker
 
-
 ## Image
 
 Custom image derived from: https://github.com/krizsan/activemq-docker

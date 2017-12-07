@@ -2,19 +2,20 @@
 
 This page describes the necessary steps required to run integration/BDD tests within a container or local environment alongside any required services running in their own containers.
 
-### Table of Contents
-<!-- TOC START min:1 max:3 link:true update:false -->
+### Table of Contents<!-- TOC START min:1 max:3 link:true update:false -->
   - [Testing Workflow](#testing-workflow)
   - [Testing with Gradle](#testing-with-gradle)
-  - [Structure of feature-test images](#structure-of-feature-test-images)
-    - [runTests.sh script](#runtestssh-script)
-    - [Gradle build files](#gradle-build-files)
-    - [Dockerfile](#dockerfile)
+  - [Structure of Feature-test Images](#structure-of-feature-test-images)
+    - [runTests.sh Script](#runtestssh-script)
+    - [Gradle Build Files](#gradle-build-files)
+    - [Dockerfile Description](#dockerfile-description)
     - [Configuring Jenkins](#configuring-jenkins)
-  - [Running tests against custom images](#running-tests-against-custom-images)
-  - [Developing tests](#developing-tests)
+  - [Running Tests Against Custom Images](#running-tests-against-custom-images)
+  - [Developing Tests](#developing-tests)
 
 <!-- TOC END -->
+
+
 
 Platform Tests repository: https://github.com/ATTX-project/platform-tests
 
@@ -112,6 +113,12 @@ if (!project.hasProperty("testEnv") || project.testEnv == "dev") {
     ext.testSet = "container"
 } else {
     throw new GradleException("Build project environment option not recognised.")
+}
+
+if (!project.hasProperty("volumeDir")) {
+    ext.volumeDir = "/attx-sb-shared/data"
+} else {
+    ext.volumeDir = project.volumeDir
 }
 
 def data = ""
@@ -275,6 +282,42 @@ buildTestImage.dependsOn shadowJar
 ```
 
 `checkDPUDone` waits for the ATTX DPUS to be added to the front-end where there is a need for such test fixtures. The ATTX DPU waits for MySQL  (for about 4 minutes to be up) in order to add the DPU. If everything is OK the exit code of that container will be (By convention, an 'exit 0' indicates success - http://www.tldp.org/LDP/abs/html/exit-status.html). The same strategy is used to check the Tests fail or not inside the container - if the exit code is `0` the tests were successful if not the tests failed.
+
+The `testEnv.json` configuration file can have the following structure:
+```json
+{
+    "networks": {
+        "pdTest": {
+            "baseImage": "graphmanager",
+            "dependencies": [
+                "messagebroker",
+                "provservice",
+                "indexservice",
+                "ldframe",
+                "uvprov",
+                "rmlservice",
+                "attxdpus",
+                "es5",
+                "testdata"
+            ]
+        },
+        "gmTest": {
+            "baseImage": "graphmanager",
+            "dependencies": [
+                "messagebroker",
+                "provservice",
+                "indexservice",
+                "ldframe",
+                "uvprov",
+                "rmlservice",
+                "attxdpus",
+                "es5"
+            ]
+        }
+    }
+}
+
+```
 
 **build.test.gradle**
 
