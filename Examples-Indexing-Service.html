@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>CI/CD Enviroment · GitBook</title>
+        <title>Indexing Messages Examples · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Jenkins-CI.html" />
+    <link rel="next" href="Service-Graph-Framing.html" />
     
     
-    <link rel="prev" href="Release-Plan.html" />
+    <link rel="prev" href="Service-Indexing.html" />
     
 
     </head>
@@ -741,7 +741,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="4.3.1" data-path="Examples-Indexing-Service.html">
+        <li class="chapter active" data-level="4.3.1" data-path="Examples-Indexing-Service.html">
             
                 <a href="Examples-Indexing-Service.html">
             
@@ -857,7 +857,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="6.4" data-path="CI-CD-Enviroment.html">
+        <li class="chapter " data-level="6.4" data-path="CI-CD-Enviroment.html">
             
                 <a href="CI-CD-Enviroment.html">
             
@@ -1153,7 +1153,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >CI/CD Enviroment</a>
+        <a href="." >Indexing Messages Examples</a>
     </h1>
 </div>
 
@@ -1168,43 +1168,55 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 28-Jun-2017 12:24:18</div></div><h1 id="cicd-environment">CI/CD Environment</h1>
-<h3 id="table-of-contents">Table of Contents</h3>
-<!-- TOC START min:1 max:3 link:true update:false -->
-<ul>
-<li><a href="#attx-dev-server">ATTX-DEV SERVER</a></li>
-<li><a href="#how-to-access-the-jenkins-server">How to access the Jenkins server</a></li>
-<li><a href="#how-to-access-the-archiva-server">How to access the Archiva server</a></li>
-<li><a href="#how-to-access-the-pypi-ivy-repo-server">How to access the PyPi Ivy repo server</a></li>
-<li><a href="#attx-sandbox-server">ATTX-SANDBOX SERVER</a></li>
-</ul>
-<!-- TOC END -->
-<p><strong>Currently all these services are located on servers with restricted access.</strong></p>
-<h2 id="attx-dev-server">ATTX-DEV SERVER</h2>
-<p>The ATTX-DEV server (<code>attx-dev.hulib.helsinki.fi</code>) runs the following containerised services: Jenkins (automated Gradle tests and Docker building), Docker Registry Server (private registry for ATTX-Project Docker images), and Nginx (web server).</p>
-<p>All services are implemented as Docker containers, and the goal is to have their images publicly available in Docker Hub (cf. <a href="https://hub.docker.com/u/attxproject/dashboard/" target="_blank">https://hub.docker.com/u/attxproject/dashboard/</a>) for the general public&apos;s benefit.</p>
-<p>To ensure the availability of the CI/CD environment, the Jenkins and Docker Registry containers have been put under the supervision of the <code>sysctl</code> daemon (<code>jenkins-docker.service</code> and <code>private-docker-registry.service</code>, respectively). This will ensure their automatic start-up in case the <code>attx-dev</code> server needs to be rebooted for maintenance.</p>
-<h2 id="how-to-access-the-jenkins-server">How to Access the Jenkins Server</h2>
-<p>The Jenkins WebUI can be reached @ <a href="http://attx-dev:49001/" target="_blank">http://attx-dev:49001/</a>
-More information about <a href="Jenkins-CI.html">Jenkins CI</a></p>
-<h2 id="how-to-access-the-archiva-server">How to Access the Archiva Server</h2>
-<p>The Archiva WebUI can be reached at: <a href="http://attx-dev:8081/" target="_blank">http://attx-dev:8081/</a></p>
-<p>To access the REST API use:</p>
-<ul>
-<li>the documentation: <a href="http://attx-dev:8081/#rest-docs-archiva-rest-api/index.html" target="_blank">http://attx-dev:8081/#rest-docs-archiva-rest-api/index.html</a></li>
-<li>to download an artifact (e.g. gmAPI artifact):
-<code>config ${artifactRepoURL}/restServices/archivaServices/searchService/artifact?g=org.uh.hulib.attx.gc&amp;a=gm-API&amp;v=${gmAPI}&amp;p=tar.gz&quot;:&quot;gm-API-${gmAPI}.tar.gz</code></li>
-</ul>
-<h2 id="how-to-access-the-pypi-ivy-repo-server">How to Access the PyPi Ivy Repo Server</h2>
-<p>Example of curl requests:</p>
-<ul>
-<li><code>shell
-curl -X GET -H http://attx-dev:5039/pypi/{dependencyName}/{version}/dependencyName-version.tar.gz</code> - to retrieve dependency with a specific version number</li>
-<li><code>shell
-curl -X POST -H &quot;Content-Type: application/json&quot; -H &quot;Cache-Control: no-cache&quot; -d &apos;{ &quot;dependencies&quot;: [ { &quot;name&quot; : &quot;pytest&quot;, &quot;version&quot; : &quot;3.0.5&quot; }, { &quot;name&quot; : &quot;elizabeth&quot;, &quot;version&quot; : &quot;0.3.11&quot; } ], &quot;replace&quot; : [ { &quot;name&quot;: &quot;alabaster&quot;, &quot;oldVersion&quot;: &quot;0.7&quot;, &quot;newVersion&quot;: &quot;0.7.1&quot; } ] }&apos; &quot;http://attx-dev:5639/add&quot;</code> - for adding dependencies</li>
-</ul>
-<h2 id="attx-sandbox-server">ATTX-SANDBOX SERVER</h2>
-<p>The ATTX-SANDBOX server (<code>attx-sandbox.hulib.helsinki.fi</code>) runs the containerised services described in the <a href="Platform-Deployment.md">Platform Deployment</a>.</p>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 07-Dec-2017 11:39:31</div></div><h1 id="indexing-service-examples">Indexing Service examples</h1>
+<p>Request</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;provenance&quot;</span>: {
+        <span class="hljs-string">&quot;context&quot;</span>: {
+            <span class="hljs-string">&quot;workflowID&quot;</span>: <span class="hljs-string">&quot;ingestionwf&quot;</span>,
+            <span class="hljs-string">&quot;activityID&quot;</span>: <span class="hljs-number">1</span>,
+            <span class="hljs-string">&quot;stepID&quot;</span>: <span class="hljs-string">&quot;replaceds&quot;</span>
+        }
+    },
+    <span class="hljs-string">&quot;payload&quot;</span>: {
+        <span class="hljs-string">&quot;indexingServiceInput&quot;</span>: {
+            <span class="hljs-string">&quot;task&quot;</span>: <span class="hljs-string">&quot;replace&quot;</span>,
+            <span class="hljs-string">&quot;targetAlias&quot;</span>: [<span class="hljs-string">&quot;test&quot;</span>],
+            <span class="hljs-string">&quot;sourceData&quot;</span>: [{
+                    <span class="hljs-string">&quot;input&quot;</span>: <span class="hljs-string">&quot;file:///attx-sb-shared/temp/file.json&quot;</span>,
+                    <span class="hljs-string">&quot;docType&quot;</span>: <span class="hljs-string">&quot;workflowingestionwf_activity1&quot;</span>,
+                    <span class="hljs-string">&quot;useBulk&quot;</span>: <span class="hljs-literal">true</span>,
+                    <span class="hljs-string">&quot;inputType&quot;</span>: <span class="hljs-string">&quot;URI&quot;</span>
+                },
+                {
+                    <span class="hljs-string">&quot;input&quot;</span>: <span class="hljs-string">&quot;file:///attx-sb-shared/temp/file1.json&quot;</span>,
+                    <span class="hljs-string">&quot;docType&quot;</span>: <span class="hljs-string">&quot;workflow1_activity8&quot;</span>,
+                    <span class="hljs-string">&quot;useBulk&quot;</span>: <span class="hljs-literal">true</span>,
+                    <span class="hljs-string">&quot;inputType&quot;</span>: <span class="hljs-string">&quot;URI&quot;</span>
+                }
+            ]
+        }
+    }
+}
+</code></pre>
+<p>Response</p>
+<pre><code class="lang-json">{
+    <span class="hljs-string">&quot;provenance&quot;</span>: {
+        <span class="hljs-string">&quot;context&quot;</span>: {
+            <span class="hljs-string">&quot;activityID&quot;</span>: <span class="hljs-string">&quot;1&quot;</span>,
+            <span class="hljs-string">&quot;stepID&quot;</span>: <span class="hljs-string">&quot;replaceds&quot;</span>,
+            <span class="hljs-string">&quot;workflowID&quot;</span>: <span class="hljs-string">&quot;ingestionwf&quot;</span>
+        },
+        <span class="hljs-string">&quot;agent&quot;</span>: {
+            <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;index&quot;</span>,
+            <span class="hljs-string">&quot;ID&quot;</span>: <span class="hljs-string">&quot;IndexingService&quot;</span>
+        }
+    },
+    <span class="hljs-string">&quot;payload&quot;</span>: {
+        <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;success&quot;</span>
+    }
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1232,12 +1244,12 @@ curl -X POST -H &quot;Content-Type: application/json&quot; -H &quot;Cache-Contro
 
             
                 
-                <a href="Release-Plan.html" class="navigation navigation-prev " aria-label="Previous page: Release Plan">
+                <a href="Service-Indexing.html" class="navigation navigation-prev " aria-label="Previous page: Indexing Service">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Jenkins-CI.html" class="navigation navigation-next " aria-label="Next page: Jenkins CI">
+                <a href="Service-Graph-Framing.html" class="navigation navigation-next " aria-label="Next page: Graph Framing Service">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1248,7 +1260,7 @@ curl -X POST -H &quot;Content-Type: application/json&quot; -H &quot;Cache-Contro
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"CI/CD Enviroment","level":"6.4","depth":1,"next":{"title":"Jenkins CI","level":"6.4.1","depth":2,"path":"Jenkins-CI.md","ref":"Jenkins-CI.md","articles":[]},"previous":{"title":"Release Plan","level":"6.3","depth":1,"path":"Release-Plan.md","ref":"Release-Plan.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"CI-CD-Enviroment.md","mtime":"2017-08-03T12:02:45.407Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-12-07T11:40:49.996Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Indexing Messages Examples","level":"4.3.1","depth":2,"next":{"title":"Graph Framing Service","level":"4.4","depth":1,"path":"Service-Graph-Framing.md","ref":"Service-Graph-Framing.md","articles":[{"title":"Graph Framing Messages Examples","level":"4.4.1","depth":2,"path":"Examples-Graph-Framing-Service.md","ref":"Examples-Graph-Framing-Service.md","articles":[]}]},"previous":{"title":"Indexing Service","level":"4.3","depth":1,"path":"Service-Indexing.md","ref":"Service-Indexing.md","articles":[{"title":"Indexing Messages Examples","level":"4.3.1","depth":2,"path":"Examples-Indexing-Service.md","ref":"Examples-Indexing-Service.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Examples-Indexing-Service.md","mtime":"2017-12-07T11:40:14.744Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-12-07T11:40:49.996Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
