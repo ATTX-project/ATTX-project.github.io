@@ -45,7 +45,7 @@ tdb:DatasetTDB  rdfs:subClassOf  ja:RDFDataset .
 tdb:GraphTDB    rdfs:subClassOf  ja:Model .
 
 # Development service endpoint for Use-case Data.
-# Recommended would be to split this into 2 services one for query with the inferenced dataset and one for update.
+# Recommended would be to split this into 2 services one for query with the resulting (after inference) dataset and one for update.
 <#service_prod> rdf:type fuseki:Service ;
   rdfs:label                        "TDB Service" ;
   fuseki:name                       "ds" ;       # http://host:port/ds

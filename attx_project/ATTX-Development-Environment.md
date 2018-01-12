@@ -54,8 +54,8 @@ PO must be present. Scrumm master presents the sprint and demo.
 
 ## Github Workflow
 
-Project uses Github for all of its issue management purposes from general todos (e.g. prepare materials for the next meeting)  to sprint related development task management. ATTX has been registered as organization in Github (https://github.com/ATTX-project) under which all the project related repositories will be created. Project is also subscribed to the Github's commercial plan, which allows the creation unlimited private repositories.
-Project uses ZenHub (https://www.zenhub.com/) to add project management related functionality, such as Epics, todo-list and Broads to Github. One needs to have ZenHub installed in orde to participate in Sprint activities.
+Project uses Github for all of its issue management purposes from general tasks (e.g. prepare materials for the next meeting)  to sprint related development task management. ATTX has been registered as organization in Github (https://github.com/ATTX-project) under which all the project related repositories will be created. Project is also subscribed to the Github's commercial plan, which allows the creation unlimited private repositories.
+Project uses ZenHub (https://www.zenhub.com/) to add project management related functionality, such as Epics, task-list and Broads to Github. One needs to have ZenHub installed in orde to participate in Sprint activities.
 
 ### Practicalities
 
@@ -70,7 +70,7 @@ _Every task/user story is an issue_
 * All the EPICs will be created in the project-management repository.
 * Issues related to certain Sprint are collected to an EPIC called "Sprint X". Issues can be added to EPIC when they are created or when they are assigned.
 * Milestones are not used in PM repo. In other repositories milestones can be used to group issues for releases.
-* One should always reference the issues in the commit message. Use full name ATTX-project/[repo]/#[issue number] to distinguish between repositories.
+* One should always reference the issues in the commit message. Use full name `ATTX-project/[repo]/#[issue number]` to distinguish between repositories.
 
 ### Privacy Considerations
 
@@ -82,9 +82,9 @@ Project's GitHub is divided into following repositories:
 
 * project-management
  * Special private repository main for providing overall view to the issues in different repositories.
-* etl
- * Repository for projects that provide etl/workflow related functionality. Add new directories for every specific implementation.
-* public-apis
+* ETL
+ * Repository for projects that provide ETL/workflow related functionality. Add new directories for every specific implementation.
+* public-APIs
 * graph-component
  * Repository hosts a single project that manages the state of the internal graph.
 

@@ -2,9 +2,9 @@
 
 # Mildred use case
 
-The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the backend service for university's [Think Open](https://www.helsinki.fi/en/research/think-open) site. Think Open brings together and promotes openness-related activities, such as open research data, open source code and publications, within the University of Helsinki.
+The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the back-end service for university's [Think Open](https://www.helsinki.fi/en/research/think-open) site. Think Open brings together and promotes openness-related activities, such as open research data, open source code and publications, within the University of Helsinki.
 
-Use case is part of the [Mildred project](http://blogs.helsinki.fi/mildred/), which aims to update the research data infrastructure provided by the University of Helsinki. Mildred consists of five subprojects that concentrate on different phases of the research process. ATTX co-operates with the subproject which is responsible for building and data publishing and metadata services.
+Use case is part of the [Mildred project](http://blogs.helsinki.fi/mildred/), which aims to update the research data infrastructure provided by the University of Helsinki. Mildred consists of five sub-projects that concentrate on different phases of the research process. ATTX co-operates with the sub-project which is responsible for building and data publishing and metadata services.
 
 ### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->
@@ -38,7 +38,7 @@ Use case is also featured as part of the OpenScienceFair 2017 in the poster sess
 
 ### Etsin
 
-Etsin is a national research dataset registry that contains both manually inputted and harvested metadata.
+Etsin is a national research dataset registry that contains both via manually input and harvested metadata.
 Based on CKAN.
 
 #### APIs
@@ -477,7 +477,7 @@ Features:
 * Data validation based on JSON schemas
 * Simple data quality analysis
 * Identifying dataset related to UH
-* Deduplication of dataset metadata available from multiple sources
+* De-duplication of dataset metadata available from multiple sources
 
 ### Pipelines
 
