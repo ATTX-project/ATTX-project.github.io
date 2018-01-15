@@ -1168,7 +1168,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 06-Nov-2017 17:52:38</div></div><h1 id="attx-development-environment-and-guidelines">ATTX Development Environment and Guidelines</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 11-Jan-2018 11:11:37</div></div><h1 id="attx-development-environment-and-guidelines">ATTX Development Environment and Guidelines</h1>
 <p>This page describes the project management and software development related practices and tools for the ATTX-2016 project. This is the place to go, when member of the project wants to learn or be reminded of how different project management methodologies and tools are used in ATTX, how we for example branch in using GIT, or what are the requirements for testing ones code.</p>
 <h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
@@ -1215,8 +1215,8 @@ Middle of the sprint on Friday.</p>
 At the end of the project on Friday, right before lunch.
 PO must be present. Scrumm master presents the sprint and demo.</p>
 <h2 id="github-workflow">Github Workflow</h2>
-<p>Project uses Github for all of its issue management purposes from general todos (e.g. prepare materials for the next meeting)  to sprint related development task management. ATTX has been registered as organization in Github (<a href="https://github.com/ATTX-project" target="_blank">https://github.com/ATTX-project</a>) under which all the project related repositories will be created. Project is also subscribed to the Github&apos;s commercial plan, which allows the creation unlimited private repositories.
-Project uses ZenHub (<a href="https://www.zenhub.com/" target="_blank">https://www.zenhub.com/</a>) to add project management related functionality, such as Epics, todo-list and Broads to Github. One needs to have ZenHub installed in orde to participate in Sprint activities.</p>
+<p>Project uses Github for all of its issue management purposes from general tasks (e.g. prepare materials for the next meeting)  to sprint related development task management. ATTX has been registered as organization in Github (<a href="https://github.com/ATTX-project" target="_blank">https://github.com/ATTX-project</a>) under which all the project related repositories will be created. Project is also subscribed to the Github&apos;s commercial plan, which allows the creation unlimited private repositories.
+Project uses ZenHub (<a href="https://www.zenhub.com/" target="_blank">https://www.zenhub.com/</a>) to add project management related functionality, such as Epics, task-list and Broads to Github. One needs to have ZenHub installed in orde to participate in Sprint activities.</p>
 <h3 id="practicalities">Practicalities</h3>
 <ul>
 <li>Add Milestone for every sprint and include the sprint issue in the corresponding milestone. This allows us to take (some) advantage of the timing capabilities related to milestones in Github/Zenhub combo.</li>
@@ -1228,7 +1228,7 @@ Project uses ZenHub (<a href="https://www.zenhub.com/" target="_blank">https://w
 <li>All the EPICs will be created in the project-management repository.</li>
 <li>Issues related to certain Sprint are collected to an EPIC called &quot;Sprint X&quot;. Issues can be added to EPIC when they are created or when they are assigned.</li>
 <li>Milestones are not used in PM repo. In other repositories milestones can be used to group issues for releases.</li>
-<li>One should always reference the issues in the commit message. Use full name ATTX-project/[repo]/#[issue number] to distinguish between repositories.</li>
+<li>One should always reference the issues in the commit message. Use full name <code>ATTX-project/[repo]/#[issue number]</code> to distinguish between repositories.</li>
 </ul>
 <h3 id="privacy-considerations">Privacy Considerations</h3>
 <p><strong>Do not include any personal information that is not part of the Github in the issues.</strong></p>
@@ -1239,11 +1239,11 @@ Project uses ZenHub (<a href="https://www.zenhub.com/" target="_blank">https://w
 <li>Special private repository main for providing overall view to the issues in different repositories.</li>
 </ul>
 </li>
-<li>etl<ul>
-<li>Repository for projects that provide etl/workflow related functionality. Add new directories for every specific implementation.</li>
+<li>ETL<ul>
+<li>Repository for projects that provide ETL/workflow related functionality. Add new directories for every specific implementation.</li>
 </ul>
 </li>
-<li>public-apis</li>
+<li>public-APIs</li>
 <li>graph-component<ul>
 <li>Repository hosts a single project that manages the state of the internal graph.</li>
 </ul>
@@ -1359,7 +1359,7 @@ Closing a milestone must be done separately for every repository.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"ATTX Development Environment","level":"6.1","depth":1,"next":{"title":"Feature Roadmap","level":"6.2","depth":1,"path":"Feature-roadmap.md","ref":"Feature-roadmap.md","articles":[]},"previous":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Development-Environment.md","mtime":"2017-11-07T08:41:38.677Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-01-08T14:10:34.161Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"ATTX Development Environment","level":"6.1","depth":1,"next":{"title":"Feature Roadmap","level":"6.2","depth":1,"path":"Feature-roadmap.md","ref":"Feature-roadmap.md","articles":[]},"previous":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"ATTX-Development-Environment.md","mtime":"2018-01-15T14:08:16.518Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-01-15T14:09:07.315Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

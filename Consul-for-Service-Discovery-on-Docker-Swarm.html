@@ -1168,7 +1168,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 06-Nov-2017 17:52:38</div></div><h1 id="consul-for-service-discovery-in-docker-swarm">Consul for Service Discovery in Docker Swarm</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 11-Jan-2018 11:11:37</div></div><h1 id="consul-for-service-discovery-in-docker-swarm">Consul for Service Discovery in Docker Swarm</h1>
 <p>Hereby you can find a report of a test implementation of <a href="https://www.consul.io/" target="_blank">Consul</a> as a <a href="Service-Discovery-Solutions.html">Service Discovery</a> solution in a <a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a> cluster.</p>
 <h3 id="table-of-contents">Table of Contents</h3>
 <!-- TOC START min:1 max:3 link:true update:false -->
@@ -1323,28 +1323,28 @@ vfarcic/docker-flow-proxy
 <p><code>curl &quot;http://$(docker-machine ip swarm-1):8500/v1/kv/docker-flow/my_web?recurse&quot;</code></p>
 <p>The output should include Service Discovery data in key value format, and be available in all Consul instances (replace <code>docker-machine ip swarm-1</code> with <code>docker-machine ip swarm-2</code> and <code>docker-machine ip swarm-3</code>):</p>
 <pre><code class="lang-javascript">{
-<span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
-<span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/path&quot;</span>,
-<span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
-<span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;L3Zhci93d3c=&quot;</span>,
-<span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14224</span>,
-<span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14384</span>
+    <span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/path&quot;</span>,
+    <span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;L3Zhci93d3c=&quot;</span>,
+    <span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14224</span>,
+    <span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14384</span>
 },
 {
-<span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
-<span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/pathtype&quot;</span>,
-<span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
-<span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;cGF0aF9iZWc=&quot;</span>,
-<span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14221</span>,
-<span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14381</span>
+    <span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/pathtype&quot;</span>,
+    <span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;cGF0aF9iZWc=&quot;</span>,
+    <span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14221</span>,
+    <span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14381</span>
 },
 {
-<span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
-<span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/port&quot;</span>,
-<span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
-<span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;NDkwMDE=&quot;</span>,
-<span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14218</span>,
-<span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14377</span>
+    <span class="hljs-attr">LockIndex</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">Key</span>: <span class="hljs-string">&quot;docker-flow/my_web/port&quot;</span>,
+    <span class="hljs-attr">Flags</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">Value</span>: <span class="hljs-string">&quot;NDkwMDE=&quot;</span>,
+    <span class="hljs-attr">CreateIndex</span>: <span class="hljs-number">14218</span>,
+    <span class="hljs-attr">ModifyIndex</span>: <span class="hljs-number">14377</span>
 },
 </code></pre>
 <p>Let&apos;s scale up the instances of Docker Flow Proxy and check whether the status was replicated.</p>
@@ -1419,7 +1419,7 @@ allow: POST, OPTIONS
 </code></pre>
 <p>At this point, we have reached the following architectural schema when setting up Consul as a Service Registration and Discovery in Docker Swarm, while trying to:</p>
 <ol>
-<li>Ensure consistency and distributability of Consul&apos;s stateful Key-Value Store, and fault tolerance plus elasticity of Consul instances.</li>
+<li>Ensure consistency and distributivity of Consul&apos;s stateful Key-Value Store, and fault tolerance plus elasticity of Consul instances.</li>
 <li>Automatic Service Registration / De-Registration of Docker Swarm services at startup/shutdown.</li>
 </ol>
 <pre><code>+--------+
@@ -1463,7 +1463,7 @@ allow: POST, OPTIONS
 </li>
 <li><p>Consul doesn&apos;t support running in &quot;swarm&quot; mode yet, but it can be run in &quot;host&quot; mode across a <a href="https://docs.docker.com/engine/swarm/" target="_blank">Docker Swarm</a>. The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.</p>
 </li>
-<li><p>Consul&apos;s Docker Swarm limitations can be addressed by using <a href="http://proxy.dockerflow.com/" target="_blank">Docker Flow Proxy</a> capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Semantic Broker. Nevertheless, service registration calls to Flow Proxy must be triggered either manually by the user or by programmatically by the container (at startup as part of its entrypoint script).</p>
+<li><p>Consul&apos;s Docker Swarm limitations can be addressed by using <a href="http://proxy.dockerflow.com/" target="_blank">Docker Flow Proxy</a> capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Semantic Broker. Nevertheless, service registration calls to Flow Proxy must be triggered either manually by the user or by programmatically by the container (at start up as part of its entry point script).</p>
 </li>
 <li><p>Automatic service is registration/de-registration can be implement with <a href="http://swarmlistener.dockerflow.com/" target="_blank">Docker Swarm Listener</a>, which can be run as a Docker Swarm service. This evidently requires that the service registration KV parameters are known, in order to be parametrised at startup time, whether by command line or in a <code>docker-compose.yml</code> file.</p>
 </li>
@@ -1520,7 +1520,7 @@ allow: POST, OPTIONS
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Consul for Service Discovery on Docker Swarm","level":"3.4.2","depth":2,"next":{"title":"Message Broker","level":"3.5","depth":1,"path":"ATTX-Component-MessageBroker.md","ref":"ATTX-Component-MessageBroker.md","articles":[{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"path":"MessageBroker-ActiveMQ.md","ref":"MessageBroker-ActiveMQ.md","articles":[]},{"title":"RabbitMQ Message Broker","level":"3.5.2","depth":2,"path":"MessageBroker-RabbitMQ.md","ref":"MessageBroker-RabbitMQ.md","articles":[]}]},"previous":{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"path":"Consul-ServiceDiscovery-Implementation.md","ref":"Consul-ServiceDiscovery-Implementation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2017-11-07T08:41:38.677Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-01-08T14:10:34.161Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Consul for Service Discovery on Docker Swarm","level":"3.4.2","depth":2,"next":{"title":"Message Broker","level":"3.5","depth":1,"path":"ATTX-Component-MessageBroker.md","ref":"ATTX-Component-MessageBroker.md","articles":[{"title":"ActiveMQ Message Broker","level":"3.5.1","depth":2,"path":"MessageBroker-ActiveMQ.md","ref":"MessageBroker-ActiveMQ.md","articles":[]},{"title":"RabbitMQ Message Broker","level":"3.5.2","depth":2,"path":"MessageBroker-RabbitMQ.md","ref":"MessageBroker-RabbitMQ.md","articles":[]}]},"previous":{"title":"Consul Service Discovery Implementation","level":"3.4.1","depth":2,"path":"Consul-ServiceDiscovery-Implementation.md","ref":"Consul-ServiceDiscovery-Implementation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Consul-for-Service-Discovery-on-Docker-Swarm.md","mtime":"2018-01-15T14:08:16.518Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-01-15T14:09:07.315Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
