@@ -1,6 +1,6 @@
 # Shared NFS Volume in Docker Swarm (on cPouta)
 
-Please find hereby the procedure to set-up a shared NFS filesystem in Docker Swarm with the [Netshare Docker volume plugin](http://netshare.containx.io/)
+Please find hereby the procedure to set-up a shared NFS file system in Docker Swarm with the [Netshare Docker volume plugin](http://netshare.containx.io/)
 
 1. Create a "/d/attx-shared" directory in the ATTX Master (attx-swarm-1): `sudo mkdir -p /d/attx-shared`
 
@@ -38,7 +38,7 @@ Install the NFS client tools and test mounting the NFS export into the local "/d
 # mount -t nfs -o proto=tcp,port=2049 <nfs-server-IP>:/ /d/attx-shared
 ```
 
-Remember to unmount it afterwards (`unmount /d/attx-shared`).
+Remember to un-mount it afterwards (`unmount /d/attx-shared`).
 
 5. Install and configure the NetShare Docker volume plugin in all hosts as per http://netshare.containx.io/docs/getting-started
 

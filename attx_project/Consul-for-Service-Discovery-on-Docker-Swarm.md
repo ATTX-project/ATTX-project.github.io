@@ -194,28 +194,28 @@ The output should include Service Discovery data in key value format, and be ava
 
 ```javascript
 {
-LockIndex: 0,
-Key: "docker-flow/my_web/path",
-Flags: 0,
-Value: "L3Zhci93d3c=",
-CreateIndex: 14224,
-ModifyIndex: 14384
+    LockIndex: 0,
+    Key: "docker-flow/my_web/path",
+    Flags: 0,
+    Value: "L3Zhci93d3c=",
+    CreateIndex: 14224,
+    ModifyIndex: 14384
 },
 {
-LockIndex: 0,
-Key: "docker-flow/my_web/pathtype",
-Flags: 0,
-Value: "cGF0aF9iZWc=",
-CreateIndex: 14221,
-ModifyIndex: 14381
+    LockIndex: 0,
+    Key: "docker-flow/my_web/pathtype",
+    Flags: 0,
+    Value: "cGF0aF9iZWc=",
+    CreateIndex: 14221,
+    ModifyIndex: 14381
 },
 {
-LockIndex: 0,
-Key: "docker-flow/my_web/port",
-Flags: 0,
-Value: "NDkwMDE=",
-CreateIndex: 14218,
-ModifyIndex: 14377
+    LockIndex: 0,
+    Key: "docker-flow/my_web/port",
+    Flags: 0,
+    Value: "NDkwMDE=",
+    CreateIndex: 14218,
+    ModifyIndex: 14377
 },
 ```
 
@@ -318,7 +318,7 @@ allow: POST, OPTIONS
 ```
 
 At this point, we have reached the following architectural schema when setting up Consul as a Service Registration and Discovery in Docker Swarm, while trying to:
-1. Ensure consistency and distributability of Consul's stateful Key-Value Store, and fault tolerance plus elasticity of Consul instances.
+1. Ensure consistency and distributivity of Consul's stateful Key-Value Store, and fault tolerance plus elasticity of Consul instances.
 2. Automatic Service Registration / De-Registration of Docker Swarm services at startup/shutdown.
 
 
@@ -367,7 +367,7 @@ At this point, we have reached the following architectural schema when setting u
 
 2. Consul doesn't support running in "swarm" mode yet, but it can be run in "host" mode across a [Docker Swarm](https://docs.docker.com/engine/swarm/). The downside is that this creates a non-fault-tolerant Consul cluster, should the Consul Server instance go down. It also makes uncertain the Key-Value Store status of a new Consul Server instance in a scaled-up Docker Swarm.
 
-3. Consul's Docker Swarm limitations can be addressed by using [Docker Flow Proxy](http://proxy.dockerflow.com/) capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Semantic Broker. Nevertheless, service registration calls to Flow Proxy must be triggered either manually by the user or by programmatically by the container (at startup as part of its entrypoint script).
+3. Consul's Docker Swarm limitations can be addressed by using [Docker Flow Proxy](http://proxy.dockerflow.com/) capabilities of distributing Service Discovery registration/reconfiguration and query requests between Consul servers and agents. Docker Flow Proxy can also be used as a distributed reverse proxy for the ATTX Semantic Broker. Nevertheless, service registration calls to Flow Proxy must be triggered either manually by the user or by programmatically by the container (at start up as part of its entry point script).
 
 4. Automatic service is registration/de-registration can be implement with [Docker Swarm Listener](http://swarmlistener.dockerflow.com/), which can be run as a Docker Swarm service. This evidently requires that the service registration KV parameters are known, in order to be parametrised at startup time, whether by command line or in a `docker-compose.yml` file.
 

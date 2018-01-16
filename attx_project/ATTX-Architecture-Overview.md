@@ -99,7 +99,7 @@ In Figure 4 we illustrate a pipeline that downloads a new version of a dataset a
 Figure 4. Pipeline for downloading and replacing dataset
 
 As a continuation of the result of the pipeline depicted in Figure 4, the pipeline from Figure 5 exhibits the steps necessary for publishing the resulting data. In order to achieve this we identified the following services:
-* _ESDistributionService_ - service for constructing, based on the graph retrieved from Graph Store, JSON/JSON-LD formatted bulk data, that is stored on a volume. This microservice can be further divided into two otherservices:
+* _ESDistributionService_ - service for constructing, based on the graph retrieved from Graph Store, JSON/JSON-LD formatted bulk data, that is stored on a volume. This microservice can be further divided into two other services:
     * _RDFFramerService_ - converting the data from RDF to JSON/JSON-LD;
     * _indexService_ - (bulk) indexing at a specific endpoint;
 * _ElasticSearch_ - several versions might be available each providing different indexing mechanisms.

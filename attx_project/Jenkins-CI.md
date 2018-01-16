@@ -32,7 +32,7 @@ There are two types of flows:
 1. `/feature-* branch` to `/dev` branch
 2. `/dev` branch to `/master` branch
 
-Either one can be solved with Gradle plugins or github hooks
+Either one can be solved with Gradle plugins or Github hooks
 
 The image below describes the build and deploy workflow from a `/feature-name` branch to `/dev` branch.
 

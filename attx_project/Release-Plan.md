@@ -35,7 +35,7 @@ Planned release date: **31st of March 2017**
 1. Exposed ports (NEED TO CHECK - might be solved; very small task)
     - DC component should have the ports exposed for both instances of ElasticSearch
     (stick with one version of ES ?) 9200 & 9300 + 9210 & 9310
-    - UV should have a frontend that expose port 8080
+    - UV should have a front-end that expose port 8080
     - other ports should not be available, except for the test/dev environments; this might require changes to the Gradle scripts (scripts out of scope for first release)
 2. Versioning of artifacts and images
     - _Make sure that packages in java projects follow the same structure (group and artifact)_ https://github.com/ATTX-project/project-management/issues/86
