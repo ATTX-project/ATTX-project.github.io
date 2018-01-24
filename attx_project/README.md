@@ -30,6 +30,8 @@ ATTX 2016 is a research and development project run by the [Helsinki University 
     * [RML Service](Service-RML.md)
     * [Indexing Service](Service-Indexing.md)
     * [Graph Framing Service](Service-Graph-Framing.md)
+    * [Validation Service](Service-Validation.md)
+    * [Ontology Service](Service-Ontology.md)
 
 ---
 
