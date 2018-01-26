@@ -101,3 +101,29 @@ Result:
 ```
 
 ## Validation Service Messages
+
+```json
+{
+    "provenance": {
+        "context": {
+            "workflowID": "ingestionwf",
+            "activityID": 1,
+            "stepID": "validation"
+        }
+    },
+    "payload": {
+        "validationServiceInput": {
+            "sourceData": {
+                "shapesGraph": {
+                    "contentType": "text/turtle",
+                    "input": "file:///attx-sb-shared/shapes-data.ttl"
+                },
+                "dataGraph":{
+                    "contentType": "text/turtle",
+                    "input": "file:///attx-sb-shared/source-data.ttl"
+                }
+            }   
+        }
+    }
+}
+```
