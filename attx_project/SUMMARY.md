@@ -56,6 +56,9 @@
   * [Indexing Messages Examples](Examples-Indexing-Service.md)
 * [Graph Framing Service](Service-Graph-Framing.md)
   * [Graph Framing Messages Examples](Examples-Graph-Framing-Service.md)
+* [Validation Service](Service-Validation.md)
+    * [Validation Examples](Examples-Validation-Service.md)
+* [Ontology Service](Service-Ontology.md)
 
 ## User Guide
 

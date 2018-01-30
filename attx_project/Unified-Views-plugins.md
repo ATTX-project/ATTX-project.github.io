@@ -2,15 +2,21 @@
 
 Github repository: https://github.com/ATTX-project/uv-plugins
 
-New Custom Unified Views plugins developed:
-* `uv-common`
-* `attx-l-replaceds`
-* `attx-t-describeds`
-* `attx-t-describeexternalds`
-* `attx-t-rmlservice`
+ATTX Linked Data Broker version 2.0 Unified Views plugins developed:
+- `attx-e-oaipmhharvester`
+- `attx-e-selectds`
+- `attx-l-publishtoapi`
+- `attx-l-replaceds`
+- `attx-t-construct`
+- `attx-t-describeds`
+- `attx-t-describeexternalds`
+- `attx-t-framingservice`
+- `attx-t-retrieveds`
+- `attx-t-rmlservice`
+- `uv-common`
 
 
-Old Custom Unified Views plugins developed:
+ATTX Linked Data Broker version 1.0 Unified Views plugins developed:
 * `uv-t-attx-template` plugin - basic template for creating a UnifiedViews plugin;
 * `uv-t-attx-metadata` plugin - collecting metadata specific to the input and output graphs;
 * `uv-dpu-l-attx-apicaller` plugin - general functionality for calling an API and retrieving data;
