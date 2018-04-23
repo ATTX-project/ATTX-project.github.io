@@ -1,4 +1,4 @@
-# Graph Manager Service Examples
+# Graph Manager Service examples
 
 ### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:false -->

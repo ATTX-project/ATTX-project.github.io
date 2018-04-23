@@ -1,5 +1,8 @@
 # Indexing Service examples
 
+
+## Message Broker Communication
+
 Request
 
 ```json

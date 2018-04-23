@@ -100,7 +100,7 @@ Result:
 ] .
 ```
 
-## Validation Service Messages
+## Message Broker Communication
 
 ```json
 {
