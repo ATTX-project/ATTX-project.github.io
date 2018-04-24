@@ -102,6 +102,8 @@ Result:
 
 ## Message Broker Communication
 
+Request
+
 ```json
 {
     "provenance": {
@@ -114,16 +116,32 @@ Result:
     "payload": {
         "validationServiceInput": {
             "sourceData": {
-                "shapesGraph": {
-                    "contentType": "text/turtle",
-                    "input": "file:///attx-sb-shared/shapes-data.ttl"
-                },
-                "dataGraph":{
-                    "contentType": "text/turtle",
-                    "input": "file:///attx-sb-shared/source-data.ttl"
-                }
+                "shapesGraph": "file:///attx-sb-shared/shapes-data.ttl",
+                "dataGraph":"file:///attx-sb-shared/source-data.ttl"
             }   
         }
     }
 }
 ```
+
+Response
+
+```json
+{
+    "provenance": {
+        "context": {
+            "activityID": "1",
+            "stepID": "replaceds",
+            "workflowID": "ingestionwf"
+        },
+        "agent": {
+            "role": "index",
+            "ID": "IndexingService"
+        }
+    },
+    "payload": {
+        "status": "success",
+        "statusMessage": "",
+        "validationServiceOutput": "file:///attx-sb-shared/validationservice/file/results.ttl"
+    }
+}

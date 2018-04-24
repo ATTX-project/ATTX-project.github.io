@@ -59,7 +59,7 @@
 * [Validation Service](Service-Validation.md)
     * [Validation Examples](Examples-Validation-Service.md)
 * [Ontology Service](Service-Ontology.md)
-    * [Ontology Examples](Examples-Ontology-Service.md)
+    * [Ontology Examples](Examples-Ontologyw-Service.md)
 
 ## User Guide
 

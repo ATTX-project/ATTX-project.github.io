@@ -41,8 +41,7 @@ Deliverables:
 - Indexing service with JSON-LD framing
 - Incremental updates to the DC datasets (RDF Patch)
 - Prototyping provenance browser
-- Kontena as part of the CI/CD environment
-- Service discovery/registry
+- Demo instance in Kontena
 - Demo instance running in cPouta
 
 Deliverable:
@@ -51,3 +50,4 @@ Deliverable:
 #### Q1/2018
   - Data validation with SHACL
   - Platform support for ontology based inferencing
+  - Deploy to ATTX Semantic Broker instance for Helsinki University
