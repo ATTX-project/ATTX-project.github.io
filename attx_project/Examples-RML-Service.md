@@ -1,6 +1,8 @@
 # RML Service examples
 
-## Transform using inline input
+## Message Broker Communication
+
+### Transform using inline input
 
 Request
 

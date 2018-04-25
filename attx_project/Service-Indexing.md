@@ -40,7 +40,7 @@ The connection with Elasticsearch is required  in order to:
 
 ### Message Broker Connection
 
-Provenance Service needs [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md) in order to communicate with UV plugins.
+Indexing Service needs [RabbitMQ Message Broker](MessageBroker-RabbitMQ.md) in order to communicate with UV plugins.
 
 ## Environment Variables
 

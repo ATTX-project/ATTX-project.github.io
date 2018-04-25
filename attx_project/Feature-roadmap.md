@@ -38,20 +38,16 @@ Deliverables:
 - Article proposals for ISWC and IEEE Microservices journal
 
 ### Q4 - December 2017
-- Data validation with SHACL
 - Indexing service with JSON-LD framing
-- Platform support for ontology based inferencing
 - Incremental updates to the DC datasets (RDF Patch)
 - Prototyping provenance browser
-- Kontena as part of the CI/CD environment
-- Service discovery/registry
+- Demo instance in Kontena
 - Demo instance running in cPouta
 
 Deliverable:
-- [ ] SWIB 2017 presentation (coming)
+- [X] SWIB 2017 presentation (coming)
 
 #### Q1/2018
-- Centralised logging
-- Provenance browser
-- RDF distribution (e.g. HDT and LinkedDataFragments)
-
+  - Data validation with SHACL
+  - Platform support for ontology based inferencing
+  - Deploy to ATTX Semantic Broker instance for Helsinki University

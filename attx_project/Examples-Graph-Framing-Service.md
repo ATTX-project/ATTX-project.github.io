@@ -1,5 +1,7 @@
 # Graph Framing Service examples
 
+## Message Broker Communication
+
 Request
 
 ```json
