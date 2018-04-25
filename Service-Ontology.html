@@ -61,7 +61,7 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="User-Guide-Administrator.html" />
+    <link rel="next" href="Examples-Ontologyw-Service.md" />
     
     
     <link rel="prev" href="Examples-Validation-Service.html" />
@@ -834,6 +834,25 @@
             
 
             
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.6.1" data-path="Examples-Ontologyw-Service.md">
+            
+                <span>
+            
+                    
+                    Ontology Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
 
@@ -1213,10 +1232,74 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 24-Jan-2018 08:08:08</div></div><h1 id="ontology-service">Ontology Service</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 23-Apr-2018 10:10:36</div></div><h1 id="ontology-service">Ontology Service</h1>
 <p>Github repository: <a href="https://github.com/ATTX-project/ontology-service" target="_blank">https://github.com/ATTX-project/ontology-service</a></p>
-<p>The service makes use of: <a href="https://bitbucket.org/jibalamy/owlready2" target="_blank">https://bitbucket.org/jibalamy/owlready2</a></p>
-
+<p>The service makes use of: <a href="https://jena.apache.org/documentation/inference" target="_blank">https://jena.apache.org/documentation/inference</a></p>
+<h3 id="table-of-contents">Table of Contents</h3>
+<!-- TOC START min:1 max:3 link:true update:true -->
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#building-ontology-service">Building Ontology Service</a><ul>
+<li><a href="#message-broker-connection">Message Broker Connection</a></li>
+</ul>
+</li>
+<li><a href="#environment-variables">Environment Variables</a></li>
+<li><a href="#service-api-endpoints">Service API Endpoints</a><ul>
+<li><a href="#health-endpoint">health Endpoint</a></li>
+<li><a href="#infer-endpoint">infer Endpoint</a></li>
+<li><a href="#report-endpoint">report Endpoint</a></li>
+</ul>
+</li>
+</ul>
+<!-- TOC END -->
+<h2 id="overview">Overview</h2>
+<p>The Indexing REST API has the following endpoints:</p>
+<ul>
+<li><code>infer</code> - infer new data based on a schema/ontlogy and a data graph;</li>
+<li><code>report</code> - validated RDF data agains a schema/ontology and retrieve a report;</li>
+<li><code>health</code> - checks if the application is running.</li>
+</ul>
+<p>Current version: <code>0.2</code> (URL for the endpoint should take into consideration for the API <code>http://host:4305/version/endpoint</code>)</p>
+<h2 id="building-ontology-service">Building Ontology Service</h2>
+<p>In order to work with the service start with:</p>
+<ul>
+<li><a href="https://github.com/ATTX-project/ontology-service" target="_blank">Ontology Service source</a> - contains information on building both the project and the  Docker image and testing from the source code;</li>
+</ul>
+<p>Build with Gradle and run:</p>
+<pre><code>gradle run
+</code></pre><h3 id="message-broker-connection">Message Broker Connection</h3>
+<p>Ontology Service needs <a href="MessageBroker-RabbitMQ.html">RabbitMQ Message Broker</a> .</p>
+<h2 id="environment-variables">Environment Variables</h2>
+<ul>
+<li><code>MHOST</code> - container name or address for the MessageBroker-RabbitMQ database (defaults to <code>localhost</code>);</li>
+<li><code>MUSER</code> - user name for MessageBroker (defaults to <code>user</code>);</li>
+<li><code>MPASS</code> - password for MessageBroker (defaults to <code>password</code>).</li>
+</ul>
+<h2 id="service-api-endpoints">Service API Endpoints</h2>
+<h3 id="health-endpoint">health Endpoint</h3>
+<ul>
+<li><code>health</code> GET API:<ul>
+<li>simple: <a href="http://localhost:4305/health" target="_blank">http://localhost:4305/health</a> reponds with <code>200</code> in order for other applications to know the service is running.</li>
+</ul>
+</li>
+</ul>
+<h3 id="alias-endpoint">alias Endpoint</h3>
+<ul>
+<li><code>/infer</code> POST API: infer new data.</li>
+</ul>
+<pre><code>{
+  &quot;schemaGraph&quot;: &quot;file:///resources/owlDemoSchema.ttl&quot;,
+  &quot;dataGraph&quot;:&quot;file:///resources/owlDemoData.ttl&quot;
+}
+</code></pre><h3 id="data-endpoint">data Endpoint</h3>
+<ul>
+<li><code>/report</code> POST API: validity report.</li>
+</ul>
+<pre><code>{
+  &quot;schemaGraph&quot;: &quot;file:///resources/owlDemoSchema.ttl&quot;,
+  &quot;dataGraph&quot;:&quot;file:///resources/owlDemoData.ttl&quot;
+}
+</code></pre>
                                 
                                 </section>
                             
@@ -1248,7 +1331,7 @@
                 </a>
                 
                 
-                <a href="User-Guide-Administrator.html" class="navigation navigation-next " aria-label="Next page: Data Administrator's User guide">
+                <a href="Examples-Ontologyw-Service.md" class="navigation navigation-next " aria-label="Next page: Ontology Examples">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1259,7 +1342,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Ontology Service","level":"4.6","depth":1,"next":{"title":"Data Administrator's User guide","level":"5.1","depth":1,"path":"User-Guide-Administrator.md","ref":"User-Guide-Administrator.md","articles":[]},"previous":{"title":"Validation Examples","level":"4.5.1","depth":2,"path":"Examples-Validation-Service.md","ref":"Examples-Validation-Service.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Service-Ontology.md","mtime":"2018-04-20T11:05:14.310Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-20T11:08:10.604Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Ontology Service","level":"4.6","depth":1,"next":{"title":"Ontology Examples","level":"4.6.1","depth":2,"path":"Examples-Ontologyw-Service.md","ref":"Examples-Ontologyw-Service.md","articles":[]},"previous":{"title":"Validation Examples","level":"4.5.1","depth":2,"path":"Examples-Validation-Service.md","ref":"Examples-Validation-Service.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Service-Ontology.md","mtime":"2018-04-25T05:35:22.012Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-25T05:36:26.830Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
