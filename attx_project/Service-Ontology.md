@@ -19,7 +19,7 @@ The service makes use of: https://jena.apache.org/documentation/inference
 
 ## Overview
 
-The Indexing REST API has the following endpoints:
+The Ontology REST API has the following endpoints:
 * `infer` - infer new data based on a schema/ontlogy and a data graph;
 * `report` - validated RDF data agains a schema/ontology and retrieve a report;
 * `health` - checks if the application is running.
