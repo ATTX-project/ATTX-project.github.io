@@ -1,6 +1,4 @@
-<h1 style="color:red">DRAFT - work in progress</h1>
-
-# Mildred use case
+# Thinkopen/Mildred use case
 
 The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the back-end service for university's [Think Open](https://www.helsinki.fi/en/research/think-open) site. Think Open brings together and promotes openness-related activities, such as open research data, open source code and publications, within the University of Helsinki.
 
