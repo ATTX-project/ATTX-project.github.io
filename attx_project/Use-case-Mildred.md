@@ -1,6 +1,4 @@
-<h1 style="color:red">DRAFT - work in progress</h1>
-
-# Mildred use case
+# Thinkopen/Mildred use case
 
 The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the back-end service for university's [Think Open](https://www.helsinki.fi/en/research/think-open) site. Think Open brings together and promotes openness-related activities, such as open research data, open source code and publications, within the University of Helsinki.
 
@@ -465,20 +463,271 @@ Results:
 
 [IOW](https://iow.csc.fi/) is a service for creating and maintaining descriptions for interoperability. In the context of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.
 
+### Google Drive
+
+Google Drive provides an easy way to incorporate manually curated lists of UH datasets to ATTX workflows. One can create a link from a spreadsheet file that allows ATTX to download it in a CSV format. The CSV data can then be processed in to RDF and used as one of the filtering datasets as part of the publishing pipeline. 
+
+Creating CSV link for a Google Drive spreadsheet:
+* select "File"->"Publish to the web..."
+* From the link tab select the appropriate sheet and comma-separeated values as the output format
+* Click "Publish" and use the generated link in the pipeline's HTTP extractor
+
+Example CSV:
+```
+DOI
+10.123/TEST.123
+```
+
+Example RML:
+
+```turtle
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
+@prefix attx-work: <http://data.hulib.helsinki.fi/attx/work#> .
+
+<:handpicked>
+  rml:logicalSource [
+    rml:source "{filename}";
+    rml:referenceFormulation ql:CSV
+  ];
+  
+  rr:subjectMap [
+    rr:template "doi:{DOI};
+    rr:class attx-work:uh-dataset
+  ];
+
+```
+
 ## Implementation
 
 Architectural overview:
 
 ![Architectural overview](images/ATTX-Mildred-architecture.svg)
 
-Features:
-* DataCite output format
-* Custom output format if required
-* Data validation based on JSON schemas
-* Simple data quality analysis
-* Identifying dataset related to UH
-* De-duplication of dataset metadata available from multiple sources
-
 ### Pipelines
 
-TBD
+![Pipelines and datasets](images/ATTX-Thinkopen-Pipelines_and_Dataset.png)
+
+From the figure above we can deduce the following dependencies between pipelines:
+
+* Search datasets (B2Share) -> Filter UH datasets (B2Share) -> Publish UH datasets from B2Share 
+* Harvest datasets (Zenodo) -> Filter UH datasets (Zenodo) && UH community related dataset identifiers 
+(Zenodo) -> Publish UH datasets from Zenodo 
+* Harvest Etsin organizations -> Infer relationships between orgs -> Construct UH harvesting sets -> Harvest dataset metadata from UH orgs -> Publish UH datasets from Etsin
+
+These dependencies should be taken in account when setting up rules for pipeline execution in UnifiedViews.
+
+Pipelines can be found in the use-case repository.
+
+![Thinkopen pipelines](images/thinkopen-pipelines.png)
+
+#### Pipeline examples
+
+**Harvest Etsin organizations**
+
+![Harvest Etsin organizations](images/etsin-harvest-orgs.png)
+
+The pipeline uses two different httprequets extractors to split the data download.
+
+![Harvest Etsin organizations](images/etsin-harvest-orgs-detail1.png)
+
+The following RML configuration is used to transform organization json to internal RDF.
+
+```turtle
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
+@prefix attx-work: <http://data.hulib.helsinki.fi/attx/work#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix etsin: <http://etsin.avointiede.fi/> .
+
+
+<etsin:orgs>
+  rml:logicalSource [
+    rml:source "{filename}"  ;
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.result[*]"
+  ];
+
+
+  rr:subjectMap [
+    rr:template "http://etsin.avointiede.fi/org/{name}" ;
+    rr:class attx-work:Organization ;
+  ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:title;
+      rr:objectMap [
+        rml:reference "title"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:description;
+      rr:objectMap [
+        rml:reference "description"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:identifier;
+      rr:objectMap [
+        rml:reference "id" ;
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:setName;
+      rr:objectMap [
+        rml:reference "name" ;
+      ]
+    ];    
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:parentOrg;
+      rr:objectMap [
+        rr:template "http://etsin.avointiede.fi/org/{groups[*].name}" ;
+      ]
+    ];
+  .
+```
+
+**Infer organizations**
+
+The original organization data only includes links to parent organizational unit. 
+
+![Infer organizations](images/etsin-infer-orgs.png)
+
+Using harvested organization data as the source dataset.
+
+![Select source datasets](images/etsin-infer-orgs-detail1.png)
+
+The new data we want to infer is the inverse childOrg property. We also want to make it transitive in order to create a direct link between the root organization (UH) and all of its child organizational units. 
+
+![Infer new data using simple ontology](images/etsin-infer-orgs-detail2.png)
+
+**Create UH orgs***
+
+We need to create dataset that can be used as the source data for set based OAI-PMH harvesting.
+
+![Create UH sets](images/etsin-create-uh-orgs.png)
+
+Using both harvested and inferred organization dataas the source datasets.
+
+![Select source datasets](images/etsin-create-uh-orgs-detail1.png)
+
+Using construct query to generate new dataset.
+
+![Construct new data](images/etsin-create-uh-orgs-detail2.png)
+
+**Publish datasets**
+
+The publishing pipeline transforms internal RDF data into JSON documents.
+
+![Publish datasets](images/etsin-publish-uh-datasets.png)
+
+Using the following JSON-LD frame.
+
+```json
+{
+  "@context": {
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "ex": "http://example.org/vocab#",
+    "work": "http://data.hulib.helsinki.fi/attx/work#",
+    "version": "work:version",
+    "identifier": "work:identifier",
+    "idenfifierValue": "work:value",
+    "identifierType": "work:type",
+    "title": "work:title",
+    "subjects": "work:subject",
+    "subject": "work:term",
+    "creators": "work:creator",
+    "creatorName": "work:creatorName",
+    "contributors": "work:contributor",
+        "contributorName": "work:contributorName",
+    "contributorType": "work:contributorType",
+
+    "affiliation" : "work:affiliation",
+    "publisher": "work:publisher",
+    "publicationYear": "work:pubdate",
+    "language": "work:language",
+    "resourceType": "work:resourceType",
+    "resourceTypeGeneral": "work:title",
+        "nameIdentifiers": "work:nameIdentifier",
+    "subjectScheme": "work:subjectScheme",
+    "valueURI": "work:valueURI",
+    "rightsList": "work:license",
+    "rights": "work:licenseID"
+
+  },
+  "@type": "work:uh-dataset",
+  "@explicit": true,
+  "@requireAll": false,
+  "identifier": {
+    "@type": "work:ID",
+          "@explicit": true,
+    "idenfifierValue": "",
+    "identifierType": ""
+  },
+  "title": "",
+  "subjects": {
+    "subject": "",
+    "subjectScheme": "",
+    "valueURI": ""
+  },
+  "creators": {
+    "@explicit": true,
+    "@requireAll": false,
+    "creatorName": "",
+    "affiliation": "",
+    "nameIdentifiers": {
+
+      "@explicit": true,
+      "idenfifierValue": "",
+      "identifierType": ""
+    }
+  },
+  "contributors": {
+    "@explicit": true,
+    "@requireAll": false,
+    "contributorName": "",
+    "contributorType": "",
+    "affiliation": "",
+    "nameIdentifiers": {
+
+      "@explicit": true,
+      "idenfifierValue": "",
+      "identifierType": ""
+    }
+  },
+  "publisher": "",
+  "publicationYear": "",
+  "language": "",
+  "resourceType": {
+    "@explicit": true,
+    "resourceTypeGeneral": ""
+  },
+  "rightsList": {
+    "@explicit": true,
+    "rights" : "",
+    "rightURI": ""
+  },
+  "version": {"@default": "4.0"}
+}
+```
+
+### Internal datasets
+
+Internal storage consists of datasets that work as input and output processing and publication pipelines.
+Figure below depicts a simplified versions of data structures inside each dataset. For example in the B2Share case, the first dataset "UH(?) datasets" includes dataset metadata for all the datasets that could be UH related since it has been generated from a query that return every dataset that contains "helsin" in their metadata. The second, the filtered datasets, only adds new type (or tag if you will) to the datasets that are identified as proper UH datasets. The last JSON dataset represent the published search index that contains JSON representation for each of the datasets. 
+
+![Dataset structure](images/thinkopen-datasets.png)
