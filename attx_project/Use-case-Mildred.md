@@ -526,6 +526,207 @@ These dependencies should be taken in account when setting up rules for pipeline
 
 Pipelines can be found in the use-case repository.
 
+![Thinkopen pipelines](images/thinkopen-pipelines.png)
+
+#### Pipeline examples
+
+**Harvest Etsin organizations**
+
+![Harvest Etsin organizations](images/etsin-harvest-orgs.png)
+
+The pipeline uses two different httprequets extractors to split the data download.
+
+![Harvest Etsin organizations](images/etsin-harvest-orgs-detail1.png)
+
+The following RML configuration is used to transform organization json to internal RDF.
+
+```turtle
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
+@prefix attx-work: <http://data.hulib.helsinki.fi/attx/work#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix etsin: <http://etsin.avointiede.fi/> .
+
+
+<etsin:orgs>
+  rml:logicalSource [
+    rml:source "{filename}"  ;
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator "$.result[*]"
+  ];
+
+
+  rr:subjectMap [
+    rr:template "http://etsin.avointiede.fi/org/{name}" ;
+    rr:class attx-work:Organization ;
+  ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:title;
+      rr:objectMap [
+        rml:reference "title"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:description;
+      rr:objectMap [
+        rml:reference "description"
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:identifier;
+      rr:objectMap [
+        rml:reference "id" ;
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:setName;
+      rr:objectMap [
+        rml:reference "name" ;
+      ]
+    ];    
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:parentOrg;
+      rr:objectMap [
+        rr:template "http://etsin.avointiede.fi/org/{groups[*].name}" ;
+      ]
+    ];
+  .
+```
+
+**Infer organizations**
+
+The original organization data only includes links to parent organizational unit. 
+
+![Infer organizations](images/etsin-infer-orgs.png)
+
+Using harvested organization data as the source dataset.
+
+![Select source datasets](images/etsin-infer-orgs-detail1.png)
+
+The new data we want to infer is the inverse childOrg property. We also want to make it transitive in order to create a direct link between the root organization (UH) and all of its child organizational units. 
+
+![Infer new data using simple ontology](images/etsin-infer-orgs-detail2.png)
+
+**Create UH orgs***
+
+We need to create dataset that can be used as the source data for set based OAI-PMH harvesting.
+
+![Create UH sets](images/etsin-create-uh-orgs.png)
+
+Using both harvested and inferred organization dataas the source datasets.
+
+![Select source datasets](images/etsin-create-uh-orgs-detail1.png)
+
+Using construct query to generate new dataset.
+
+![Construct new data](images/etsin-create-uh-orgs-detail2.png)
+
+**Publish datasets**
+
+The publishing pipeline transforms internal RDF data into JSON documents.
+
+![Publish datasets](images/etsin-publish-uh-datasets.png)
+
+Using the following JSON-LD frame.
+
+```json
+{
+  "@context": {
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "ex": "http://example.org/vocab#",
+    "work": "http://data.hulib.helsinki.fi/attx/work#",
+    "version": "work:version",
+    "identifier": "work:identifier",
+    "idenfifierValue": "work:value",
+    "identifierType": "work:type",
+    "title": "work:title",
+    "subjects": "work:subject",
+    "subject": "work:term",
+    "creators": "work:creator",
+    "creatorName": "work:creatorName",
+    "contributors": "work:contributor",
+        "contributorName": "work:contributorName",
+    "contributorType": "work:contributorType",
+
+    "affiliation" : "work:affiliation",
+    "publisher": "work:publisher",
+    "publicationYear": "work:pubdate",
+    "language": "work:language",
+    "resourceType": "work:resourceType",
+    "resourceTypeGeneral": "work:title",
+        "nameIdentifiers": "work:nameIdentifier",
+    "subjectScheme": "work:subjectScheme",
+    "valueURI": "work:valueURI",
+    "rightsList": "work:license",
+    "rights": "work:licenseID"
+
+  },
+  "@type": "work:uh-dataset",
+  "@explicit": true,
+  "@requireAll": false,
+  "identifier": {
+    "@type": "work:ID",
+          "@explicit": true,
+    "idenfifierValue": "",
+    "identifierType": ""
+  },
+  "title": "",
+  "subjects": {
+    "subject": "",
+    "subjectScheme": "",
+    "valueURI": ""
+  },
+  "creators": {
+    "@explicit": true,
+    "@requireAll": false,
+    "creatorName": "",
+    "affiliation": "",
+    "nameIdentifiers": {
+
+      "@explicit": true,
+      "idenfifierValue": "",
+      "identifierType": ""
+    }
+  },
+  "contributors": {
+    "@explicit": true,
+    "@requireAll": false,
+    "contributorName": "",
+    "contributorType": "",
+    "affiliation": "",
+    "nameIdentifiers": {
+
+      "@explicit": true,
+      "idenfifierValue": "",
+      "identifierType": ""
+    }
+  },
+  "publisher": "",
+  "publicationYear": "",
+  "language": "",
+  "resourceType": {
+    "@explicit": true,
+    "resourceTypeGeneral": ""
+  },
+  "rightsList": {
+    "@explicit": true,
+    "rights" : "",
+    "rightURI": ""
+  },
+  "version": {"@default": "4.0"}
+}
+```
+
 ### Internal datasets
 
 Internal storage consists of datasets that work as input and output processing and publication pipelines.
