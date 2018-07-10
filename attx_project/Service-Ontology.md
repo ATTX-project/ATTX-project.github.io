@@ -4,6 +4,13 @@ Github repository: https://github.com/ATTX-project/ontology-service
 
 The service makes use of: https://jena.apache.org/documentation/inference
 
+**NOTE**
+
+There is a bug in the service images that cause messagebroker connection to fail when starting the service for the first time. In order to get the service connected you have to restart it. 
+
+* docker ps 
+* docker restart [ontology-service-container-id]
+
 ### Table of Contents
 <!-- TOC START min:1 max:3 link:true update:true -->
   - [Overview](#overview)
