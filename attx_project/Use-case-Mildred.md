@@ -465,19 +465,51 @@ Results:
 
 [IOW](https://iow.csc.fi/) is a service for creating and maintaining descriptions for interoperability. In the context of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.
 
+### Google Drive
+
+Google Drive provides an easy way to incorporate manually curated lists of UH datasets to ATTX workflows. One can create a link from a spreadsheet file that allows ATTX to download it in a CSV format. The CSV data can then be processed in to RDF and used as one of the filtering datasets as part of the publishing pipeline. 
+
+Creating CSV link for a Google Drive spreadsheet:
+* select "File"->"Publish to the web..."
+* From the link tab select the appropriate sheet and comma-separeated values as the output format
+* Click "Publish" and use the generated link in the pipeline's HTTP extractor
+
+Example CSV:
+
+DOI
+10.123/TEST.123
+
+Example RML:
+
+```turtle
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix ex: <http://example.com/ns#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix attx: <http://data.hulib.helsinki.fi/attx/> .
+@prefix attx-work: <http://data.hulib.helsinki.fi/attx/work#> .
+
+<:handpicked>
+  rml:logicalSource [
+    rml:source "{filename}";
+    rml:referenceFormulation ql:CSV
+  ];
+  
+  rr:subjectMap [
+    rr:template "doi:{DOI};
+    rr:class attx-work:uh-dataset
+  ];
+
+```
+
 ## Implementation
 
 Architectural overview:
 
 ![Architectural overview](images/ATTX-Mildred-architecture.svg)
 
-Features:
-* DataCite output format
-* Custom output format if required
-* Data validation based on JSON schemas
-* Simple data quality analysis
-* Identifying dataset related to UH
-* De-duplication of dataset metadata available from multiple sources
 
 ### Pipelines
 
