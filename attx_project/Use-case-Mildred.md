@@ -511,7 +511,24 @@ Architectural overview:
 
 ![Architectural overview](images/ATTX-Mildred-architecture.svg)
 
-
 ### Pipelines
 
-TBD
+![Pipelines and datasets](images/ATTX-Thinkopen-Pipelines_and_Dataset.png)
+
+From the figure above we can deduce the following dependencies between pipelines:
+
+* Search datasets (B2Share) -> Filter UH datasets (B2Share) -> Publish UH datasets from B2Share 
+* Harvest datasets (Zenodo) -> Filter UH datasets (Zenodo) && UH community related dataset identifiers 
+(Zenodo) -> Publish UH datasets from Zenodo 
+* Harvest Etsin organizations -> Infer relationships between orgs -> Construct UH harvesting sets -> Harvest dataset metadata from UH orgs -> Publish UH datasets from Etsin
+
+These dependencies should be taken in account when setting up rules for pipeline execution in UnifiedViews.
+
+Pipelines can be found in the use-case repository.
+
+### Internal datasets
+
+Internal storage consists of datasets that work as input and output processing and publication pipelines.
+Figure below depicts a simplified versions of data structures inside each dataset. For example in the B2Share case, the first dataset "UH(?) datasets" includes dataset metadata for all the datasets that could be UH related since it has been generated from a query that return every dataset that contains "helsin" in their metadata. The second, the filtered datasets, only adds new type (or tag if you will) to the datasets that are identified as proper UH datasets. The last JSON dataset represent the published search index that contains JSON representation for each of the datasets. 
+
+![Dataset structure](images/thinkopen-datasets.png)
