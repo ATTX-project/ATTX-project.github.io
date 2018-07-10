@@ -475,9 +475,10 @@ Creating CSV link for a Google Drive spreadsheet:
 * Click "Publish" and use the generated link in the pipeline's HTTP extractor
 
 Example CSV:
-
+```
 DOI
 10.123/TEST.123
+```
 
 Example RML:
 
