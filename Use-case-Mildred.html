@@ -1232,9 +1232,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 11-Jan-2018 11:11:37</div></div><h1 style="color:red" id="draft---work-in-progress">DRAFT - work in progress</h1>
-
-<h1 id="mildred-use-case">Mildred use case</h1>
+                                <div class="git-author-container git-author-top"><div class="modified">Current page last modified at: 10-Jul-2018 08:48:14</div></div><h1 id="thinkopenmildred-use-case">Thinkopen/Mildred use case</h1>
 <p>The goal of the use case is to create a dataset that provides an aggregated view to the research data output of the University of Helsinki. This new dataset and accompanied data API are then used as the back-end service for university&apos;s <a href="https://www.helsinki.fi/en/research/think-open" target="_blank">Think Open</a> site. Think Open brings together and promotes openness-related activities, such as open research data, open source code and publications, within the University of Helsinki.</p>
 <p>Use case is part of the <a href="http://blogs.helsinki.fi/mildred/" target="_blank">Mildred project</a>, which aims to update the research data infrastructure provided by the University of Helsinki. Mildred consists of five sub-projects that concentrate on different phases of the research process. ATTX co-operates with the sub-project which is responsible for building and data publishing and metadata services.</p>
 <h3 id="table-of-contents">Table of Contents</h3>
@@ -1589,20 +1587,228 @@ Example output from Hulib community in DataCite format:
 <p><a href="http://finto.fi/en/" target="_blank">Finto</a> or Finnish thesaurus and ontology service can be used to access up-to-date versions of maintained linked vocabularies, which can be used to describe datasets or linked to existing dataset description to provide linked data for complex queries and automatic inferencing of new data.</p>
 <h3 id="iow">IOW</h3>
 <p><a href="https://iow.csc.fi/" target="_blank">IOW</a> is a service for creating and maintaining descriptions for interoperability. In the context of this use case, it means that IOW can be used as the data source for schemas that allow for automatic validation of incoming or outgoing broker data.</p>
+<h3 id="google-drive">Google Drive</h3>
+<p>Google Drive provides an easy way to incorporate manually curated lists of UH datasets to ATTX workflows. One can create a link from a spreadsheet file that allows ATTX to download it in a CSV format. The CSV data can then be processed in to RDF and used as one of the filtering datasets as part of the publishing pipeline. </p>
+<p>Creating CSV link for a Google Drive spreadsheet:</p>
+<ul>
+<li>select &quot;File&quot;-&gt;&quot;Publish to the web...&quot;</li>
+<li>From the link tab select the appropriate sheet and comma-separeated values as the output format</li>
+<li>Click &quot;Publish&quot; and use the generated link in the pipeline&apos;s HTTP extractor</li>
+</ul>
+<p>Example CSV:</p>
+<pre><code>DOI
+10.123/TEST.123
+</code></pre><p>Example RML:</p>
+<pre><code class="lang-turtle">@prefix rr: &lt;http://www.w3.org/ns/r2rml#&gt;.
+@prefix rml: &lt;http://semweb.mmlab.be/ns/rml#&gt;.
+@prefix ql: &lt;http://semweb.mmlab.be/ns/ql#&gt;.
+@prefix ex: &lt;http://example.com/ns#&gt;.
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;.
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
+@prefix attx: &lt;http://data.hulib.helsinki.fi/attx/&gt; .
+@prefix attx-work: &lt;http://data.hulib.helsinki.fi/attx/work#&gt; .
+
+&lt;:handpicked&gt;
+  rml:logicalSource [
+    rml:source &quot;{filename}&quot;;
+    rml:referenceFormulation ql:CSV
+  ];
+
+  rr:subjectMap [
+    rr:template &quot;doi:{DOI};
+    rr:class attx-work:uh-dataset
+  ];
+</code></pre>
 <h2 id="implementation">Implementation</h2>
 <p>Architectural overview:</p>
 <p><img src="images/ATTX-Mildred-architecture.svg" alt="Architectural overview"></p>
-<p>Features:</p>
-<ul>
-<li>DataCite output format</li>
-<li>Custom output format if required</li>
-<li>Data validation based on JSON schemas</li>
-<li>Simple data quality analysis</li>
-<li>Identifying dataset related to UH</li>
-<li>De-duplication of dataset metadata available from multiple sources</li>
-</ul>
 <h3 id="pipelines">Pipelines</h3>
-<p>TBD</p>
+<p><img src="images/ATTX-Thinkopen-Pipelines_and_Dataset.png" alt="Pipelines and datasets"></p>
+<p>From the figure above we can deduce the following dependencies between pipelines:</p>
+<ul>
+<li>Search datasets (B2Share) -&gt; Filter UH datasets (B2Share) -&gt; Publish UH datasets from B2Share </li>
+<li>Harvest datasets (Zenodo) -&gt; Filter UH datasets (Zenodo) &amp;&amp; UH community related dataset identifiers 
+(Zenodo) -&gt; Publish UH datasets from Zenodo </li>
+<li>Harvest Etsin organizations -&gt; Infer relationships between orgs -&gt; Construct UH harvesting sets -&gt; Harvest dataset metadata from UH orgs -&gt; Publish UH datasets from Etsin</li>
+</ul>
+<p>These dependencies should be taken in account when setting up rules for pipeline execution in UnifiedViews.</p>
+<p>Pipelines can be found in the use-case repository.</p>
+<p><img src="images/thinkopen-pipelines.png" alt="Thinkopen pipelines"></p>
+<h4 id="pipeline-examples">Pipeline examples</h4>
+<p><strong>Harvest Etsin organizations</strong></p>
+<p><img src="images/etsin-harvest-orgs.png" alt="Harvest Etsin organizations"></p>
+<p>The pipeline uses two different httprequets extractors to split the data download.</p>
+<p><img src="images/etsin-harvest-orgs-detail1.png" alt="Harvest Etsin organizations"></p>
+<p>The following RML configuration is used to transform organization json to internal RDF.</p>
+<pre><code class="lang-turtle">@prefix rr: &lt;http://www.w3.org/ns/r2rml#&gt;.
+@prefix rml: &lt;http://semweb.mmlab.be/ns/rml#&gt;.
+@prefix ql: &lt;http://semweb.mmlab.be/ns/ql#&gt;.
+@prefix ex: &lt;http://example.com/ns#&gt;.
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;.
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;.
+@prefix attx: &lt;http://data.hulib.helsinki.fi/attx/&gt; .
+@prefix attx-work: &lt;http://data.hulib.helsinki.fi/attx/work#&gt; .
+@prefix dct: &lt;http://purl.org/dc/terms/&gt; .
+@prefix etsin: &lt;http://etsin.avointiede.fi/&gt; .
+
+
+&lt;etsin:orgs&gt;
+  rml:logicalSource [
+    rml:source &quot;{filename}&quot;  ;
+    rml:referenceFormulation ql:JSONPath ;
+    rml:iterator &quot;$.result[*]&quot;
+  ];
+
+
+  rr:subjectMap [
+    rr:template &quot;http://etsin.avointiede.fi/org/{name}&quot; ;
+    rr:class attx-work:Organization ;
+  ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:title;
+      rr:objectMap [
+        rml:reference &quot;title&quot;
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:description;
+      rr:objectMap [
+        rml:reference &quot;description&quot;
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate dct:identifier;
+      rr:objectMap [
+        rml:reference &quot;id&quot; ;
+      ]
+    ];
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:setName;
+      rr:objectMap [
+        rml:reference &quot;name&quot; ;
+      ]
+    ];    
+
+  rr:predicateObjectMap [
+      rr:predicate attx-work:parentOrg;
+      rr:objectMap [
+        rr:template &quot;http://etsin.avointiede.fi/org/{groups[*].name}&quot; ;
+      ]
+    ];
+  .
+</code></pre>
+<p><strong>Infer organizations</strong></p>
+<p>The original organization data only includes links to parent organizational unit. </p>
+<p><img src="images/etsin-infer-orgs.png" alt="Infer organizations"></p>
+<p>Using harvested organization data as the source dataset.</p>
+<p><img src="images/etsin-infer-orgs-detail1.png" alt="Select source datasets"></p>
+<p>The new data we want to infer is the inverse childOrg property. We also want to make it transitive in order to create a direct link between the root organization (UH) and all of its child organizational units. </p>
+<p><img src="images/etsin-infer-orgs-detail2.png" alt="Infer new data using simple ontology"></p>
+<p><strong>Create UH orgs*</strong></p>
+<p>We need to create dataset that can be used as the source data for set based OAI-PMH harvesting.</p>
+<p><img src="images/etsin-create-uh-orgs.png" alt="Create UH sets"></p>
+<p>Using both harvested and inferred organization dataas the source datasets.</p>
+<p><img src="images/etsin-create-uh-orgs-detail1.png" alt="Select source datasets"></p>
+<p>Using construct query to generate new dataset.</p>
+<p><img src="images/etsin-create-uh-orgs-detail2.png" alt="Construct new data"></p>
+<p><strong>Publish datasets</strong></p>
+<p>The publishing pipeline transforms internal RDF data into JSON documents.</p>
+<p><img src="images/etsin-publish-uh-datasets.png" alt="Publish datasets"></p>
+<p>Using the following JSON-LD frame.</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;@context&quot;</span>: {
+    <span class="hljs-string">&quot;dc&quot;</span>: <span class="hljs-string">&quot;http://purl.org/dc/elements/1.1/&quot;</span>,
+    <span class="hljs-string">&quot;ex&quot;</span>: <span class="hljs-string">&quot;http://example.org/vocab#&quot;</span>,
+    <span class="hljs-string">&quot;work&quot;</span>: <span class="hljs-string">&quot;http://data.hulib.helsinki.fi/attx/work#&quot;</span>,
+    <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;work:version&quot;</span>,
+    <span class="hljs-string">&quot;identifier&quot;</span>: <span class="hljs-string">&quot;work:identifier&quot;</span>,
+    <span class="hljs-string">&quot;idenfifierValue&quot;</span>: <span class="hljs-string">&quot;work:value&quot;</span>,
+    <span class="hljs-string">&quot;identifierType&quot;</span>: <span class="hljs-string">&quot;work:type&quot;</span>,
+    <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;work:title&quot;</span>,
+    <span class="hljs-string">&quot;subjects&quot;</span>: <span class="hljs-string">&quot;work:subject&quot;</span>,
+    <span class="hljs-string">&quot;subject&quot;</span>: <span class="hljs-string">&quot;work:term&quot;</span>,
+    <span class="hljs-string">&quot;creators&quot;</span>: <span class="hljs-string">&quot;work:creator&quot;</span>,
+    <span class="hljs-string">&quot;creatorName&quot;</span>: <span class="hljs-string">&quot;work:creatorName&quot;</span>,
+    <span class="hljs-string">&quot;contributors&quot;</span>: <span class="hljs-string">&quot;work:contributor&quot;</span>,
+        <span class="hljs-string">&quot;contributorName&quot;</span>: <span class="hljs-string">&quot;work:contributorName&quot;</span>,
+    <span class="hljs-string">&quot;contributorType&quot;</span>: <span class="hljs-string">&quot;work:contributorType&quot;</span>,
+
+    <span class="hljs-string">&quot;affiliation&quot;</span> : <span class="hljs-string">&quot;work:affiliation&quot;</span>,
+    <span class="hljs-string">&quot;publisher&quot;</span>: <span class="hljs-string">&quot;work:publisher&quot;</span>,
+    <span class="hljs-string">&quot;publicationYear&quot;</span>: <span class="hljs-string">&quot;work:pubdate&quot;</span>,
+    <span class="hljs-string">&quot;language&quot;</span>: <span class="hljs-string">&quot;work:language&quot;</span>,
+    <span class="hljs-string">&quot;resourceType&quot;</span>: <span class="hljs-string">&quot;work:resourceType&quot;</span>,
+    <span class="hljs-string">&quot;resourceTypeGeneral&quot;</span>: <span class="hljs-string">&quot;work:title&quot;</span>,
+        <span class="hljs-string">&quot;nameIdentifiers&quot;</span>: <span class="hljs-string">&quot;work:nameIdentifier&quot;</span>,
+    <span class="hljs-string">&quot;subjectScheme&quot;</span>: <span class="hljs-string">&quot;work:subjectScheme&quot;</span>,
+    <span class="hljs-string">&quot;valueURI&quot;</span>: <span class="hljs-string">&quot;work:valueURI&quot;</span>,
+    <span class="hljs-string">&quot;rightsList&quot;</span>: <span class="hljs-string">&quot;work:license&quot;</span>,
+    <span class="hljs-string">&quot;rights&quot;</span>: <span class="hljs-string">&quot;work:licenseID&quot;</span>
+
+  },
+  <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;work:uh-dataset&quot;</span>,
+  <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">&quot;@requireAll&quot;</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-string">&quot;identifier&quot;</span>: {
+    <span class="hljs-string">&quot;@type&quot;</span>: <span class="hljs-string">&quot;work:ID&quot;</span>,
+          <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-string">&quot;idenfifierValue&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;identifierType&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+  },
+  <span class="hljs-string">&quot;title&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-string">&quot;subjects&quot;</span>: {
+    <span class="hljs-string">&quot;subject&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;subjectScheme&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;valueURI&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+  },
+  <span class="hljs-string">&quot;creators&quot;</span>: {
+    <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-string">&quot;@requireAll&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-string">&quot;creatorName&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;affiliation&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;nameIdentifiers&quot;</span>: {
+
+      <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-string">&quot;idenfifierValue&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+      <span class="hljs-string">&quot;identifierType&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+    }
+  },
+  <span class="hljs-string">&quot;contributors&quot;</span>: {
+    <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-string">&quot;@requireAll&quot;</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-string">&quot;contributorName&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;contributorType&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;affiliation&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;nameIdentifiers&quot;</span>: {
+
+      <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-string">&quot;idenfifierValue&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+      <span class="hljs-string">&quot;identifierType&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+    }
+  },
+  <span class="hljs-string">&quot;publisher&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-string">&quot;publicationYear&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-string">&quot;language&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,
+  <span class="hljs-string">&quot;resourceType&quot;</span>: {
+    <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-string">&quot;resourceTypeGeneral&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+  },
+  <span class="hljs-string">&quot;rightsList&quot;</span>: {
+    <span class="hljs-string">&quot;@explicit&quot;</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-string">&quot;rights&quot;</span> : <span class="hljs-string">&quot;&quot;</span>,
+    <span class="hljs-string">&quot;rightURI&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+  },
+  <span class="hljs-string">&quot;version&quot;</span>: {<span class="hljs-string">&quot;@default&quot;</span>: <span class="hljs-string">&quot;4.0&quot;</span>}
+}
+</code></pre>
+<h3 id="internal-datasets">Internal datasets</h3>
+<p>Internal storage consists of datasets that work as input and output processing and publication pipelines.
+Figure below depicts a simplified versions of data structures inside each dataset. For example in the B2Share case, the first dataset &quot;UH(?) datasets&quot; includes dataset metadata for all the datasets that could be UH related since it has been generated from a query that return every dataset that contains &quot;helsin&quot; in their metadata. The second, the filtered datasets, only adds new type (or tag if you will) to the datasets that are identified as proper UH datasets. The last JSON dataset represent the published search index that contains JSON representation for each of the datasets. </p>
+<p><img src="images/thinkopen-datasets.png" alt="Dataset structure"></p>
 
                                 
                                 </section>
@@ -1646,7 +1852,7 @@ Example output from Hulib community in DataCite format:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2018-07-10T08:39:38.260Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-10T08:41:25.688Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"UC4 - Mildred","level":"1.2.4","depth":2,"next":{"title":"ATTX Architecture Overview","level":"1.3","depth":1,"path":"ATTX-Architecture-Overview.md","ref":"ATTX-Architecture-Overview.md","articles":[]},"previous":{"title":"UC3 - Metax","level":"1.2.3","depth":2,"path":"Use-case-Metax.md","ref":"Use-case-Metax.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["highlight","fontsettings","search","git-author","gitversion","copy-code-button"],"pluginsConfig":{"gitversion":{},"git-author":{"position":"top","modifyTpl":"Current page last modified at: {timeStamp}","createTpl":false,"timeStampFormat":"DD-MMM-YYYY HH:mm:ss"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"fontSettings":{"size":1},"highlight":{},"copy-code-button":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Use-case-Mildred.md","mtime":"2018-07-10T08:48:53.394Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-10T08:49:14.730Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
